@@ -95,6 +95,16 @@
         es: { score: "Puntuación", click: "Clic", bonus: "Bono", restart: "Reiniciar" },
         zh: { score: "分数", click: "点击", bonus: "奖励", restart: "重新开始" },
         ja: { score: "スコア", click: "クリック", bonus: "ボーナス", restart: "やり直す" },
+        de: { score: "Punkte", click: "Klick", bonus: "Bonus", restart: "Neu starten" },
+        fr: { score: "Score", click: "Cliquer", bonus: "Bonus", restart: "Recommencer" },
+        hi: { score: "स्कोर", click: "क्लिक", bonus: "बोनस", restart: "फिर शुरू करें" },
+        cs: { score: "Skóre", click: "Klik", bonus: "Bonus", restart: "Restartovat" },
+        nl: { score: "Score", click: "Klik", bonus: "Bonus", restart: "Opnieuw starten" },
+        fi: { score: "Pisteet", click: "Klikkaa", bonus: "Bonus", restart: "Aloita uudelleen" },
+        he: { score: "ניקוד", click: "לחיצה", bonus: "בונוס", restart: "התחל מחדש" },
+        ro: { score: "Scor", click: "Click", bonus: "Bonus", restart: "Repornește" },
+        uk: { score: "Рахунок", click: "Клік", bonus: "Бонус", restart: "Почати знову" },
+        mk: { score: "Резултат", click: "Клик", bonus: "Бонус", restart: "Почни повторно" },
       };
 
       function detectLocale() {
@@ -105,19 +115,31 @@
           if (code.startsWith("es")) return "es";
           if (code.startsWith("zh")) return "zh";
           if (code.startsWith("ja")) return "ja";
+          if (code.startsWith("de")) return "de";
+          if (code.startsWith("fr")) return "fr";
+          if (code.startsWith("hi")) return "hi";
+          if (code.startsWith("cs")) return "cs";
+          if (code.startsWith("nl")) return "nl";
+          if (code.startsWith("fi")) return "fi";
+          if (code.startsWith("he") || code.startsWith("iw")) return "he";
+          if (code.startsWith("ro")) return "ro";
+          if (code.startsWith("uk")) return "uk";
+          if (code.startsWith("mk")) return "mk";
           if (code.startsWith("en")) return "en";
         }
         return "en";
       }
 
-      const copy = translations[detectLocale()];
+      const currentLocale = detectLocale();
+      const copy = translations[currentLocale];
       const score = document.querySelector("#score");
       const scoreLabel = document.querySelector("#scoreLabel");
       const target = document.querySelector("#target");
       const reset = document.querySelector("#reset");
       let count = 0;
 
-      document.documentElement.lang = detectLocale();
+      document.documentElement.lang = currentLocale;
+      document.documentElement.dir = currentLocale === "he" ? "rtl" : "ltr";
       scoreLabel.textContent = copy.score;
       target.textContent = copy.click;
       reset.textContent = copy.restart;
