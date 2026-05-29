@@ -3,16 +3,10 @@ const translations = {
     localeName: "한국어",
     navGenres: "장르",
     navGames: "게임",
-    coin: "코인",
     brandHome: "GameCoin Arcade 홈",
     mainMenu: "주요 메뉴",
-    ownedCoins: "보유 코인",
-    adTitle: "광고 시청 중",
-    adText: "광고가 끝나면 코인 1개가 지급됩니다.",
-    cancel: "취소",
-    claimReward: "보상 받기",
     rewardArcade: "Reward Arcade",
-    heroText: "광고 보상으로 코인을 모으고, 원하는 장르의 임베드 게임을<br>코인 1개로 바로 실행하세요.",
+    heroText: "원하는 장르를 고르고, 브라우저에서 바로 실행되는<br>임베드 미니게임을 즐겨보세요.",
     chooseGenre: "장르 선택",
     viewGames: "게임 보기",
     featuredGenres: "대표 장르",
@@ -23,14 +17,12 @@ const translations = {
     gamesEyebrow: "Games",
     allGames: "전체 게임",
     genreGames: "{genre} 게임",
-    gamesText: "게임 실행에는 코인 1개가 필요합니다. 코인은 광고 시청 보상으로 충전됩니다.",
+    gamesText: "원하는 게임을 선택하면 브라우저 안에서 바로 실행됩니다.",
     gameGenreFilter: "게임 장르 필터",
     all: "전체",
-    watchAd: "광고 보고 코인 받기",
     launch: "실행",
     list: "목록",
     gameNotFound: "게임을 찾을 수 없습니다.",
-    notEnoughCoins: "코인이 부족합니다. 이 장르 화면에서 광고를 보고 코인 1개를 받은 뒤 실행하세요.",
     score: "점수",
     restart: "다시 시작",
     gameOver: "Game Over",
@@ -64,16 +56,10 @@ const translations = {
     localeName: "English",
     navGenres: "Genres",
     navGames: "Games",
-    coin: "Coins",
     brandHome: "GameCoin Arcade home",
     mainMenu: "Main menu",
-    ownedCoins: "Owned coins",
-    adTitle: "Watching ad",
-    adText: "You will receive 1 coin when the ad ends.",
-    cancel: "Cancel",
-    claimReward: "Claim reward",
     rewardArcade: "Reward Arcade",
-    heroText: "Collect coins from ad rewards and launch embedded games<br>from any genre instantly for 1 coin.",
+    heroText: "Choose a genre and play embedded mini games<br>directly in your browser.",
     chooseGenre: "Choose Genre",
     viewGames: "View Games",
     featuredGenres: "Featured genres",
@@ -84,14 +70,12 @@ const translations = {
     gamesEyebrow: "Games",
     allGames: "All Games",
     genreGames: "{genre} Games",
-    gamesText: "Launching a game costs 1 coin. Coins are charged through ad-view rewards.",
+    gamesText: "Choose any game and it will launch directly in your browser.",
     gameGenreFilter: "Game genre filter",
     all: "All",
-    watchAd: "Watch ad for coins",
     launch: "Launch",
     list: "List",
     gameNotFound: "Game not found.",
-    notEnoughCoins: "Not enough coins. Watch an ad on this genre page to receive 1 coin, then launch the game.",
     score: "Score",
     restart: "Restart",
     gameOver: "Game Over",
@@ -125,16 +109,10 @@ const translations = {
     localeName: "Español",
     navGenres: "Géneros",
     navGames: "Juegos",
-    coin: "Monedas",
     brandHome: "Inicio de GameCoin Arcade",
     mainMenu: "Menú principal",
-    ownedCoins: "Monedas disponibles",
-    adTitle: "Viendo anuncio",
-    adText: "Recibirás 1 moneda cuando termine el anuncio.",
-    cancel: "Cancelar",
-    claimReward: "Recibir recompensa",
     rewardArcade: "Arcade con recompensas",
-    heroText: "Consigue monedas con recompensas de anuncios y juega títulos integrados<br>del género que quieras al instante por 1 moneda.",
+    heroText: "Elige un género y juega minijuegos integrados<br>directamente en tu navegador.",
     chooseGenre: "Elegir género",
     viewGames: "Ver juegos",
     featuredGenres: "Géneros destacados",
@@ -145,14 +123,12 @@ const translations = {
     gamesEyebrow: "Juegos",
     allGames: "Todos los juegos",
     genreGames: "Juegos de {genre}",
-    gamesText: "Iniciar un juego cuesta 1 moneda. Las monedas se recargan con recompensas por ver anuncios.",
+    gamesText: "Elige cualquier juego y se abrirá directamente en tu navegador.",
     gameGenreFilter: "Filtro de género de juegos",
     all: "Todos",
-    watchAd: "Ver anuncio por monedas",
     launch: "Iniciar",
     list: "Lista",
     gameNotFound: "No se encontró el juego.",
-    notEnoughCoins: "No tienes suficientes monedas. Mira un anuncio en esta página de género para recibir 1 moneda y luego inicia el juego.",
     score: "Puntuación",
     restart: "Reiniciar",
     gameOver: "Fin del juego",
@@ -186,16 +162,10 @@ const translations = {
     localeName: "中文",
     navGenres: "类型",
     navGames: "游戏",
-    coin: "金币",
     brandHome: "GameCoin Arcade 首页",
     mainMenu: "主菜单",
-    ownedCoins: "持有金币",
-    adTitle: "正在观看广告",
-    adText: "广告结束后将获得 1 枚金币。",
-    cancel: "取消",
-    claimReward: "领取奖励",
     rewardArcade: "奖励街机",
-    heroText: "通过广告奖励收集金币，并用 1 枚金币立即启动<br>任意类型的嵌入式游戏。",
+    heroText: "选择喜欢的类型，并直接在浏览器中<br>游玩嵌入式小游戏。",
     chooseGenre: "选择类型",
     viewGames: "查看游戏",
     featuredGenres: "推荐类型",
@@ -206,14 +176,12 @@ const translations = {
     gamesEyebrow: "游戏",
     allGames: "全部游戏",
     genreGames: "{genre}游戏",
-    gamesText: "启动游戏需要 1 枚金币。金币可通过观看广告奖励获得。",
+    gamesText: "选择任意游戏后，将直接在浏览器中启动。",
     gameGenreFilter: "游戏类型筛选",
     all: "全部",
-    watchAd: "观看广告获得金币",
     launch: "启动",
     list: "列表",
     gameNotFound: "找不到游戏。",
-    notEnoughCoins: "金币不足。请在该类型页面观看广告获得 1 枚金币后再启动游戏。",
     score: "分数",
     restart: "重新开始",
     gameOver: "游戏结束",
@@ -247,16 +215,10 @@ const translations = {
     localeName: "日本語",
     navGenres: "ジャンル",
     navGames: "ゲーム",
-    coin: "コイン",
     brandHome: "GameCoin Arcade ホーム",
     mainMenu: "メインメニュー",
-    ownedCoins: "所持コイン",
-    adTitle: "広告を視聴中",
-    adText: "広告が終わるとコインを1枚受け取れます。",
-    cancel: "キャンセル",
-    claimReward: "報酬を受け取る",
     rewardArcade: "リワードアーケード",
-    heroText: "広告報酬でコインを集め、好きなジャンルの埋め込みゲームを<br>コイン1枚ですぐにプレイできます。",
+    heroText: "好きなジャンルを選んで、ブラウザ内でそのまま遊べる<br>埋め込みミニゲームを楽しめます。",
     chooseGenre: "ジャンル選択",
     viewGames: "ゲームを見る",
     featuredGenres: "代表ジャンル",
@@ -267,14 +229,12 @@ const translations = {
     gamesEyebrow: "ゲーム",
     allGames: "すべてのゲーム",
     genreGames: "{genre}ゲーム",
-    gamesText: "ゲームの起動にはコインが1枚必要です。コインは広告視聴報酬でチャージされます。",
+    gamesText: "好きなゲームを選ぶと、ブラウザ内ですぐに起動します。",
     gameGenreFilter: "ゲームジャンルフィルター",
     all: "すべて",
-    watchAd: "広告を見てコインを受け取る",
     launch: "起動",
     list: "一覧",
     gameNotFound: "ゲームが見つかりません。",
-    notEnoughCoins: "コインが足りません。このジャンル画面で広告を見てコインを1枚受け取ってから起動してください。",
     score: "スコア",
     restart: "やり直す",
     gameOver: "ゲームオーバー",
@@ -325,27 +285,15 @@ const supportedLocales = Object.keys(translations);
 const currentLocale = detectLocale();
 const copy = translations[currentLocale];
 const app = document.querySelector("#app");
-const coinCount = document.querySelector("#coinCount");
-const adModal = document.querySelector("#adModal");
-const adProgress = document.querySelector("#adProgress");
-const finishAdButton = document.querySelector("#finishAdButton");
-const cancelAdButton = document.querySelector("#cancelAdButton");
-const topAdButton = document.querySelector("#topAdButton");
 
 const state = {
-  coins: Number(localStorage.getItem("gamecoin.coins") || "0"),
   selectedGenre: "all",
-  adTimer: null,
 };
 
 applyStaticText();
-finishAdButton.addEventListener("click", claimReward);
-cancelAdButton.addEventListener("click", closeRewardAd);
-topAdButton.addEventListener("click", openRewardAd);
 window.addEventListener("hashchange", render);
 app.addEventListener("click", handleAppClick);
 
-updateCoins();
 render();
 
 function detectLocale() {
@@ -365,16 +313,8 @@ function applyStaticText() {
   document.documentElement.lang = currentLocale;
   document.querySelector("#brandLink").setAttribute("aria-label", copy.brandHome);
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
-  document.querySelector("#coinPill").setAttribute("aria-label", copy.ownedCoins);
   document.querySelector("#navGenres").textContent = copy.navGenres;
   document.querySelector("#navGames").textContent = copy.navGames;
-  document.querySelector("#coinLabel").textContent = copy.coin;
-  topAdButton.setAttribute("aria-label", copy.watchAd);
-  topAdButton.setAttribute("title", copy.watchAd);
-  document.querySelector("#adTitle").textContent = copy.adTitle;
-  document.querySelector("#adText").textContent = copy.adText;
-  cancelAdButton.textContent = copy.cancel;
-  finishAdButton.textContent = copy.claimReward;
 }
 
 function render() {
@@ -526,7 +466,6 @@ function gamesSection(genreId = "all", standalone = false) {
             })
             .join("")}
         </div>
-        ${genreId === "all" ? "" : `<button class="primary-button" type="button" data-watch-ad>${copy.watchAd}</button>`}
       </div>
       <div class="grid">
         ${visibleGames.map(gameCard).join("")}
@@ -544,7 +483,6 @@ function gameCard(game) {
         <p>${game.description}</p>
       </div>
       <div class="game-actions">
-        <span class="cost"><span class="coin-icon"></span>1</span>
         <button class="primary-button" type="button" data-launch="${game.id}">${copy.launch}</button>
       </div>
     </article>
@@ -552,12 +490,6 @@ function gameCard(game) {
 }
 
 function handleAppClick(event) {
-  const adButton = event.target.closest("[data-watch-ad]");
-  if (adButton) {
-    openRewardAd();
-    return;
-  }
-
   const filterButton = event.target.closest("[data-filter]");
   if (filterButton) {
     location.hash = `#games/${filterButton.dataset.filter}`;
@@ -571,59 +503,7 @@ function handleAppClick(event) {
 }
 
 function launchGame(gameId) {
-  if (state.coins < 1) {
-    const game = getGames().find((item) => item.id === gameId);
-    const genreId = game?.genre || "all";
-    location.hash = `#games/${genreId}`;
-    requestAnimationFrame(() => {
-      const section = document.querySelector("#games .section-header p");
-      if (section) {
-        section.textContent = copy.notEnoughCoins;
-      }
-    });
-    return;
-  }
-
-  state.coins -= 1;
-  persistCoins();
   location.hash = `#play/${gameId}`;
-}
-
-function openRewardAd() {
-  clearInterval(state.adTimer);
-  let progress = 0;
-  adModal.hidden = false;
-  finishAdButton.disabled = true;
-  adProgress.style.width = "0%";
-
-  state.adTimer = setInterval(() => {
-    progress += 10;
-    adProgress.style.width = `${progress}%`;
-    if (progress >= 100) {
-      clearInterval(state.adTimer);
-      finishAdButton.disabled = false;
-    }
-  }, 280);
-}
-
-function closeRewardAd() {
-  clearInterval(state.adTimer);
-  adModal.hidden = true;
-}
-
-function claimReward() {
-  state.coins += 1;
-  persistCoins();
-  closeRewardAd();
-}
-
-function persistCoins() {
-  localStorage.setItem("gamecoin.coins", String(state.coins));
-  updateCoins();
-}
-
-function updateCoins() {
-  coinCount.textContent = state.coins;
 }
 
 function getGenres() {

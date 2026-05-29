@@ -44,7 +44,7 @@ button {
   top: 0;
   z-index: 10;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 18px;
   min-height: 68px;
@@ -56,7 +56,6 @@ button {
 
 .brand,
 .nav,
-.coin-pill,
 .genre-filter,
 .toolbar {
   display: flex;
@@ -111,51 +110,6 @@ button {
   transform: translateY(-1px);
 }
 
-.coin-pill {
-  gap: 8px;
-  min-height: 42px;
-  padding: 9px 13px;
-  border: 1px solid rgba(247, 184, 75, 0.4);
-  border-radius: 999px;
-  background: rgba(247, 184, 75, 0.12);
-  color: #ffe3a2;
-}
-
-.ad-coin-button {
-  display: grid;
-  width: 28px;
-  height: 28px;
-  margin-left: 2px;
-  place-items: center;
-  border: 1px solid rgba(247, 184, 75, 0.52);
-  border-radius: 8px;
-  background: rgba(247, 184, 75, 0.18);
-  color: #ffe3a2;
-  cursor: pointer;
-  font-size: 0.76rem;
-  line-height: 1;
-  transition:
-    transform 160ms ease,
-    background 160ms ease,
-    border-color 160ms ease;
-}
-
-.ad-coin-button:hover {
-  transform: translateY(-1px);
-  border-color: rgba(247, 184, 75, 0.82);
-  background: rgba(247, 184, 75, 0.28);
-}
-
-.coin-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 35%, #fff4bf 0 16%, transparent 17%),
-    linear-gradient(135deg, #ffe06b, #e39221);
-  box-shadow: inset 0 -2px 0 rgba(112, 58, 4, 0.28);
-}
-
 .hero {
   position: relative;
   min-height: calc(100vh - 68px);
@@ -208,7 +162,6 @@ button {
 }
 
 .hero-actions,
-.modal-actions,
 .game-actions {
   display: flex;
   flex-wrap: wrap;
@@ -406,14 +359,6 @@ button {
   justify-content: space-between;
 }
 
-.cost {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: #ffe3a2;
-  font-weight: 800;
-}
-
 .player-shell {
   display: grid;
   gap: 18px;
@@ -454,80 +399,6 @@ button {
   border-radius: 8px;
   color: var(--muted);
   text-align: center;
-}
-
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  background: rgba(0, 0, 0, 0.66);
-}
-
-.modal-backdrop[hidden] {
-  display: none;
-}
-
-.ad-modal {
-  width: min(420px, 100%);
-  padding: 18px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #17191e;
-  box-shadow: var(--shadow);
-}
-
-.ad-screen {
-  display: grid;
-  min-height: 190px;
-  align-content: end;
-  gap: 18px;
-  padding: 16px;
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(43, 209, 196, 0.2), rgba(240, 93, 94, 0.18)),
-    #22262e;
-}
-
-.ad-badge {
-  justify-self: start;
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-
-.ad-playhead {
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.ad-playhead span {
-  display: block;
-  width: 0%;
-  height: 100%;
-  background: var(--green);
-  transition: width 200ms linear;
-}
-
-.ad-modal h2 {
-  margin: 18px 0 8px;
-}
-
-.ad-modal p {
-  margin: 0 0 18px;
-  color: var(--muted);
-}
-
-.ad-modal .primary-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
-  transform: none;
 }
 
 @media (max-width: 900px) {
