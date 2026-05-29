@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample Clicker</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #0b0c0f;
+        color: #f4f2ea;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .game {
+        width: min(720px, calc(100% - 28px));
+        min-height: 460px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .hud {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: #b8bec9;
+      }
+
+      .stage {
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(43, 209, 196, 0.16), rgba(169, 139, 255, 0.18)),
+          #151820;
+        text-align: center;
+      }
+
+      .target {
+        width: 160px;
+        height: 160px;
+        border: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f7b84b, #f05d5e);
+        color: #1b1205;
+        font-size: 1.35rem;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 18px 40px rgba(240, 93, 94, 0.3);
+      }
+
+      .target:active {
+        transform: scale(0.96);
+      }
+
+      .reset {
+        justify-self: start;
+        min-height: 40px;
+        padding: 9px 13px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #f4f2ea;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Sample Clicker</strong>
+        <span><span id="scoreLabel">점수</span> <b id="score">0</b></span>
+      </div>
+      <section class="stage">
+        <button class="target" id="target" type="button">클릭</button>
+      </section>
+      <button class="reset" id="reset" type="button">다시 시작</button>
+    </main>
+
+    <script>
+      const translations = {
+        ko: { score: "점수", click: "클릭", bonus: "보너스", restart: "다시 시작" },
+        en: { score: "Score", click: "Click", bonus: "Bonus", restart: "Restart" },
+        es: { score: "Puntuación", click: "Clic", bonus: "Bono", restart: "Reiniciar" },
+        zh: { score: "分数", click: "点击", bonus: "奖励", restart: "重新开始" },
+        ja: { score: "スコア", click: "クリック", bonus: "ボーナス", restart: "やり直す" },
+      };
+
+      function detectLocale() {
+        const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
+        for (const language of languages) {
+          const code = language.toLowerCase();
+          if (code.startsWith("ko")) return "ko";
+          if (code.startsWith("es")) return "es";
+          if (code.startsWith("zh")) return "zh";
+          if (code.startsWith("ja")) return "ja";
+          if (code.startsWith("en")) return "en";
+        }
+        return "en";
+      }
+
+      const copy = translations[detectLocale()];
+      const score = document.querySelector("#score");
+      const scoreLabel = document.querySelector("#scoreLabel");
+      const target = document.querySelector("#target");
+      const reset = document.querySelector("#reset");
+      let count = 0;
+
+      document.documentElement.lang = detectLocale();
+      scoreLabel.textContent = copy.score;
+      target.textContent = copy.click;
+      reset.textContent = copy.restart;
+
+      target.addEventListener("click", () => {
+        count += 1;
+        score.textContent = count;
+        target.textContent = count % 10 === 0 ? copy.bonus : copy.click;
+      });
+
+      reset.addEventListener("click", () => {
+        count = 0;
+        score.textContent = count;
+        target.textContent = copy.click;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameCoin Arcade</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" id="brandLink" href="#home" aria-label="GameCoin Arcade 홈">
+        <span class="brand-mark">G</span>
+        <span>GameCoin Arcade</span>
+      </a>
+      <nav class="nav" id="mainNav" aria-label="주요 메뉴">
+        <a id="navGenres" href="#genres">장르</a>
+        <a id="navGames" href="#games">게임</a>
+      </nav>
+      <div class="coin-pill" id="coinPill" aria-label="보유 코인">
+        <span class="coin-icon" aria-hidden="true"></span>
+        <span id="coinCount">0</span>
+        <span id="coinLabel">코인</span>
+        <button class="ad-coin-button" id="topAdButton" type="button" aria-label="광고 보고 코인 받기" title="광고 보고 코인 받기">▶</button>
+      </div>
+    </header>
+
+    <main id="app"></main>
+
+    <div class="modal-backdrop" id="adModal" hidden>
+      <section class="ad-modal" role="dialog" aria-modal="true" aria-labelledby="adTitle">
+        <div class="ad-screen">
+          <div class="ad-badge">Google Ad</div>
+          <div class="ad-playhead"><span id="adProgress"></span></div>
+        </div>
+        <h2 id="adTitle">광고 시청 중</h2>
+        <p id="adText">광고가 끝나면 코인 1개가 지급됩니다.</p>
+        <div class="modal-actions">
+          <button class="ghost-button" id="cancelAdButton" type="button">취소</button>
+          <button class="primary-button" id="finishAdButton" type="button" disabled>보상 받기</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
