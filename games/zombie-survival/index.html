@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zombie Survival</title>
+    <link rel="stylesheet" href="../action-style.css" />
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button"></button>
+    </main>
+    <script>
+      window.ACTION_GAME_CONFIG = { title: "Zombie Survival", type: "arena", health: 5, enemyShape: "zombie", enemyColor: "#73d676", playerColor: "#2bd1c4", enemySpeed: 1.55, spawnRate: 48, hitScore: 6, bgA: "#101814", bgB: "#20242b" };
+    </script>
+    <script src="../action-pack.js"></script>
+  </body>
+</html>

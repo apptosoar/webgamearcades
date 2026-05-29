@@ -46,6 +46,16 @@ const translations = {
     },
     gameDescriptions: {
       "neon-dodge": "방향키로 붉은 블록을 피하고 오래 버티세요.",
+      "zombie-survival": "몰려오는 좀비를 피해 아레나에서 최대한 오래 살아남으세요.",
+      "space-shooter": "우주선을 조종해 적 비행체를 격추하고 점수를 올리세요.",
+      "ninja-dash": "닌자를 움직여 장애물을 뛰어넘고 계속 달리세요.",
+      "robot-arena": "로봇 아레나에서 적 로봇을 피하며 오래 버티세요.",
+      "arrow-dodge": "옆에서 날아오는 화살을 피하며 반응 속도를 시험하세요.",
+      "monster-punch": "등장하는 몬스터를 빠르게 눌러 처치하세요.",
+      "laser-escape": "움직이는 레이저 벽을 피해 오래 살아남으세요.",
+      "castle-defender": "성으로 몰려오는 적을 조준해 막아내세요.",
+      "bomb-runner": "폭탄 장애물을 뛰어넘으며 최대한 멀리 달리세요.",
+      "meteor-dodge": "떨어지는 운석을 피해 우주선을 지키세요.",
       "memory-grid": "짧게 켜지는 타일 순서를 기억해 다시 누르세요.",
       "lane-rush": "차선을 바꾸며 장애물을 피해 점수를 올리세요.",
       "coin-keep": "수익과 방어에 코인을 배분해 10턴을 버티세요.",
@@ -99,6 +109,16 @@ const translations = {
     },
     gameDescriptions: {
       "neon-dodge": "Use the arrow keys to dodge red blocks and survive as long as possible.",
+      "zombie-survival": "Survive as long as possible in an arena while zombies close in.",
+      "space-shooter": "Pilot a ship, shoot down enemy craft, and raise your score.",
+      "ninja-dash": "Move the ninja, jump over hazards, and keep running.",
+      "robot-arena": "Survive in a robot arena while hostile bots chase you.",
+      "arrow-dodge": "Dodge arrows flying in from the side and test your reactions.",
+      "monster-punch": "Punch monsters as they appear and clear the screen quickly.",
+      "laser-escape": "Avoid moving laser walls and survive as long as possible.",
+      "castle-defender": "Aim at enemies rushing the castle and hold the line.",
+      "bomb-runner": "Jump over bomb hazards and run as far as you can.",
+      "meteor-dodge": "Protect your ship by dodging falling meteors.",
       "memory-grid": "Remember the briefly lit tile sequence and press it again.",
       "lane-rush": "Change lanes, avoid obstacles, and raise your score.",
       "coin-keep": "Split coins between income and defense to survive 10 turns.",
@@ -804,11 +824,21 @@ const genreMeta = [
 ];
 
 const gameMeta = [
-  { id: "neon-dodge", genre: "action", title: "Neon Dodge", accent: "#f05d5e", makeSrcdoc: makeDodgeGame },
-  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
-  { id: "lane-rush", genre: "racing", title: "Lane Rush", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
-  { id: "coin-keep", genre: "strategy", title: "Coin Keep", accent: "#73d676", makeSrcdoc: makeStrategyGame },
-  { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
+  { id: "neon-dodge", genre: "action", title: "Neon Dodge", icon: "🟦", accent: "#f05d5e", makeSrcdoc: makeDodgeGame },
+  { id: "zombie-survival", genre: "action", title: "Zombie Survival", icon: "🧟", accent: "#73d676", url: "./games/zombie-survival/index.html" },
+  { id: "space-shooter", genre: "action", title: "Space Shooter", icon: "🚀", accent: "#2bd1c4", url: "./games/space-shooter/index.html" },
+  { id: "ninja-dash", genre: "action", title: "Ninja Dash", icon: "🥷", accent: "#f7b84b", url: "./games/ninja-dash/index.html" },
+  { id: "robot-arena", genre: "action", title: "Robot Arena", icon: "🤖", accent: "#a98bff", url: "./games/robot-arena/index.html" },
+  { id: "arrow-dodge", genre: "action", title: "Arrow Dodge", icon: "🏹", accent: "#f7b84b", url: "./games/arrow-dodge/index.html" },
+  { id: "monster-punch", genre: "action", title: "Monster Punch", icon: "👊", accent: "#f05d5e", url: "./games/monster-punch/index.html" },
+  { id: "laser-escape", genre: "action", title: "Laser Escape", icon: "🔴", accent: "#73d676", url: "./games/laser-escape/index.html" },
+  { id: "castle-defender", genre: "action", title: "Castle Defender", icon: "🏰", accent: "#f7b84b", url: "./games/castle-defender/index.html" },
+  { id: "bomb-runner", genre: "action", title: "Bomb Runner", icon: "💣", accent: "#f05d5e", url: "./games/bomb-runner/index.html" },
+  { id: "meteor-dodge", genre: "action", title: "Meteor Dodge", icon: "☄️", accent: "#2bd1c4", url: "./games/meteor-dodge/index.html" },
+  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "🧠", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
+  { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "🏎️", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
+  { id: "coin-keep", genre: "strategy", title: "Coin Keep", icon: "♜", accent: "#73d676", makeSrcdoc: makeStrategyGame },
+  { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "👆", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
 
 const supportedLocales = Object.keys(translations);
@@ -1019,7 +1049,7 @@ function gameCard(game) {
   return `
     <article class="game-card" style="--accent:${game.accent}">
       <div class="game-top">
-        <span class="tile-icon">${getGenre(game.genre).icon}</span>
+        <span class="tile-icon">${game.icon || getGenre(game.genre).icon}</span>
         <h3>${game.title}</h3>
         <p>${game.description}</p>
       </div>
@@ -1062,7 +1092,7 @@ function getGenre(id) {
 function getGames() {
   return gameMeta.map((game) => ({
     ...game,
-    description: copy.gameDescriptions[game.id],
+    description: copy.gameDescriptions[game.id] || translations.en.gameDescriptions[game.id],
     srcdoc: game.makeSrcdoc ? game.makeSrcdoc() : undefined,
   }));
 }

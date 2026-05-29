@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meteor Dodge</title>
+    <link rel="stylesheet" href="../action-style.css" />
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button"></button>
+    </main>
+    <script>
+      window.ACTION_GAME_CONFIG = { title: "Meteor Dodge", type: "dodge", pattern: "meteors", health: 4, enemyShape: "meteor", hazardColor: "#f7b84b", playerShape: "ship", playerColor: "#2bd1c4", speed: 6, spawnRate: 24, passiveScore: 2, bgA: "#0b0d18", bgB: "#261f35" };
+    </script>
+    <script src="../action-pack.js"></script>
+  </body>
+</html>

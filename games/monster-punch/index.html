@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monster Punch</title>
+    <link rel="stylesheet" href="../action-style.css" />
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
+      <canvas id="game"></canvas>
+      <button class="action" id="action" type="button">Punch</button>
+      <button id="restart" type="button"></button>
+    </main>
+    <script>
+      window.ACTION_GAME_CONFIG = { title: "Monster Punch", type: "click", health: 4, enemyShape: "zombie", enemyColor: "#f05d5e", playerColor: "#f7b84b", spawnRate: 34, hitScore: 9, bgA: "#171016", bgB: "#30202d" };
+    </script>
+    <script src="../action-pack.js"></script>
+  </body>
+</html>

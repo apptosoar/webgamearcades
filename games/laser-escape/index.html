@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laser Escape</title>
+    <link rel="stylesheet" href="../action-style.css" />
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button"></button>
+    </main>
+    <script>
+      window.ACTION_GAME_CONFIG = { title: "Laser Escape", type: "dodge", pattern: "laser", health: 3, playerColor: "#73d676", speed: 6.2, spawnRate: 32, passiveScore: 2, bgA: "#081316", bgB: "#162e34" };
+    </script>
+    <script src="../action-pack.js"></script>
+  </body>
+</html>
