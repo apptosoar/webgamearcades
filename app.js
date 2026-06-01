@@ -223,7 +223,7 @@ const gameMeta = [
 ];
 
 const puzzleExamples = [
-  { id: "block-stacker", title: "블럭 쌓기", type: "Block puzzle", icon: "B", description: "Stack falling blocks and clear full lines." },
+  { id: "block-stacker", title: "block-stacker", type: "Block puzzle", icon: "B", description: "Stack falling blocks and clear full lines." },
   { title: "Minesweeper", type: "Logic puzzle", icon: "M", description: "Use number clues to find safe cells." },
   { title: "Sudoku", type: "Number puzzle", icon: "9", description: "Fill the grid so each row and column follows the rule." },
 ];
