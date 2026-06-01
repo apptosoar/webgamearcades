@@ -254,8 +254,16 @@ button {
   gap: 14px;
 }
 
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
 .genre-card,
-.game-card {
+.game-card,
+.info-card,
+.info-panel {
   position: relative;
   overflow: hidden;
   min-height: 188px;
@@ -274,6 +282,11 @@ button {
   text-align: center;
 }
 
+.info-card,
+.info-panel {
+  cursor: default;
+}
+
 .genre-card::after,
 .game-card::after {
   content: "";
@@ -289,7 +302,8 @@ button {
 }
 
 .genre-card h3,
-.game-card h3 {
+.game-card h3,
+.info-card h3 {
   position: relative;
   z-index: 1;
   margin: 12px 0 8px;
@@ -298,6 +312,8 @@ button {
 
 .genre-card p,
 .game-card p,
+.info-card p,
+.info-panel p,
 .meta {
   position: relative;
   z-index: 1;
@@ -359,6 +375,77 @@ button {
   justify-content: space-between;
 }
 
+.compact-section {
+  padding-top: 12px;
+}
+
+.info-panel {
+  min-height: 0;
+}
+
+.info-panel h2 {
+  margin: 8px 0 12px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.info-panel p + p {
+  margin-top: 10px;
+}
+
+.info-page {
+  min-height: calc(100svh - 68px);
+}
+
+.game-guide {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.game-guide h3 {
+  margin: 0 0 8px;
+}
+
+.game-guide p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.game-guide p + p {
+  margin-top: 8px;
+}
+
+.site-footer {
+  display: grid;
+  gap: 10px;
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 26px 0 36px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.site-footer span {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-footer a {
+  color: var(--text);
+}
+
 .player-shell {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
@@ -413,7 +500,8 @@ button {
   }
 
   .preview-strip,
-  .grid {
+  .grid,
+  .info-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -443,7 +531,8 @@ button {
   }
 
   .preview-strip,
-  .grid {
+  .grid,
+  .info-grid {
     grid-template-columns: 1fr;
   }
 

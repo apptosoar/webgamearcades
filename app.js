@@ -3,6 +3,8 @@
     localeName: "한국어",
     navGenres: "장르",
     navGames: "게임",
+    navPrivacy: "개인정보처리방침",
+    navContact: "문의",
     brandHome: "webgame arcade 홈",
     mainMenu: "주요 메뉴",
     heroText: "장르를 고르고 브라우저에서 바로 실행되는<br>미니게임을 즐겨보세요.",
@@ -40,6 +42,33 @@
     reviewNeeded: "검토가 필요합니다",
     progress: "진행",
     previousAttack: "직전 공격",
+    featuredGamesTitle: "추천 게임",
+    featuredGamesText: "광고나 다운로드 버튼과 혼동되지 않도록 각 게임의 목표와 조작법을 명확히 안내합니다.",
+    howToPlayEyebrow: "Guide",
+    howToPlayTitle: "플레이 안내",
+    howToPlayText: "게임을 선택하면 브라우저 안에서 바로 실행됩니다. PC에서는 키보드, 모바일에서는 터치 조작을 사용할 수 있습니다.",
+    playStep1Title: "게임 선택",
+    playStep1Text: "게임 카드의 실행 버튼을 눌러 플레이 화면으로 이동합니다.",
+    playStep2Title: "조작 확인",
+    playStep2Text: "각 게임 화면의 설명과 점수 표시를 확인한 뒤 플레이합니다.",
+    playStep3Title: "광고와 분리",
+    playStep3Text: "광고 영역은 게임 버튼이나 조작 영역과 구분되도록 배치합니다.",
+    aboutTitle: "webgame arcade 소개",
+    aboutText: "webgame arcade는 설치 없이 즐길 수 있는 간단한 브라우저 게임 모음입니다. 게임 설명, 조작법, 개인정보 안내를 명확히 제공해 사용자가 사이트 내용을 쉽게 이해할 수 있도록 구성했습니다.",
+    privacyTitle: "개인정보처리방침",
+    privacyIntro: "webgame arcade는 사이트 운영과 광고 제공을 위해 쿠키, 접속 로그, 기기 정보와 같은 기본적인 이용 정보를 처리할 수 있습니다.",
+    privacyPoint1: "Google AdSense를 사용하는 경우 Google 및 제3자가 쿠키를 사용해 광고를 제공할 수 있습니다.",
+    privacyPoint2: "사용자는 브라우저 설정 또는 Google 광고 설정에서 맞춤 광고를 관리할 수 있습니다.",
+    privacyPoint3: "문의가 필요한 경우 Contact 페이지를 통해 연락할 수 있습니다.",
+    termsTitle: "이용약관",
+    termsIntro: "이 사이트의 게임은 브라우저에서 바로 즐길 수 있는 캐주얼 콘텐츠로 제공됩니다.",
+    termsPoint1: "게임 이용 중 자동화된 트래픽, 악의적인 접근, 서비스 방해 행위를 금지합니다.",
+    termsPoint2: "사이트의 콘텐츠와 광고 영역을 혼동시키는 방식의 이용을 금지합니다.",
+    termsPoint3: "사이트 구성과 콘텐츠는 운영 상황에 따라 변경될 수 있습니다.",
+    contactTitle: "문의",
+    contactIntro: "사이트 오류, 정책, 광고, 게임 관련 문의는 아래 정보로 연락해 주세요.",
+    contactEmail: "이메일: apptosoar@gmail.com",
+    footerText: "브라우저에서 바로 즐기는 웹 게임 모음",
     genres: {
       action: { name: "액션", description: "반응과 타이밍이 중요한 빠른 게임" },
       puzzle: { name: "퍼즐", description: "규칙을 읽고 빈틈을 찾는 두뇌 게임" },
@@ -62,12 +91,17 @@
       "lane-rush": "차선을 바꾸며 장애물을 피하고 점수를 올리세요.",
       "coin-keep": "수익과 방어에 코인을 배분해 10턴을 버티세요.",
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
+      "block-stacker": "떨어지는 블록을 쌓아 줄을 지우고 점수를 올리세요.",
+      "puzzle-minesweeper": "숫자 단서를 보고 지뢰가 아닌 안전한 칸을 찾으세요.",
+      "puzzle-sudoku": "빈칸을 눌러 숫자를 채우고 모든 행과 열을 맞추세요.",
     },
   },
   en: {
     localeName: "English",
     navGenres: "Genres",
     navGames: "Games",
+    navPrivacy: "Privacy",
+    navContact: "Contact",
     brandHome: "webgame arcade home",
     mainMenu: "Main menu",
     heroText: "Choose a genre and play embedded mini games<br>directly in your browser.",
@@ -105,6 +139,33 @@
     reviewNeeded: "Review needed",
     progress: "Progress",
     previousAttack: "Previous attack",
+    featuredGamesTitle: "Featured Games",
+    featuredGamesText: "Each game includes a clear goal and description so game controls are not confused with ads or navigation.",
+    howToPlayEyebrow: "Guide",
+    howToPlayTitle: "How to Play",
+    howToPlayText: "Choose a game and it launches directly in your browser. Use keyboard controls on desktop and touch controls on mobile.",
+    playStep1Title: "Choose a Game",
+    playStep1Text: "Press the launch button on a game card to open the play screen.",
+    playStep2Title: "Check Controls",
+    playStep2Text: "Read the game description and score display before playing.",
+    playStep3Title: "Ads Stay Separate",
+    playStep3Text: "Ad areas should remain separate from game buttons and control areas.",
+    aboutTitle: "About webgame arcade",
+    aboutText: "webgame arcade is a collection of simple browser games that run without installation. The site provides clear game descriptions, controls, and privacy information so visitors can understand the content easily.",
+    privacyTitle: "Privacy Policy",
+    privacyIntro: "webgame arcade may process basic usage information such as cookies, access logs, and device information for site operation and ad delivery.",
+    privacyPoint1: "When Google AdSense is used, Google and third parties may use cookies to serve ads.",
+    privacyPoint2: "Visitors can manage personalized ads through browser settings or Google ad settings.",
+    privacyPoint3: "For questions, use the Contact page.",
+    termsTitle: "Terms",
+    termsIntro: "The games on this site are provided as casual browser content.",
+    termsPoint1: "Automated traffic, malicious access, and actions that disrupt the service are not allowed.",
+    termsPoint2: "Using the site in a way that confuses content, controls, and ads is not allowed.",
+    termsPoint3: "Site content and structure may change depending on operation needs.",
+    contactTitle: "Contact",
+    contactIntro: "For site issues, policies, ads, or game questions, contact us using the information below.",
+    contactEmail: "Email: apptosoar@gmail.com",
+    footerText: "A collection of web games that run directly in your browser",
     genres: {
       action: { name: "Action", description: "Fast games where quick reactions and timing matter" },
       puzzle: { name: "Puzzle", description: "Brainy games about reading rules and finding gaps" },
@@ -127,6 +188,9 @@
       "lane-rush": "Change lanes, avoid obstacles, and raise your score.",
       "coin-keep": "Split coins between income and defense to survive 10 turns.",
       "sample-clicker": "A sample game added as an external HTML file.",
+      "block-stacker": "Stack falling blocks, clear full lines, and raise your score.",
+      "puzzle-minesweeper": "Use number clues to find safe cells without opening mines.",
+      "puzzle-sudoku": "Tap empty cells to fill numbers and complete every row and column.",
     },
   },
 };
@@ -159,7 +223,7 @@ const gameMeta = [
 ];
 
 const puzzleExamples = [
-  { title: "Tetris", type: "Block puzzle", icon: "T", description: "Stack falling blocks and clear full lines." },
+  { id: "block-stacker", title: "블럭 쌓기", type: "Block puzzle", icon: "B", description: "Stack falling blocks and clear full lines." },
   { title: "Minesweeper", type: "Logic puzzle", icon: "M", description: "Use number clues to find safe cells." },
   { title: "Sudoku", type: "Number puzzle", icon: "9", description: "Fill the grid so each row and column follows the rule." },
 ];
@@ -211,6 +275,8 @@ function applyStaticText() {
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
   document.querySelector("#navGenres").textContent = copy.navGenres;
   document.querySelector("#navGames").textContent = copy.navGames;
+  document.querySelector("#navPrivacy").textContent = copy.navPrivacy;
+  document.querySelector("#navContact").textContent = copy.navContact;
 }
 
 function render() {
@@ -233,6 +299,11 @@ function render() {
 
   if (route === "play") {
     renderPlayer(id);
+    return;
+  }
+
+  if (["privacy", "terms", "contact", "about"].includes(route)) {
+    renderInfoPage(route);
     return;
   }
 
@@ -263,18 +334,22 @@ function renderHome() {
           .join("")}
       </div>
     </section>
+    ${featuredGamesSection()}
+    ${howToPlaySection()}
+    ${aboutSection()}
     ${genreSection()}
     ${gamesSection("all")}
+    ${siteFooter()}
   `;
 }
 
 function renderGenres() {
-  app.innerHTML = genreSection(true);
+  app.innerHTML = genreSection(true) + siteFooter();
 }
 
 function renderGames(genreId = "all") {
   state.selectedGenre = genreId;
-  app.innerHTML = gamesSection(genreId, true);
+  app.innerHTML = gamesSection(genreId, true) + siteFooter();
 }
 
 function renderPlayer(gameId) {
@@ -299,9 +374,52 @@ function renderPlayer(gameId) {
       <div class="iframe-frame">
         ${gameFrame(game)}
       </div>
+      ${gameGuide(game)}
     </section>
   `;
   focusPlayerFrame();
+}
+
+function renderInfoPage(page) {
+  const content = {
+    privacy: {
+      title: copy.privacyTitle,
+      intro: copy.privacyIntro,
+      points: [copy.privacyPoint1, copy.privacyPoint2, copy.privacyPoint3],
+    },
+    terms: {
+      title: copy.termsTitle,
+      intro: copy.termsIntro,
+      points: [copy.termsPoint1, copy.termsPoint2, copy.termsPoint3],
+    },
+    contact: {
+      title: copy.contactTitle,
+      intro: copy.contactIntro,
+      points: [copy.contactEmail],
+    },
+    about: {
+      title: copy.aboutTitle,
+      intro: copy.aboutText,
+      points: [copy.howToPlayText, copy.featuredGamesText],
+    },
+  }[page];
+
+  app.innerHTML = `
+    <section class="section info-page">
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">${brandName}</div>
+          <h2>${content.title}</h2>
+          <p>${content.intro}</p>
+        </div>
+        <a class="ghost-button" href="#home">${copy.home}</a>
+      </div>
+      <div class="info-panel">
+        ${content.points.map((point) => `<p>${point}</p>`).join("")}
+      </div>
+    </section>
+    ${siteFooter()}
+  `;
 }
 
 function gameFrame(game) {
@@ -355,6 +473,58 @@ function genreSection(standalone = false) {
   `;
 }
 
+function featuredGamesSection() {
+  const featured = getGames().filter((game) => ["memory-grid", "sample-clicker", "block-stacker", "puzzle-minesweeper", "puzzle-sudoku"].includes(game.id));
+  return `
+    <section class="section" id="featured">
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">${copy.gamesEyebrow}</div>
+          <h2>${copy.featuredGamesTitle}</h2>
+          <p>${copy.featuredGamesText}</p>
+        </div>
+      </div>
+      <div class="grid">
+        ${featured.map(gameCard).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function howToPlaySection() {
+  const steps = [
+    [copy.playStep1Title, copy.playStep1Text],
+    [copy.playStep2Title, copy.playStep2Text],
+    [copy.playStep3Title, copy.playStep3Text],
+  ];
+  return `
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">${copy.howToPlayEyebrow}</div>
+          <h2>${copy.howToPlayTitle}</h2>
+          <p>${copy.howToPlayText}</p>
+        </div>
+      </div>
+      <div class="info-grid">
+        ${steps.map(([title, text]) => `<article class="info-card"><h3>${title}</h3><p>${text}</p></article>`).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function aboutSection() {
+  return `
+    <section class="section compact-section">
+      <div class="info-panel">
+        <div class="eyebrow">${brandName}</div>
+        <h2>${copy.aboutTitle}</h2>
+        <p>${copy.aboutText}</p>
+      </div>
+    </section>
+  `;
+}
+
 function gamesSection(genreId = "all", standalone = false) {
   const visibleGames = genreId === "all" ? getGames() : getGames().filter((game) => game.genre === genreId);
   const title = genreId === "all" ? copy.allGames : copy.genreGames.replace("{genre}", getGenre(genreId).name);
@@ -400,6 +570,31 @@ function gameCard(game) {
   `;
 }
 
+function gameGuide(game) {
+  return `
+    <div class="game-guide">
+      <h3>${game.title}</h3>
+      <p>${game.description}</p>
+      <p>${copy.howToPlayText}</p>
+    </div>
+  `;
+}
+
+function siteFooter() {
+  return `
+    <footer class="site-footer">
+      <span>${brandName}</span>
+      <p>${copy.footerText}</p>
+      <nav aria-label="${copy.mainMenu}">
+        <a href="#about">${copy.aboutTitle}</a>
+        <a href="#privacy">${copy.privacyTitle}</a>
+        <a href="#terms">${copy.termsTitle}</a>
+        <a href="#contact">${copy.contactTitle}</a>
+      </nav>
+    </footer>
+  `;
+}
+
 function handleAppClick(event) {
   const filterButton = event.target.closest("[data-filter]");
   if (filterButton) {
@@ -430,13 +625,13 @@ function getGenre(id) {
 }
 
 function getGames() {
-  const visiblePuzzleExamples = new Set(["Tetris", "Minesweeper", "Sudoku"]);
+  const visiblePuzzleExamples = new Set(["block-stacker", "Minesweeper", "Sudoku"]);
   const catalog = [
     ...gameMeta,
     ...puzzleExamples
-      .filter((game) => visiblePuzzleExamples.has(game.title))
+      .filter((game) => visiblePuzzleExamples.has(game.id || game.title))
       .map((game) => ({
-        id: puzzleExampleId(game.title),
+        id: game.id || puzzleExampleId(game.title),
         genre: "puzzle",
         title: game.title,
         icon: game.icon,
@@ -506,7 +701,7 @@ function gameHtml(title, body) {
 }
 
 function makePuzzleExampleGame(game) {
-  if (game.title === "Tetris") return makeTetrisMini(game);
+  if (game.id === "block-stacker") return makeBlockStackerMini(game);
   if (game.title === "Minesweeper") return makeMinesweeperMini(game);
   if (game.title === "Sudoku") return makeSudokuMini(game);
   return makeMatchMini(game);
@@ -527,7 +722,7 @@ function makeMinesweeperMini(game) {
   <\/script>`, "Safe cells");
 }
 
-function makeTetrisMiniLegacy(game) {
+function makeBlockStackerMiniLegacy(game) {
   return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(8,30px);gap:3px;justify-content:center"></div><script>
     const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let x=3,y=0,locked=[[2,7],[3,7],[4,7],[1,8],[2,8],[3,8],[4,8],[5,8]],cleared=false;
     function move(key){if(key==="ArrowLeft")x=Math.max(0,x-1);if(key==="ArrowRight")x=Math.min(6,x+1);if(key==="ArrowDown")y=Math.min(6,y+1);draw()}
@@ -538,11 +733,11 @@ function makeTetrisMiniLegacy(game) {
   <\/script>`, "Use arrows and Space");
 }
 
-function makeTetrisMini(game) {
+function makeBlockStackerMini(game) {
   return puzzleShell(game, `<style>body{overflow:hidden}.wrap{height:100vh;gap:8px}.stage{overflow:hidden;padding:6px!important}.stage.center{align-items:stretch}.stage.center>div{position:relative;width:100%;height:100%;display:grid;place-items:center}.stage.center p:first-child{display:none}.stage.center #status{position:absolute;top:0;left:0;right:0;margin:0;min-height:0!important;pointer-events:none}.touch-controls{display:none!important}#board{display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(24,1fr);gap:2px;aspect-ratio:10/24;align-self:center;justify-self:center}</style><div id="board"></div><script>
-    const board=document.querySelector("#board"),status=document.querySelector("#status"),scoreEl=document.querySelector("#tetrisScore"),over=${jsString(copy.gameOver)};
-    const w=10,h=24,colors={I:"#2bd1c4",J:"#4f8cff",L:"#f7b84b",O:"#ffd95a",S:"#73d676",T:"#a98bff",Z:"#f05d5e"};
-    const shapes={I:[[0,1],[1,1],[2,1],[3,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]],O:[[1,0],[2,0],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],T:[[1,0],[0,1],[1,1],[2,1]],Z:[[0,0],[1,0],[1,1],[2,1]]};
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),scoreEl=document.querySelector("#blockScore"),over=${jsString(copy.gameOver)};
+    const w=10,h=24,colors={I:"#2bd1c4",J:"#4f8cff",L:"#f7b84b",O:"#ffd95a",S:"#73d676",T:"#a98bff",Z:"#f05d5e",X:"#ffffff",C:"#ff8f3d"};
+    const shapes={I:[[0,1],[1,1],[2,1],[3,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]],O:[[1,0],[2,0],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],T:[[1,0],[0,1],[1,1],[2,1]],Z:[[0,0],[1,0],[1,1],[2,1]],X:[[1,0],[0,1],[1,1],[2,1],[1,2]],C:[[0,0],[1,0],[0,1],[0,2],[1,2]]};
     let grid=Array.from({length:h},()=>Array(w).fill("")),piece=null,score=0,lines=0,dropMs=650,done=false,settling=false,timer=null,flash=[];
     function spawn(){const keys=Object.keys(shapes),type=keys[Math.floor(Math.random()*keys.length)];piece={type,cells:shapes[type].map(p=>[p[0],p[1]]),x:3,y:-1};if(collides(piece,0,0,piece.cells)){done=true;status.textContent=over;clearInterval(timer)}}
     function collides(p,dx,dy,cells){return cells.some(([cx,cy])=>{const x=p.x+cx+dx,y=p.y+cy+dy;return x<0||x>=w||y>=h||(y>=0&&grid[y][x])})}
@@ -557,14 +752,16 @@ function makeTetrisMini(game) {
     addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowDown","ArrowUp"," "].includes(e.key)){e.preventDefault();move(e.key)}});
     board.addEventListener("click",rotate);
     installTouchControls({move,action:hardDrop,actionLabel:"D"});
-    function fitBoard(){const box=board.parentElement.getBoundingClientRect(),gap=2,pad=10;const tile=Math.max(10,Math.floor(Math.min((box.width-pad-gap*(w-1))/w,(box.height-pad-gap*(h-1))/h)));board.style.width=(tile*w+gap*(w-1))+"px";board.style.height=(tile*h+gap*(h-1))+"px"}
-    function draw(){fitBoard();board.innerHTML="";const view=grid.map(row=>row.slice());if(piece)piece.cells.forEach(([cx,cy])=>{const x=piece.x+cx,y=piece.y+cy;if(y>=0&&y<h&&x>=0&&x<w)view[y][x]=piece.type});for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=view[y][x],lit=flash.includes(y*w+x);const cell=document.createElement("i");cell.style.cssText="display:block;width:100%;height:100%;border-radius:4px;background:"+(lit?"#ffffff":c?colors[c]:"rgba(255,255,255,.08)")+";box-shadow:"+(lit?"0 0 18px #fff":c?"inset 0 0 0 1px rgba(255,255,255,.2)":"none");board.appendChild(cell)}}
-    addEventListener("resize",draw);
-    spawn();draw();resetTimer();
-  <\/script>`, `${localized("score")} <b id="tetrisScore">0</b>`);
+    let layoutTimer=null;
+    function fitBoard(){const box=board.parentElement.getBoundingClientRect(),gap=2,pad=14;const tile=Math.max(10,Math.floor(Math.min((box.width-pad-gap*(w-1))/w,(box.height-pad-gap*(h-1))/h)));board.style.width=(tile*w+gap*(w-1))+"px";board.style.height=(tile*h+gap*(h-1))+"px"}
+    function draw(){board.innerHTML="";const view=grid.map(row=>row.slice());if(piece)piece.cells.forEach(([cx,cy])=>{const x=piece.x+cx,y=piece.y+cy;if(y>=0&&y<h&&x>=0&&x<w)view[y][x]=piece.type});for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=view[y][x],lit=flash.includes(y*w+x);const cell=document.createElement("i");cell.style.cssText="display:block;width:100%;height:100%;border-radius:4px;background:"+(lit?"#ffffff":c?colors[c]:"rgba(255,255,255,.08)")+";box-shadow:"+(lit?"0 0 18px #fff":c?"inset 0 0 0 1px rgba(255,255,255,.2)":"none");board.appendChild(cell)}}
+    function layout(){fitBoard();draw()}
+    addEventListener("resize",()=>{clearTimeout(layoutTimer);layoutTimer=setTimeout(layout,120)});
+    spawn();layout();resetTimer();
+  <\/script>`, `${localized("score")} <b id="blockScore">0</b>`);
 }
 
-function makeTetrisEffectMini(game) {
+function makeBlockStackerEffectMini(game) {
   return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(6,38px);gap:5px;justify-content:center"></div><script>
     const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let beat=0,hit=0;
     function draw(){board.innerHTML="";for(let i=0;i<24;i++){const b=document.createElement("button");const active=i%6===beat;b.textContent=active?"*":"";b.style.cssText="width:38px;height:38px;padding:0;background:"+(active?"#a98bff":"rgba(255,255,255,.08)");b.onclick=()=>{if(active)hit++;if(hit>=6)status.textContent=success};board.appendChild(b)}}setInterval(()=>{beat=(beat+1)%6;draw()},650);draw();
