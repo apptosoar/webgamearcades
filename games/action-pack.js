@@ -23,6 +23,7 @@
     cooldown: 0,
     spawn: 0,
     second: 0,
+    touch: { active: false, x: 0, y: 0 },
   };
 
   const palette = {
@@ -55,10 +56,24 @@
   });
   addEventListener("keyup", (event) => state.keys.delete(event.key));
   canvas.addEventListener("pointerdown", (event) => {
+    canvas.setPointerCapture?.(event.pointerId);
     const p = pointer(event);
+    state.touch.active = true;
+    state.touch.x = p.x;
+    state.touch.y = p.y;
     if (config.type === "click") punchAt(p.x, p.y);
     if (config.type === "defender") fireToward(p.x, p.y);
+    if (config.type === "shooter") fire();
+    if (config.type === "runner") jump();
   });
+  canvas.addEventListener("pointermove", (event) => {
+    if (!state.touch.active) return;
+    const p = pointer(event);
+    state.touch.x = p.x;
+    state.touch.y = p.y;
+  });
+  canvas.addEventListener("pointerup", stopTouch);
+  canvas.addEventListener("pointercancel", stopTouch);
 
   function resize() {
     const box = canvas.getBoundingClientRect();
@@ -116,6 +131,7 @@
       }
       if (state.keys.has("ArrowLeft")) p.x -= speed;
       if (state.keys.has("ArrowRight")) p.x += speed;
+      if (state.touch.active) p.x += clamp(state.touch.x - p.x, -speed * 1.8, speed * 1.8);
       p.x = clamp(p.x, 40, state.w - 40);
       return;
     }
@@ -124,8 +140,17 @@
     if (state.keys.has("ArrowRight") || state.keys.has("d")) p.x += speed;
     if (state.keys.has("ArrowUp") || state.keys.has("w")) p.y -= speed;
     if (state.keys.has("ArrowDown") || state.keys.has("s")) p.y += speed;
+    if (state.touch.active && config.type !== "defender" && config.type !== "click") {
+      p.x += clamp(state.touch.x - p.x, -speed * 1.8, speed * 1.8);
+      p.y += clamp(state.touch.y - p.y, -speed * 1.8, speed * 1.8);
+    }
     p.x = clamp(p.x, 24, state.w - 24);
     p.y = clamp(p.y, 42, state.h - 36);
+  }
+
+  function stopTouch(event) {
+    canvas.releasePointerCapture?.(event.pointerId);
+    state.touch.active = false;
   }
 
   function jump() {

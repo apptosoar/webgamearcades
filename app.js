@@ -1,18 +1,17 @@
-const translations = {
+﻿const translations = {
   ko: {
     localeName: "한국어",
     navGenres: "장르",
     navGames: "게임",
-    brandHome: "GameCoin Arcade 홈",
+    brandHome: "webgame arcade 홈",
     mainMenu: "주요 메뉴",
-    rewardArcade: "Reward Arcade",
-    heroText: "원하는 장르를 고르고, 브라우저에서 바로 실행되는<br>임베드 미니게임을 즐겨보세요.",
+    heroText: "장르를 고르고 브라우저에서 바로 실행되는<br>미니게임을 즐겨보세요.",
     chooseGenre: "장르 선택",
     viewGames: "게임 보기",
     featuredGenres: "대표 장르",
     genresEyebrow: "Genres",
     genresTitle: "장르 선택",
-    genresText: "장르를 누르면 해당 게임만 모아 볼 수 있습니다.",
+    genresText: "장르를 고르면 해당 게임만 모아 볼 수 있습니다.",
     home: "홈",
     gamesEyebrow: "Games",
     allGames: "전체 게임",
@@ -25,11 +24,11 @@ const translations = {
     gameNotFound: "게임을 찾을 수 없습니다.",
     score: "점수",
     restart: "다시 시작",
-    gameOver: "Game Over",
+    gameOver: "게임 종료",
     round: "라운드",
     start: "시작",
     memoryFail: "실패! 1라운드부터 다시 시작합니다.",
-    crash: "Crash",
+    crash: "충돌",
     turn: "턴",
     vault: "금고",
     defense: "방어",
@@ -37,27 +36,30 @@ const translations = {
     earn: "수익",
     bankrupt: "파산했습니다",
     success: "성공!",
+    complete: "완료!",
+    reviewNeeded: "검토가 필요합니다",
+    progress: "진행",
     previousAttack: "직전 공격",
     genres: {
-      action: { name: "액션", description: "짧은 반응과 타이밍이 중요한 빠른 게임" },
-      puzzle: { name: "퍼즐", description: "규칙을 읽고 빈틈을 찾는 두뇌형 게임" },
-      racing: { name: "레이싱", description: "속도, 라인, 리듬으로 승부하는 주행 게임" },
+      action: { name: "액션", description: "반응과 타이밍이 중요한 빠른 게임" },
+      puzzle: { name: "퍼즐", description: "규칙을 읽고 빈틈을 찾는 두뇌 게임" },
+      racing: { name: "레이싱", description: "속도와 리듬으로 승부하는 주행 게임" },
       strategy: { name: "전략", description: "자원과 선택지를 관리하는 계획형 게임" },
     },
     gameDescriptions: {
       "neon-dodge": "방향키로 붉은 블록을 피하고 오래 버티세요.",
       "zombie-survival": "몰려오는 좀비를 피해 아레나에서 최대한 오래 살아남으세요.",
-      "space-shooter": "우주선을 조종해 적 비행체를 격추하고 점수를 올리세요.",
-      "ninja-dash": "닌자를 움직여 장애물을 뛰어넘고 계속 달리세요.",
+      "space-shooter": "우주선을 조종해 적기를 격추하고 점수를 올리세요.",
+      "ninja-dash": "닌자를 움직여 장애물을 넘고 계속 달리세요.",
       "robot-arena": "로봇 아레나에서 적 로봇을 피하며 오래 버티세요.",
       "arrow-dodge": "옆에서 날아오는 화살을 피하며 반응 속도를 시험하세요.",
       "monster-punch": "등장하는 몬스터를 빠르게 눌러 처치하세요.",
       "laser-escape": "움직이는 레이저 벽을 피해 오래 살아남으세요.",
       "castle-defender": "성으로 몰려오는 적을 조준해 막아내세요.",
-      "bomb-runner": "폭탄 장애물을 뛰어넘으며 최대한 멀리 달리세요.",
+      "bomb-runner": "폭탄 장애물을 넘어 최대한 멀리 달리세요.",
       "meteor-dodge": "떨어지는 운석을 피해 우주선을 지키세요.",
       "memory-grid": "짧게 켜지는 타일 순서를 기억해 다시 누르세요.",
-      "lane-rush": "차선을 바꾸며 장애물을 피해 점수를 올리세요.",
+      "lane-rush": "차선을 바꾸며 장애물을 피하고 점수를 올리세요.",
       "coin-keep": "수익과 방어에 코인을 배분해 10턴을 버티세요.",
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
     },
@@ -66,9 +68,8 @@ const translations = {
     localeName: "English",
     navGenres: "Genres",
     navGames: "Games",
-    brandHome: "GameCoin Arcade home",
+    brandHome: "webgame arcade home",
     mainMenu: "Main menu",
-    rewardArcade: "Reward Arcade",
     heroText: "Choose a genre and play embedded mini games<br>directly in your browser.",
     chooseGenre: "Choose Genre",
     viewGames: "View Games",
@@ -100,6 +101,9 @@ const translations = {
     earn: "Earn",
     bankrupt: "Bankrupt",
     success: "Success!",
+    complete: "Complete!",
+    reviewNeeded: "Review needed",
+    progress: "Progress",
     previousAttack: "Previous attack",
     genres: {
       action: { name: "Action", description: "Fast games where quick reactions and timing matter" },
@@ -125,726 +129,46 @@ const translations = {
       "sample-clicker": "A sample game added as an external HTML file.",
     },
   },
-  es: {
-    localeName: "Español",
-    navGenres: "Géneros",
-    navGames: "Juegos",
-    brandHome: "Inicio de GameCoin Arcade",
-    mainMenu: "Menú principal",
-    rewardArcade: "Arcade con recompensas",
-    heroText: "Elige un género y juega minijuegos integrados<br>directamente en tu navegador.",
-    chooseGenre: "Elegir género",
-    viewGames: "Ver juegos",
-    featuredGenres: "Géneros destacados",
-    genresEyebrow: "Géneros",
-    genresTitle: "Elige un género",
-    genresText: "Selecciona un género para ver solo los juegos de esa categoría.",
-    home: "Inicio",
-    gamesEyebrow: "Juegos",
-    allGames: "Todos los juegos",
-    genreGames: "Juegos de {genre}",
-    gamesText: "Elige cualquier juego y se abrirá directamente en tu navegador.",
-    gameGenreFilter: "Filtro de género de juegos",
-    all: "Todos",
-    launch: "Iniciar",
-    list: "Lista",
-    gameNotFound: "No se encontró el juego.",
-    score: "Puntuación",
-    restart: "Reiniciar",
-    gameOver: "Fin del juego",
-    round: "Ronda",
-    start: "Empezar",
-    memoryFail: "Fallaste. Volviendo a empezar desde la ronda 1.",
-    crash: "Choque",
-    turn: "Turno",
-    vault: "Bóveda",
-    defense: "Defensa",
-    strategyIntro: "Pulsa Ganar para bóveda +2 o Defensa para defensa +1. Hay un ataque en cada turno.",
-    earn: "Ganar",
-    bankrupt: "Bancarrota",
-    success: "¡Éxito!",
-    previousAttack: "Ataque anterior",
-    genres: {
-      action: { name: "Acción", description: "Juegos rápidos donde importan los reflejos y el ritmo" },
-      puzzle: { name: "Puzle", description: "Juegos mentales para leer reglas y encontrar huecos" },
-      racing: { name: "Carreras", description: "Juegos de conducción basados en velocidad, trazadas y ritmo" },
-      strategy: { name: "Estrategia", description: "Juegos de planificación con recursos y decisiones" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Usa las flechas para esquivar bloques rojos y sobrevivir el mayor tiempo posible.",
-      "memory-grid": "Recuerda la secuencia de casillas iluminadas y vuelve a pulsarla.",
-      "lane-rush": "Cambia de carril, evita obstáculos y sube tu puntuación.",
-      "coin-keep": "Reparte monedas entre ingresos y defensa para sobrevivir 10 turnos.",
-      "sample-clicker": "Un juego de muestra añadido como archivo HTML externo.",
-    },
-  },
-  zh: {
-    localeName: "中文",
-    navGenres: "类型",
-    navGames: "游戏",
-    brandHome: "GameCoin Arcade 首页",
-    mainMenu: "主菜单",
-    rewardArcade: "奖励街机",
-    heroText: "选择喜欢的类型，并直接在浏览器中<br>游玩嵌入式小游戏。",
-    chooseGenre: "选择类型",
-    viewGames: "查看游戏",
-    featuredGenres: "推荐类型",
-    genresEyebrow: "类型",
-    genresTitle: "选择类型",
-    genresText: "选择类型后，只显示该类型的游戏。",
-    home: "首页",
-    gamesEyebrow: "游戏",
-    allGames: "全部游戏",
-    genreGames: "{genre}游戏",
-    gamesText: "选择任意游戏后，将直接在浏览器中启动。",
-    gameGenreFilter: "游戏类型筛选",
-    all: "全部",
-    launch: "启动",
-    list: "列表",
-    gameNotFound: "找不到游戏。",
-    score: "分数",
-    restart: "重新开始",
-    gameOver: "游戏结束",
-    round: "回合",
-    start: "开始",
-    memoryFail: "失败！从第 1 回合重新开始。",
-    crash: "撞车",
-    turn: "回合",
-    vault: "金库",
-    defense: "防御",
-    strategyIntro: "选择收益可让金库 +2，选择防御可让防御 +1。每回合都会受到攻击。",
-    earn: "收益",
-    bankrupt: "破产了",
-    success: "成功！",
-    previousAttack: "上次攻击",
-    genres: {
-      action: { name: "动作", description: "考验快速反应和时机的快节奏游戏" },
-      puzzle: { name: "解谜", description: "阅读规则、寻找突破口的益智游戏" },
-      racing: { name: "竞速", description: "以速度、路线和节奏取胜的驾驶游戏" },
-      strategy: { name: "策略", description: "管理资源和选择的计划型游戏" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "使用方向键躲避红色方块，尽可能坚持更久。",
-      "memory-grid": "记住短暂亮起的格子顺序，然后再次点击。",
-      "lane-rush": "切换车道、避开障碍并提高分数。",
-      "coin-keep": "在收益和防御之间分配金币，坚持 10 回合。",
-      "sample-clicker": "作为外部 HTML 文件添加的示例游戏。",
-    },
-  },
-  ja: {
-    localeName: "日本語",
-    navGenres: "ジャンル",
-    navGames: "ゲーム",
-    brandHome: "GameCoin Arcade ホーム",
-    mainMenu: "メインメニュー",
-    rewardArcade: "リワードアーケード",
-    heroText: "好きなジャンルを選んで、ブラウザ内でそのまま遊べる<br>埋め込みミニゲームを楽しめます。",
-    chooseGenre: "ジャンル選択",
-    viewGames: "ゲームを見る",
-    featuredGenres: "代表ジャンル",
-    genresEyebrow: "ジャンル",
-    genresTitle: "ジャンルを選択",
-    genresText: "ジャンルを選ぶと、そのカテゴリのゲームだけを表示できます。",
-    home: "ホーム",
-    gamesEyebrow: "ゲーム",
-    allGames: "すべてのゲーム",
-    genreGames: "{genre}ゲーム",
-    gamesText: "好きなゲームを選ぶと、ブラウザ内ですぐに起動します。",
-    gameGenreFilter: "ゲームジャンルフィルター",
-    all: "すべて",
-    launch: "起動",
-    list: "一覧",
-    gameNotFound: "ゲームが見つかりません。",
-    score: "スコア",
-    restart: "やり直す",
-    gameOver: "ゲームオーバー",
-    round: "ラウンド",
-    start: "開始",
-    memoryFail: "失敗！ラウンド1からやり直します。",
-    crash: "クラッシュ",
-    turn: "ターン",
-    vault: "金庫",
-    defense: "防御",
-    strategyIntro: "収益を選ぶと金庫 +2、防御を選ぶと防御 +1。毎ターン攻撃が来ます。",
-    earn: "収益",
-    bankrupt: "破産しました",
-    success: "成功！",
-    previousAttack: "直前の攻撃",
-    genres: {
-      action: { name: "アクション", description: "素早い反応とタイミングが重要なスピードゲーム" },
-      puzzle: { name: "パズル", description: "ルールを読み、突破口を探す頭脳系ゲーム" },
-      racing: { name: "レース", description: "スピード、ライン、リズムで勝負する走行ゲーム" },
-      strategy: { name: "ストラテジー", description: "資源と選択肢を管理する計画型ゲーム" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "方向キーで赤いブロックを避け、できるだけ長く生き残りましょう。",
-      "memory-grid": "短く光るタイルの順番を覚えて、もう一度押しましょう。",
-      "lane-rush": "車線を変えながら障害物を避け、スコアを伸ばしましょう。",
-      "coin-keep": "収益と防御にコインを配分し、10ターン生き残りましょう。",
-      "sample-clicker": "外部HTMLファイルとして追加されたサンプルゲームです。",
-    },
-  },
-  de: {
-    localeName: "Deutsch",
-    navGenres: "Genres",
-    navGames: "Spiele",
-    brandHome: "GameCoin Arcade Startseite",
-    mainMenu: "Hauptmenü",
-    rewardArcade: "Reward Arcade",
-    heroText: "Wähle ein Genre und spiele eingebettete Minispiele<br>direkt in deinem Browser.",
-    chooseGenre: "Genre wählen",
-    viewGames: "Spiele ansehen",
-    featuredGenres: "Ausgewählte Genres",
-    genresEyebrow: "Genres",
-    genresTitle: "Genre wählen",
-    genresText: "Wähle ein Genre, um nur Spiele dieser Kategorie zu sehen.",
-    home: "Start",
-    gamesEyebrow: "Spiele",
-    allGames: "Alle Spiele",
-    genreGames: "{genre}-Spiele",
-    gamesText: "Wähle ein Spiel aus, und es startet direkt in deinem Browser.",
-    gameGenreFilter: "Genre-Filter",
-    all: "Alle",
-    launch: "Starten",
-    list: "Liste",
-    gameNotFound: "Spiel nicht gefunden.",
-    score: "Punkte",
-    restart: "Neu starten",
-    gameOver: "Spiel beendet",
-    round: "Runde",
-    start: "Start",
-    memoryFail: "Fehlgeschlagen! Neustart ab Runde 1.",
-    crash: "Crash",
-    turn: "Zug",
-    vault: "Tresor",
-    defense: "Verteidigung",
-    strategyIntro: "Wähle Einkommen für Tresor +2 oder Verteidigung für Verteidigung +1. Jede Runde kommt ein Angriff.",
-    earn: "Einkommen",
-    bankrupt: "Bankrott",
-    success: "Erfolg!",
-    previousAttack: "Letzter Angriff",
-    genres: {
-      action: { name: "Action", description: "Schnelle Spiele, bei denen Reaktion und Timing zählen" },
-      puzzle: { name: "Puzzle", description: "Knobelspiele mit Regeln, Mustern und Lücken" },
-      racing: { name: "Rennen", description: "Fahrspiele mit Tempo, Linie und Rhythmus" },
-      strategy: { name: "Strategie", description: "Planspiele mit Ressourcen und Entscheidungen" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Weiche mit den Pfeiltasten roten Blöcken aus und überlebe möglichst lange.",
-      "memory-grid": "Merke dir die kurz leuchtende Kachelreihenfolge und drücke sie erneut.",
-      "lane-rush": "Wechsle die Spur, vermeide Hindernisse und erhöhe deine Punktzahl.",
-      "coin-keep": "Verteile Münzen zwischen Einkommen und Verteidigung, um 10 Runden zu überstehen.",
-      "sample-clicker": "Ein Beispielspiel, das als externe HTML-Datei hinzugefügt wurde.",
-    },
-  },
-  fr: {
-    localeName: "Français",
-    navGenres: "Genres",
-    navGames: "Jeux",
-    brandHome: "Accueil GameCoin Arcade",
-    mainMenu: "Menu principal",
-    rewardArcade: "Arcade à récompenses",
-    heroText: "Choisissez un genre et jouez à des mini-jeux intégrés<br>directement dans votre navigateur.",
-    chooseGenre: "Choisir un genre",
-    viewGames: "Voir les jeux",
-    featuredGenres: "Genres en vedette",
-    genresEyebrow: "Genres",
-    genresTitle: "Choisir un genre",
-    genresText: "Sélectionnez un genre pour voir uniquement les jeux de cette catégorie.",
-    home: "Accueil",
-    gamesEyebrow: "Jeux",
-    allGames: "Tous les jeux",
-    genreGames: "Jeux {genre}",
-    gamesText: "Choisissez un jeu et il se lancera directement dans votre navigateur.",
-    gameGenreFilter: "Filtre de genre",
-    all: "Tous",
-    launch: "Lancer",
-    list: "Liste",
-    gameNotFound: "Jeu introuvable.",
-    score: "Score",
-    restart: "Recommencer",
-    gameOver: "Fin de partie",
-    round: "Manche",
-    start: "Démarrer",
-    memoryFail: "Échec ! Reprise depuis la manche 1.",
-    crash: "Crash",
-    turn: "Tour",
-    vault: "Coffre",
-    defense: "Défense",
-    strategyIntro: "Choisissez Gain pour coffre +2 ou Défense pour défense +1. Une attaque arrive à chaque tour.",
-    earn: "Gain",
-    bankrupt: "Faillite",
-    success: "Réussi !",
-    previousAttack: "Attaque précédente",
-    genres: {
-      action: { name: "Action", description: "Jeux rapides où réflexes et timing sont essentiels" },
-      puzzle: { name: "Puzzle", description: "Jeux de réflexion basés sur les règles et les failles" },
-      racing: { name: "Course", description: "Jeux de conduite fondés sur la vitesse, les trajectoires et le rythme" },
-      strategy: { name: "Stratégie", description: "Jeux de planification avec ressources et décisions" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Utilisez les flèches pour esquiver les blocs rouges et survivre le plus longtemps possible.",
-      "memory-grid": "Mémorisez la suite de tuiles brièvement allumées puis répétez-la.",
-      "lane-rush": "Changez de voie, évitez les obstacles et augmentez votre score.",
-      "coin-keep": "Répartissez les pièces entre revenu et défense pour survivre 10 tours.",
-      "sample-clicker": "Un jeu d'exemple ajouté comme fichier HTML externe.",
-    },
-  },
-  hi: {
-    localeName: "हिन्दी",
-    navGenres: "श्रेणियां",
-    navGames: "गेम",
-    brandHome: "GameCoin Arcade होम",
-    mainMenu: "मुख्य मेनू",
-    rewardArcade: "रिवॉर्ड आर्केड",
-    heroText: "एक श्रेणी चुनें और एम्बेडेड मिनी गेम<br>सीधे अपने ब्राउज़र में खेलें.",
-    chooseGenre: "श्रेणी चुनें",
-    viewGames: "गेम देखें",
-    featuredGenres: "मुख्य श्रेणियां",
-    genresEyebrow: "श्रेणियां",
-    genresTitle: "श्रेणी चुनें",
-    genresText: "किसी श्रेणी को चुनकर उसी श्रेणी के गेम देखें.",
-    home: "होम",
-    gamesEyebrow: "गेम",
-    allGames: "सभी गेम",
-    genreGames: "{genre} गेम",
-    gamesText: "कोई भी गेम चुनें और वह सीधे ब्राउज़र में शुरू होगा.",
-    gameGenreFilter: "गेम श्रेणी फ़िल्टर",
-    all: "सभी",
-    launch: "शुरू करें",
-    list: "सूची",
-    gameNotFound: "गेम नहीं मिला.",
-    score: "स्कोर",
-    restart: "फिर शुरू करें",
-    gameOver: "गेम खत्म",
-    round: "राउंड",
-    start: "शुरू",
-    memoryFail: "असफल! राउंड 1 से फिर शुरू.",
-    crash: "क्रैश",
-    turn: "टर्न",
-    vault: "तिजोरी",
-    defense: "रक्षा",
-    strategyIntro: "कमाई चुनने पर तिजोरी +2, रक्षा चुनने पर रक्षा +1. हर टर्न हमला आता है.",
-    earn: "कमाई",
-    bankrupt: "दिवालिया",
-    success: "सफल!",
-    previousAttack: "पिछला हमला",
-    genres: {
-      action: { name: "एक्शन", description: "तेज़ प्रतिक्रिया और सही समय वाले तेज गेम" },
-      puzzle: { name: "पहेली", description: "नियम पढ़कर रास्ता खोजने वाले दिमागी गेम" },
-      racing: { name: "रेसिंग", description: "गति, लाइन और लय से जीतने वाले ड्राइविंग गेम" },
-      strategy: { name: "रणनीति", description: "संसाधन और चुनाव संभालने वाले योजनात्मक गेम" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "लाल ब्लॉक से बचने और ज्यादा देर टिकने के लिए ऐरो की इस्तेमाल करें.",
-      "memory-grid": "थोड़ी देर चमकने वाली टाइलों का क्रम याद रखें और फिर दबाएं.",
-      "lane-rush": "लेन बदलें, बाधाओं से बचें और स्कोर बढ़ाएं.",
-      "coin-keep": "10 टर्न बचने के लिए सिक्कों को कमाई और रक्षा में बांटें.",
-      "sample-clicker": "बाहरी HTML फ़ाइल के रूप में जोड़ा गया नमूना गेम.",
-    },
-  },
-  cs: {
-    localeName: "Čeština",
-    navGenres: "Žánry",
-    navGames: "Hry",
-    brandHome: "Domů GameCoin Arcade",
-    mainMenu: "Hlavní menu",
-    rewardArcade: "Reward Arcade",
-    heroText: "Vyberte žánr a hrajte vložené minihry<br>přímo v prohlížeči.",
-    chooseGenre: "Vybrat žánr",
-    viewGames: "Zobrazit hry",
-    featuredGenres: "Doporučené žánry",
-    genresEyebrow: "Žánry",
-    genresTitle: "Vyberte žánr",
-    genresText: "Vyberte žánr a zobrazí se jen hry z této kategorie.",
-    home: "Domů",
-    gamesEyebrow: "Hry",
-    allGames: "Všechny hry",
-    genreGames: "Hry: {genre}",
-    gamesText: "Vyberte hru a spustí se přímo v prohlížeči.",
-    gameGenreFilter: "Filtr žánrů",
-    all: "Vše",
-    launch: "Spustit",
-    list: "Seznam",
-    gameNotFound: "Hra nebyla nalezena.",
-    score: "Skóre",
-    restart: "Restartovat",
-    gameOver: "Konec hry",
-    round: "Kolo",
-    start: "Start",
-    memoryFail: "Neúspěch! Začínáte znovu od 1. kola.",
-    crash: "Náraz",
-    turn: "Tah",
-    vault: "Trezor",
-    defense: "Obrana",
-    strategyIntro: "Zisk přidá trezor +2, Obrana přidá obranu +1. Každé kolo přijde útok.",
-    earn: "Zisk",
-    bankrupt: "Bankrot",
-    success: "Úspěch!",
-    previousAttack: "Předchozí útok",
-    genres: {
-      action: { name: "Akce", description: "Rychlé hry, kde záleží na reakci a načasování" },
-      puzzle: { name: "Puzzle", description: "Logické hry o pravidlech a hledání mezer" },
-      racing: { name: "Závody", description: "Jízdní hry o rychlosti, stopě a rytmu" },
-      strategy: { name: "Strategie", description: "Plánovací hry se zdroji a volbami" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Šipkami se vyhýbejte červeným blokům a přežijte co nejdéle.",
-      "memory-grid": "Zapamatujte si krátce rozsvícenou sekvenci dlaždic a zopakujte ji.",
-      "lane-rush": "Měňte pruhy, vyhýbejte se překážkám a zvyšujte skóre.",
-      "coin-keep": "Rozdělte mince mezi příjem a obranu a přežijte 10 kol.",
-      "sample-clicker": "Ukázková hra přidaná jako externí HTML soubor.",
-    },
-  },
-  nl: {
-    localeName: "Nederlands",
-    navGenres: "Genres",
-    navGames: "Games",
-    brandHome: "GameCoin Arcade start",
-    mainMenu: "Hoofdmenu",
-    rewardArcade: "Reward Arcade",
-    heroText: "Kies een genre en speel ingesloten minigames<br>direct in je browser.",
-    chooseGenre: "Kies genre",
-    viewGames: "Bekijk games",
-    featuredGenres: "Uitgelichte genres",
-    genresEyebrow: "Genres",
-    genresTitle: "Kies een genre",
-    genresText: "Selecteer een genre om alleen games in die categorie te zien.",
-    home: "Home",
-    gamesEyebrow: "Games",
-    allGames: "Alle games",
-    genreGames: "{genre}-games",
-    gamesText: "Kies een game en deze start direct in je browser.",
-    gameGenreFilter: "Genre-filter",
-    all: "Alles",
-    launch: "Starten",
-    list: "Lijst",
-    gameNotFound: "Game niet gevonden.",
-    score: "Score",
-    restart: "Opnieuw starten",
-    gameOver: "Game over",
-    round: "Ronde",
-    start: "Start",
-    memoryFail: "Mislukt! Opnieuw vanaf ronde 1.",
-    crash: "Crash",
-    turn: "Beurt",
-    vault: "Kluis",
-    defense: "Verdediging",
-    strategyIntro: "Kies Verdienen voor kluis +2 of Verdediging voor verdediging +1. Elke beurt komt er een aanval.",
-    earn: "Verdienen",
-    bankrupt: "Failliet",
-    success: "Gelukt!",
-    previousAttack: "Vorige aanval",
-    genres: {
-      action: { name: "Actie", description: "Snelle games waarin reactie en timing tellen" },
-      puzzle: { name: "Puzzel", description: "Denkspellen over regels lezen en gaten vinden" },
-      racing: { name: "Racen", description: "Rijgames met snelheid, lijnen en ritme" },
-      strategy: { name: "Strategie", description: "Plangames met middelen en keuzes" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Gebruik de pijltjestoetsen om rode blokken te ontwijken en zo lang mogelijk te overleven.",
-      "memory-grid": "Onthoud de kort oplichtende tegelreeks en druk die opnieuw in.",
-      "lane-rush": "Wissel van baan, ontwijk obstakels en verhoog je score.",
-      "coin-keep": "Verdeel munten tussen inkomsten en verdediging om 10 beurten te overleven.",
-      "sample-clicker": "Een voorbeeldgame toegevoegd als extern HTML-bestand.",
-    },
-  },
-  fi: {
-    localeName: "Suomi",
-    navGenres: "Lajityypit",
-    navGames: "Pelit",
-    brandHome: "GameCoin Arcade etusivu",
-    mainMenu: "Päävalikko",
-    rewardArcade: "Reward Arcade",
-    heroText: "Valitse lajityyppi ja pelaa upotettuja minipelejä<br>suoraan selaimessasi.",
-    chooseGenre: "Valitse lajityyppi",
-    viewGames: "Näytä pelit",
-    featuredGenres: "Suositut lajityypit",
-    genresEyebrow: "Lajityypit",
-    genresTitle: "Valitse lajityyppi",
-    genresText: "Valitse lajityyppi nähdäksesi vain sen kategorian pelit.",
-    home: "Etusivu",
-    gamesEyebrow: "Pelit",
-    allGames: "Kaikki pelit",
-    genreGames: "{genre}-pelit",
-    gamesText: "Valitse peli, ja se käynnistyy suoraan selaimessasi.",
-    gameGenreFilter: "Pelien lajityyppisuodatin",
-    all: "Kaikki",
-    launch: "Käynnistä",
-    list: "Lista",
-    gameNotFound: "Peliä ei löytynyt.",
-    score: "Pisteet",
-    restart: "Aloita uudelleen",
-    gameOver: "Peli päättyi",
-    round: "Kierros",
-    start: "Aloita",
-    memoryFail: "Epäonnistui! Aloitetaan uudelleen kierrokselta 1.",
-    crash: "Törmäys",
-    turn: "Vuoro",
-    vault: "Holvi",
-    defense: "Puolustus",
-    strategyIntro: "Valitse Tuotto saadaksesi holvi +2 tai Puolustus saadaksesi puolustus +1. Hyökkäys tulee joka vuorolla.",
-    earn: "Tuotto",
-    bankrupt: "Konkurssi",
-    success: "Onnistui!",
-    previousAttack: "Edellinen hyökkäys",
-    genres: {
-      action: { name: "Toiminta", description: "Nopeat pelit, joissa reaktio ja ajoitus ratkaisevat" },
-      puzzle: { name: "Pulma", description: "Älypelit sääntöjen lukemiseen ja ratkaisujen löytämiseen" },
-      racing: { name: "Ajo", description: "Ajopelit, joissa nopeus, linja ja rytmi ratkaisevat" },
-      strategy: { name: "Strategia", description: "Suunnittelupelit resursseista ja valinnoista" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Väistä punaisia palikoita nuolinäppäimillä ja selviä mahdollisimman pitkään.",
-      "memory-grid": "Muista hetken välähtävä ruutujärjestys ja paina se uudelleen.",
-      "lane-rush": "Vaihda kaistaa, väistä esteitä ja kasvata pisteitä.",
-      "coin-keep": "Jaa kolikot tuoton ja puolustuksen välillä selvitäksesi 10 vuoroa.",
-      "sample-clicker": "Esimerkkipeli, joka on lisätty ulkoisena HTML-tiedostona.",
-    },
-  },
-  he: {
-    localeName: "עברית",
-    navGenres: "ז'אנרים",
-    navGames: "משחקים",
-    brandHome: "דף הבית של GameCoin Arcade",
-    mainMenu: "תפריט ראשי",
-    rewardArcade: "Reward Arcade",
-    heroText: "בחרו ז'אנר ושחקו במיני-משחקים מוטמעים<br>ישירות בדפדפן.",
-    chooseGenre: "בחר ז'אנר",
-    viewGames: "הצג משחקים",
-    featuredGenres: "ז'אנרים מובילים",
-    genresEyebrow: "ז'אנרים",
-    genresTitle: "בחר ז'אנר",
-    genresText: "בחרו ז'אנר כדי לראות רק משחקים מאותה קטגוריה.",
-    home: "בית",
-    gamesEyebrow: "משחקים",
-    allGames: "כל המשחקים",
-    genreGames: "משחקי {genre}",
-    gamesText: "בחרו משחק והוא יופעל ישירות בדפדפן.",
-    gameGenreFilter: "מסנן ז'אנר משחקים",
-    all: "הכול",
-    launch: "הפעל",
-    list: "רשימה",
-    gameNotFound: "המשחק לא נמצא.",
-    score: "ניקוד",
-    restart: "התחל מחדש",
-    gameOver: "המשחק נגמר",
-    round: "סיבוב",
-    start: "התחל",
-    memoryFail: "נכשל! מתחילים שוב מסיבוב 1.",
-    crash: "התנגשות",
-    turn: "תור",
-    vault: "כספת",
-    defense: "הגנה",
-    strategyIntro: "בחרו הכנסה עבור כספת +2 או הגנה עבור הגנה +1. בכל תור מגיעה התקפה.",
-    earn: "הכנסה",
-    bankrupt: "פשטת רגל",
-    success: "הצלחה!",
-    previousAttack: "התקפה קודמת",
-    genres: {
-      action: { name: "אקשן", description: "משחקים מהירים שבהם תגובה ותזמון חשובים" },
-      puzzle: { name: "פאזל", description: "משחקי חשיבה של חוקים ומציאת פתרונות" },
-      racing: { name: "מרוצים", description: "משחקי נהיגה של מהירות, קו וקצב" },
-      strategy: { name: "אסטרטגיה", description: "משחקי תכנון של משאבים ובחירות" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "השתמשו במקשי החצים כדי להתחמק מבלוקים אדומים ולשרוד כמה שיותר זמן.",
-      "memory-grid": "זכרו את רצף האריחים שנדלק לרגע ולחצו עליו שוב.",
-      "lane-rush": "החליפו נתיבים, התחמקו ממכשולים והעלו את הניקוד.",
-      "coin-keep": "חלקו מטבעות בין הכנסה להגנה כדי לשרוד 10 תורות.",
-      "sample-clicker": "משחק לדוגמה שנוסף כקובץ HTML חיצוני.",
-    },
-  },
-  ro: {
-    localeName: "Română",
-    navGenres: "Genuri",
-    navGames: "Jocuri",
-    brandHome: "Pagina principală GameCoin Arcade",
-    mainMenu: "Meniu principal",
-    rewardArcade: "Reward Arcade",
-    heroText: "Alege un gen și joacă mini-jocuri integrate<br>direct în browser.",
-    chooseGenre: "Alege genul",
-    viewGames: "Vezi jocuri",
-    featuredGenres: "Genuri recomandate",
-    genresEyebrow: "Genuri",
-    genresTitle: "Alege un gen",
-    genresText: "Selectează un gen pentru a vedea doar jocurile din acea categorie.",
-    home: "Acasă",
-    gamesEyebrow: "Jocuri",
-    allGames: "Toate jocurile",
-    genreGames: "Jocuri {genre}",
-    gamesText: "Alege orice joc și se va lansa direct în browser.",
-    gameGenreFilter: "Filtru gen joc",
-    all: "Toate",
-    launch: "Lansează",
-    list: "Listă",
-    gameNotFound: "Jocul nu a fost găsit.",
-    score: "Scor",
-    restart: "Repornește",
-    gameOver: "Joc terminat",
-    round: "Rundă",
-    start: "Start",
-    memoryFail: "Eșec! Reîncepe de la runda 1.",
-    crash: "Impact",
-    turn: "Tură",
-    vault: "Seif",
-    defense: "Apărare",
-    strategyIntro: "Alege Câștig pentru seif +2 sau Apărare pentru apărare +1. Un atac vine la fiecare tură.",
-    earn: "Câștig",
-    bankrupt: "Faliment",
-    success: "Succes!",
-    previousAttack: "Atacul anterior",
-    genres: {
-      action: { name: "Acțiune", description: "Jocuri rapide unde contează reacția și sincronizarea" },
-      puzzle: { name: "Puzzle", description: "Jocuri de logică despre reguli și găsirea soluțiilor" },
-      racing: { name: "Curse", description: "Jocuri de condus bazate pe viteză, traseu și ritm" },
-      strategy: { name: "Strategie", description: "Jocuri de planificare cu resurse și alegeri" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Folosește săgețile pentru a evita blocurile roșii și a supraviețui cât mai mult.",
-      "memory-grid": "Ține minte secvența de plăci aprinse pentru scurt timp și apasă-le din nou.",
-      "lane-rush": "Schimbă benzile, evită obstacolele și crește scorul.",
-      "coin-keep": "Împarte monedele între venit și apărare pentru a supraviețui 10 ture.",
-      "sample-clicker": "Un joc demonstrativ adăugat ca fișier HTML extern.",
-    },
-  },
-  uk: {
-    localeName: "Українська",
-    navGenres: "Жанри",
-    navGames: "Ігри",
-    brandHome: "Головна GameCoin Arcade",
-    mainMenu: "Головне меню",
-    rewardArcade: "Reward Arcade",
-    heroText: "Оберіть жанр і грайте у вбудовані міні-ігри<br>прямо у браузері.",
-    chooseGenre: "Обрати жанр",
-    viewGames: "Переглянути ігри",
-    featuredGenres: "Популярні жанри",
-    genresEyebrow: "Жанри",
-    genresTitle: "Оберіть жанр",
-    genresText: "Оберіть жанр, щоб бачити лише ігри цієї категорії.",
-    home: "Головна",
-    gamesEyebrow: "Ігри",
-    allGames: "Усі ігри",
-    genreGames: "Ігри {genre}",
-    gamesText: "Оберіть будь-яку гру, і вона запуститься прямо у браузері.",
-    gameGenreFilter: "Фільтр жанрів ігор",
-    all: "Усі",
-    launch: "Запустити",
-    list: "Список",
-    gameNotFound: "Гру не знайдено.",
-    score: "Рахунок",
-    restart: "Почати знову",
-    gameOver: "Гру завершено",
-    round: "Раунд",
-    start: "Старт",
-    memoryFail: "Помилка! Починаємо знову з 1 раунду.",
-    crash: "Аварія",
-    turn: "Хід",
-    vault: "Сховище",
-    defense: "Захист",
-    strategyIntro: "Оберіть Дохід для сховища +2 або Захист для захисту +1. Кожного ходу відбувається атака.",
-    earn: "Дохід",
-    bankrupt: "Банкрутство",
-    success: "Успіх!",
-    previousAttack: "Попередня атака",
-    genres: {
-      action: { name: "Екшн", description: "Швидкі ігри, де важливі реакція і таймінг" },
-      puzzle: { name: "Головоломка", description: "Ігри на мислення з правилами та пошуком рішень" },
-      racing: { name: "Перегони", description: "Ігри про швидкість, траєкторію та ритм" },
-      strategy: { name: "Стратегія", description: "Планувальні ігри з ресурсами та вибором" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Використовуйте стрілки, щоб ухилятися від червоних блоків і вижити якомога довше.",
-      "memory-grid": "Запам'ятайте коротко підсвічену послідовність плиток і повторіть її.",
-      "lane-rush": "Змінюйте смуги, уникайте перешкод і збільшуйте рахунок.",
-      "coin-keep": "Розподіляйте монети між доходом і захистом, щоб вижити 10 ходів.",
-      "sample-clicker": "Приклад гри, доданий як зовнішній HTML-файл.",
-    },
-  },
-  mk: {
-    localeName: "Македонски",
-    navGenres: "Жанрови",
-    navGames: "Игри",
-    brandHome: "Почетна GameCoin Arcade",
-    mainMenu: "Главно мени",
-    rewardArcade: "Reward Arcade",
-    heroText: "Изберете жанр и играјте вградени мини-игри<br>директно во прелистувачот.",
-    chooseGenre: "Избери жанр",
-    viewGames: "Види игри",
-    featuredGenres: "Истакнати жанрови",
-    genresEyebrow: "Жанрови",
-    genresTitle: "Избери жанр",
-    genresText: "Изберете жанр за да ги видите само игрите од таа категорија.",
-    home: "Почетна",
-    gamesEyebrow: "Игри",
-    allGames: "Сите игри",
-    genreGames: "{genre} игри",
-    gamesText: "Изберете игра и таа ќе се стартува директно во прелистувачот.",
-    gameGenreFilter: "Филтер за жанр на игри",
-    all: "Сите",
-    launch: "Стартувај",
-    list: "Листа",
-    gameNotFound: "Играта не е пронајдена.",
-    score: "Резултат",
-    restart: "Почни повторно",
-    gameOver: "Крај на играта",
-    round: "Рунда",
-    start: "Старт",
-    memoryFail: "Неуспех! Почнувате повторно од рунда 1.",
-    crash: "Судир",
-    turn: "Потег",
-    vault: "Сеф",
-    defense: "Одбрана",
-    strategyIntro: "Изберете Заработка за сеф +2 или Одбрана за одбрана +1. Секој потег доаѓа напад.",
-    earn: "Заработка",
-    bankrupt: "Банкрот",
-    success: "Успех!",
-    previousAttack: "Претходен напад",
-    genres: {
-      action: { name: "Акција", description: "Брзи игри каде што се важни реакцијата и тајмингот" },
-      puzzle: { name: "Загатка", description: "Логички игри со правила и пронаоѓање решенија" },
-      racing: { name: "Трки", description: "Возачки игри со брзина, линија и ритам" },
-      strategy: { name: "Стратегија", description: "Плански игри со ресурси и избори" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Користете ги стрелките за да избегнувате црвени блокови и да преживеете што подолго.",
-      "memory-grid": "Запомнете ја кратко осветлената секвенца на полиња и притиснете ја повторно.",
-      "lane-rush": "Менувајте ленти, избегнувајте пречки и зголемувајте го резултатот.",
-      "coin-keep": "Распределете монети меѓу приход и одбрана за да преживеете 10 потези.",
-      "sample-clicker": "Пример игра додадена како надворешна HTML-датотека.",
-    },
-  },
 };
-
+for (const locale of ["es", "zh", "ja", "de", "fr", "hi", "cs", "nl", "fi", "he", "ro", "uk", "mk"]) {
+  translations[locale] = { ...translations.en, localeName: locale };
+}
 const genreMeta = [
-  { id: "action", icon: "🥊", accent: "#f05d5e" },
-  { id: "puzzle", icon: "🧩", accent: "#2bd1c4" },
-  { id: "racing", icon: "🚗", accent: "#f7b84b" },
-  { id: "strategy", icon: "♜", accent: "#73d676" },
+  { id: "action", icon: "A", accent: "#f05d5e" },
+  { id: "puzzle", icon: "P", accent: "#2bd1c4" },
+  { id: "racing", icon: "R", accent: "#f7b84b" },
+  { id: "strategy", icon: "S", accent: "#73d676" },
 ];
 
 const gameMeta = [
-  { id: "neon-dodge", genre: "action", title: "Neon Dodge", icon: "🟦", accent: "#f05d5e", makeSrcdoc: makeDodgeGame },
-  { id: "zombie-survival", genre: "action", title: "Zombie Survival", icon: "🧟", accent: "#73d676", url: "./games/zombie-survival/index.html" },
-  { id: "space-shooter", genre: "action", title: "Space Shooter", icon: "🚀", accent: "#2bd1c4", url: "./games/space-shooter/index.html" },
-  { id: "ninja-dash", genre: "action", title: "Ninja Dash", icon: "🥷", accent: "#f7b84b", url: "./games/ninja-dash/index.html" },
-  { id: "robot-arena", genre: "action", title: "Robot Arena", icon: "🤖", accent: "#a98bff", url: "./games/robot-arena/index.html" },
-  { id: "arrow-dodge", genre: "action", title: "Arrow Dodge", icon: "🏹", accent: "#f7b84b", url: "./games/arrow-dodge/index.html" },
-  { id: "monster-punch", genre: "action", title: "Monster Punch", icon: "👊", accent: "#f05d5e", url: "./games/monster-punch/index.html" },
-  { id: "laser-escape", genre: "action", title: "Laser Escape", icon: "🔴", accent: "#73d676", url: "./games/laser-escape/index.html" },
-  { id: "castle-defender", genre: "action", title: "Castle Defender", icon: "🏰", accent: "#f7b84b", url: "./games/castle-defender/index.html" },
-  { id: "bomb-runner", genre: "action", title: "Bomb Runner", icon: "💣", accent: "#f05d5e", url: "./games/bomb-runner/index.html" },
-  { id: "meteor-dodge", genre: "action", title: "Meteor Dodge", icon: "☄️", accent: "#2bd1c4", url: "./games/meteor-dodge/index.html" },
-  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "🧠", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
-  { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "🏎️", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
-  { id: "coin-keep", genre: "strategy", title: "Coin Keep", icon: "♜", accent: "#73d676", makeSrcdoc: makeStrategyGame },
-  { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "👆", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
+  { id: "neon-dodge", genre: "action", title: "Neon Dodge", icon: "ND", accent: "#f05d5e", makeSrcdoc: makeDodgeGame },
+  { id: "zombie-survival", genre: "action", title: "Zombie Survival", icon: "ZS", accent: "#73d676", url: "./games/zombie-survival/index.html" },
+  { id: "space-shooter", genre: "action", title: "Space Shooter", icon: "SS", accent: "#2bd1c4", url: "./games/space-shooter/index.html" },
+  { id: "ninja-dash", genre: "action", title: "Ninja Dash", icon: "ND", accent: "#f7b84b", url: "./games/ninja-dash/index.html" },
+  { id: "robot-arena", genre: "action", title: "Robot Arena", icon: "RA", accent: "#a98bff", url: "./games/robot-arena/index.html" },
+  { id: "arrow-dodge", genre: "action", title: "Arrow Dodge", icon: "AD", accent: "#f7b84b", url: "./games/arrow-dodge/index.html" },
+  { id: "monster-punch", genre: "action", title: "Monster Punch", icon: "MP", accent: "#f05d5e", url: "./games/monster-punch/index.html" },
+  { id: "laser-escape", genre: "action", title: "Laser Escape", icon: "LE", accent: "#73d676", url: "./games/laser-escape/index.html" },
+  { id: "castle-defender", genre: "action", title: "Castle Defender", icon: "CD", accent: "#f7b84b", url: "./games/castle-defender/index.html" },
+  { id: "bomb-runner", genre: "action", title: "Bomb Runner", icon: "BR", accent: "#f05d5e", url: "./games/bomb-runner/index.html" },
+  { id: "meteor-dodge", genre: "action", title: "Meteor Dodge", icon: "MD", accent: "#2bd1c4", url: "./games/meteor-dodge/index.html" },
+  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
+  { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
+  { id: "coin-keep", genre: "strategy", title: "Coin Keep", icon: "CK", accent: "#73d676", makeSrcdoc: makeStrategyGame },
+  { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
+];
+
+const puzzleExamples = [
+  { title: "Tetris", type: "Block puzzle", icon: "T", description: "Stack falling blocks and clear full lines." },
+  { title: "Minesweeper", type: "Logic puzzle", icon: "M", description: "Use number clues to find safe cells." },
+  { title: "Sudoku", type: "Number puzzle", icon: "9", description: "Fill the grid so each row and column follows the rule." },
 ];
 
 const supportedLocales = Object.keys(translations);
 const currentLocale = detectLocale();
 const copy = translations[currentLocale];
 const app = document.querySelector("#app");
+const brandName = "webgame arcade";
 
 const state = {
   selectedGenre: "all",
@@ -882,7 +206,8 @@ function detectLocale() {
 function applyStaticText() {
   document.documentElement.lang = currentLocale;
   document.documentElement.dir = currentLocale === "he" ? "rtl" : "ltr";
-  document.querySelector("#brandLink").setAttribute("aria-label", copy.brandHome);
+  document.querySelector("#brandLink").setAttribute("aria-label", `${brandName} home`);
+  document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
   document.querySelector("#navGenres").textContent = copy.navGenres;
   document.querySelector("#navGames").textContent = copy.navGames;
@@ -918,8 +243,7 @@ function renderHome() {
   app.innerHTML = `
     <section class="hero">
       <div class="hero-content">
-        <div class="eyebrow">${copy.rewardArcade}</div>
-        <h1>GameCoin Arcade</h1>
+        <h1>${brandName}</h1>
         <p>${copy.heroText}</p>
         <div class="hero-actions">
           <a class="primary-button" href="#genres">${copy.chooseGenre}</a>
@@ -977,14 +301,30 @@ function renderPlayer(gameId) {
       </div>
     </section>
   `;
+  focusPlayerFrame();
 }
 
 function gameFrame(game) {
   if (game.url) {
-    return `<iframe title="${game.title}" src="${escapeAttribute(game.url)}" sandbox="allow-scripts allow-same-origin"></iframe>`;
+    return `<iframe title="${game.title}" src="${escapeAttribute(game.url)}" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe>`;
   }
 
-  return `<iframe title="${game.title}" srcdoc="${escapeAttribute(game.srcdoc)}" sandbox="allow-scripts"></iframe>`;
+  return `<iframe title="${game.title}" srcdoc="${escapeAttribute(game.srcdoc)}" sandbox="allow-scripts" tabindex="-1"></iframe>`;
+}
+
+function focusPlayerFrame() {
+  const frame = app.querySelector(".iframe-frame iframe");
+  if (!frame) return;
+  const focus = () => {
+    frame.focus();
+    try {
+      frame.contentWindow?.focus();
+    } catch {
+      // Sandboxed frames can reject direct window access; focusing the iframe element is enough.
+    }
+  };
+  frame.addEventListener("load", () => requestAnimationFrame(focus), { once: true });
+  requestAnimationFrame(focus);
 }
 
 function genreSection(standalone = false) {
@@ -1090,11 +430,31 @@ function getGenre(id) {
 }
 
 function getGames() {
-  return gameMeta.map((game) => ({
+  const visiblePuzzleExamples = new Set(["Tetris", "Minesweeper", "Sudoku"]);
+  const catalog = [
+    ...gameMeta,
+    ...puzzleExamples
+      .filter((game) => visiblePuzzleExamples.has(game.title))
+      .map((game) => ({
+        id: puzzleExampleId(game.title),
+        genre: "puzzle",
+        title: game.title,
+        icon: game.icon,
+        accent: "#2bd1c4",
+        description: game.description,
+        makeSrcdoc: () => makePuzzleExampleGame(game),
+      })),
+  ];
+
+  return catalog.map((game) => ({
     ...game,
-    description: copy.gameDescriptions[game.id] || translations.en.gameDescriptions[game.id],
+    description: copy.gameDescriptions[game.id] || translations.en.gameDescriptions[game.id] || game.description,
     srcdoc: game.makeSrcdoc ? game.makeSrcdoc() : undefined,
   }));
+}
+
+function puzzleExampleId(title) {
+  return `puzzle-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
 }
 
 function escapeAttribute(value) {
@@ -1109,14 +469,261 @@ function jsString(value) {
   return JSON.stringify(value);
 }
 
+function localized(key) {
+  return copy[key] || translations.en[key] || key;
+}
+
 function gameHtml(title, body) {
   return `<!doctype html><html lang="${currentLocale}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,sans-serif;display:grid;place-items:center;overflow:hidden}
+    :root{--tile:70px}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,sans-serif;display:grid;place-items:center;overflow:auto}
     button{font:inherit;border:0;border-radius:8px;padding:10px 14px;background:#f7b84b;color:#1b1205;font-weight:800;cursor:pointer}
-    .wrap{width:min(760px,100%);height:min(560px,100vh);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
-    .hud{display:flex;justify-content:space-between;gap:10px;color:#b8bec9}.stage{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:#151820}
+    .wrap{width:min(760px,100%);height:min(720px,100vh);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
+    .hud{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:#b8bec9}.stage{position:relative;overflow:auto;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:#151820}
+    .stage.center{padding:14px}
     .center{display:grid;place-items:center;text-align:center}.pill{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.08)}
-  </style></head><body>${body}</body></html>`;
+    .stage,.touch-controls button{touch-action:none}.touch-controls{display:none;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:7px;justify-content:center;align-items:center}
+    .touch-controls button{width:48px;height:48px;padding:0}.touch-controls .up{grid-column:2}.touch-controls .left{grid-column:1;grid-row:2}.touch-controls .down{grid-column:2;grid-row:2}.touch-controls .right{grid-column:3;grid-row:2}.touch-controls .action{grid-column:3;grid-row:1;background:#2bd1c4;color:#0b0c0f}
+    @media(max-width:720px),(pointer:coarse){.touch-controls{display:grid}}
+    @media(max-width:520px){:root{--tile:52px}.wrap{padding:12px}.hud{font-size:.9rem}}
+  </style><script>
+    addEventListener("load",()=>requestAnimationFrame(()=>focus()));
+    function installTouchControls(options){
+      const opts=options||{},stage=document.querySelector("#stage")||document.querySelector(".stage"),wrap=document.querySelector(".wrap");
+      let startX=0,startY=0,tracking=false;
+      if(stage){
+        stage.addEventListener("pointerdown",e=>{tracking=true;startX=e.clientX;startY=e.clientY;stage.setPointerCapture?.(e.pointerId)});
+        stage.addEventListener("pointerup",e=>{if(!tracking)return;tracking=false;stage.releasePointerCapture?.(e.pointerId);const dx=e.clientX-startX,dy=e.clientY-startY;if(Math.hypot(dx,dy)<18){opts.tap?.(e);return}opts.move?.(Math.abs(dx)>Math.abs(dy)?(dx>0?"ArrowRight":"ArrowLeft"):(dy>0?"ArrowDown":"ArrowUp"))});
+        stage.addEventListener("pointercancel",()=>{tracking=false});
+      }
+      if(!wrap||!opts.move)return;
+      const pad=document.createElement("div");pad.className="touch-controls";pad.setAttribute("aria-label","Touch controls");
+      [["up","ArrowUp","^"],["left","ArrowLeft","<"],["down","ArrowDown","v"],["right","ArrowRight",">"]].forEach(([cls,key,label])=>{const b=document.createElement("button");b.type="button";b.className=cls;b.textContent=label;b.addEventListener("pointerdown",e=>{e.preventDefault();opts.move(key)});pad.appendChild(b)});
+      if(opts.action){const b=document.createElement("button");b.type="button";b.className="action";b.textContent=opts.actionLabel||"Action";b.addEventListener("pointerdown",e=>{e.preventDefault();opts.action()});pad.appendChild(b)}
+      const last=wrap.lastElementChild;wrap.insertBefore(pad,last);
+    }
+  </script></head><body>${body}</body></html>`;
+}
+
+function makePuzzleExampleGame(game) {
+  if (game.title === "Tetris") return makeTetrisMini(game);
+  if (game.title === "Minesweeper") return makeMinesweeperMini(game);
+  if (game.title === "Sudoku") return makeSudokuMini(game);
+  return makeMatchMini(game);
+}
+
+function puzzleShell(game, body, stat = "Moves <b id=\"moves\">0</b>") {
+  return gameHtml(
+    game.title,
+    `<div class="wrap"><div class="hud"><span class="pill">${game.title}</span><span>${game.type} - ${stat}</span></div><div class="stage center"><div><p style="margin:0 0 12px;color:#b8bec9">${game.description}</p>${body}<p id="status" style="min-height:24px;color:#2bd1c4;font-weight:800"></p></div></div><button onclick="location.reload()">${copy.restart}</button></div>`,
+  );
+}
+
+function makeMinesweeperMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(5,52px);gap:6px;justify-content:center"></div><script>
+    const mines=[3,8,16,22],safe=25-mines.length,board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)},over=${jsString(copy.gameOver)};let open=0;
+    function count(i){return[-6,-5,-4,-1,1,4,5,6].filter(d=>{const n=i+d;return n>=0&&n<25&&Math.abs(n%5-i%5)<2&&mines.includes(n)}).length}
+    for(let i=0;i<25;i++){const b=document.createElement("button");b.textContent="";b.style.cssText="width:52px;height:52px;padding:0;background:rgba(255,255,255,.08);color:#f4f2ea";b.onclick=()=>{if(mines.includes(i)){b.textContent="X";b.style.background="#f05d5e";status.textContent=over;return}b.textContent=count(i);b.disabled=true;b.style.background="#2bd1c4";b.style.color="#0b0c0f";open++;if(open===safe)status.textContent=success};board.appendChild(b)}
+  <\/script>`, "Safe cells");
+}
+
+function makeTetrisMiniLegacy(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(8,30px);gap:3px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let x=3,y=0,locked=[[2,7],[3,7],[4,7],[1,8],[2,8],[3,8],[4,8],[5,8]],cleared=false;
+    function move(key){if(key==="ArrowLeft")x=Math.max(0,x-1);if(key==="ArrowRight")x=Math.min(6,x+1);if(key==="ArrowDown")y=Math.min(6,y+1);draw()}
+    addEventListener("keydown",e=>{if(e.key===" ")lock();else move(e.key)});
+    installTouchControls({move,action:lock,actionLabel:"Drop"});
+    function lock(){locked.push([x,y],[x+1,y]);if(y===6){cleared=true;status.textContent=success}}
+    function draw(){board.innerHTML="";for(let i=0;i<80;i++){const c=i%8,r=Math.floor(i/8),on=locked.some(p=>p[0]===c&&p[1]===r)||(r===y&&(c===x||c===x+1));const b=document.createElement("i");b.style.cssText="width:30px;height:30px;border-radius:4px;background:"+(on?"#2bd1c4":"rgba(255,255,255,.08)");board.appendChild(b)}}draw();
+  <\/script>`, "Use arrows and Space");
+}
+
+function makeTetrisMini(game) {
+  return puzzleShell(game, `<style>body{overflow:hidden}.wrap{height:100vh;gap:8px}.stage{overflow:hidden;padding:6px!important}.stage.center{align-items:stretch}.stage.center>div{position:relative;width:100%;height:100%;display:grid;place-items:center}.stage.center p:first-child{display:none}.stage.center #status{position:absolute;top:0;left:0;right:0;margin:0;min-height:0!important;pointer-events:none}.touch-controls{display:none!important}#board{display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(24,1fr);gap:2px;aspect-ratio:10/24;align-self:center;justify-self:center}</style><div id="board"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),scoreEl=document.querySelector("#tetrisScore"),over=${jsString(copy.gameOver)};
+    const w=10,h=24,colors={I:"#2bd1c4",J:"#4f8cff",L:"#f7b84b",O:"#ffd95a",S:"#73d676",T:"#a98bff",Z:"#f05d5e"};
+    const shapes={I:[[0,1],[1,1],[2,1],[3,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]],O:[[1,0],[2,0],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],T:[[1,0],[0,1],[1,1],[2,1]],Z:[[0,0],[1,0],[1,1],[2,1]]};
+    let grid=Array.from({length:h},()=>Array(w).fill("")),piece=null,score=0,lines=0,dropMs=650,done=false,settling=false,timer=null,flash=[];
+    function spawn(){const keys=Object.keys(shapes),type=keys[Math.floor(Math.random()*keys.length)];piece={type,cells:shapes[type].map(p=>[p[0],p[1]]),x:3,y:-1};if(collides(piece,0,0,piece.cells)){done=true;status.textContent=over;clearInterval(timer)}}
+    function collides(p,dx,dy,cells){return cells.some(([cx,cy])=>{const x=p.x+cx+dx,y=p.y+cy+dy;return x<0||x>=w||y>=h||(y>=0&&grid[y][x])})}
+    function shift(dx,dy){if(done||settling)return false;if(!collides(piece,dx,dy,piece.cells)){piece.x+=dx;piece.y+=dy;draw();return true}return false}
+    function rotate(){if(done||settling||piece.type==="O")return;const next=piece.cells.map(([x,y])=>[3-y,x]);for(const kick of [0,-1,1,-2,2]){if(!collides(piece,kick,0,next)){piece.x+=kick;piece.cells=next;draw();return}}}
+    function lock(){if(settling)return;settling=true;flash=[];piece.cells.forEach(([cx,cy])=>{const x=piece.x+cx,y=piece.y+cy;if(y>=0){grid[y][x]=piece.type;flash.push(y*w+x)}});draw();setTimeout(()=>{clearLines();spawn();settling=false;draw()},110)}
+    function clearLines(){let kept=grid.filter(row=>row.some(v=>!v));let cleared=h-kept.length;while(kept.length<h)kept.unshift(Array(w).fill(""));grid=kept;if(cleared){score+=cleared*100;lines+=cleared;scoreEl.textContent=score;resetTimer()}flash=[]}
+    function resetTimer(){dropMs=Math.max(180,650-Math.floor(lines/2)*55);clearInterval(timer);timer=setInterval(softDrop,dropMs)}
+    function softDrop(){if(!shift(0,1))lock()}
+    function hardDrop(){if(done)return;while(shift(0,1)){}lock()}
+    function move(key){if(key==="ArrowLeft")shift(-1,0);if(key==="ArrowRight")shift(1,0);if(key==="ArrowDown")softDrop();if(key==="ArrowUp")rotate();if(key===" ")hardDrop()}
+    addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowDown","ArrowUp"," "].includes(e.key)){e.preventDefault();move(e.key)}});
+    board.addEventListener("click",rotate);
+    installTouchControls({move,action:hardDrop,actionLabel:"D"});
+    function fitBoard(){const box=board.parentElement.getBoundingClientRect(),gap=2,pad=10;const tile=Math.max(10,Math.floor(Math.min((box.width-pad-gap*(w-1))/w,(box.height-pad-gap*(h-1))/h)));board.style.width=(tile*w+gap*(w-1))+"px";board.style.height=(tile*h+gap*(h-1))+"px"}
+    function draw(){fitBoard();board.innerHTML="";const view=grid.map(row=>row.slice());if(piece)piece.cells.forEach(([cx,cy])=>{const x=piece.x+cx,y=piece.y+cy;if(y>=0&&y<h&&x>=0&&x<w)view[y][x]=piece.type});for(let y=0;y<h;y++)for(let x=0;x<w;x++){const c=view[y][x],lit=flash.includes(y*w+x);const cell=document.createElement("i");cell.style.cssText="display:block;width:100%;height:100%;border-radius:4px;background:"+(lit?"#ffffff":c?colors[c]:"rgba(255,255,255,.08)")+";box-shadow:"+(lit?"0 0 18px #fff":c?"inset 0 0 0 1px rgba(255,255,255,.2)":"none");board.appendChild(cell)}}
+    addEventListener("resize",draw);
+    spawn();draw();resetTimer();
+  <\/script>`, `${localized("score")} <b id="tetrisScore">0</b>`);
+}
+
+function makeTetrisEffectMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(6,38px);gap:5px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let beat=0,hit=0;
+    function draw(){board.innerHTML="";for(let i=0;i<24;i++){const b=document.createElement("button");const active=i%6===beat;b.textContent=active?"*":"";b.style.cssText="width:38px;height:38px;padding:0;background:"+(active?"#a98bff":"rgba(255,255,255,.08)");b.onclick=()=>{if(active)hit++;if(hit>=6)status.textContent=success};board.appendChild(b)}}setInterval(()=>{beat=(beat+1)%6;draw()},650);draw();
+  <\/script>`, "Hit the beat");
+}
+
+function makeSudokuMiniLegacy(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(4,58px);gap:6px;justify-content:center"></div><script>
+    const puzzle=[1,0,0,4,0,4,1,0,0,1,4,0,4,0,0,1],answer=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};
+    puzzle.forEach((v,i)=>{const b=document.createElement("button");b.textContent=v||"";b.style.cssText="width:58px;height:58px;padding:0;background:"+(v?"#2bd1c4":"rgba(255,255,255,.08)")+";color:"+(v?"#0b0c0f":"#f4f2ea");b.onclick=()=>{if(v)return;let n=Number(b.textContent||0)%4+1;b.textContent=n;check()};board.appendChild(b)});
+    function check(){if([...board.children].every((b,i)=>Number(b.textContent)===answer[i]))status.textContent=success}
+  <\/script>`);
+}
+
+function makeSudokuMini(game) {
+  return puzzleShell(game, `<div id="sizes" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px"></div><div id="board" style="display:grid;gap:4px;justify-content:center"></div><script>
+    const sizes=document.querySelector("#sizes"),board=document.querySelector("#board"),status=document.querySelector("#status");
+    const options=[4,5,6,8,10];let size=4,answer=[],cells=[],fixed=[],complete=false;
+    options.forEach(n=>{sizes.insertAdjacentHTML("beforeend",'<button type="button" data-size="'+n+'" style="min-width:58px;height:36px;padding:0 8px">'+n+'x'+n+'</button>')});
+    sizes.onclick=e=>{const b=e.target.closest("[data-size]");if(b)start(Number(b.dataset.size))};
+    function inputCell(i,el){if(fixed[i]||complete)return;cells[i]=(cells[i]%size)+1;if(el)el.textContent=cells[i]||"";check();drawBoard()}
+    function shuffle(list){for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=list[i];list[i]=list[j];list[j]=t}return list}
+    function start(n){size=n;complete=false;const nums=shuffle(Array.from({length:n},(_,i)=>i+1)),rows=shuffle(Array.from({length:n},(_,i)=>i)),cols=shuffle(Array.from({length:n},(_,i)=>i));answer=[];for(let r=0;r<n;r++)for(let c=0;c<n;c++)answer.push(nums[(rows[r]+cols[c])%n]);cells=answer.map(v=>Math.random()<0.48?v:0);fixed=cells.map(Boolean);drawSizes();drawBoard();updateStatus()}
+    function drawSizes(){[...sizes.children].forEach(b=>{const active=Number(b.dataset.size)===size;b.style.background=active?"#2bd1c4":"#f7b84b";b.style.color=active?"#0b0c0f":"#1b1205"})}
+    function hasConflict(i){const v=cells[i];if(!v)return false;const row=Math.floor(i/size),col=i%size;for(let n=0;n<size;n++){const ri=row*size+n,ci=n*size+col;if((ri!==i&&cells[ri]===v)||(ci!==i&&cells[ci]===v))return true}return false}
+    function drawBoard(){const tile=size>=10?32:size>=8?36:size>=6?44:58,review=cells.every(Boolean);board.style.gridTemplateColumns="repeat("+size+","+tile+"px)";board.innerHTML="";cells.forEach((v,i)=>{const bad=review&&hasConflict(i),locked=fixed[i]||complete,bg=complete?"#73d676":bad?"#f05d5e":fixed[i]?"#2bd1c4":"rgba(255,255,255,.08)",fg=complete||fixed[i]?"#0b0c0f":"#f4f2ea";const cell=document.createElement("button");cell.type="button";cell.textContent=v||"";cell.style.cssText="width:"+tile+"px;height:"+tile+"px;padding:0;border-radius:8px;font-weight:800;font-size:"+(size>=10?".78rem":".95rem")+";background:"+bg+";color:"+fg+";opacity:1;cursor:"+(locked?"default":"pointer");if(!locked)cell.onclick=()=>inputCell(i,cell);board.appendChild(cell)})}
+    const labels={complete:${jsString(localized("complete"))},reviewNeeded:${jsString(localized("reviewNeeded"))},progress:${jsString(localized("progress"))}};
+    function updateStatus(){const filled=cells.filter(Boolean).length;status.textContent=labels.progress+" "+filled+" / "+cells.length}
+    function check(){const filled=cells.every(Boolean);complete=filled&&cells.every((_,i)=>!hasConflict(i));if(complete){status.textContent=labels.complete;return}if(filled){status.textContent=labels.reviewNeeded;return}updateStatus()}
+    start(4);
+  <\/script>`);
+}
+
+function make2048Mini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(4,60px);gap:7px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status");let cells=[2,0,0,0,2,0,0,0,4,0,0,0,4,0,0,0];
+    function move(key){if(!["ArrowLeft","ArrowRight"].includes(key))return;for(let r=0;r<4;r++){let row=cells.slice(r*4,r*4+4).filter(Boolean);if(key==="ArrowRight")row.reverse();for(let i=0;i<row.length-1;i++)if(row[i]===row[i+1]){row[i]*=2;row.splice(i+1,1)}while(row.length<4)row.push(0);if(key==="ArrowRight")row.reverse();cells.splice(r*4,4,...row)}draw()}
+    addEventListener("keydown",e=>move(e.key));
+    installTouchControls({move});
+    function draw(){board.innerHTML="";cells.forEach(v=>{const b=document.createElement("button");b.textContent=v||"";b.style.cssText="width:60px;height:60px;padding:0;background:"+(v?"#f7b84b":"rgba(255,255,255,.08)")+";color:#1b1205";board.appendChild(b)});if(cells.includes(16))status.textContent=${jsString(copy.success)}}draw();
+  <\/script>`, "Use arrows");
+}
+
+function makePortalMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(6,42px);gap:5px;justify-content:center"></div><script>
+    const walls=[1,7,13,20,21],portalA=4,portalB=31,goal=35,board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let pos=0;
+    function move(key){let n=pos;if(key==="ArrowRight")n++;if(key==="ArrowLeft")n--;if(key==="ArrowDown")n+=6;if(key==="ArrowUp")n-=6;if(n===portalA)n=portalB;if(n===portalB)n=portalA;if(n>=0&&n<36&&Math.abs(n%6-pos%6)<=1&&!walls.includes(n)){pos=n;draw()}}
+    addEventListener("keydown",e=>move(e.key));
+    installTouchControls({move});
+    function draw(){board.innerHTML="";for(let i=0;i<36;i++){const b=document.createElement("button");b.textContent=i===pos?"P":i===goal?"G":i===portalA||i===portalB?"O":walls.includes(i)?"":".";b.style.cssText="width:42px;height:42px;padding:0;background:"+(i===pos?"#2bd1c4":i===portalA||i===portalB?"#a98bff":walls.includes(i)?"#f05d5e":"rgba(255,255,255,.08)");board.appendChild(b)}if(pos===goal)status.textContent=success}draw();
+  <\/script>`, "Use arrows");
+}
+
+function makeWitnessMini(game) {
+  return puzzleShell(game, `<div style="color:#b8bec9;margin-bottom:8px">Connect: 1 -> 3 -> 5 -> 2 -> 4</div><div id="board" style="display:grid;grid-template-columns:repeat(5,48px);gap:7px;justify-content:center"></div><script>
+    const path=[1,3,5,2,4],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let at=0;
+    for(let i=1;i<=5;i++){const b=document.createElement("button");b.textContent=i;b.style.cssText="width:48px;height:48px;padding:0";b.onclick=()=>{if(i===path[at]){b.style.background="#2bd1c4";at++;if(at===path.length)status.textContent=success}else{at=0;[...board.children].forEach(x=>x.style.background="#f7b84b")}};board.appendChild(b)}
+  <\/script>`, "Trace rule");
+}
+
+function makePicrossMini(game) {
+  return puzzleShell(game, `<div style="color:#b8bec9;margin-bottom:8px">Rows: 1 3 1 3 - Cols: 1 3 1 3</div><div id="board" style="display:grid;grid-template-columns:repeat(4,58px);gap:6px;justify-content:center"></div><script>
+    const ans=[1,0,0,0,1,1,1,0,0,0,1,0,0,1,1,1],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let cells=Array(16).fill(0);
+    ans.forEach((_,i)=>{const b=document.createElement("button");b.style.cssText="width:58px;height:58px;padding:0;background:rgba(255,255,255,.08)";b.onclick=()=>{cells[i]=1-cells[i];b.style.background=cells[i]?"#2bd1c4":"rgba(255,255,255,.08)";if(cells.every((v,j)=>v===ans[j]))status.textContent=success};board.appendChild(b)})
+  <\/script>`);
+}
+
+function makeMonumentMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(4,58px);gap:7px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let rotation=0,pos=0,goal=15;
+    function canMove(n){return rotation%2===0?n%4!==1:n%4!==2}
+    function rotate(){rotation++;draw()}
+    function move(key){let n=pos;if(key==="ArrowRight")n++;if(key==="ArrowLeft")n--;if(key==="ArrowDown")n+=4;if(key==="ArrowUp")n-=4;if(n>=0&&n<16&&Math.abs(n%4-pos%4)<=1&&canMove(n))pos=n;draw()}
+    addEventListener("keydown",e=>{if(e.key==="r")rotate();else move(e.key)});
+    installTouchControls({move,action:rotate,actionLabel:"R"});
+    function draw(){board.innerHTML="";for(let i=0;i<16;i++){const b=document.createElement("button");b.textContent=i===pos?"P":i===goal?"G":canMove(i)?"":"X";b.style.cssText="width:58px;height:58px;padding:0;background:"+(i===pos?"#2bd1c4":canMove(i)?"rgba(255,255,255,.08)":"#a98bff");board.appendChild(b)}if(pos===goal)status.textContent=success}draw();
+  <\/script>`, "Arrows, R rotate");
+}
+
+function makeRuleMini(game) {
+  return puzzleShell(game, `<div id="rules" style="display:grid;gap:8px;justify-content:center"></div><script>
+    const rules=["FLAG IS WIN","ROCK IS STOP","BABA IS YOU"],need=["BABA IS WIN","ROCK IS YOU","FLAG IS STOP"],box=document.querySelector("#rules"),status=document.querySelector("#status"),success=${jsString(copy.success)};let state=[...rules];
+    function draw(){box.innerHTML="";state.forEach((r,i)=>{const b=document.createElement("button");b.textContent=r;b.onclick=()=>{state[i]=need[i];draw()};box.appendChild(b)});if(state.every((r,i)=>r===need[i]))status.textContent=success}draw();
+  <\/script>`, "Change rules");
+}
+
+function makeCandyMini(game) {
+  return puzzleShell(game, `<div style="color:#b8bec9;margin-bottom:8px">Clear 5 red candies</div><div id="board" style="display:grid;grid-template-columns:repeat(5,46px);gap:6px;justify-content:center"></div><script>
+    const colors=["#f05d5e","#2bd1c4","#f7b84b"],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let cells=[0,0,0,1,2,1,2,1,2,1,2,1,2,1,2,0,0,1,2,1,2,1,0,0,0],cleared=0;
+    function draw(){board.innerHTML="";cells.forEach((c,i)=>{const b=document.createElement("button");b.style.cssText="width:46px;height:46px;padding:0;background:"+(c<0?"rgba(255,255,255,.08)":colors[c]);b.onclick=()=>{if(cells[i]===0){cells[i]=-1;cleared++;if(cleared>=5)status.textContent=success;draw()}};board.appendChild(b)})}draw();
+  <\/script>`, "Tap red");
+}
+
+function makeBejeweledMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(4,54px);gap:7px;justify-content:center"></div><script>
+    const gems=["A","B","C","D"],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let cells=[0,1,0,2,1,0,2,3,2,3,1,0,3,2,3,1],first=null;
+    function draw(){board.innerHTML="";cells.forEach((g,i)=>{const b=document.createElement("button");b.textContent=gems[g];b.style.cssText="width:54px;height:54px;padding:0;font-size:24px";b.onclick=()=>{if(first===null){first=i;b.style.outline="2px solid #2bd1c4";return}const t=cells[first];cells[first]=cells[i];cells[i]=t;first=null;check();draw()};board.appendChild(b)})}
+    function check(){for(let r=0;r<4;r++)for(let c=0;c<2;c++){const i=r*4+c;if(cells[i]===cells[i+1]&&cells[i]===cells[i+2])status.textContent=success}}draw();
+  <\/script>`, "Swap gems");
+}
+
+function makeLuminesMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(6,38px);gap:4px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let sweep=0,hits=0;
+    function draw(){board.innerHTML="";for(let i=0;i<36;i++){const col=i%6,active=col===sweep;const b=document.createElement("button");b.style.cssText="width:38px;height:38px;padding:0;background:"+(active?"#f7b84b":i%2?"#2bd1c4":"#a98bff");b.onclick=()=>{if(active){hits++;if(hits>5)status.textContent=success}};board.appendChild(b)}}setInterval(()=>{sweep=(sweep+1)%6;draw()},500);draw();
+  <\/script>`, "Catch sweep");
+}
+
+function makePuyoMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(4,52px);gap:6px;justify-content:center"></div><script>
+    const colors=["#73d676","#f05d5e","#2bd1c4"],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let cells=Array(16).fill(-1),drop=0;
+    function draw(){board.innerHTML="";for(let i=0;i<16;i++){const b=document.createElement("button");b.style.cssText="width:52px;height:52px;padding:0;background:"+(cells[i]<0?"rgba(255,255,255,.08)":colors[cells[i]]);b.onclick=()=>{let col=i%4,row=3;while(row>=0&&cells[row*4+col]>=0)row--;if(row>=0){cells[row*4+col]=drop%3;drop++;check();draw()}};board.appendChild(b)}}
+    function check(){for(let c=0;c<4;c++){let same=0,last=-2;for(let r=3;r>=0;r--){const v=cells[r*4+c];same=v===last?same+1:1;last=v;if(v>=0&&same>=4)status.textContent=success}}}draw();
+  <\/script>`, "Stack 4");
+}
+
+function makeHumanResourceMini(game) {
+  return puzzleShell(game, `<div style="margin-bottom:10px;color:#b8bec9">Output: 2, 4, 6</div><div id="out" class="pill" style="margin-bottom:10px;min-height:36px"></div><button data-n="1">INBOX</button> <button data-n="2">ADD 1</button> <button data-n="3">OUTBOX</button><script>
+    const out=document.querySelector("#out"),status=document.querySelector("#status"),success=${jsString(copy.success)};let seq=[];document.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{seq.push(b.dataset.n);out.textContent=seq.join(" ");if(seq.join("")==="123123123")status.textContent=success});
+  <\/script>`, "Program");
+}
+
+function makeOpusMini(game) {
+  return puzzleShell(game, `<div style="margin-bottom:10px;color:#b8bec9">Assemble: Salt</div><div id="out" class="pill" style="margin-bottom:10px;min-height:36px"></div><button data-c="Na">Na</button> <button data-c="Cl">Cl</button> <button data-c="Bond">Bond</button><script>
+    const out=document.querySelector("#out"),status=document.querySelector("#status"),success=${jsString(copy.success)};let steps=[];document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{steps.push(b.dataset.c);out.textContent=steps.join(" + ");if(steps.join("-")==="Na-Cl-Bond")status.textContent=success});
+  <\/script>`, "Assemble");
+}
+
+function makeGooMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(5,48px);gap:6px;justify-content:center"></div><script>
+    const board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let built=[20,15,10],goal=4;
+    function draw(){board.innerHTML="";for(let i=0;i<25;i++){const b=document.createElement("button");b.textContent=i===goal?"G":built.includes(i)?"O":"";b.style.cssText="width:48px;height:48px;padding:0;background:"+(built.includes(i)?"#73d676":"rgba(255,255,255,.08)");b.onclick=()=>{if(built.some(x=>Math.abs(x-i)===1||Math.abs(x-i)===5)){built.push(i);if(i===goal)status.textContent=success;draw()}};board.appendChild(b)}}draw();
+  <\/script>`, "Build bridge");
+}
+
+function makeSortMini(game) {
+  return puzzleShell(game, `<div style="display:grid;grid-template-columns:repeat(3,110px);gap:8px;justify-content:center"><button data-v="book">Book</button><button data-v="cup">Cup</button><button data-v="shirt">Shirt</button></div><div id="shelf" class="pill" style="margin-top:12px;min-height:42px"></div><script>
+    const order=["shirt","book","cup"],shelf=document.querySelector("#shelf"),status=document.querySelector("#status"),success=${jsString(copy.success)};let placed=[];document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{placed.push(b.dataset.v);b.disabled=true;shelf.textContent=placed.join(" -> ");if(placed.length===3)status.textContent=placed.every((v,i)=>v===order[i])?success:"Try arranging again"});
+  <\/script>`, "Arrange");
+}
+
+function makeLaytonMini(game) {
+  return puzzleShell(game, `<div style="display:grid;gap:8px;justify-content:center"><button data-a="cook">Cook + Kitchen</button><button data-a="sailor">Sailor + Deck</button><button data-a="captain">Captain + Cabin</button></div><script>
+    const status=document.querySelector("#status"),success=${jsString(copy.success)};document.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{status.textContent=b.dataset.a==="cook"?success:"Read the hint again"});
+  <\/script>`, "Find truth");
+}
+
+function makeObraDinnMini(game) {
+  return puzzleShell(game, `<div style="display:grid;gap:8px;justify-content:center"><button data-a="storm">Storm</button><button data-a="mutiny">Mutiny</button><button data-a="kraken">Sea beast</button></div><script>
+    const status=document.querySelector("#status"),success=${jsString(copy.success)};document.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{status.textContent=b.dataset.a==="mutiny"?success:"Does not match the log"});
+  <\/script>`, "Identify fate");
+}
+
+function makeMatchMini(game) {
+  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(5,48px);gap:6px;justify-content:center"></div><script>
+    const colors=["#f05d5e","#2bd1c4","#f7b84b","#a98bff"],board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)};let cells=Array.from({length:25},(_,i)=>i<5?0:(i%4)),first=null,score=0;
+    function draw(){board.innerHTML="";cells.forEach((c,i)=>{const b=document.createElement("button");b.style.cssText="width:48px;height:48px;padding:0;background:"+colors[c];b.onclick=()=>{if(first===null){first=i;return}const t=cells[first];cells[first]=cells[i];cells[i]=t;first=null;check();draw()};board.appendChild(b)})}
+    function check(){for(let r=0;r<5;r++)for(let c=0;c<3;c++){let i=r*5+c;if(cells[i]===cells[i+1]&&cells[i]===cells[i+2])score++}if(score>0)status.textContent=success}draw();
+  <\/script>`, "Match 3");
 }
 
 function makeDodgeGame() {
@@ -1126,7 +733,12 @@ function makeDodgeGame() {
     const stage=document.querySelector("#stage"),player=document.querySelector("#player"),scoreEl=document.querySelector("#score");
     const gameOver=${jsString(copy.gameOver)},scoreLabel=${jsString(copy.score)};
     let x=50,y=50,score=0,alive=true,blocks=[];player.style.cssText="position:absolute;width:34px;height:34px;border-radius:8px;background:#2bd1c4;left:50%;top:50%;box-shadow:0 0 24px #2bd1c4";
-    addEventListener("keydown",e=>{if(e.key==="ArrowLeft")x-=5;if(e.key==="ArrowRight")x+=5;if(e.key==="ArrowUp")y-=5;if(e.key==="ArrowDown")y+=5;x=Math.max(3,Math.min(92,x));y=Math.max(5,Math.min(90,y));});
+    function clampPlayer(){x=Math.max(3,Math.min(92,x));y=Math.max(5,Math.min(90,y))}
+    function move(key){if(key==="ArrowLeft")x-=5;if(key==="ArrowRight")x+=5;if(key==="ArrowUp")y-=5;if(key==="ArrowDown")y+=5;clampPlayer()}
+    addEventListener("keydown",e=>move(e.key));
+    stage.addEventListener("pointerdown",trackTouch);stage.addEventListener("pointermove",trackTouch);
+    function trackTouch(e){const r=stage.getBoundingClientRect();x=((e.clientX-r.left)/r.width)*100;y=((e.clientY-r.top)/r.height)*100;clampPlayer()}
+    installTouchControls({move});
     document.querySelector("#restart").onclick=()=>location.reload();
     function spawn(){const b=document.createElement("i");b.style.cssText="position:absolute;width:28px;height:28px;border-radius:6px;background:#f05d5e;left:"+Math.random()*92+"%;top:-30px;box-shadow:0 0 18px #f05d5e";stage.appendChild(b);blocks.push({el:b,top:-8,speed:1.4+Math.random()*2});}
     setInterval(()=>alive&&spawn(),650);
@@ -1156,7 +768,9 @@ function makeLaneGame() {
     const stage=document.querySelector("#stage"),car=document.querySelector("#car"),scoreEl=document.querySelector("#score");
     const crashText=${jsString(copy.crash)},scoreLabel=${jsString(copy.score)};let lane=1,score=0,alive=true,obs=[];
     car.style.cssText="position:absolute;bottom:20px;left:calc(50% - 24px);width:48px;height:70px;border-radius:8px;background:#f7b84b;box-shadow:0 0 22px #f7b84b";
-    addEventListener("keydown",e=>{if(e.key==="ArrowLeft")lane=Math.max(0,lane-1);if(e.key==="ArrowRight")lane=Math.min(2,lane+1)});
+    function move(key){if(key==="ArrowLeft")lane=Math.max(0,lane-1);if(key==="ArrowRight")lane=Math.min(2,lane+1)}
+    addEventListener("keydown",e=>move(e.key));
+    installTouchControls({move,tap:e=>{const r=stage.getBoundingClientRect();move(e.clientX-r.left<r.width/2?"ArrowLeft":"ArrowRight")}});
     function laneLeft(n){return (16+n*33)+"%"}function spawn(){const o=document.createElement("i");const l=Math.floor(Math.random()*3);o.style.cssText="position:absolute;top:-80px;left:"+laneLeft(l)+";width:48px;height:70px;border-radius:8px;background:#a98bff";stage.appendChild(o);obs.push({el:o,lane:l,y:-80})}
     setInterval(()=>alive&&spawn(),780);
     function loop(){if(!alive)return;score++;scoreEl.textContent=score;car.style.left="calc("+laneLeft(lane)+" - 0px)";obs.forEach(o=>{o.y+=4;o.el.style.top=o.y+"px";if(o.lane===lane&&o.y>330&&o.y<430){alive=false;stage.classList.add("center");stage.innerHTML="<h2>"+crashText+"<br>"+scoreLabel+" "+score+"</h2>"}});requestAnimationFrame(loop)}loop();
@@ -1176,3 +790,5 @@ function makeStrategyGame() {
   <\/script>`,
   );
 }
+
+

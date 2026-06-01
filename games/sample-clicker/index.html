@@ -37,6 +37,8 @@
       }
 
       .stage {
+        position: relative;
+        overflow: hidden;
         display: grid;
         place-items: center;
         border: 1px solid rgba(255, 255, 255, 0.13);
@@ -48,6 +50,8 @@
       }
 
       .target {
+        position: relative;
+        z-index: 2;
         width: 160px;
         height: 160px;
         border: 0;
@@ -62,6 +66,54 @@
 
       .target:active {
         transform: scale(0.96);
+      }
+
+      .particle {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        display: grid;
+        width: 18px;
+        height: 18px;
+        place-items: center;
+        color: var(--particle-color);
+        font-size: var(--particle-size);
+        font-weight: 900;
+        line-height: 1;
+        pointer-events: none;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.42), 0 0 12px var(--particle-glow);
+        transform: translate(-50%, -50%);
+        animation: burst 720ms cubic-bezier(0.16, 0.84, 0.24, 1) forwards;
+      }
+
+      .particle.square {
+        background: var(--particle-color);
+        box-shadow: 0 0 0 2px rgba(11, 12, 15, 0.42), 0 0 14px var(--particle-glow);
+        border-radius: 4px;
+        color: transparent;
+      }
+
+      .particle.triangle {
+        width: 0;
+        height: 0;
+        border-right: 9px solid transparent;
+        border-bottom: 16px solid var(--particle-color);
+        border-left: 9px solid transparent;
+        filter: drop-shadow(0 0 10px var(--particle-glow)) drop-shadow(0 2px 0 rgba(0, 0, 0, 0.45));
+        color: transparent;
+      }
+
+      @keyframes burst {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+        }
+
+        100% {
+          opacity: 0;
+          transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25) rotate(var(--spin));
+        }
       }
 
       .reset {
@@ -135,6 +187,7 @@
       const score = document.querySelector("#score");
       const scoreLabel = document.querySelector("#scoreLabel");
       const target = document.querySelector("#target");
+      const stage = document.querySelector(".stage");
       const reset = document.querySelector("#reset");
       let count = 0;
 
@@ -144,10 +197,11 @@
       target.textContent = copy.click;
       reset.textContent = copy.restart;
 
-      target.addEventListener("click", () => {
+      target.addEventListener("click", (event) => {
         count += 1;
         score.textContent = count;
         target.textContent = count % 10 === 0 ? copy.bonus : copy.click;
+        burst(event);
       });
 
       reset.addEventListener("click", () => {
@@ -155,6 +209,35 @@
         score.textContent = count;
         target.textContent = copy.click;
       });
+
+      function burst(event) {
+        const stageBox = stage.getBoundingClientRect();
+        const targetBox = target.getBoundingClientRect();
+        const originX = event.clientX ? event.clientX - stageBox.left : targetBox.left + targetBox.width / 2 - stageBox.left;
+        const originY = event.clientY ? event.clientY - stageBox.top : targetBox.top + targetBox.height / 2 - stageBox.top;
+        const colors = ["#00f5e0", "#ffb000", "#ff334d", "#8f5cff", "#38e05f", "#ffffff"];
+        const shapes = ["square", "triangle", "star", "diamond", "circle"];
+
+        for (let i = 0; i < 18; i += 1) {
+          const angle = (Math.PI * 2 * i) / 18 + Math.random() * 0.45;
+          const distance = 54 + Math.random() * 92;
+          const particle = document.createElement("span");
+          const shape = shapes[Math.floor(Math.random() * shapes.length)];
+          particle.className = `particle ${shape}`;
+          particle.textContent = shape === "star" ? "★" : shape === "diamond" ? "◆" : shape === "circle" ? "●" : "";
+          particle.style.left = `${originX}px`;
+          particle.style.top = `${originY}px`;
+          particle.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+          particle.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+          particle.style.setProperty("--spin", `${Math.random() * 360 - 180}deg`);
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          particle.style.setProperty("--particle-color", color);
+          particle.style.setProperty("--particle-glow", color);
+          particle.style.setProperty("--particle-size", `${14 + Math.random() * 12}px`);
+          stage.appendChild(particle);
+          particle.addEventListener("animationend", () => particle.remove(), { once: true });
+        }
+      }
     </script>
   </body>
 </html>

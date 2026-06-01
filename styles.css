@@ -361,7 +361,9 @@ button {
 
 .player-shell {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 18px;
+  min-height: calc(100svh - 68px);
 }
 
 .player-top {
@@ -386,8 +388,8 @@ button {
 .iframe-frame iframe {
   display: block;
   width: 100%;
-  height: min(72vh, 680px);
-  min-height: 460px;
+  height: min(82svh, 760px);
+  min-height: min(620px, calc(100svh - 150px));
   border: 0;
 }
 
@@ -451,7 +453,23 @@ button {
     bottom: 18px;
   }
 
+  .section.player-shell {
+    width: 100%;
+    min-height: calc(100svh - 59px);
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .player-top {
+    gap: 10px;
+  }
+
+  .player-top h2 {
+    font-size: 1.25rem;
+  }
+
   .iframe-frame iframe {
+    height: calc(100svh - 150px);
     min-height: 420px;
   }
 }
