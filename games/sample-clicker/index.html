@@ -44,9 +44,21 @@
         border: 1px solid rgba(255, 255, 255, 0.13);
         border-radius: 8px;
         background:
+          radial-gradient(circle at 22% 24%, rgba(43, 209, 196, 0.28), transparent 28%),
+          radial-gradient(circle at 78% 68%, rgba(247, 184, 75, 0.22), transparent 28%),
+          repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 34px),
           linear-gradient(135deg, rgba(43, 209, 196, 0.16), rgba(169, 139, 255, 0.18)),
           #151820;
         text-align: center;
+      }
+
+      .stage::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        pointer-events: none;
       }
 
       .target {

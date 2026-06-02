@@ -648,6 +648,10 @@ function localized(key) {
   return copy[key] || translations.en[key] || key;
 }
 
+function gameClass(title) {
+  return `game-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+}
+
 function gameHtml(title, body) {
   return `<!doctype html><html lang="${currentLocale}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><style>
     :root{--tile:70px}
@@ -655,6 +659,13 @@ function gameHtml(title, body) {
     button{font:inherit;border:0;border-radius:8px;padding:10px 14px;background:#f7b84b;color:#1b1205;font-weight:800;cursor:pointer}
     .wrap{width:min(760px,100%);height:min(720px,100vh);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
     .hud{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:#b8bec9}.stage{position:relative;overflow:auto;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:#151820}
+    .stage>*{position:relative;z-index:1}.stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--scene,linear-gradient(135deg,#151820,#20242b));background-size:var(--scene-size,auto);opacity:.95}
+    .game-neon-dodge{--scene:radial-gradient(circle at 20% 22%,rgba(43,209,196,.24),transparent 28%),radial-gradient(circle at 82% 76%,rgba(240,93,94,.22),transparent 30%),repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 52px),linear-gradient(135deg,#081316,#201221)}
+    .game-memory-grid{--scene:radial-gradient(circle at 50% 22%,rgba(43,209,196,.18),transparent 34%),linear-gradient(45deg,rgba(255,255,255,.05) 25%,transparent 25% 50%,rgba(255,255,255,.05) 50% 75%,transparent 75%),linear-gradient(135deg,#11151f,#22202a);--scene-size:auto,72px 72px,auto}
+    .game-lane-rush{--scene:linear-gradient(90deg,transparent 0 31%,rgba(255,255,255,.16) 31% 32%,transparent 32% 64%,rgba(255,255,255,.16) 64% 65%,transparent 65%),repeating-linear-gradient(0deg,rgba(247,184,75,.28) 0 34px,transparent 34px 78px),linear-gradient(180deg,#16181c,#24272d)}
+    .game-block-stacker{--scene:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),linear-gradient(135deg,#111820,#1b2230)}
+    .game-minesweeper{--scene:radial-gradient(circle at 18% 20%,rgba(240,93,94,.18),transparent 28%),repeating-linear-gradient(45deg,rgba(115,214,118,.1) 0 16px,rgba(43,209,196,.06) 16px 32px),linear-gradient(135deg,#132016,#182329)}
+    .game-sudoku{--scene:linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px),radial-gradient(circle at 78% 18%,rgba(169,139,255,.2),transparent 32%),linear-gradient(135deg,#141620,#201d27);--scene-size:64px 64px,64px 64px,auto,auto}
     .stage.center{padding:14px}
     .center{display:grid;place-items:center;text-align:center}.pill{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.08)}
     .stage,.touch-controls button{touch-action:none}.touch-controls{display:none;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:7px;justify-content:center;align-items:center}
@@ -677,7 +688,7 @@ function gameHtml(title, body) {
       if(opts.action){const b=document.createElement("button");b.type="button";b.className="action";b.textContent=opts.actionLabel||"Action";b.addEventListener("pointerdown",e=>{e.preventDefault();opts.action()});pad.appendChild(b)}
       const last=wrap.lastElementChild;wrap.insertBefore(pad,last);
     }
-  </script></head><body>${body}</body></html>`;
+  </script></head><body class="${gameClass(title)}">${body}</body></html>`;
 }
 
 function makePuzzleExampleGame(game) {

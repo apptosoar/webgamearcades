@@ -300,13 +300,180 @@
     grd.addColorStop(1, config.bgB || "#22262e");
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, state.w, state.h);
-    ctx.strokeStyle = "rgba(255,255,255,.06)";
+    drawScene(sceneName());
+    drawGridOverlay();
+  }
+
+  function sceneName() {
+    const title = (config.title || "").toLowerCase();
+    if (title.includes("space")) return "space";
+    if (title.includes("meteor")) return "meteor";
+    if (title.includes("zombie")) return "graveyard";
+    if (title.includes("ninja")) return "dojo";
+    if (title.includes("robot")) return "factory";
+    if (title.includes("arrow")) return "range";
+    if (title.includes("monster")) return "cave";
+    if (title.includes("laser")) return "lab";
+    if (title.includes("castle")) return "castle";
+    if (title.includes("bomb")) return "bomb";
+    return config.pattern || config.type;
+  }
+
+  function drawScene(scene) {
+    if (scene === "space" || scene === "meteor") drawSpaceScene(scene === "meteor");
+    else if (scene === "graveyard") drawGraveyardScene();
+    else if (scene === "dojo") drawDojoScene();
+    else if (scene === "factory") drawFactoryScene();
+    else if (scene === "range") drawRangeScene();
+    else if (scene === "cave") drawCaveScene();
+    else if (scene === "lab") drawLabScene();
+    else if (scene === "castle") drawCastleScene();
+    else if (scene === "bomb") drawBombScene();
+  }
+
+  function drawGridOverlay() {
+    ctx.strokeStyle = "rgba(255,255,255,.045)";
     for (let x = (state.t % 40) - 40; x < state.w; x += 40) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x + 80, state.h);
       ctx.stroke();
     }
+  }
+
+  function drawSpaceScene(withRocks) {
+    ctx.fillStyle = "rgba(255,255,255,.72)";
+    for (let i = 0; i < 46; i += 1) {
+      const x = (i * 83 + state.t * (0.25 + (i % 4) * 0.08)) % state.w;
+      const y = (i * 47 + state.t * (0.45 + (i % 5) * 0.06)) % state.h;
+      circle(x, y, i % 7 === 0 ? 2.1 : 1.1);
+    }
+    ctx.fillStyle = "rgba(43,209,196,.12)";
+    circle(state.w * 0.78, state.h * 0.18, Math.min(state.w, state.h) * 0.18);
+    if (!withRocks) return;
+    ctx.fillStyle = "rgba(247,184,75,.18)";
+    for (let i = 0; i < 8; i += 1) {
+      const x = (i * 137 - state.t * 0.8) % (state.w + 120);
+      const y = (i * 61 + state.t * 0.5) % state.h;
+      path([x, y - 12, x + 18, y - 4, x + 12, y + 16, x - 14, y + 9, x - 20, y - 6]);
+    }
+  }
+
+  function drawGraveyardScene() {
+    drawGround("#142016");
+    ctx.fillStyle = "rgba(244,242,234,.12)";
+    for (let x = 36; x < state.w; x += 92) {
+      roundRect(x, state.h - 96 - ((x / 92) % 2) * 12, 26, 48, 10);
+      ctx.fillRect(x - 7, state.h - 58, 40, 10);
+    }
+    ctx.fillStyle = "rgba(115,214,118,.16)";
+    circle(state.w * 0.82, state.h * 0.18, 48);
+  }
+
+  function drawDojoScene() {
+    drawGround("#1c1812");
+    ctx.fillStyle = "rgba(247,184,75,.1)";
+    for (let x = -40; x < state.w; x += 86) {
+      ctx.fillRect(x, 72, 26, state.h - 128);
+    }
+    ctx.strokeStyle = "rgba(240,93,94,.22)";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(0, state.h * 0.34);
+    ctx.lineTo(state.w, state.h * 0.28);
+    ctx.stroke();
+  }
+
+  function drawFactoryScene() {
+    drawGround("#171a20");
+    ctx.fillStyle = "rgba(169,139,255,.14)";
+    for (let x = 28; x < state.w; x += 104) {
+      roundRect(x, state.h - 178, 54, 118, 5);
+      ctx.fillRect(x + 18, state.h - 224, 18, 46);
+    }
+    ctx.strokeStyle = "rgba(43,209,196,.18)";
+    ctx.lineWidth = 2;
+    for (let y = 70; y < state.h - 70; y += 54) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(state.w, y + Math.sin((state.t + y) * 0.015) * 18);
+      ctx.stroke();
+    }
+  }
+
+  function drawRangeScene() {
+    drawGround("#24181a");
+    ctx.strokeStyle = "rgba(247,184,75,.18)";
+    ctx.lineWidth = 3;
+    for (let y = 70; y < state.h - 50; y += 70) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(state.w, y - 30);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(240,93,94,.12)";
+    for (let x = state.w - 80; x > 0; x -= 150) {
+      circle(x, state.h * 0.5, 34);
+      ctx.fillStyle = "rgba(244,242,234,.12)";
+      circle(x, state.h * 0.5, 18);
+      ctx.fillStyle = "rgba(240,93,94,.12)";
+    }
+  }
+
+  function drawCaveScene() {
+    drawGround("#1f1420");
+    ctx.fillStyle = "rgba(0,0,0,.18)";
+    for (let x = 0; x < state.w; x += 74) {
+      path([x, 0, x + 28, 0, x + 16, 56 + (x % 4) * 12]);
+      path([x + 18, state.h, x + 54, state.h, x + 38, state.h - 68 - (x % 5) * 9]);
+    }
+    ctx.fillStyle = "rgba(240,93,94,.14)";
+    circle(state.w * 0.2, state.h * 0.24, 42);
+  }
+
+  function drawLabScene() {
+    drawGround("#071c22");
+    ctx.strokeStyle = "rgba(43,209,196,.18)";
+    ctx.lineWidth = 2;
+    for (let x = 40; x < state.w; x += 82) {
+      ctx.beginPath();
+      ctx.moveTo(x, 40);
+      ctx.lineTo(x + Math.sin((state.t + x) * 0.02) * 24, state.h - 58);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(115,214,118,.1)";
+    for (let x = 68; x < state.w; x += 160) roundRect(x, 78, 54, 90, 10);
+  }
+
+  function drawCastleScene() {
+    drawGround("#1c2117");
+    ctx.fillStyle = "rgba(244,242,234,.1)";
+    for (let x = 74; x < state.w; x += 118) {
+      roundRect(x, state.h - 170, 62, 110, 8);
+      ctx.fillRect(x - 8, state.h - 186, 16, 22);
+      ctx.fillRect(x + 23, state.h - 190, 16, 26);
+      ctx.fillRect(x + 52, state.h - 186, 16, 22);
+    }
+    ctx.fillStyle = "rgba(247,184,75,.12)";
+    circle(state.w * 0.72, state.h * 0.18, 44);
+  }
+
+  function drawBombScene() {
+    drawGround("#261b10");
+    ctx.fillStyle = "rgba(247,184,75,.13)";
+    for (let x = 24; x < state.w; x += 86) {
+      ctx.fillRect(x - ((state.t * 2) % 86), state.h - 82, 42, 10);
+      ctx.fillRect(x + 22 - ((state.t * 2) % 86), state.h - 62, 42, 10);
+    }
+    ctx.fillStyle = "rgba(240,93,94,.16)";
+    for (let x = 80; x < state.w; x += 180) circle(x, state.h - 92, 18);
+  }
+
+  function drawGround(color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, state.h - 58, state.w, 58);
+    ctx.fillStyle = "rgba(255,255,255,.05)";
+    ctx.fillRect(0, state.h - 60, state.w, 2);
   }
 
   function drawPlayer() {
