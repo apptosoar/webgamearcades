@@ -31,17 +31,10 @@
     start: "시작",
     memoryFail: "실패! 1라운드부터 다시 시작합니다.",
     crash: "충돌",
-    turn: "턴",
-    vault: "금고",
-    defense: "방어",
-    strategyIntro: "수익을 누르면 금고 +2, 방어를 누르면 방어 +1. 매 턴 공격이 옵니다.",
-    earn: "수익",
-    bankrupt: "파산했습니다",
     success: "성공!",
     complete: "완료!",
     reviewNeeded: "검토가 필요합니다",
     progress: "진행",
-    previousAttack: "직전 공격",
     featuredGamesTitle: "추천 게임",
     featuredGamesText: "광고나 다운로드 버튼과 혼동되지 않도록 각 게임의 목표와 조작법을 명확히 안내합니다.",
     howToPlayEyebrow: "Guide",
@@ -73,7 +66,6 @@
       action: { name: "액션", description: "반응과 타이밍이 중요한 빠른 게임" },
       puzzle: { name: "퍼즐", description: "규칙을 읽고 빈틈을 찾는 두뇌 게임" },
       racing: { name: "레이싱", description: "속도와 리듬으로 승부하는 주행 게임" },
-      strategy: { name: "전략", description: "자원과 선택지를 관리하는 계획형 게임" },
     },
     gameDescriptions: {
       "neon-dodge": "방향키로 붉은 블록을 피하고 오래 버티세요.",
@@ -89,7 +81,6 @@
       "meteor-dodge": "떨어지는 운석을 피해 우주선을 지키세요.",
       "memory-grid": "짧게 켜지는 타일 순서를 기억해 다시 누르세요.",
       "lane-rush": "차선을 바꾸며 장애물을 피하고 점수를 올리세요.",
-      "coin-keep": "수익과 방어에 코인을 배분해 10턴을 버티세요.",
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
       "block-stacker": "떨어지는 블록을 쌓아 줄을 지우고 점수를 올리세요.",
       "puzzle-minesweeper": "숫자 단서를 보고 지뢰가 아닌 안전한 칸을 찾으세요.",
@@ -104,7 +95,7 @@
     navContact: "Contact",
     brandHome: "webgame arcade home",
     mainMenu: "Main menu",
-    heroText: "Choose a genre and play embedded mini games<br>directly in your browser.",
+    heroText: "Choose a genre and play mini games<br>directly in your browser.",
     chooseGenre: "Choose Genre",
     viewGames: "View Games",
     featuredGenres: "Featured genres",
@@ -128,17 +119,10 @@
     start: "Start",
     memoryFail: "Failed! Starting again from round 1.",
     crash: "Crash",
-    turn: "Turn",
-    vault: "Vault",
-    defense: "Defense",
-    strategyIntro: "Choose Earn for vault +2 or Defense for defense +1. An attack comes every turn.",
-    earn: "Earn",
-    bankrupt: "Bankrupt",
     success: "Success!",
     complete: "Complete!",
     reviewNeeded: "Review needed",
     progress: "Progress",
-    previousAttack: "Previous attack",
     featuredGamesTitle: "Featured Games",
     featuredGamesText: "Each game includes a clear goal and description so game controls are not confused with ads or navigation.",
     howToPlayEyebrow: "Guide",
@@ -170,7 +154,6 @@
       action: { name: "Action", description: "Fast games where quick reactions and timing matter" },
       puzzle: { name: "Puzzle", description: "Brainy games about reading rules and finding gaps" },
       racing: { name: "Racing", description: "Driving games won through speed, lines, and rhythm" },
-      strategy: { name: "Strategy", description: "Planning games about managing resources and choices" },
     },
     gameDescriptions: {
       "neon-dodge": "Use the arrow keys to dodge red blocks and survive as long as possible.",
@@ -186,7 +169,6 @@
       "meteor-dodge": "Protect your ship by dodging falling meteors.",
       "memory-grid": "Remember the briefly lit tile sequence and press it again.",
       "lane-rush": "Change lanes, avoid obstacles, and raise your score.",
-      "coin-keep": "Split coins between income and defense to survive 10 turns.",
       "sample-clicker": "A sample game added as an external HTML file.",
       "block-stacker": "Stack falling blocks, clear full lines, and raise your score.",
       "puzzle-minesweeper": "Use number clues to find safe cells without opening mines.",
@@ -201,7 +183,6 @@ const genreMeta = [
   { id: "action", icon: "A", accent: "#f05d5e" },
   { id: "puzzle", icon: "P", accent: "#2bd1c4" },
   { id: "racing", icon: "R", accent: "#f7b84b" },
-  { id: "strategy", icon: "S", accent: "#73d676" },
 ];
 
 const gameMeta = [
@@ -218,7 +199,6 @@ const gameMeta = [
   { id: "meteor-dodge", genre: "action", title: "Meteor Dodge", icon: "MD", accent: "#2bd1c4", url: "./games/meteor-dodge/index.html" },
   { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
   { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
-  { id: "coin-keep", genre: "strategy", title: "Coin Keep", icon: "CK", accent: "#73d676", makeSrcdoc: makeStrategyGame },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
 
@@ -971,19 +951,6 @@ function makeLaneGame() {
     function laneLeft(n){return (16+n*33)+"%"}function spawn(){const o=document.createElement("i");const l=Math.floor(Math.random()*3);o.style.cssText="position:absolute;top:-80px;left:"+laneLeft(l)+";width:48px;height:70px;border-radius:8px;background:#a98bff";stage.appendChild(o);obs.push({el:o,lane:l,y:-80})}
     setInterval(()=>alive&&spawn(),780);
     function loop(){if(!alive)return;score++;scoreEl.textContent=score;car.style.left="calc("+laneLeft(lane)+" - 0px)";obs.forEach(o=>{o.y+=4;o.el.style.top=o.y+"px";if(o.lane===lane&&o.y>330&&o.y<430){alive=false;stage.classList.add("center");stage.innerHTML="<h2>"+crashText+"<br>"+scoreLabel+" "+score+"</h2>"}});requestAnimationFrame(loop)}loop();
-  <\/script>`,
-  );
-}
-
-function makeStrategyGame() {
-  return gameHtml(
-    "Coin Keep",
-    `<div class="wrap"><div class="hud"><span class="pill">Coin Keep</span><span>${copy.turn} <b id="turn">1</b>/10</span></div><div class="stage center"><div><h2 id="status">${copy.vault} 5 / ${copy.defense} 1</h2><p>${copy.strategyIntro}</p><button id="earn">${copy.earn}</button> <button id="guard">${copy.defense}</button></div></div><button onclick="location.reload()">${copy.restart}</button></div><script>
-    const labels={vault:${jsString(copy.vault)},defense:${jsString(copy.defense)},bankrupt:${jsString(copy.bankrupt)},success:${jsString(copy.success)},previousAttack:${jsString(copy.previousAttack)}};
-    let turn=1,coins=5,def=1;const t=document.querySelector("#turn"),s=document.querySelector("#status");
-    document.querySelector("#earn").onclick=()=>step("earn");document.querySelector("#guard").onclick=()=>step("guard");
-    function step(a){if(a==="earn")coins+=2;else def++;const attack=Math.ceil(Math.random()*4);coins-=Math.max(0,attack-def);turn++;if(coins<=0){s.textContent=labels.bankrupt;disable();return}if(turn>10){s.textContent=labels.success+" "+labels.vault+" "+coins+" / "+labels.defense+" "+def;disable();return}t.textContent=turn;s.textContent=labels.vault+" "+coins+" / "+labels.defense+" "+def+" / "+labels.previousAttack+" "+attack}
-    function disable(){document.querySelector("#earn").disabled=true;document.querySelector("#guard").disabled=true}
   <\/script>`,
   );
 }
