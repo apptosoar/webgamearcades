@@ -723,50 +723,6 @@
     },
   });
 
-  translations.mk = mk({
-    localeName: "Македонски",
-    navGenres: "Жанрови", navGames: "Игри", navPrivacy: "Приватност", navContact: "Контакт",
-    brandHome: "почетна страница на webgame arcade", mainMenu: "Главно мени",
-    heroText: "Избери жанр и играј мини-игри<br>директно во прелистувачот.",
-    chooseGenre: "Избери жанр", viewGames: "Прегледај игри", featuredGenres: "Истакнати жанрови",
-    genresEyebrow: "Жанрови", genresTitle: "Избери жанр",
-    genresText: "Избери жанр за да ги видиш само игрите во таа категорија.",
-    home: "Дома", gamesEyebrow: "Игри", allGames: "Сите игри",
-    genreGames: "Игри: {genre}",
-    gamesText: "Избери која било игра и ќе се стартува директно во прелистувачот.",
-    gameGenreFilter: "Филтер на жанр", all: "Сите", launch: "Играј", list: "Листа",
-    gameNotFound: "Играта не е пронајдена.", score: "Резултат", restart: "Почни повторно",
-    gameOver: "Крај на играта", round: "Рунда", start: "Старт",
-    memoryFail: "Неуспех! Почнуваме одново од рунда 1.",
-    crash: "Судир", success: "Успех!", complete: "Завршено!", reviewNeeded: "Потребна е проверка", progress: "Напредок",
-    footerText: "Колекција на веб игри кои се играат директно во прелистувачот",
-    genres: {
-      action: { name: "Акција", description: "Брзи игри каде реакцијата и времето се важни" },
-      puzzle: { name: "Загатка", description: "Игри за читање правила и наоѓање решенија" },
-      racing: { name: "Трки", description: "Игри со возење кои се добиваат со брзина и ритам" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Избегнувај ги црвените блокови со стрелките и издржи колку можеш подолго.",
-      "zombie-survival": "Преживеај колку можеш подолго на арената додека зомбиите се приближуваат.",
-      "space-shooter": "Пилотирај брод, собори непријателски летала и зголеми го резултатот.",
-      "ninja-dash": "Движи го нинџата, прескокнувај препреки и продолжи да трчаш.",
-      "robot-arena": "Преживеај на роботска арена додека непријателски ботови те гонат.",
-      "arrow-dodge": "Избегнувај стрели што летаат од страна и провери ги своите рефлекси.",
-      "monster-punch": "Тупај чудовишта кога се појавуваат и брзо исчисти го екранот.",
-      "laser-escape": "Избегнувај подвижни ласерски ѕидови и преживеај колку можеш подолго.",
-      "castle-defender": "Нишани на непријателите што напаѓаат замок и задржи ја линијата.",
-      "bomb-runner": "Прескокнувај бомби и трчај колку можеш подалеку.",
-      "meteor-dodge": "Заштити го бродот со избегнување на паднати метеори.",
-      "time-stop": "Постави целно време и притисни СТОП за да го замрзнеш тајмерот точно во тој момент.",
-      "memory-grid": "Запамти ги кратко осветлените плочки и притисни ги повторно.",
-      "lane-rush": "Менувај ленти, избегнувај препреки и зголеми го резултатот.",
-      "sample-clicker": "Примерна игра додадена како надворешна HTML датотека.",
-      "block-stacker": "Складирај паднати блокови, бришај цели редови и зголеми го резултатот.",
-      "puzzle-minesweeper": "Користи броевни упатства за наоѓање безбедни полиња без минирање.",
-      "puzzle-sudoku": "Допри ги празните полиња за да ги пополниш броевите и да завршиш секој ред и колона.",
-    },
-  });
-
   translations.pt = mk({
     localeName: "Português",
     navGenres: "Gêneros", navGames: "Jogos", navPrivacy: "Privacidade", navContact: "Contato",
@@ -855,49 +811,6 @@
     },
   });
 
-  translations.lb = mk({
-    localeName: "Lëtzebuergesch",
-    navGenres: "Genren", navGames: "Spiller", navPrivacy: "Privatsphär", navContact: "Kontakt",
-    brandHome: "webgame arcade Haaptsäit", mainMenu: "Haaptmenü",
-    heroText: "Wiel e Genre a spill Minispiller<br>direkt an dengem Browser.",
-    chooseGenre: "Genre wielen", viewGames: "Spiller kucken", featuredGenres: "Beliicht Genren",
-    genresEyebrow: "Genren", genresTitle: "E Genre wielen",
-    genresText: "Sicht e Genre aus fir nëmmen d'Spiller aus dëser Kategorie ze gesinn.",
-    home: "Heem", gamesEyebrow: "Spiller", allGames: "All Spiller",
-    genreGames: "{genre}-Spiller",
-    gamesText: "Wiel e Spill a et start direkt an dengem Browser.",
-    gameGenreFilter: "Genre-Filter", all: "All", launch: "Spillen", list: "Lëscht",
-    gameNotFound: "Spill net fonnt.", score: "Punkten", restart: "Nees ufänken",
-    gameOver: "Spill eriwwer", round: "Ronn", start: "Start",
-    memoryFail: "Feeler! Nei ufänken vun der Ronn 1.",
-    crash: "Crash", success: "Erfolleg!", complete: "Fäerdeg!", reviewNeeded: "Iwwerpréiwung néideg", progress: "Fortschrëtt",
-    footerText: "Eng Sammlung vu Webspiller déi direkt am Browser lafen",
-    genres: {
-      action: { name: "Aktioun", description: "Schnell Spiller wou Reaktioun a Timing wichteg sinn" },
-      puzzle: { name: "Puzzle", description: "Kappspiller fir Reegelen ze liesen a Léisungen ze fannen" },
-      racing: { name: "Rennen", description: "Fuerspiller déi mat Vitesse a Rhythmus gewonnen ginn" },
-    },
-    gameDescriptions: {
-      "neon-dodge": "Weich roudte Blöck mat de Pfeilstaschten aus a iwwerliewe sou laang wéi méiglech.",
-      "zombie-survival": "Iwwerliewe sou laang wéi méiglech an der Arèna wärend d'Zombien no kommen.",
-      "space-shooter": "Stéier e Raumscheff, schéiss feindlech Schëffer of a erhéich däin Score.",
-      "ninja-dash": "Beweeg de Ninja, sprong iwwer Hindernisser a laaf weider.",
-      "robot-arena": "Iwwerliewe an enger Roboterarèna wärend feindlech Botten dech joen.",
-      "arrow-dodge": "Weich Pfeil aus déi vum Rand fléien a teste deng Reaktiounen.",
-      "monster-punch": "Schloe Monsteren wann se erscheinen a räume de Bildschirm séier.",
-      "laser-escape": "Vermeide beweegbar Lasermaueren a iwwerliewe sou laang wéi méiglech.",
-      "castle-defender": "Zil op Feinden déi de Schloss stormen a halen d'Linn.",
-      "bomb-runner": "Spring iwwer Bommen a laaf sou wäit wéi méiglech.",
-      "meteor-dodge": "Schütz däin Scheff andeems de fallende Meteore ausweichs.",
-      "time-stop": "Setz eng Zielzäit a dréckt STOP fir den Timer genee an deem Moment anzefrieren.",
-      "memory-grid": "Onthale d'kuerz opliewend Fliesen-Reihenfolg a dréckt se nach eng Kéier.",
-      "lane-rush": "Wiesselt d'Spur, evitéiert Hindernisser a erhéicht däin Score.",
-      "sample-clicker": "E Beispillspill als extern HTML-Fichier dobäigesat.",
-      "block-stacker": "Stapel fallende Blöck, läsch voll Zeilen a erhéich däin Score.",
-      "puzzle-minesweeper": "Benotzt Zuelen-Hiweiser fir sécher Felder ze fannen ouni Minen opzemaachen.",
-      "puzzle-sudoku": "Tippe eidel Felder un, fëll Zuelen a vervollstänneg all Rëtsch a Kolonn.",
-    },
-  });
 }
 const genreMeta = [
   { id: "action", icon: "A", accent: "#f05d5e" },
@@ -989,10 +902,8 @@ function detectLocale() {
     if (code.startsWith("he") || code.startsWith("iw")) return "he";
     if (code.startsWith("ro")) return "ro";
     if (code.startsWith("uk")) return "uk";
-    if (code.startsWith("mk")) return "mk";
     if (code.startsWith("pt")) return "pt";
     if (code.startsWith("id")) return "id";
-    if (code.startsWith("lb")) return "lb";
     if (code.startsWith("en")) return "en";
   }
   return "en";
