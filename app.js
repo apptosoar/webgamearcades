@@ -2093,7 +2093,7 @@ function gameHtml(title, body) {
     :root{--tile:70px}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,sans-serif;display:grid;place-items:center;overflow:auto}
     button{font:inherit;border:0;border-radius:8px;padding:10px 14px;background:#f7b84b;color:#1b1205;font-weight:800;cursor:pointer}
-    .wrap{width:min(760px,100%);height:min(720px,100vh);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
+    .wrap{width:min(760px,100%);height:min(720px,100svh);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
     .hud{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:#b8bec9}.stage{position:relative;overflow:auto;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:#151820}
     .stage>*{position:relative;z-index:1}.stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--scene,linear-gradient(135deg,#151820,#20242b));background-size:var(--scene-size,auto);opacity:.95}
     .game-neon-dodge{--scene:radial-gradient(circle at 20% 22%,rgba(43,209,196,.24),transparent 28%),radial-gradient(circle at 82% 76%,rgba(240,93,94,.22),transparent 30%),repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 52px),linear-gradient(135deg,#081316,#201221)}
@@ -2102,12 +2102,12 @@ function gameHtml(title, body) {
     .game-block-stacker{--scene:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),linear-gradient(135deg,#111820,#1b2230)}
     .game-minesweeper{--scene:radial-gradient(circle at 18% 20%,rgba(240,93,94,.18),transparent 28%),repeating-linear-gradient(45deg,rgba(115,214,118,.1) 0 16px,rgba(43,209,196,.06) 16px 32px),linear-gradient(135deg,#132016,#182329)}
     .game-sudoku{--scene:linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px),radial-gradient(circle at 78% 18%,rgba(169,139,255,.2),transparent 32%),linear-gradient(135deg,#141620,#201d27);--scene-size:64px 64px,64px 64px,auto,auto}
-    .stage.center{padding:14px}
+    .stage.center{padding:14px;align-items:start;overflow-y:auto}
     .center{display:grid;place-items:center;text-align:center}.pill{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.08)}
     .stage,.touch-controls button{touch-action:none}.touch-controls{display:none;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:7px;justify-content:center;align-items:center}
     .touch-controls button{width:48px;height:48px;padding:0}.touch-controls .up{grid-column:2}.touch-controls .left{grid-column:1;grid-row:2}.touch-controls .down{grid-column:2;grid-row:2}.touch-controls .right{grid-column:3;grid-row:2}.touch-controls .action{grid-column:3;grid-row:1;background:#2bd1c4;color:#0b0c0f}
     @media(max-width:720px),(pointer:coarse){.touch-controls{display:grid}}
-    @media(max-width:520px){:root{--tile:52px}.wrap{padding:12px}.hud{font-size:.9rem}}
+    @media(max-width:520px){:root{--tile:52px}.wrap{padding:10px;gap:8px}.hud{font-size:.9rem}.stage.center{padding:10px}}
   </style><script>
     addEventListener("load",()=>requestAnimationFrame(()=>focus()));
     function installTouchControls(options){
