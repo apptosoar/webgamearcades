@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Stop</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      #area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+      }
+
+      .target-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: #b8bec9;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .target-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .adj-btn {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        border-radius: 50%;
+        line-height: 1;
+      }
+
+      .target-num {
+        font-family: 'Courier New', monospace;
+        font-size: clamp(40px, 9vw, 68px);
+        font-weight: 700;
+        color: #a98bff;
+        text-shadow: 0 0 20px rgba(169, 139, 255, 0.5);
+        min-width: 4ch;
+        text-align: center;
+      }
+
+      .digital-display {
+        font-family: 'Courier New', monospace;
+        font-size: clamp(60px, 15vw, 108px);
+        font-weight: 700;
+        line-height: 1;
+        color: #2bd1c4;
+        text-shadow: 0 0 28px rgba(43, 209, 196, 0.8), 0 0 56px rgba(43, 209, 196, 0.3);
+        letter-spacing: 6px;
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(43, 209, 196, 0.25);
+        border-radius: 14px;
+        padding: 22px 40px;
+        transition: color 0.12s, text-shadow 0.12s, border-color 0.12s;
+      }
+
+      .digital-display.frozen {
+        color: #f7b84b;
+        text-shadow: 0 0 28px rgba(247, 184, 75, 0.8), 0 0 56px rgba(247, 184, 75, 0.3);
+        border-color: rgba(247, 184, 75, 0.25);
+      }
+
+      .result-grade {
+        font-size: clamp(26px, 5.5vw, 44px);
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-align: center;
+      }
+
+      .g-perfect { color: #73d676; text-shadow: 0 0 20px rgba(115, 214, 118, 0.6); }
+      .g-great   { color: #2bd1c4; text-shadow: 0 0 20px rgba(43, 209, 196, 0.6); }
+      .g-good    { color: #f7b84b; text-shadow: 0 0 20px rgba(247, 184, 75, 0.5); }
+      .g-miss    { color: #f05d5e; text-shadow: 0 0 20px rgba(240, 93, 94, 0.5); }
+
+      .result-meta {
+        color: #b8bec9;
+        font-size: 14px;
+        line-height: 2;
+        text-align: center;
+      }
+
+      .btn-start {
+        min-width: 160px;
+        background: #2bd1c4;
+        color: #051a19;
+        font-weight: 800;
+        font-size: 17px;
+      }
+
+      .btn-stop {
+        min-width: 160px;
+        background: #f05d5e;
+        color: #1b0505;
+        font-weight: 800;
+        font-size: 17px;
+      }
+
+      .btn-next {
+        min-width: 160px;
+        background: #a98bff;
+        color: #0d0a1a;
+        font-weight: 800;
+        font-size: 17px;
+      }
+
+      .hint {
+        color: #b8bec9;
+        font-size: 12px;
+        text-align: center;
+        opacity: 0.6;
+        letter-spacing: 1px;
+      }
+
+      .score-big {
+        font-size: clamp(56px, 13vw, 100px);
+        font-weight: 800;
+        color: #f7b84b;
+        line-height: 1;
+        text-shadow: 0 0 32px rgba(247, 184, 75, 0.5);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong id="title">Time Stop</strong>
+        <span>Round <b id="round">1</b> / 5</span>
+        <span>Score <b id="score">0</b></span>
+      </div>
+
+      <div id="area"></div>
+
+      <button id="restart" type="button" style="display:none">Restart</button>
+    </main>
+
+    <script>
+      const ROUNDS = 5;
+
+      const gs = {
+        phase: 'setup',
+        targetMs: 3000,
+        startTime: 0,
+        elapsedMs: 0,
+        animId: 0,
+        score: 0,
+        round: 1,
+        diff: 0,
+      };
+
+      const elRound   = document.getElementById('round');
+      const elScore   = document.getElementById('score');
+      const elArea    = document.getElementById('area');
+      const elRestart = document.getElementById('restart');
+
+      function fmt(ms) {
+        const s  = Math.floor(ms / 1000);
+        const cs = Math.floor((ms % 1000) / 10);
+        return `${String(s).padStart(2, '0')}:${String(cs).padStart(2, '0')}`;
+      }
+
+      function gradeResult(diff) {
+        if (diff <=  30) return { text: 'PERFECT!', cls: 'g-perfect', pts: 100 };
+        if (diff <=  80) return { text: 'GREAT!',   cls: 'g-great',   pts: 80  };
+        if (diff <= 200) return { text: 'GOOD',     cls: 'g-good',    pts: 50  };
+        if (diff <= 500) return { text: 'CLOSE',    cls: 'g-good',    pts: 20  };
+        return                   { text: 'MISS',    cls: 'g-miss',    pts: 5   };
+      }
+
+      function showSetup() {
+        gs.phase = 'setup';
+        elArea.innerHTML = `
+          <div>
+            <div class="target-label">Set Target Time</div>
+            <div class="target-row">
+              <button class="adj-btn" id="dec">−</button>
+              <div class="target-num" id="tgt">${fmt(gs.targetMs)}</div>
+              <button class="adj-btn" id="inc">+</button>
+            </div>
+            <div style="text-align:center;color:#b8bec9;font-size:11px;margin-top:8px;letter-spacing:1px">0.5 s steps &nbsp;·&nbsp; 0.5 – 9.5 s</div>
+          </div>
+          <div class="digital-display">00:00</div>
+          <button class="btn-start" id="go">▶ &nbsp;START</button>
+          <div class="hint">Space or tap START to begin &nbsp;·&nbsp; STOP on target</div>
+        `;
+
+        document.getElementById('dec').onclick = () => {
+          gs.targetMs = Math.max(500, gs.targetMs - 500);
+          document.getElementById('tgt').textContent = fmt(gs.targetMs);
+        };
+        document.getElementById('inc').onclick = () => {
+          gs.targetMs = Math.min(9500, gs.targetMs + 500);
+          document.getElementById('tgt').textContent = fmt(gs.targetMs);
+        };
+        document.getElementById('go').onclick = startRound;
+      }
+
+      function showRunning() {
+        gs.phase = 'running';
+        elArea.innerHTML = `
+          <div>
+            <div class="target-label">Target</div>
+            <div class="target-num">${fmt(gs.targetMs)}</div>
+          </div>
+          <div class="digital-display" id="clk">00:00</div>
+          <button class="btn-stop" id="stop-btn">■ &nbsp;STOP</button>
+          <div class="hint">Space key also works</div>
+        `;
+        document.getElementById('stop-btn').onclick = doStop;
+      }
+
+      function showResult() {
+        const g      = gradeResult(gs.diff);
+        const isLast = gs.round >= ROUNDS;
+        elArea.innerHTML = `
+          <div>
+            <div class="result-grade ${g.cls}">${g.text}</div>
+            <div class="result-meta" style="margin-top:12px">
+              Target&nbsp;&nbsp;: <b style="color:#a98bff">${fmt(gs.targetMs)}</b><br>
+              Stopped : <b style="color:#f7b84b">${fmt(gs.elapsedMs)}</b><br>
+              Diff&nbsp;&nbsp;&nbsp;&nbsp;: <b style="color:#f4f2ea">${gs.diff}&thinsp;ms</b>
+              &emsp;+<b style="color:#73d676">${g.pts}</b>&thinsp;pts
+            </div>
+          </div>
+          <div class="digital-display frozen">${fmt(gs.elapsedMs)}</div>
+          <button class="btn-next" id="nxt">${isLast ? 'Finish →' : 'Next Round →'}</button>
+        `;
+        document.getElementById('nxt').onclick = () => {
+          if (isLast) {
+            showGameOver();
+          } else {
+            gs.round++;
+            elRound.textContent = gs.round;
+            showSetup();
+          }
+        };
+      }
+
+      function showGameOver() {
+        elRestart.style.display = '';
+        const msg =
+          gs.score >= 420 ? 'Precision Master!' :
+          gs.score >= 280 ? 'Great Reflexes!' :
+          'Keep Practicing!';
+        elArea.innerHTML = `
+          <div style="color:#b8bec9;font-size:11px;text-transform:uppercase;letter-spacing:3px">Final Score</div>
+          <div class="score-big">${gs.score}</div>
+          <div style="color:#b8bec9;font-size:14px;letter-spacing:1px">${msg}</div>
+        `;
+      }
+
+      function startRound() {
+        gs.elapsedMs = 0;
+        gs.startTime = performance.now();
+        showRunning();
+        tick();
+      }
+
+      function tick() {
+        if (gs.phase !== 'running') return;
+        gs.elapsedMs = Math.round(performance.now() - gs.startTime);
+        const clk = document.getElementById('clk');
+        if (clk) clk.textContent = fmt(gs.elapsedMs);
+        if (gs.elapsedMs >= gs.targetMs + 5000) { doStop(); return; }
+        gs.animId = requestAnimationFrame(tick);
+      }
+
+      function doStop() {
+        if (gs.phase !== 'running') return;
+        cancelAnimationFrame(gs.animId);
+        gs.phase = 'result';
+        gs.elapsedMs = Math.round(performance.now() - gs.startTime);
+        gs.diff      = Math.abs(gs.elapsedMs - gs.targetMs);
+        gs.score    += gradeResult(gs.diff).pts;
+        elScore.textContent = gs.score;
+        showResult();
+      }
+
+      document.addEventListener('keydown', e => {
+        if (e.code !== 'Space') return;
+        e.preventDefault();
+        if (gs.phase === 'running') doStop();
+        else if (gs.phase === 'setup') startRound();
+      });
+
+      elRestart.onclick = () => {
+        gs.score = 0; gs.round = 1; gs.targetMs = 3000; gs.phase = 'setup';
+        elRound.textContent = 1;
+        elScore.textContent = 0;
+        elRestart.style.display = 'none';
+        showSetup();
+      };
+
+      showSetup();
+    </script>
+  </body>
+</html>
