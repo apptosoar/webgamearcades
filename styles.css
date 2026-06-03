@@ -562,3 +562,52 @@ button {
     min-height: 420px;
   }
 }
+
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  background: var(--panel-2);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.cookie-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cookie-actions a {
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.cookie-actions a:hover {
+  text-decoration: underline;
+}
+
+#cookie-accept {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--amber);
+  color: #1b0c05;
+  font: 600 13px/1 inherit;
+  cursor: pointer;
+}
+
+#cookie-accept:hover {
+  opacity: 0.88;
+}

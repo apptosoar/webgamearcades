@@ -50,14 +50,18 @@
     aboutText: "webgame arcade는 설치 없이 즐길 수 있는 간단한 브라우저 게임 모음입니다. 게임 설명, 조작법, 개인정보 안내를 명확히 제공해 사용자가 사이트 내용을 쉽게 이해할 수 있도록 구성했습니다.",
     privacyTitle: "개인정보처리방침",
     privacyIntro: "webgame arcade는 사이트 운영과 광고 제공을 위해 쿠키, 접속 로그, 기기 정보와 같은 기본적인 이용 정보를 처리할 수 있습니다.",
-    privacyPoint1: "Google AdSense를 사용하는 경우 Google 및 제3자가 쿠키를 사용해 광고를 제공할 수 있습니다.",
-    privacyPoint2: "사용자는 브라우저 설정 또는 Google 광고 설정에서 맞춤 광고를 관리할 수 있습니다.",
-    privacyPoint3: "문의가 필요한 경우 Contact 페이지를 통해 연락할 수 있습니다.",
+    privacyPoint1: "Google AdSense를 사용하는 경우 Google 및 제3자가 쿠키를 사용해 맞춤 광고를 제공할 수 있습니다.",
+    privacyPoint2: "사용자는 브라우저 설정 또는 Google 광고 설정(g.co/adsettings)에서 맞춤 광고를 관리하거나 거부할 수 있습니다.",
+    privacyPoint3: "수집된 정보는 광고 제공 이외의 목적으로 제3자에게 판매되지 않습니다.",
+    privacyPoint4: "EU·EEA 거주자 및 캘리포니아 거주자(CCPA)를 포함한 일부 지역 사용자는 개인 데이터에 대한 열람·삭제·이의 제기 권리를 가질 수 있습니다.",
+    privacyPoint5: "개인정보 관련 문의는 Contact 페이지의 이메일을 통해 연락해 주세요.",
     termsTitle: "이용약관",
     termsIntro: "이 사이트의 게임은 브라우저에서 바로 즐길 수 있는 캐주얼 콘텐츠로 제공됩니다.",
-    termsPoint1: "게임 이용 중 자동화된 트래픽, 악의적인 접근, 서비스 방해 행위를 금지합니다.",
+    termsPoint1: "자동화된 트래픽, 악의적인 접근, 서비스 방해 행위를 금지합니다.",
     termsPoint2: "사이트의 콘텐츠와 광고 영역을 혼동시키는 방식의 이용을 금지합니다.",
-    termsPoint3: "사이트 구성과 콘텐츠는 운영 상황에 따라 변경될 수 있습니다.",
+    termsPoint3: "사이트 게임 콘텐츠 및 디자인에 관한 권리는 운영자에게 있으며, 무단 복제 및 재배포를 금지합니다.",
+    termsPoint4: "게임과 서비스는 현재 상태로 제공되며, 이용으로 인해 발생하는 손해에 대해 운영자는 법적 책임을 지지 않습니다.",
+    termsPoint5: "사이트 구성과 콘텐츠는 운영 상황에 따라 변경될 수 있습니다.",
     contactTitle: "문의",
     contactIntro: "사이트 오류, 정책, 광고, 게임 관련 문의는 아래 정보로 연락해 주세요.",
     contactEmail: "이메일: apptosoar@gmail.com",
@@ -139,14 +143,18 @@
     aboutText: "webgame arcade is a collection of simple browser games that run without installation. The site provides clear game descriptions, controls, and privacy information so visitors can understand the content easily.",
     privacyTitle: "Privacy Policy",
     privacyIntro: "webgame arcade may process basic usage information such as cookies, access logs, and device information for site operation and ad delivery.",
-    privacyPoint1: "When Google AdSense is used, Google and third parties may use cookies to serve ads.",
-    privacyPoint2: "Visitors can manage personalized ads through browser settings or Google ad settings.",
-    privacyPoint3: "For questions, use the Contact page.",
+    privacyPoint1: "When Google AdSense is active, Google and third parties may use cookies to serve personalized ads based on your browsing activity.",
+    privacyPoint2: "You can manage or opt out of personalized ads through your browser settings or Google Ad Settings (g.co/adsettings).",
+    privacyPoint3: "Collected information is not sold to third parties for purposes beyond ad delivery.",
+    privacyPoint4: "Users in certain regions — including the EU/EEA (GDPR) and California (CCPA) — may have additional rights regarding their personal data, such as the right to access, delete, or object to processing.",
+    privacyPoint5: "For privacy-related questions or data requests, contact us via the Contact page.",
     termsTitle: "Terms",
     termsIntro: "The games on this site are provided as casual browser content.",
     termsPoint1: "Automated traffic, malicious access, and actions that disrupt the service are not allowed.",
     termsPoint2: "Using the site in a way that confuses content, controls, and ads is not allowed.",
-    termsPoint3: "Site content and structure may change depending on operation needs.",
+    termsPoint3: "All game content and site design rights belong to the operator. Unauthorized reproduction or redistribution is not permitted.",
+    termsPoint4: "Games and services are provided as-is. The operator is not liable for damages arising from use of the site.",
+    termsPoint5: "Site content and structure may change depending on operation needs.",
     contactTitle: "Contact",
     contactIntro: "For site issues, policies, ads, or game questions, contact us using the information below.",
     contactEmail: "Email: apptosoar@gmail.com",
@@ -936,6 +944,33 @@ window.addEventListener("hashchange", render);
 app.addEventListener("click", handleAppClick);
 
 render();
+initCookieBanner();
+
+function initCookieBanner() {
+  if (localStorage.getItem("cookie_ok")) return;
+  const banner = document.createElement("div");
+  banner.id = "cookie-banner";
+  const msg = currentLocale === "ko"
+    ? "이 사이트는 서비스 운영과 광고 제공을 위해 쿠키를 사용합니다."
+    : "This site uses cookies for operation and ad delivery.";
+  const acceptLabel = currentLocale === "ko" ? "동의" : "Accept";
+  const learnLabel  = currentLocale === "ko" ? "자세히" : "Learn more";
+  banner.innerHTML = `
+    <span>${msg}</span>
+    <div class="cookie-actions">
+      <a href="#privacy" id="cookie-learn">${learnLabel}</a>
+      <button id="cookie-accept">${acceptLabel}</button>
+    </div>`;
+  document.body.appendChild(banner);
+  document.getElementById("cookie-accept").addEventListener("click", () => {
+    localStorage.setItem("cookie_ok", "1");
+    banner.remove();
+  });
+  document.getElementById("cookie-learn").addEventListener("click", () => {
+    localStorage.setItem("cookie_ok", "1");
+    banner.remove();
+  });
+}
 
 function detectLocale() {
   const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
@@ -1081,12 +1116,12 @@ function renderInfoPage(page) {
     privacy: {
       title: copy.privacyTitle,
       intro: copy.privacyIntro,
-      points: [copy.privacyPoint1, copy.privacyPoint2, copy.privacyPoint3],
+      points: [copy.privacyPoint1, copy.privacyPoint2, copy.privacyPoint3, copy.privacyPoint4, copy.privacyPoint5].filter(Boolean),
     },
     terms: {
       title: copy.termsTitle,
       intro: copy.termsIntro,
-      points: [copy.termsPoint1, copy.termsPoint2, copy.termsPoint3],
+      points: [copy.termsPoint1, copy.termsPoint2, copy.termsPoint3, copy.termsPoint4, copy.termsPoint5].filter(Boolean),
     },
     contact: {
       title: copy.contactTitle,
