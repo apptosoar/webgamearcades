@@ -811,6 +811,749 @@
     },
   });
 
+  translations.bn = mk({
+    localeName: "বাংলা",
+    navGenres: "ধরন", navGames: "গেম", navPrivacy: "গোপনীয়তা", navContact: "যোগাযোগ",
+    brandHome: "webgame arcade হোম", mainMenu: "মূল মেনু",
+    heroText: "একটি ধরন বেছে নিন এবং সরাসরি<br>ব্রাউজারে মিনিগেম খেলুন।",
+    chooseGenre: "ধরন বেছে নিন", viewGames: "গেম দেখুন", featuredGenres: "বিশেষ ধরন",
+    genresEyebrow: "ধরন", genresTitle: "একটি ধরন বেছে নিন",
+    genresText: "শুধুমাত্র সেই বিভাগের গেম দেখতে একটি ধরন নির্বাচন করুন।",
+    home: "হোম", gamesEyebrow: "গেম", allGames: "সব গেম",
+    genreGames: "{genre} গেম",
+    gamesText: "যেকোনো গেম বেছে নিন এবং এটি সরাসরি আপনার ব্রাউজারে চলবে।",
+    gameGenreFilter: "ধরন ফিল্টার", all: "সব", launch: "শুরু করুন", list: "তালিকা",
+    gameNotFound: "গেম পাওয়া যায়নি।", score: "স্কোর", restart: "আবার শুরু",
+    gameOver: "গেম শেষ", round: "রাউন্ড", start: "শুরু",
+    memoryFail: "ব্যর্থ! রাউন্ড ১ থেকে আবার শুরু।",
+    crash: "ক্র্যাশ", success: "সাফল্য!", complete: "সম্পূর্ণ!", reviewNeeded: "পর্যালোচনা দরকার", progress: "অগ্রগতি",
+    footerText: "সরাসরি ব্রাউজারে চলে এমন ওয়েব গেমের সংগ্রহ",
+    genres: {
+      action: { name: "অ্যাকশন", description: "দ্রুত গেম যেখানে প্রতিক্রিয়া ও সময় গুরুত্বপূর্ণ" },
+      puzzle: { name: "পাজল", description: "নিয়ম পড়ে সমাধান খোঁজার মস্তিষ্কের খেলা" },
+      racing: { name: "রেসিং", description: "গতি ও ছন্দে জেতা ড্রাইভিং গেম" },
+    },
+  });
+
+  translations.bg = mk({
+    localeName: "Български",
+    navGenres: "Жанрове", navGames: "Игри", navPrivacy: "Поверителност", navContact: "Контакт",
+    brandHome: "начало на webgame arcade", mainMenu: "Главно меню",
+    heroText: "Избери жанр и играй мини игри<br>директно в браузъра.",
+    chooseGenre: "Избери жанр", viewGames: "Виж игри", featuredGenres: "Препоръчани жанрове",
+    genresEyebrow: "Жанрове", genresTitle: "Избери жанр",
+    genresText: "Избери жанр, за да видиш само игрите от тази категория.",
+    home: "Начало", gamesEyebrow: "Игри", allGames: "Всички игри",
+    genreGames: "Игри: {genre}",
+    gamesText: "Избери игра и тя ще се стартира директно в браузъра.",
+    gameGenreFilter: "Филтър жанр", all: "Всички", launch: "Играй", list: "Списък",
+    gameNotFound: "Играта не е намерена.", score: "Резултат", restart: "Рестарт",
+    gameOver: "Край на играта", round: "Рунд", start: "Старт",
+    memoryFail: "Неуспех! Започваме отново от рунд 1.",
+    crash: "Сблъсък", success: "Успех!", complete: "Готово!", reviewNeeded: "Необходима проверка", progress: "Прогрес",
+    footerText: "Колекция от уеб игри, работещи директно в браузъра",
+    genres: {
+      action: { name: "Екшън", description: "Бързи игри, където реакцията и времето са важни" },
+      puzzle: { name: "Пъзел", description: "Умни игри за четене на правила и намиране на решения" },
+      racing: { name: "Надбягване", description: "Игри с шофиране, спечелени чрез скорост и ритъм" },
+    },
+  });
+
+  translations.ca = mk({
+    localeName: "Català",
+    navGenres: "Gèneres", navGames: "Jocs", navPrivacy: "Privadesa", navContact: "Contacte",
+    brandHome: "inici de webgame arcade", mainMenu: "Menú principal",
+    heroText: "Tria un gènere i juga a minijocs<br>directament al navegador.",
+    chooseGenre: "Triar gènere", viewGames: "Veure jocs", featuredGenres: "Gèneres destacats",
+    genresEyebrow: "Gèneres", genresTitle: "Triar un gènere",
+    genresText: "Selecciona un gènere per veure només els jocs d'aquella categoria.",
+    home: "Inici", gamesEyebrow: "Jocs", allGames: "Tots els jocs",
+    genreGames: "Jocs de {genre}",
+    gamesText: "Tria qualsevol joc i s'iniciarà directament al navegador.",
+    gameGenreFilter: "Filtre de gènere", all: "Tots", launch: "Jugar", list: "Llista",
+    gameNotFound: "Joc no trobat.", score: "Puntuació", restart: "Reiniciar",
+    gameOver: "Fi del joc", round: "Ronda", start: "Inici",
+    memoryFail: "Error! Tornem a la ronda 1.",
+    crash: "Xoc", success: "Èxit!", complete: "Complet!", reviewNeeded: "Cal revisió", progress: "Progrés",
+    footerText: "Una col·lecció de jocs web que s'executen directament al navegador",
+    genres: {
+      action: { name: "Acció", description: "Jocs ràpids on els reflexos i el timing importan" },
+      puzzle: { name: "Trencaclosques", description: "Jocs mentals per llegir regles i trobar solucions" },
+      racing: { name: "Curses", description: "Jocs de conducció guanyats amb velocitat i ritme" },
+    },
+  });
+
+  translations["zh-TW"] = mk({
+    localeName: "繁體中文",
+    navGenres: "類別", navGames: "遊戲", navPrivacy: "隱私", navContact: "聯繫",
+    brandHome: "webgame arcade 首頁", mainMenu: "主選單",
+    heroText: "選擇類別，直接在瀏覽器中<br>暢玩迷你遊戲。",
+    chooseGenre: "選擇類別", viewGames: "查看遊戲", featuredGenres: "精選類別",
+    genresEyebrow: "類別", genresTitle: "選擇類別",
+    genresText: "選擇類別以只查看該分類的遊戲。",
+    home: "首頁", gamesEyebrow: "遊戲", allGames: "全部遊戲",
+    genreGames: "{genre}遊戲",
+    gamesText: "選擇任意遊戲，將直接在瀏覽器中啟動。",
+    gameGenreFilter: "遊戲類別篩選", all: "全部", launch: "啟動", list: "列表",
+    gameNotFound: "未找到遊戲。", score: "分數", restart: "重新開始",
+    gameOver: "遊戲結束", round: "回合", start: "開始",
+    memoryFail: "失敗！從第1回合重新開始。",
+    crash: "碰撞", success: "成功！", complete: "完成！", reviewNeeded: "需要檢查", progress: "進度",
+    footerText: "可直接在瀏覽器中遊玩的網頁遊戲合集",
+    genres: {
+      action: { name: "動作", description: "考驗反應和時機的快節奏遊戲" },
+      puzzle: { name: "益智", description: "閱讀規則、尋找突破口的腦力遊戲" },
+      racing: { name: "競速", description: "靠速度和節奏取勝的駕駛遊戲" },
+    },
+  });
+
+  translations.hr = mk({
+    localeName: "Hrvatski",
+    navGenres: "Žanrovi", navGames: "Igre", navPrivacy: "Privatnost", navContact: "Kontakt",
+    brandHome: "webgame arcade početna", mainMenu: "Glavni izbornik",
+    heroText: "Odaberi žanr i igraj minigame<br>izravno u pregledniku.",
+    chooseGenre: "Odaberi žanr", viewGames: "Pogledaj igre", featuredGenres: "Istaknuti žanrovi",
+    genresEyebrow: "Žanrovi", genresTitle: "Odaberi žanr",
+    genresText: "Odaberi žanr kako bi vidio samo igre iz te kategorije.",
+    home: "Početna", gamesEyebrow: "Igre", allGames: "Sve igre",
+    genreGames: "Igre: {genre}",
+    gamesText: "Odaberi bilo koju igru i pokrenit će se izravno u pregledniku.",
+    gameGenreFilter: "Filter žanra", all: "Sve", launch: "Igraj", list: "Lista",
+    gameNotFound: "Igra nije pronađena.", score: "Rezultat", restart: "Ponovi",
+    gameOver: "Kraj igre", round: "Runda", start: "Start",
+    memoryFail: "Neuspjeh! Počinjemo od runde 1.",
+    crash: "Sudar", success: "Uspjeh!", complete: "Završeno!", reviewNeeded: "Potrebna provjera", progress: "Napredak",
+    footerText: "Zbirka web igara koje se pokreću izravno u pregledniku",
+    genres: {
+      action: { name: "Akcija", description: "Brze igre u kojima su reakcija i tajming važni" },
+      puzzle: { name: "Zagonetka", description: "Igre uma za čitanje pravila i pronalaženje rješenja" },
+      racing: { name: "Utrke", description: "Igre vožnje koje se dobivaju brzinom i ritmom" },
+    },
+  });
+
+  translations.da = mk({
+    localeName: "Dansk",
+    navGenres: "Genrer", navGames: "Spil", navPrivacy: "Privatliv", navContact: "Kontakt",
+    brandHome: "webgame arcade startside", mainMenu: "Hovedmenu",
+    heroText: "Vælg en genre og spil minispil<br>direkte i din browser.",
+    chooseGenre: "Vælg genre", viewGames: "Se spil", featuredGenres: "Udvalgte genrer",
+    genresEyebrow: "Genrer", genresTitle: "Vælg en genre",
+    genresText: "Vælg en genre for kun at se spil i den kategori.",
+    home: "Hjem", gamesEyebrow: "Spil", allGames: "Alle spil",
+    genreGames: "{genre}-spil",
+    gamesText: "Vælg et spil, og det starter direkte i din browser.",
+    gameGenreFilter: "Genre-filter", all: "Alle", launch: "Spil", list: "Liste",
+    gameNotFound: "Spil ikke fundet.", score: "Point", restart: "Genstart",
+    gameOver: "Spil slut", round: "Runde", start: "Start",
+    memoryFail: "Fejl! Starter forfra fra runde 1.",
+    crash: "Kollision", success: "Succes!", complete: "Færdig!", reviewNeeded: "Gennemgang kræves", progress: "Fremgang",
+    footerText: "En samling webspil der kører direkte i browseren",
+    genres: {
+      action: { name: "Action", description: "Hurtige spil hvor reaktioner og timing er vigtige" },
+      puzzle: { name: "Puslespil", description: "Tankespil om at læse regler og finde løsninger" },
+      racing: { name: "Racerløb", description: "Kørespil vundet med hastighed og rytme" },
+    },
+  });
+
+  translations.et = mk({
+    localeName: "Eesti",
+    navGenres: "Žanrid", navGames: "Mängud", navPrivacy: "Privaatsus", navContact: "Kontakt",
+    brandHome: "webgame arcade avaleht", mainMenu: "Peamenüü",
+    heroText: "Vali žanr ja mängi minimänge<br>otse brauseris.",
+    chooseGenre: "Vali žanr", viewGames: "Vaata mänge", featuredGenres: "Soovitatud žanrid",
+    genresEyebrow: "Žanrid", genresTitle: "Vali žanr",
+    genresText: "Vali žanr, et näha ainult selle kategooria mänge.",
+    home: "Avaleht", gamesEyebrow: "Mängud", allGames: "Kõik mängud",
+    genreGames: "{genre}-mängud",
+    gamesText: "Vali mäng ja see käivitub otse brauseris.",
+    gameGenreFilter: "Žanrifilter", all: "Kõik", launch: "Mängi", list: "Nimekiri",
+    gameNotFound: "Mängu ei leitud.", score: "Skoor", restart: "Taaskäivita",
+    gameOver: "Mäng läbi", round: "Voor", start: "Start",
+    memoryFail: "Ebaõnnestus! Alustame uuesti voorust 1.",
+    crash: "Kokkupõrge", success: "Õnnestumine!", complete: "Valmis!", reviewNeeded: "Vajab ülevaatust", progress: "Edenemine",
+    footerText: "Veebi mängude kogu, mis töötab otse brauseris",
+    genres: {
+      action: { name: "Tegevus", description: "Kiired mängud, kus reaktsioon ja ajastus on olulised" },
+      puzzle: { name: "Mõistatus", description: "Ajumängud reeglite lugemiseks ja lahenduste leidmiseks" },
+      racing: { name: "Võidusõit", description: "Sõidumängud, mida võidetakse kiiruse ja rütmiga" },
+    },
+  });
+
+  translations.fil = mk({
+    localeName: "Filipino",
+    navGenres: "Mga Genre", navGames: "Mga Laro", navPrivacy: "Privacy", navContact: "Makipag-ugnayan",
+    brandHome: "webgame arcade tahanan", mainMenu: "Pangunahing menu",
+    heroText: "Pumili ng genre at maglaro ng mini-games<br>nang direkta sa iyong browser.",
+    chooseGenre: "Pumili ng genre", viewGames: "Tingnan ang mga laro", featuredGenres: "Mga tampok na genre",
+    genresEyebrow: "Mga Genre", genresTitle: "Pumili ng genre",
+    genresText: "Pumili ng genre upang makita lamang ang mga laro sa kategoryang iyon.",
+    home: "Tahanan", gamesEyebrow: "Mga Laro", allGames: "Lahat ng laro",
+    genreGames: "Mga larong {genre}",
+    gamesText: "Pumili ng anumang laro at ito ay maglulunsad nang direkta sa iyong browser.",
+    gameGenreFilter: "Filter ng genre", all: "Lahat", launch: "Laruin", list: "Listahan",
+    gameNotFound: "Hindi nahanap ang laro.", score: "Puntos", restart: "Magsimula ulit",
+    gameOver: "Tapos na ang laro", round: "Ronda", start: "Magsimula",
+    memoryFail: "Nabigo! Nagsisimula muli mula sa ronda 1.",
+    crash: "Banggaan", success: "Tagumpay!", complete: "Kumpleto!", reviewNeeded: "Kailangan ng pagsusuri", progress: "Pag-unlad",
+    footerText: "Isang koleksyon ng mga web game na tumatakbo nang direkta sa browser",
+    genres: {
+      action: { name: "Aksyon", description: "Mabilis na laro kung saan mahalaga ang reaksyon at tiyempo" },
+      puzzle: { name: "Palaisipan", description: "Mga larong pangkaisipan para sa pagbabasa ng mga panuntunan" },
+      racing: { name: "Karera", description: "Mga laro sa pagmamaneho na nananalo sa pamamagitan ng bilis at ritmo" },
+    },
+  });
+
+  translations.el = mk({
+    localeName: "Ελληνικά",
+    navGenres: "Είδη", navGames: "Παιχνίδια", navPrivacy: "Απόρρητο", navContact: "Επικοινωνία",
+    brandHome: "αρχική webgame arcade", mainMenu: "Κύριο μενού",
+    heroText: "Επίλεξε είδος και παίξε mini-games<br>απευθείας στον browser σου.",
+    chooseGenre: "Επιλογή είδους", viewGames: "Δες παιχνίδια", featuredGenres: "Προτεινόμενα είδη",
+    genresEyebrow: "Είδη", genresTitle: "Επίλεξε είδος",
+    genresText: "Επίλεξε είδος για να δεις μόνο παιχνίδια αυτής της κατηγορίας.",
+    home: "Αρχική", gamesEyebrow: "Παιχνίδια", allGames: "Όλα τα παιχνίδια",
+    genreGames: "Παιχνίδια {genre}",
+    gamesText: "Επίλεξε οποιοδήποτε παιχνίδι και θα εκκινήσει απευθείας στον browser σου.",
+    gameGenreFilter: "Φίλτρο είδους", all: "Όλα", launch: "Εκκίνηση", list: "Λίστα",
+    gameNotFound: "Το παιχνίδι δεν βρέθηκε.", score: "Σκορ", restart: "Επανεκκίνηση",
+    gameOver: "Τέλος παιχνιδιού", round: "Γύρος", start: "Έναρξη",
+    memoryFail: "Αποτυχία! Ξεκινάμε από τον γύρο 1.",
+    crash: "Σύγκρουση", success: "Επιτυχία!", complete: "Ολοκληρώθηκε!", reviewNeeded: "Απαιτείται έλεγχος", progress: "Πρόοδος",
+    footerText: "Μια συλλογή web παιχνιδιών που τρέχουν απευθείας στον browser",
+    genres: {
+      action: { name: "Δράση", description: "Γρήγορα παιχνίδια όπου τα αντανακλαστικά και ο χρονισμός μετράνε" },
+      puzzle: { name: "Παζλ", description: "Παιχνίδια μυαλού για ανάγνωση κανόνων και εύρεση λύσεων" },
+      racing: { name: "Αγώνες", description: "Παιχνίδια οδήγησης που κερδίζονται με ταχύτητα και ρυθμό" },
+    },
+  });
+
+  translations.gu = mk({
+    localeName: "ગુજરાતી",
+    navGenres: "શૈલીઓ", navGames: "ગેમ્સ", navPrivacy: "ગોપનીયતા", navContact: "સંપર્ક",
+    brandHome: "webgame arcade હોમ", mainMenu: "મુખ્ય મેનૂ",
+    heroText: "એક શૈલી પસંદ કરો અને સીધા<br>બ્રાઉઝરમાં મિનીગેમ રમો.",
+    chooseGenre: "શૈલી પસંદ કરો", viewGames: "ગેમ્સ જુઓ", featuredGenres: "વિશેષ શૈલીઓ",
+    genresEyebrow: "શૈલીઓ", genresTitle: "એક શૈલી પસંદ કરો",
+    genresText: "ફક્ત તે શ્રેણીની ગેમ્સ જોવા માટે શૈલી પસંદ કરો.",
+    home: "હોમ", gamesEyebrow: "ગેમ્સ", allGames: "બધી ગેમ્સ",
+    genreGames: "{genre} ગેમ્સ",
+    gamesText: "કોઈ પણ ગેમ પસંદ કરો અને તે સીધી બ્રાઉઝરમાં ચાલશે.",
+    gameGenreFilter: "શૈલી ફિલ્ટર", all: "બધી", launch: "શરૂ કરો", list: "સૂચિ",
+    gameNotFound: "ગેમ મળી નથી.", score: "સ્કોર", restart: "ફરીથી શરૂ",
+    gameOver: "ગેમ ઓવર", round: "રાઉન્ડ", start: "શરૂ",
+    memoryFail: "નિષ્ફળ! રાઉન્ડ 1 થી ફરી શરૂ.",
+    crash: "ક્રૅશ", success: "સફળ!", complete: "પૂર્ણ!", reviewNeeded: "સમીક્ષા જરૂરી", progress: "પ્રગતિ",
+    footerText: "સીધા બ્રાઉઝરમાં ચાલતી વેબ ગેમ્સનો સંગ્રહ",
+    genres: {
+      action: { name: "એક્શન", description: "ઝડપી ગેમ્સ જ્યાં પ્રતિક્રિયા અને સમય મહત્વ ધરાવે છે" },
+      puzzle: { name: "પઝલ", description: "નિયમો વાંચીને ઉકેલ શોધવાની મગજ ગેમ્સ" },
+      racing: { name: "રેસિંગ", description: "ઝડપ અને લયથી જીતાતી ડ્રાઇવિંગ ગેમ્સ" },
+    },
+  });
+
+  translations.hu = mk({
+    localeName: "Magyar",
+    navGenres: "Műfajok", navGames: "Játékok", navPrivacy: "Adatvédelem", navContact: "Kapcsolat",
+    brandHome: "webgame arcade főoldal", mainMenu: "Főmenü",
+    heroText: "Válassz műfajt és játssz minijátékokat<br>közvetlenül a böngészőben.",
+    chooseGenre: "Műfaj választása", viewGames: "Játékok megtekintése", featuredGenres: "Kiemelt műfajok",
+    genresEyebrow: "Műfajok", genresTitle: "Válassz műfajt",
+    genresText: "Válassz műfajt, hogy csak az adott kategória játékait lásd.",
+    home: "Főoldal", gamesEyebrow: "Játékok", allGames: "Összes játék",
+    genreGames: "{genre}-játékok",
+    gamesText: "Válassz bármilyen játékot, és azonnal elindul a böngészőben.",
+    gameGenreFilter: "Műfajszűrő", all: "Összes", launch: "Játszani", list: "Lista",
+    gameNotFound: "A játék nem található.", score: "Pontszám", restart: "Újraindítás",
+    gameOver: "Játék vége", round: "Kör", start: "Start",
+    memoryFail: "Sikertelen! Újraindítás az 1. körtől.",
+    crash: "Ütközés", success: "Siker!", complete: "Kész!", reviewNeeded: "Ellenőrzés szükséges", progress: "Haladás",
+    footerText: "Böngészőben közvetlenül futó webjátékok gyűjteménye",
+    genres: {
+      action: { name: "Akció", description: "Gyors játékok, ahol a reflexek és az időzítés számít" },
+      puzzle: { name: "Rejtvény", description: "Agyjátékok a szabályok olvasásához és megoldások kereséséhez" },
+      racing: { name: "Verseny", description: "Autós játékok, amelyeket sebességgel és ritmussal nyernek" },
+    },
+  });
+
+  translations.it = mk({
+    localeName: "Italiano",
+    navGenres: "Generi", navGames: "Giochi", navPrivacy: "Privacy", navContact: "Contatti",
+    brandHome: "home di webgame arcade", mainMenu: "Menu principale",
+    heroText: "Scegli un genere e gioca a minigiochi<br>direttamente nel tuo browser.",
+    chooseGenre: "Scegli genere", viewGames: "Vedi giochi", featuredGenres: "Generi in evidenza",
+    genresEyebrow: "Generi", genresTitle: "Scegli un genere",
+    genresText: "Seleziona un genere per vedere solo i giochi di quella categoria.",
+    home: "Home", gamesEyebrow: "Giochi", allGames: "Tutti i giochi",
+    genreGames: "Giochi di {genre}",
+    gamesText: "Scegli qualsiasi gioco e si avvierà direttamente nel tuo browser.",
+    gameGenreFilter: "Filtro genere", all: "Tutti", launch: "Gioca", list: "Lista",
+    gameNotFound: "Gioco non trovato.", score: "Punteggio", restart: "Ricomincia",
+    gameOver: "Partita terminata", round: "Turno", start: "Inizio",
+    memoryFail: "Fallito! Si ricomincia dal turno 1.",
+    crash: "Schianto", success: "Successo!", complete: "Completato!", reviewNeeded: "Revisione necessaria", progress: "Progresso",
+    footerText: "Una raccolta di giochi web che si avviano direttamente nel browser",
+    genres: {
+      action: { name: "Azione", description: "Giochi veloci dove i riflessi e il tempismo contano" },
+      puzzle: { name: "Puzzle", description: "Giochi mentali per leggere le regole e trovare soluzioni" },
+      racing: { name: "Corsa", description: "Giochi di guida vinti con velocità e ritmo" },
+    },
+  });
+
+  translations.kn = mk({
+    localeName: "ಕನ್ನಡ",
+    navGenres: "ಪ್ರಕಾರಗಳು", navGames: "ಆಟಗಳು", navPrivacy: "ಗೌಪ್ಯತೆ", navContact: "ಸಂಪರ್ಕ",
+    brandHome: "webgame arcade ಹೋಮ್", mainMenu: "ಮುಖ್ಯ ಮೆನು",
+    heroText: "ಒಂದು ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ ಮತ್ತು<br>ನೇರವಾಗಿ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಿನಿಗೇಮ್ ಆಡಿ.",
+    chooseGenre: "ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ", viewGames: "ಆಟಗಳು ನೋಡಿ", featuredGenres: "ವಿಶೇಷ ಪ್ರಕಾರಗಳು",
+    genresEyebrow: "ಪ್ರಕಾರಗಳು", genresTitle: "ಒಂದು ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ",
+    genresText: "ಆ ವರ್ಗದ ಆಟಗಳನ್ನು ಮಾತ್ರ ನೋಡಲು ಒಂದು ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ.",
+    home: "ಹೋಮ್", gamesEyebrow: "ಆಟಗಳು", allGames: "ಎಲ್ಲ ಆಟಗಳು",
+    genreGames: "{genre} ಆಟಗಳು",
+    gamesText: "ಯಾವುದೇ ಆಟ ಆಯ್ಕೆ ಮಾಡಿ, ಅದು ನೇರವಾಗಿ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತದೆ.",
+    gameGenreFilter: "ಪ್ರಕಾರ ಫಿಲ್ಟರ್", all: "ಎಲ್ಲ", launch: "ಪ್ರಾರಂಭಿಸಿ", list: "ಪಟ್ಟಿ",
+    gameNotFound: "ಆಟ ಕಂಡುಬಂದಿಲ್ಲ.", score: "ಸ್ಕೋರ್", restart: "ಮತ್ತೆ ಪ್ರಾರಂಭಿಸಿ",
+    gameOver: "ಆಟ ಮುಗಿಯಿತು", round: "ರೌಂಡ್", start: "ಪ್ರಾರಂಭ",
+    memoryFail: "ವಿಫಲ! ರೌಂಡ್ 1 ರಿಂದ ಮತ್ತೆ.",
+    crash: "ಕ್ರ್ಯಾಶ್", success: "ಯಶಸ್ಸು!", complete: "ಪೂರ್ಣ!", reviewNeeded: "ಪರಿಶೀಲನೆ ಅಗತ್ಯ", progress: "ಪ್ರಗತಿ",
+    footerText: "ನೇರವಾಗಿ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಆಡಬಹುದಾದ ವೆಬ್ ಗೇಮ್‌ಗಳ ಸಂಗ್ರಹ",
+    genres: {
+      action: { name: "ಆ್ಯಕ್ಷನ್", description: "ತ್ವರಿತ ಆಟಗಳಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯೆ ಮತ್ತು ಸಮಯ ಮುಖ್ಯ" },
+      puzzle: { name: "ಪಜಲ್", description: "ನಿಯಮಗಳನ್ನು ಓದಿ ಪರಿಹಾರ ಕಂಡುಹಿಡಿಯುವ ಬ್ರೆಯಿನ್ ಗೇಮ್" },
+      racing: { name: "ರೇಸಿಂಗ್", description: "ವೇಗ ಮತ್ತು ಲಯದಿಂದ ಗೆಲ್ಲುವ ಡ್ರೈವಿಂಗ್ ಆಟಗಳು" },
+    },
+  });
+
+  translations.lv = mk({
+    localeName: "Latviešu",
+    navGenres: "Žanri", navGames: "Spēles", navPrivacy: "Privātums", navContact: "Kontakts",
+    brandHome: "webgame arcade sākumlapa", mainMenu: "Galvenā izvēlne",
+    heroText: "Izvēlies žanru un spēlē minispēles<br>tieši pārlūkprogrammā.",
+    chooseGenre: "Izvēlēties žanru", viewGames: "Skatīt spēles", featuredGenres: "Ieteiktie žanri",
+    genresEyebrow: "Žanri", genresTitle: "Izvēlies žanru",
+    genresText: "Izvēlies žanru, lai redzētu tikai šīs kategorijas spēles.",
+    home: "Sākums", gamesEyebrow: "Spēles", allGames: "Visas spēles",
+    genreGames: "{genre} spēles",
+    gamesText: "Izvēlies jebkuru spēli un tā startēs tieši pārlūkprogrammā.",
+    gameGenreFilter: "Žanra filtrs", all: "Visas", launch: "Spēlēt", list: "Saraksts",
+    gameNotFound: "Spēle nav atrasta.", score: "Rezultāts", restart: "Restartēt",
+    gameOver: "Spēle beigusies", round: "Kārta", start: "Sākt",
+    memoryFail: "Neveiksmīgi! Sākam no 1. kārtas.",
+    crash: "Sadursme", success: "Panākumi!", complete: "Pabeigts!", reviewNeeded: "Nepieciešama pārbaude", progress: "Progress",
+    footerText: "Tīmekļa spēļu kolekcija, kas darbojas tieši pārlūkprogrammā",
+    genres: {
+      action: { name: "Darbība", description: "Ātras spēles, kur svarīga ir reakcija un laiks" },
+      puzzle: { name: "Puzle", description: "Prāta spēles par noteikumu lasīšanu un risinājumu meklēšanu" },
+      racing: { name: "Sacīkstes", description: "Braukšanas spēles, ko uzvar ar ātrumu un ritmu" },
+    },
+  });
+
+  translations.lt = mk({
+    localeName: "Lietuvių",
+    navGenres: "Žanrai", navGames: "Žaidimai", navPrivacy: "Privatumas", navContact: "Kontaktas",
+    brandHome: "webgame arcade pradžia", mainMenu: "Pagrindinis meniu",
+    heroText: "Pasirink žanrą ir žaisk mini žaidimus<br>tiesiogiai naršyklėje.",
+    chooseGenre: "Pasirinkti žanrą", viewGames: "Peržiūrėti žaidimus", featuredGenres: "Rekomenduojami žanrai",
+    genresEyebrow: "Žanrai", genresTitle: "Pasirinkti žanrą",
+    genresText: "Pasirink žanrą, kad matytum tik tos kategorijos žaidimus.",
+    home: "Pradžia", gamesEyebrow: "Žaidimai", allGames: "Visi žaidimai",
+    genreGames: "{genre} žaidimai",
+    gamesText: "Pasirink bet kurį žaidimą ir jis paleistas tiesiogiai naršyklėje.",
+    gameGenreFilter: "Žanro filtras", all: "Visi", launch: "Žaisti", list: "Sąrašas",
+    gameNotFound: "Žaidimas nerastas.", score: "Rezultatas", restart: "Paleisti iš naujo",
+    gameOver: "Žaidimas baigtas", round: "Raundas", start: "Pradėti",
+    memoryFail: "Nepavyko! Pradedame nuo 1 raundo.",
+    crash: "Susidūrimas", success: "Sėkmė!", complete: "Baigta!", reviewNeeded: "Reikalinga peržiūra", progress: "Pažanga",
+    footerText: "Žiniatinklio žaidimų kolekcija, veikianti tiesiogiai naršyklėje",
+    genres: {
+      action: { name: "Veiksmas", description: "Greiti žaidimai, kuriuose svarbi reakcija ir laikas" },
+      puzzle: { name: "Galvosūkis", description: "Protiniai žaidimai apie taisyklių skaitymą ir sprendimų paiešką" },
+      racing: { name: "Lenktynės", description: "Vairavimo žaidimai, laimimi greičiu ir ritmu" },
+    },
+  });
+
+  translations.ms = mk({
+    localeName: "Bahasa Melayu",
+    navGenres: "Genre", navGames: "Permainan", navPrivacy: "Privasi", navContact: "Hubungi",
+    brandHome: "laman utama webgame arcade", mainMenu: "Menu utama",
+    heroText: "Pilih genre dan main permainan mini<br>terus dalam pelayar anda.",
+    chooseGenre: "Pilih genre", viewGames: "Lihat permainan", featuredGenres: "Genre unggulan",
+    genresEyebrow: "Genre", genresTitle: "Pilih genre",
+    genresText: "Pilih genre untuk melihat hanya permainan dalam kategori tersebut.",
+    home: "Utama", gamesEyebrow: "Permainan", allGames: "Semua permainan",
+    genreGames: "Permainan {genre}",
+    gamesText: "Pilih mana-mana permainan dan ia akan dilancarkan terus dalam pelayar anda.",
+    gameGenreFilter: "Penapis genre", all: "Semua", launch: "Main", list: "Senarai",
+    gameNotFound: "Permainan tidak dijumpai.", score: "Skor", restart: "Mula semula",
+    gameOver: "Permainan tamat", round: "Pusingan", start: "Mula",
+    memoryFail: "Gagal! Mulai dari pusingan 1.",
+    crash: "Perlanggaran", success: "Berjaya!", complete: "Selesai!", reviewNeeded: "Semakan diperlukan", progress: "Kemajuan",
+    footerText: "Koleksi permainan web yang berjalan terus dalam pelayar",
+    genres: {
+      action: { name: "Aksi", description: "Permainan pantas di mana refleks dan masa sangat penting" },
+      puzzle: { name: "Teka-teki", description: "Permainan minda untuk membaca peraturan dan mencari penyelesaian" },
+      racing: { name: "Lumba", description: "Permainan memandu yang dimenangi dengan kelajuan dan irama" },
+    },
+  });
+
+  translations.ml = mk({
+    localeName: "മലയാളം",
+    navGenres: "വിഭാഗങ്ങൾ", navGames: "ഗെയിമുകൾ", navPrivacy: "സ്വകാര്യത", navContact: "ബന്ധപ്പെടുക",
+    brandHome: "webgame arcade ഹോം", mainMenu: "പ്രധാന മെനു",
+    heroText: "ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക,<br>ബ്രൗസറിൽ നേരിട്ട് കളിക്കുക.",
+    chooseGenre: "വിഭാഗം തിരഞ്ഞെടുക്കുക", viewGames: "ഗെയിമുകൾ കാണുക", featuredGenres: "പ്രത്യേക വിഭാഗങ്ങൾ",
+    genresEyebrow: "വിഭാഗങ്ങൾ", genresTitle: "ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക",
+    genresText: "ആ വർഗ്ഗത്തിലെ ഗെയിമുകൾ മാത്രം കാണാൻ ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക.",
+    home: "ഹോം", gamesEyebrow: "ഗെയിമുകൾ", allGames: "എല്ലാ ഗെയിമുകൾ",
+    genreGames: "{genre} ഗെയിമുകൾ",
+    gamesText: "ഏതെങ്കിലും ഗെയിം തിരഞ്ഞെടുക്കുക, അത് ബ്രൗസറിൽ നേരിട്ട് തുറക്കും.",
+    gameGenreFilter: "വിഭാഗ ഫിൽട്ടർ", all: "എല്ലാം", launch: "ആരംഭിക്കുക", list: "പട്ടിക",
+    gameNotFound: "ഗെയിം കണ്ടെത്തിയില്ല.", score: "സ്കോർ", restart: "വീണ്ടും ആരംഭിക്കുക",
+    gameOver: "ഗെയിം കഴിഞ്ഞു", round: "റൗണ്ട്", start: "ആരംഭം",
+    memoryFail: "പരാജയം! റൗണ്ട് 1 മുതൽ വീണ്ടും.",
+    crash: "ക്രാഷ്", success: "വിജയം!", complete: "പൂർണ്ണം!", reviewNeeded: "അവലോകനം ആവശ്യമാണ്", progress: "പുരോഗതി",
+    footerText: "ബ്രൗസറിൽ നേരിട്ട് ഓടുന്ന വെബ് ഗെയിമുകളുടെ ശേഖരം",
+    genres: {
+      action: { name: "ആക്ഷൻ", description: "വേഗത്തിലുള്ള ഗെയിമുകൾ, പ്രതികരണവും സമയവും പ്രധാനം" },
+      puzzle: { name: "പസിൽ", description: "നിയമങ്ങൾ വായിച്ച് പരിഹാരം കണ്ടെത്തുന്ന ബ്രെയിൻ ഗെയിം" },
+      racing: { name: "റേസിംഗ്", description: "വേഗതയും താളവും കൊണ്ട് ജയിക്കുന്ന ഡ്രൈവിംഗ് ഗെയിം" },
+    },
+  });
+
+  translations.mr = mk({
+    localeName: "मराठी",
+    navGenres: "शैली", navGames: "खेळ", navPrivacy: "गोपनीयता", navContact: "संपर्क",
+    brandHome: "webgame arcade होम", mainMenu: "मुख्य मेनू",
+    heroText: "शैली निवडा आणि थेट<br>ब्राउझरमध्ये मिनीगेम खेळा.",
+    chooseGenre: "शैली निवडा", viewGames: "खेळ पहा", featuredGenres: "विशेष शैली",
+    genresEyebrow: "शैली", genresTitle: "शैली निवडा",
+    genresText: "त्या वर्गातील फक्त खेळ पाहण्यासाठी शैली निवडा.",
+    home: "होम", gamesEyebrow: "खेळ", allGames: "सर्व खेळ",
+    genreGames: "{genre} खेळ",
+    gamesText: "कोणताही खेळ निवडा आणि तो थेट ब्राउझरमध्ये चालेल.",
+    gameGenreFilter: "शैली फिल्टर", all: "सर्व", launch: "सुरू करा", list: "यादी",
+    gameNotFound: "खेळ सापडला नाही.", score: "स्कोर", restart: "पुन्हा सुरू",
+    gameOver: "खेळ संपला", round: "फेरी", start: "सुरुवात",
+    memoryFail: "अयशस्वी! फेरी 1 पासून पुन्हा सुरू.",
+    crash: "क्रॅश", success: "यश!", complete: "पूर्ण!", reviewNeeded: "आढावा आवश्यक", progress: "प्रगती",
+    footerText: "थेट ब्राउझरमध्ये चालणाऱ्या वेब गेम्सचा संग्रह",
+    genres: {
+      action: { name: "अॅक्शन", description: "वेगवान खेळ जिथे प्रतिक्रिया आणि वेळ महत्त्वाचे" },
+      puzzle: { name: "कोडे", description: "नियम वाचून उत्तर शोधणारे मेंदूचे खेळ" },
+      racing: { name: "रेसिंग", description: "वेग आणि लयीने जिंकले जाणारे ड्रायव्हिंग खेळ" },
+    },
+  });
+
+  translations.no = mk({
+    localeName: "Norsk",
+    navGenres: "Sjangre", navGames: "Spill", navPrivacy: "Personvern", navContact: "Kontakt",
+    brandHome: "webgame arcade startside", mainMenu: "Hovedmeny",
+    heroText: "Velg en sjanger og spill minispill<br>direkte i nettleseren.",
+    chooseGenre: "Velg sjanger", viewGames: "Se spill", featuredGenres: "Utvalgte sjangre",
+    genresEyebrow: "Sjangre", genresTitle: "Velg en sjanger",
+    genresText: "Velg en sjanger for å kun se spill i den kategorien.",
+    home: "Hjem", gamesEyebrow: "Spill", allGames: "Alle spill",
+    genreGames: "{genre}-spill",
+    gamesText: "Velg et spill og det starter direkte i nettleseren.",
+    gameGenreFilter: "Sjangerfilter", all: "Alle", launch: "Spill", list: "Liste",
+    gameNotFound: "Spill ikke funnet.", score: "Poeng", restart: "Start på nytt",
+    gameOver: "Spill slutt", round: "Runde", start: "Start",
+    memoryFail: "Mislyktes! Starter på nytt fra runde 1.",
+    crash: "Kollisjon", success: "Suksess!", complete: "Ferdig!", reviewNeeded: "Gjennomgang kreves", progress: "Fremgang",
+    footerText: "En samling nettspill som kjører direkte i nettleseren",
+    genres: {
+      action: { name: "Action", description: "Raske spill der reaksjoner og timing teller" },
+      puzzle: { name: "Puslespill", description: "Tankespill om å lese regler og finne løsninger" },
+      racing: { name: "Racing", description: "Kjørespill vunnet med hastighet og rytme" },
+    },
+  });
+
+  translations.pl = mk({
+    localeName: "Polski",
+    navGenres: "Gatunki", navGames: "Gry", navPrivacy: "Prywatność", navContact: "Kontakt",
+    brandHome: "strona główna webgame arcade", mainMenu: "Menu główne",
+    heroText: "Wybierz gatunek i graj w minigry<br>bezpośrednio w przeglądarce.",
+    chooseGenre: "Wybierz gatunek", viewGames: "Zobacz gry", featuredGenres: "Polecane gatunki",
+    genresEyebrow: "Gatunki", genresTitle: "Wybierz gatunek",
+    genresText: "Wybierz gatunek, aby zobaczyć tylko gry z tej kategorii.",
+    home: "Strona główna", gamesEyebrow: "Gry", allGames: "Wszystkie gry",
+    genreGames: "Gry: {genre}",
+    gamesText: "Wybierz dowolną grę, a uruchomi się bezpośrednio w przeglądarce.",
+    gameGenreFilter: "Filtr gatunku", all: "Wszystkie", launch: "Graj", list: "Lista",
+    gameNotFound: "Gra nie znaleziona.", score: "Punkty", restart: "Restart",
+    gameOver: "Koniec gry", round: "Runda", start: "Start",
+    memoryFail: "Nieudane! Zaczynamy od rundy 1.",
+    crash: "Zderzenie", success: "Sukces!", complete: "Gotowe!", reviewNeeded: "Wymagana recenzja", progress: "Postęp",
+    footerText: "Kolekcja gier webowych działających bezpośrednio w przeglądarce",
+    genres: {
+      action: { name: "Akcja", description: "Szybkie gry, w których liczy się reakcja i czas" },
+      puzzle: { name: "Łamigłówka", description: "Gry umysłowe o czytaniu zasad i szukaniu rozwiązań" },
+      racing: { name: "Wyścigi", description: "Gry wyścigowe wygrywane szybkością i rytmem" },
+    },
+  });
+
+  translations.pa = mk({
+    localeName: "ਪੰਜਾਬੀ",
+    navGenres: "ਕਿਸਮਾਂ", navGames: "ਗੇਮਾਂ", navPrivacy: "ਗੋਪਨੀਯਤਾ", navContact: "ਸੰਪਰਕ",
+    brandHome: "webgame arcade ਹੋਮ", mainMenu: "ਮੁੱਖ ਮੀਨੂ",
+    heroText: "ਇੱਕ ਕਿਸਮ ਚੁਣੋ ਅਤੇ ਸਿੱਧੇ<br>ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਮਿਨੀਗੇਮ ਖੇਡੋ।",
+    chooseGenre: "ਕਿਸਮ ਚੁਣੋ", viewGames: "ਗੇਮਾਂ ਵੇਖੋ", featuredGenres: "ਖਾਸ ਕਿਸਮਾਂ",
+    genresEyebrow: "ਕਿਸਮਾਂ", genresTitle: "ਇੱਕ ਕਿਸਮ ਚੁਣੋ",
+    genresText: "ਉਸ ਸ਼੍ਰੇਣੀ ਦੀਆਂ ਗੇਮਾਂ ਵੇਖਣ ਲਈ ਕਿਸਮ ਚੁਣੋ।",
+    home: "ਹੋਮ", gamesEyebrow: "ਗੇਮਾਂ", allGames: "ਸਾਰੀਆਂ ਗੇਮਾਂ",
+    genreGames: "{genre} ਗੇਮਾਂ",
+    gamesText: "ਕੋਈ ਵੀ ਗੇਮ ਚੁਣੋ ਅਤੇ ਇਹ ਸਿੱਧੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਚੱਲੇਗੀ।",
+    gameGenreFilter: "ਕਿਸਮ ਫਿਲਟਰ", all: "ਸਭ", launch: "ਸ਼ੁਰੂ ਕਰੋ", list: "ਸੂਚੀ",
+    gameNotFound: "ਗੇਮ ਨਹੀਂ ਮਿਲੀ।", score: "ਸਕੋਰ", restart: "ਦੁਬਾਰਾ ਸ਼ੁਰੂ",
+    gameOver: "ਗੇਮ ਓਵਰ", round: "ਦੌਰ", start: "ਸ਼ੁਰੂ",
+    memoryFail: "ਅਸਫਲ! ਦੌਰ 1 ਤੋਂ ਦੁਬਾਰਾ.",
+    crash: "ਕ੍ਰੈਸ਼", success: "ਸਫਲਤਾ!", complete: "ਪੂਰਾ!", reviewNeeded: "ਸਮੀਖਿਆ ਲੋੜੀਂਦੀ", progress: "ਤਰੱਕੀ",
+    footerText: "ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਸਿੱਧੇ ਚੱਲਣ ਵਾਲੀਆਂ ਵੈੱਬ ਗੇਮਾਂ ਦਾ ਸੰਗ੍ਰਹਿ",
+    genres: {
+      action: { name: "ਐਕਸ਼ਨ", description: "ਤੇਜ਼ ਗੇਮਾਂ ਜਿੱਥੇ ਪ੍ਰਤੀਕਿਰਿਆ ਅਤੇ ਸਮਾਂ ਮਹੱਤਵਪੂਰਨ" },
+      puzzle: { name: "ਪਹੇਲੀ", description: "ਨਿਯਮ ਪੜ੍ਹ ਕੇ ਹੱਲ ਲੱਭਣ ਵਾਲੀਆਂ ਦਿਮਾਗ਼ੀ ਗੇਮਾਂ" },
+      racing: { name: "ਰੇਸਿੰਗ", description: "ਗਤੀ ਅਤੇ ਤਾਲ ਨਾਲ ਜਿੱਤੀਆਂ ਡ੍ਰਾਈਵਿੰਗ ਗੇਮਾਂ" },
+    },
+  });
+
+  translations.ru = mk({
+    localeName: "Русский",
+    navGenres: "Жанры", navGames: "Игры", navPrivacy: "Конфиденциальность", navContact: "Контакт",
+    brandHome: "главная webgame arcade", mainMenu: "Главное меню",
+    heroText: "Выбери жанр и играй в мини-игры<br>прямо в браузере.",
+    chooseGenre: "Выбрать жанр", viewGames: "Смотреть игры", featuredGenres: "Выбранные жанры",
+    genresEyebrow: "Жанры", genresTitle: "Выбрать жанр",
+    genresText: "Выбери жанр, чтобы видеть только игры этой категории.",
+    home: "Главная", gamesEyebrow: "Игры", allGames: "Все игры",
+    genreGames: "Игры: {genre}",
+    gamesText: "Выбери любую игру, и она запустится прямо в браузере.",
+    gameGenreFilter: "Фильтр жанра", all: "Все", launch: "Играть", list: "Список",
+    gameNotFound: "Игра не найдена.", score: "Счёт", restart: "Начать заново",
+    gameOver: "Игра окончена", round: "Раунд", start: "Старт",
+    memoryFail: "Неудача! Начинаем с раунда 1.",
+    crash: "Столкновение", success: "Успех!", complete: "Готово!", reviewNeeded: "Требуется проверка", progress: "Прогресс",
+    footerText: "Коллекция веб-игр, запускающихся прямо в браузере",
+    genres: {
+      action: { name: "Экшн", description: "Быстрые игры, где важны реакция и тайминг" },
+      puzzle: { name: "Головоломка", description: "Умственные игры на чтение правил и поиск решений" },
+      racing: { name: "Гонки", description: "Гоночные игры, которые побеждаются скоростью и ритмом" },
+    },
+  });
+
+  translations.sr = mk({
+    localeName: "Српски",
+    navGenres: "Жанрови", navGames: "Игре", navPrivacy: "Приватност", navContact: "Контакт",
+    brandHome: "почетна webgame arcade", mainMenu: "Главни мени",
+    heroText: "Одабери жанр и играј мини игре<br>директно у прегледачу.",
+    chooseGenre: "Одабери жанр", viewGames: "Погледај игре", featuredGenres: "Истакнути жанрови",
+    genresEyebrow: "Жанрови", genresTitle: "Одабери жанр",
+    genresText: "Одабери жанр да видиш само игре из те категорије.",
+    home: "Почетна", gamesEyebrow: "Игре", allGames: "Све игре",
+    genreGames: "Игре: {genre}",
+    gamesText: "Одабери билу коју игру и покренуће се директно у прегледачу.",
+    gameGenreFilter: "Филтер жанра", all: "Све", launch: "Играј", list: "Списак",
+    gameNotFound: "Игра није пронађена.", score: "Резултат", restart: "Поново покрени",
+    gameOver: "Крај игре", round: "Рунда", start: "Старт",
+    memoryFail: "Неуспех! Почињемо поново од рунде 1.",
+    crash: "Судар", success: "Успех!", complete: "Завршено!", reviewNeeded: "Потребна провера", progress: "Напредак",
+    footerText: "Колекција веб игара које се покрећу директно у прегледачу",
+    genres: {
+      action: { name: "Акција", description: "Брзе игре у којима су реакција и тајминг важни" },
+      puzzle: { name: "Слагалица", description: "Игре ума за читање правила и проналажење решења" },
+      racing: { name: "Трке", description: "Игре вожње које се добијају брзином и ритмом" },
+    },
+  });
+
+  translations.sk = mk({
+    localeName: "Slovenčina",
+    navGenres: "Žánre", navGames: "Hry", navPrivacy: "Súkromie", navContact: "Kontakt",
+    brandHome: "domovská stránka webgame arcade", mainMenu: "Hlavná ponuka",
+    heroText: "Vyber žáner a hraj minihry<br>priamo v prehliadači.",
+    chooseGenre: "Vybrať žáner", viewGames: "Zobraziť hry", featuredGenres: "Odporúčané žánre",
+    genresEyebrow: "Žánre", genresTitle: "Vyber žáner",
+    genresText: "Vyber žáner a zobrazí sa len hry z danej kategórie.",
+    home: "Domov", gamesEyebrow: "Hry", allGames: "Všetky hry",
+    genreGames: "Hry: {genre}",
+    gamesText: "Vyber hru a spustí sa priamo v prehliadači.",
+    gameGenreFilter: "Filter žánru", all: "Všetko", launch: "Hrať", list: "Zoznam",
+    gameNotFound: "Hra nenájdená.", score: "Skóre", restart: "Reštart",
+    gameOver: "Koniec hry", round: "Kolo", start: "Štart",
+    memoryFail: "Neúspech! Začíname od kola 1.",
+    crash: "Náraz", success: "Úspech!", complete: "Hotovo!", reviewNeeded: "Potrebná kontrola", progress: "Pokrok",
+    footerText: "Zbierka webových hier, ktoré fungujú priamo v prehliadači",
+    genres: {
+      action: { name: "Akcia", description: "Rýchle hry, kde záleží na reakciách a načasovaní" },
+      puzzle: { name: "Puzzle", description: "Mozgové hry o čítaní pravidiel a hľadaní riešení" },
+      racing: { name: "Preteky", description: "Závodné hry vyhrávané rýchlosťou a rytmom" },
+    },
+  });
+
+  translations.sl = mk({
+    localeName: "Slovenščina",
+    navGenres: "Žanri", navGames: "Igre", navPrivacy: "Zasebnost", navContact: "Kontakt",
+    brandHome: "domača stran webgame arcade", mainMenu: "Glavni meni",
+    heroText: "Izberi žanr in igraj mini igre<br>neposredno v brskalniku.",
+    chooseGenre: "Izberi žanr", viewGames: "Poglej igre", featuredGenres: "Priporočeni žanri",
+    genresEyebrow: "Žanri", genresTitle: "Izberi žanr",
+    genresText: "Izberi žanr, da vidiš samo igre te kategorije.",
+    home: "Domov", gamesEyebrow: "Igre", allGames: "Vse igre",
+    genreGames: "Igre: {genre}",
+    gamesText: "Izberi katero koli igro in zagnal se bo neposredno v brskalniku.",
+    gameGenreFilter: "Filter žanra", all: "Vse", launch: "Igraj", list: "Seznam",
+    gameNotFound: "Igra ni bila najdena.", score: "Rezultat", restart: "Ponovni zagon",
+    gameOver: "Konec igre", round: "Krog", start: "Start",
+    memoryFail: "Neuspeh! Začnemo znova od kroga 1.",
+    crash: "Trčenje", success: "Uspeh!", complete: "Dokončano!", reviewNeeded: "Potreben pregled", progress: "Napredek",
+    footerText: "Zbirka spletnih iger, ki delujejo neposredno v brskalniku",
+    genres: {
+      action: { name: "Akcija", description: "Hitre igre, kjer so reakcije in čas pomembni" },
+      puzzle: { name: "Uganka", description: "Igre za branje pravil in iskanje rešitev" },
+      racing: { name: "Dirke", description: "Igre vožnje, ki se dobijo s hitrostjo in ritmom" },
+    },
+  });
+
+  translations.sv = mk({
+    localeName: "Svenska",
+    navGenres: "Genrer", navGames: "Spel", navPrivacy: "Integritet", navContact: "Kontakt",
+    brandHome: "webgame arcade startsida", mainMenu: "Huvudmeny",
+    heroText: "Välj en genre och spela minispel<br>direkt i din webbläsare.",
+    chooseGenre: "Välj genre", viewGames: "Se spel", featuredGenres: "Utvalda genrer",
+    genresEyebrow: "Genrer", genresTitle: "Välj en genre",
+    genresText: "Välj en genre för att bara se spel i den kategorin.",
+    home: "Hem", gamesEyebrow: "Spel", allGames: "Alla spel",
+    genreGames: "{genre}-spel",
+    gamesText: "Välj vilket spel som helst och det startar direkt i din webbläsare.",
+    gameGenreFilter: "Genrefilter", all: "Alla", launch: "Spela", list: "Lista",
+    gameNotFound: "Spelet hittades inte.", score: "Poäng", restart: "Starta om",
+    gameOver: "Spelet är slut", round: "Runda", start: "Start",
+    memoryFail: "Misslyckades! Startar om från runda 1.",
+    crash: "Krasch", success: "Framgång!", complete: "Klart!", reviewNeeded: "Granskning krävs", progress: "Framsteg",
+    footerText: "En samling webbspel som körs direkt i webbläsaren",
+    genres: {
+      action: { name: "Action", description: "Snabba spel där reaktioner och tajming räknas" },
+      puzzle: { name: "Pussel", description: "Tankespel om att läsa regler och hitta lösningar" },
+      racing: { name: "Racing", description: "Körspel som vinns med hastighet och rytm" },
+    },
+  });
+
+  translations.ta = mk({
+    localeName: "தமிழ்",
+    navGenres: "வகைகள்", navGames: "விளையாட்டுகள்", navPrivacy: "தனியுரிமை", navContact: "தொடர்பு",
+    brandHome: "webgame arcade முகப்பு", mainMenu: "முதன்மை மெனு",
+    heroText: "ஒரு வகையை தேர்ந்தெடுத்து<br>நேரடியாக உலாவியில் விளையாடுங்கள்.",
+    chooseGenre: "வகை தேர்ந்தெடு", viewGames: "விளையாட்டுகள் காண்க", featuredGenres: "சிறப்பு வகைகள்",
+    genresEyebrow: "வகைகள்", genresTitle: "ஒரு வகையை தேர்ந்தெடுக்கவும்",
+    genresText: "அந்த வகையின் விளையாட்டுகளை மட்டும் காண ஒரு வகையை தேர்ந்தெடுக்கவும்.",
+    home: "முகப்பு", gamesEyebrow: "விளையாட்டுகள்", allGames: "அனைத்து விளையாட்டுகள்",
+    genreGames: "{genre} விளையாட்டுகள்",
+    gamesText: "எந்த விளையாட்டையும் தேர்ந்தெடுங்கள், அது நேரடியாக உலாவியில் தொடங்கும்.",
+    gameGenreFilter: "வகை வடிகட்டி", all: "அனைத்தும்", launch: "தொடங்கு", list: "பட்டியல்",
+    gameNotFound: "விளையாட்டு கிடைக்கவில்லை.", score: "மதிப்பெண்", restart: "மீண்டும் தொடங்கு",
+    gameOver: "விளையாட்டு முடிந்தது", round: "சுற்று", start: "தொடக்கம்",
+    memoryFail: "தோல்வி! சுற்று 1 முதல் மீண்டும்.",
+    crash: "மோதல்", success: "வெற்றி!", complete: "முடிந்தது!", reviewNeeded: "மதிப்பாய்வு தேவை", progress: "முன்னேற்றம்",
+    footerText: "நேரடியாக உலாவியில் இயங்கும் வலை விளையாட்டுகளின் தொகுப்பு",
+    genres: {
+      action: { name: "ஆக்ஷன்", description: "வேகமான விளையாட்டுகளில் எதிர்வினையும் நேரமும் முக்கியம்" },
+      puzzle: { name: "புதிர்", description: "விதிகளை படித்து தீர்வு காணும் மூளை விளையாட்டு" },
+      racing: { name: "ரேசிங்", description: "வேகம் மற்றும் தாளத்தால் வெல்லும் ஓட்டும் விளையாட்டுகள்" },
+    },
+  });
+
+  translations.te = mk({
+    localeName: "తెలుగు",
+    navGenres: "శైలులు", navGames: "ఆటలు", navPrivacy: "గోప్యత", navContact: "సంప్రదింపు",
+    brandHome: "webgame arcade హోమ్", mainMenu: "ప్రధాన మెనూ",
+    heroText: "ఒక శైలిని ఎంచుకోండి మరియు<br>నేరుగా బ్రౌజర్‌లో ఆడండి.",
+    chooseGenre: "శైలి ఎంచుకోండి", viewGames: "ఆటలు చూడండి", featuredGenres: "ప్రత్యేక శైలులు",
+    genresEyebrow: "శైలులు", genresTitle: "ఒక శైలిని ఎంచుకోండి",
+    genresText: "ఆ వర్గంలోని ఆటలను మాత్రమే చూడటానికి ఒక శైలిని ఎంచుకోండి.",
+    home: "హోమ్", gamesEyebrow: "ఆటలు", allGames: "అన్ని ఆటలు",
+    genreGames: "{genre} ఆటలు",
+    gamesText: "ఏదైనా ఆట ఎంచుకోండి, అది నేరుగా మీ బ్రౌజర్‌లో ప్రారంభమవుతుంది.",
+    gameGenreFilter: "శైలి ఫిల్టర్", all: "అన్నీ", launch: "ప్రారంభించు", list: "జాబితా",
+    gameNotFound: "ఆట కనుగొనబడలేదు.", score: "స్కోర్", restart: "తిరిగి ప్రారంభించు",
+    gameOver: "ఆట ముగిసింది", round: "రౌండ్", start: "ప్రారంభం",
+    memoryFail: "విఫలం! రౌండ్ 1 నుండి మళ్ళీ.",
+    crash: "క్రాష్", success: "విజయం!", complete: "పూర్తయింది!", reviewNeeded: "సమీక్ష అవసరం", progress: "పురోగతి",
+    footerText: "నేరుగా బ్రౌజర్‌లో నడిచే వెబ్ గేమ్‌ల సంగ్రహం",
+    genres: {
+      action: { name: "యాక్షన్", description: "వేగవంతమైన ఆటలలో ప్రతిస్పందన మరియు టైమింగ్ ముఖ్యం" },
+      puzzle: { name: "పజిల్", description: "నియమాలు చదివి పరిష్కారం కనుగొనే బ్రెయిన్ గేమ్" },
+      racing: { name: "రేసింగ్", description: "వేగం మరియు రిథమ్‌తో గెలిచే డ్రైవింగ్ ఆటలు" },
+    },
+  });
+
+  translations.th = mk({
+    localeName: "ภาษาไทย",
+    navGenres: "ประเภท", navGames: "เกม", navPrivacy: "ความเป็นส่วนตัว", navContact: "ติดต่อ",
+    brandHome: "หน้าหลัก webgame arcade", mainMenu: "เมนูหลัก",
+    heroText: "เลือกประเภทและเล่นมินิเกม<br>โดยตรงในเบราว์เซอร์ของคุณ",
+    chooseGenre: "เลือกประเภท", viewGames: "ดูเกม", featuredGenres: "ประเภทแนะนำ",
+    genresEyebrow: "ประเภท", genresTitle: "เลือกประเภท",
+    genresText: "เลือกประเภทเพื่อดูเฉพาะเกมในหมวดหมู่นั้น",
+    home: "หน้าหลัก", gamesEyebrow: "เกม", allGames: "เกมทั้งหมด",
+    genreGames: "เกม{genre}",
+    gamesText: "เลือกเกมใดก็ได้และมันจะเปิดขึ้นโดยตรงในเบราว์เซอร์ของคุณ",
+    gameGenreFilter: "กรองประเภท", all: "ทั้งหมด", launch: "เล่น", list: "รายการ",
+    gameNotFound: "ไม่พบเกม", score: "คะแนน", restart: "เริ่มใหม่",
+    gameOver: "เกมจบ", round: "รอบ", start: "เริ่ม",
+    memoryFail: "ล้มเหลว! เริ่มใหม่จากรอบ 1",
+    crash: "ชน", success: "สำเร็จ!", complete: "สมบูรณ์!", reviewNeeded: "ต้องการตรวจสอบ", progress: "ความคืบหน้า",
+    footerText: "คอลเลกชันเกมเว็บที่เล่นได้โดยตรงในเบราว์เซอร์",
+    genres: {
+      action: { name: "แอคชัน", description: "เกมเร็วที่การตอบสนองและเวลาสำคัญ" },
+      puzzle: { name: "ปริศนา", description: "เกมสมองสำหรับอ่านกฎและหาทางออก" },
+      racing: { name: "แข่งรถ", description: "เกมขับรถที่ชนะด้วยความเร็วและจังหวะ" },
+    },
+  });
+
+  translations.tr = mk({
+    localeName: "Türkçe",
+    navGenres: "Türler", navGames: "Oyunlar", navPrivacy: "Gizlilik", navContact: "İletişim",
+    brandHome: "webgame arcade ana sayfa", mainMenu: "Ana menü",
+    heroText: "Bir tür seçin ve mini oyunları<br>doğrudan tarayıcınızda oynayın.",
+    chooseGenre: "Tür seç", viewGames: "Oyunları gör", featuredGenres: "Öne çıkan türler",
+    genresEyebrow: "Türler", genresTitle: "Bir tür seçin",
+    genresText: "Yalnızca o kategorideki oyunları görmek için bir tür seçin.",
+    home: "Ana Sayfa", gamesEyebrow: "Oyunlar", allGames: "Tüm oyunlar",
+    genreGames: "{genre} oyunları",
+    gamesText: "Herhangi bir oyun seçin, doğrudan tarayıcınızda başlasın.",
+    gameGenreFilter: "Tür filtresi", all: "Tümü", launch: "Oyna", list: "Liste",
+    gameNotFound: "Oyun bulunamadı.", score: "Puan", restart: "Yeniden başlat",
+    gameOver: "Oyun bitti", round: "Tur", start: "Başlat",
+    memoryFail: "Başarısız! 1. turdan yeniden başlıyoruz.",
+    crash: "Çarpışma", success: "Başarı!", complete: "Tamamlandı!", reviewNeeded: "İnceleme gerekli", progress: "İlerleme",
+    footerText: "Doğrudan tarayıcıda çalışan web oyunları koleksiyonu",
+    genres: {
+      action: { name: "Aksiyon", description: "Reflekslerin ve zamanlamanın önemli olduğu hızlı oyunlar" },
+      puzzle: { name: "Bulmaca", description: "Kuralları okuyup çözüm bulmak için beyin oyunları" },
+      racing: { name: "Yarış", description: "Hız ve ritimle kazanılan sürüş oyunları" },
+    },
+  });
+
+  translations.ur = mk({
+    localeName: "اردو",
+    navGenres: "اقسام", navGames: "گیمز", navPrivacy: "رازداری", navContact: "رابطہ",
+    brandHome: "webgame arcade ہوم", mainMenu: "مرکزی مینو",
+    heroText: "ایک قسم منتخب کریں اور<br>براہ راست براؤزر میں مینی گیمز کھیلیں۔",
+    chooseGenre: "قسم منتخب کریں", viewGames: "گیمز دیکھیں", featuredGenres: "نمایاں اقسام",
+    genresEyebrow: "اقسام", genresTitle: "ایک قسم منتخب کریں",
+    genresText: "صرف اس زمرے کے گیمز دیکھنے کے لیے ایک قسم منتخب کریں۔",
+    home: "ہوم", gamesEyebrow: "گیمز", allGames: "تمام گیمز",
+    genreGames: "{genre} گیمز",
+    gamesText: "کوئی بھی گیم منتخب کریں اور یہ براہ راست براؤزر میں چلے گا۔",
+    gameGenreFilter: "قسم فلٹر", all: "سب", launch: "شروع کریں", list: "فہرست",
+    gameNotFound: "گیم نہیں ملا۔", score: "اسکور", restart: "دوبارہ شروع",
+    gameOver: "گیم ختم", round: "راؤنڈ", start: "شروع",
+    memoryFail: "ناکام! راؤنڈ 1 سے دوبارہ۔",
+    crash: "تصادم", success: "کامیابی!", complete: "مکمل!", reviewNeeded: "جائزہ ضروری", progress: "پیشرفت",
+    footerText: "براہ راست براؤزر میں چلنے والے ویب گیمز کا مجموعہ",
+    genres: {
+      action: { name: "ایکشن", description: "تیز گیمز جہاں ردعمل اور وقت اہم ہیں" },
+      puzzle: { name: "پہیلی", description: "قواعد پڑھ کر حل تلاش کرنے والے دماغی گیمز" },
+      racing: { name: "ریسنگ", description: "رفتار اور تال سے جیتے جانے والے ڈرائیونگ گیمز" },
+    },
+  });
 }
 const genreMeta = [
   { id: "action", icon: "A", accent: "#f05d5e" },
@@ -891,6 +1634,7 @@ function detectLocale() {
     const code = language.toLowerCase();
     if (code.startsWith("ko")) return "ko";
     if (code.startsWith("es")) return "es";
+    if (code.startsWith("zh-tw") || code.startsWith("zh-hk") || code.startsWith("zh-mo")) return "zh-TW";
     if (code.startsWith("zh")) return "zh";
     if (code.startsWith("ja")) return "ja";
     if (code.startsWith("de")) return "de";
@@ -904,6 +1648,36 @@ function detectLocale() {
     if (code.startsWith("uk")) return "uk";
     if (code.startsWith("pt")) return "pt";
     if (code.startsWith("id")) return "id";
+    if (code.startsWith("bn")) return "bn";
+    if (code.startsWith("bg")) return "bg";
+    if (code.startsWith("ca")) return "ca";
+    if (code.startsWith("hr")) return "hr";
+    if (code.startsWith("da")) return "da";
+    if (code.startsWith("et")) return "et";
+    if (code.startsWith("fil") || code.startsWith("tl")) return "fil";
+    if (code.startsWith("el")) return "el";
+    if (code.startsWith("gu")) return "gu";
+    if (code.startsWith("hu")) return "hu";
+    if (code.startsWith("it")) return "it";
+    if (code.startsWith("kn")) return "kn";
+    if (code.startsWith("lv")) return "lv";
+    if (code.startsWith("lt")) return "lt";
+    if (code.startsWith("ms")) return "ms";
+    if (code.startsWith("ml")) return "ml";
+    if (code.startsWith("mr")) return "mr";
+    if (code.startsWith("no") || code.startsWith("nb") || code.startsWith("nn")) return "no";
+    if (code.startsWith("pl")) return "pl";
+    if (code.startsWith("pa")) return "pa";
+    if (code.startsWith("ru")) return "ru";
+    if (code.startsWith("sr")) return "sr";
+    if (code.startsWith("sk")) return "sk";
+    if (code.startsWith("sl")) return "sl";
+    if (code.startsWith("sv")) return "sv";
+    if (code.startsWith("ta")) return "ta";
+    if (code.startsWith("te")) return "te";
+    if (code.startsWith("th")) return "th";
+    if (code.startsWith("tr")) return "tr";
+    if (code.startsWith("ur")) return "ur";
     if (code.startsWith("en")) return "en";
   }
   return "en";
@@ -911,7 +1685,7 @@ function detectLocale() {
 
 function applyStaticText() {
   document.documentElement.lang = currentLocale;
-  document.documentElement.dir = currentLocale === "he" ? "rtl" : "ltr";
+  document.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
   document.querySelector("#brandLink").setAttribute("aria-label", `${brandName} home`);
   document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
