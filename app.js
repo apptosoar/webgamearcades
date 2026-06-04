@@ -1729,7 +1729,12 @@ function render() {
     return;
   }
 
-  if (["terms", "contact", "about"].includes(route)) {
+  if (route === "terms") {
+    renderTerms();
+    return;
+  }
+
+  if (["contact", "about"].includes(route)) {
     renderInfoPage(route);
     return;
   }
@@ -2112,6 +2117,187 @@ function renderPrivacy() {
     </div>
     ${siteFooter()}
   `;
+}
+
+function renderTerms() {
+  const isKo = currentLocale === "ko";
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <a class="lp-genre-tab" href="#home" style="display:inline-block;margin-bottom:32px">${copy.home}</a>
+        <div class="lp-policy">
+          ${isKo ? termsKo() : termsEn()}
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+}
+
+function termsKo() {
+  return `
+<h1>이용약관</h1>
+<p class="lp-policy-meta">최종 수정일: 2026년 6월 4일</p>
+
+<h3>1. 서비스 소개</h3>
+<p>Webgame Arcade(이하 "사이트")는 설치 없이 브라우저에서 바로 즐길 수 있는 무료 미니게임 모음 서비스입니다. 사이트를 이용하면 본 약관에 동의한 것으로 간주합니다. 이용에 앞서 본 약관을 주의 깊게 읽어 주세요.</p>
+
+<h3>2. 이용 자격</h3>
+<p>사이트는 연령 제한 없이 누구나 이용할 수 있는 캐주얼 게임 서비스입니다. 다만 만 14세 미만 이용자는 부모 또는 법정 보호자의 동의 하에 이용하는 것을 권장합니다. 사이트는 회원가입 없이 이용할 수 있으며, 별도의 계정을 생성하거나 개인정보를 제공할 필요가 없습니다.</p>
+
+<h3>3. 서비스 이용 규칙</h3>
+<p>이용자는 다음 사항을 준수해야 합니다.</p>
+<ul>
+  <li>사이트를 개인적·비상업적 용도로만 이용해야 합니다.</li>
+  <li>게임 플레이 중 다른 이용자의 경험을 방해하는 행위를 해서는 안 됩니다.</li>
+  <li>사이트가 정상적으로 작동하도록 합리적인 방식으로 이용해야 합니다.</li>
+  <li>광고 영역을 게임 조작 버튼이나 콘텐츠 영역으로 오인하게 만드는 방식으로 이용해서는 안 됩니다.</li>
+</ul>
+
+<h3>4. 금지 행위</h3>
+<p>다음 행위는 엄격히 금지됩니다.</p>
+<ul>
+  <li><strong>자동화 트래픽</strong>: 봇, 스크래퍼, 크롤러 등을 이용한 자동화된 접근</li>
+  <li><strong>악의적 접근</strong>: 해킹, SQL 인젝션, XSS 등 보안 취약점을 이용한 공격</li>
+  <li><strong>서비스 방해</strong>: DDoS 공격 등 서비스 가용성을 해치는 행위</li>
+  <li><strong>무단 복제</strong>: 사이트의 게임, 코드, 디자인, 콘텐츠를 무단으로 복사·수정·배포하는 행위</li>
+  <li><strong>광고 조작</strong>: 광고 클릭을 인위적으로 유발하거나 광고 시스템을 속이는 행위</li>
+  <li><strong>법령 위반</strong>: 관련 법령을 위반하는 방식의 사이트 이용</li>
+</ul>
+
+<h3>5. 지식재산권</h3>
+<p>사이트에 포함된 게임 콘텐츠, 소스코드, 디자인, 로고, 텍스트 등 모든 창작물의 지식재산권은 Webgame Arcade 운영자에게 귀속됩니다.</p>
+<ul>
+  <li>이용자는 개인적·비상업적 목적으로만 사이트 콘텐츠를 이용할 수 있습니다.</li>
+  <li>운영자의 명시적 서면 동의 없이 콘텐츠를 상업적으로 이용하거나 제3자에게 배포할 수 없습니다.</li>
+  <li>게임 내 사용된 시스템 폰트 및 오픈소스 기술은 각 라이선스 조건에 따릅니다.</li>
+</ul>
+
+<h3>6. 광고</h3>
+<p>사이트는 Google AdSense를 통해 광고를 제공하며, 광고 수익으로 서비스를 운영합니다.</p>
+<ul>
+  <li>광고 영역은 게임 콘텐츠와 명확히 구분되도록 배치됩니다.</li>
+  <li>광고 내용은 Google의 광고 정책에 따라 결정되며, 운영자가 직접 선택하지 않습니다.</li>
+  <li>광고 관련 불만은 아래 문의 이메일로 신고해 주세요.</li>
+</ul>
+
+<h3>7. 면책 조항</h3>
+<p>사이트와 모든 게임 콘텐츠는 <strong>"현재 상태(as-is)"</strong>로 제공됩니다. 운영자는 다음에 대한 법적 책임을 지지 않습니다.</p>
+<ul>
+  <li>서비스 이용 중 발생한 직접적·간접적 손해</li>
+  <li>게임 데이터 손실 또는 서비스 중단으로 인한 손해</li>
+  <li>제3자 광고 콘텐츠로 인해 발생한 문제</li>
+  <li>이용자 기기의 소프트웨어·하드웨어 문제</li>
+  <li>인터넷 연결 문제로 인한 서비스 이용 불가</li>
+</ul>
+<p>단, 관련 법령에서 면책이 허용되지 않는 경우에는 위 사항이 적용되지 않을 수 있습니다.</p>
+
+<h3>8. 서비스 변경 및 중단</h3>
+<p>운영자는 사전 고지 없이 서비스의 일부 또는 전부를 변경·중단할 수 있습니다.</p>
+<ul>
+  <li>게임 추가·삭제·수정은 운영 상황에 따라 언제든 이루어질 수 있습니다.</li>
+  <li>서비스 전체 중단 시 가능한 경우 사전에 안내합니다.</li>
+  <li>서비스 변경으로 인한 손해에 대해 운영자는 책임을 지지 않습니다.</li>
+</ul>
+
+<h3>9. 약관 변경</h3>
+<p>운영자는 필요한 경우 본 약관을 변경할 수 있으며, 변경된 약관은 사이트 내 공지 또는 본 페이지의 수정일 변경을 통해 안내합니다. 변경 후 사이트를 계속 이용하면 변경된 약관에 동의한 것으로 간주합니다.</p>
+
+<h3>10. 준거법 및 분쟁 해결</h3>
+<p>본 약관은 대한민국 법령에 따라 해석되고 적용됩니다. 사이트 이용과 관련하여 분쟁이 발생할 경우, 운영자와 이용자는 먼저 협의를 통해 해결하며, 협의가 이루어지지 않을 경우 관할 법원에 따릅니다.</p>
+
+<h3>11. 문의</h3>
+<p>약관 관련 문의 사항은 아래 이메일로 연락해 주세요.</p>
+<ul>
+  <li><strong>이메일</strong>: apptosoar@gmail.com</li>
+  <li><strong>운영자</strong>: Webgame Arcade</li>
+</ul>`;
+}
+
+function termsEn() {
+  return `
+<h1>Terms of Service</h1>
+<p class="lp-policy-meta">Last updated: June 4, 2026</p>
+
+<h3>1. Introduction</h3>
+<p>Webgame Arcade ("the Site") is a free collection of browser-based mini games requiring no installation. By using the Site, you agree to these Terms of Service. Please read them carefully before playing.</p>
+
+<h3>2. Eligibility</h3>
+<p>The Site is open to all ages as a casual gaming service. Users under the age of 14 are encouraged to use the Site with parental or guardian consent. No account registration or personal information is required to play.</p>
+
+<h3>3. Acceptable Use</h3>
+<p>When using the Site, you agree to:</p>
+<ul>
+  <li>Use the Site for personal, non-commercial purposes only.</li>
+  <li>Avoid actions that disrupt other users' experience.</li>
+  <li>Use the Site in a reasonable manner that does not impair normal operation.</li>
+  <li>Not misrepresent advertisement areas as game controls or site content.</li>
+</ul>
+
+<h3>4. Prohibited Actions</h3>
+<p>The following actions are strictly prohibited.</p>
+<ul>
+  <li><strong>Automated traffic</strong>: Using bots, scrapers, crawlers, or other automated tools to access the Site.</li>
+  <li><strong>Malicious access</strong>: Attempting to hack, inject, or exploit any security vulnerability.</li>
+  <li><strong>Service disruption</strong>: DDoS attacks or any action that impairs service availability.</li>
+  <li><strong>Unauthorised copying</strong>: Reproducing, modifying, or distributing games, code, designs, or other content without permission.</li>
+  <li><strong>Ad manipulation</strong>: Artificially generating ad clicks or deceiving the advertising system.</li>
+  <li><strong>Illegal use</strong>: Using the Site in violation of any applicable law or regulation.</li>
+</ul>
+
+<h3>5. Intellectual Property</h3>
+<p>All games, source code, designs, logos, and text on the Site are the intellectual property of the Webgame Arcade operator.</p>
+<ul>
+  <li>You may use Site content for personal, non-commercial purposes only.</li>
+  <li>Commercial use or redistribution to third parties requires explicit written consent from the operator.</li>
+  <li>System fonts and open-source technologies used on the Site are subject to their respective licences.</li>
+</ul>
+
+<h3>6. Advertising</h3>
+<p>The Site uses Google AdSense to display advertisements, which fund the service.</p>
+<ul>
+  <li>Advertisement areas are clearly separated from game content and controls.</li>
+  <li>Ad content is determined by Google's advertising policies and is not directly selected by the operator.</li>
+  <li>Please report advertising concerns to the contact email below.</li>
+</ul>
+
+<h3>7. Disclaimer</h3>
+<p>The Site and all game content are provided <strong>"as-is"</strong> without warranties of any kind. The operator is not liable for:</p>
+<ul>
+  <li>Direct or indirect damages arising from use of the Site.</li>
+  <li>Loss of game data or damages caused by service interruptions.</li>
+  <li>Issues arising from third-party advertisement content.</li>
+  <li>Software or hardware problems on the user's device.</li>
+  <li>Inability to access the service due to internet connectivity issues.</li>
+</ul>
+<p>These limitations may not apply where prohibited by applicable law.</p>
+
+<h3>8. Service Changes and Interruptions</h3>
+<p>The operator may change or discontinue part or all of the service at any time without prior notice.</p>
+<ul>
+  <li>Games may be added, removed, or modified at any time depending on operational needs.</li>
+  <li>In the event of a full service shutdown, advance notice will be provided where possible.</li>
+  <li>The operator is not liable for any damages resulting from service changes.</li>
+</ul>
+
+<h3>9. Changes to These Terms</h3>
+<p>The operator may update these Terms at any time. Changes will be communicated via a site notice or by updating the "Last updated" date on this page. Continued use of the Site after changes constitutes acceptance of the revised Terms.</p>
+
+<h3>10. Governing Law and Disputes</h3>
+<p>These Terms are governed by and construed in accordance with the laws of the Republic of Korea. In the event of a dispute, the operator and user will first attempt to resolve it through good-faith negotiation. If no agreement is reached, the dispute will be submitted to the competent courts.</p>
+
+<h3>11. Contact</h3>
+<p>For any questions about these Terms, please contact us.</p>
+<ul>
+  <li><strong>Email</strong>: apptosoar@gmail.com</li>
+  <li><strong>Operator</strong>: Webgame Arcade</li>
+</ul>`;
 }
 
 function privacyKo() {
