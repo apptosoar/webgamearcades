@@ -1735,8 +1735,22 @@ function render() {
 function renderHome() {
   app.innerHTML = `
     <div class="app-home">
-      <div class="app-grid">
-        ${getGames().map(gameAppIcon).join("")}
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-hero">
+        <div class="lp-kicker">Browser Mini Games</div>
+        <h1 class="lp-wordmark">${brandName}</h1>
+        <p class="lp-tagline">${copy.heroText.replace("<br>", " ")}</p>
+      </div>
+      <div class="lp-shelf">
+        <p class="lp-shelf-label">${copy.allGames}</p>
+        <div class="app-grid">
+          ${getGames().map(gameAppIcon).join("")}
+        </div>
       </div>
     </div>
     ${siteFooter()}
