@@ -54,7 +54,11 @@
       }
 
       function lifeFor() {
-        return Math.max(80, 200 - Math.floor(state.score / 10) * 3);
+        return Math.max(60, 200 - Math.floor(state.score / 8) * 4);
+      }
+
+      function speedFactor() {
+        return 0.4 + Math.floor(state.score / 20) * 0.18;
       }
 
       function spawnShape() {
@@ -64,9 +68,13 @@
         const color = COLORS[Math.floor(Math.random() * COLORS.length)];
         const r = 18 + Math.random() * 14;
         const lifeMax = lifeFor();
+        const spd = speedFactor() * (0.5 + Math.random() * 0.8);
+        const angle = Math.random() * Math.PI * 2;
         state.shapes.push({
           x: margin + Math.random() * (state.w - margin * 2),
           y: hud + margin + Math.random() * (state.h - hud - margin * 2),
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
           r, type, color,
           life: lifeMax, lifeMax,
           scale: 0,
@@ -114,8 +122,8 @@
         state.shake = Math.max(0, state.shake - 1);
 
         // spawn
-        const maxShapes = Math.min(8, 2 + Math.floor(state.score / 50));
-        const spawnRate = Math.max(28, 75 - Math.floor(state.score / 25) * 3);
+        const maxShapes = Math.min(10, 2 + Math.floor(state.score / 40));
+        const spawnRate = Math.max(20, 75 - Math.floor(state.score / 20) * 4);
         state.spawnTimer--;
         if (state.spawnTimer <= 0 && state.shapes.length < maxShapes) {
           spawnShape();
@@ -123,10 +131,17 @@
         }
 
         // update shapes
+        const hud = 56;
         const dead = [];
         state.shapes.forEach((s) => {
           s.scale = Math.min(1, s.scale + 0.1);
           s.pulse = (s.pulse + 0.08) % (Math.PI * 2);
+          s.x += s.vx;
+          s.y += s.vy;
+          if (s.x - s.r < 0) { s.x = s.r; s.vx = Math.abs(s.vx); }
+          if (s.x + s.r > state.w) { s.x = state.w - s.r; s.vx = -Math.abs(s.vx); }
+          if (s.y - s.r < hud) { s.y = hud + s.r; s.vy = Math.abs(s.vy); }
+          if (s.y + s.r > state.h) { s.y = state.h - s.r; s.vy = -Math.abs(s.vy); }
           s.life--;
           if (s.life <= 0) dead.push(s);
         });

@@ -1,0 +1,361 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>타일 링크</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game { height: min(640px, 100vh); }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>타일 링크</strong>
+        <span>남은 <b id="remain">96</b></span>
+        <span>점수 <b id="score">0</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">다시 시작</button>
+      <button id="shuffle" class="action" type="button">셔플</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const remainEl = document.getElementById("remain");
+      const scoreEl = document.getElementById("score");
+      document.getElementById("restart").addEventListener("click", () => location.reload());
+      document.getElementById("shuffle").addEventListener("click", doShuffle);
+
+      const ROWS = 8, COLS = 12;
+      // 6 shapes × 4 colors = 24 unique types, each appears 4 times → 96 tiles (2 pairs per type)
+      const SHAPES = ["circle", "square", "triangle", "star", "diamond", "hexagon"];
+      const COLORS = ["#f05d5e", "#2bd1c4", "#f7b84b", "#a98bff"];
+      const N_TYPES = SHAPES.length * COLORS.length; // 24
+
+      const tShape = t => SHAPES[Math.floor((t - 1) / COLORS.length)];
+      const tColor = t => COLORS[(t - 1) % COLORS.length];
+
+      let W = 0, H = 0, TW = 0, TH = 0, PX = 0, PY = 0;
+
+      const S = {
+        grid: null,
+        sel: null,
+        score: 0,
+        remain: ROWS * COLS,
+        pathPts: null,
+        pathType: 0,
+        pathLife: 0,
+        removing: null,
+        won: false,
+        noMove: false,
+      };
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        W = box.width; H = box.height;
+        canvas.width = Math.floor(W * dpr);
+        canvas.height = Math.floor(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        TW = Math.floor((W - 6) / COLS);
+        TH = Math.floor((H - 6) / ROWS);
+        PX = Math.floor((W - TW * COLS) / 2);
+        PY = Math.floor((H - TH * ROWS) / 2);
+      }
+
+      function makeGrid() {
+        let g;
+        do {
+          const pool = [];
+          // Each type appears (ROWS*COLS / N_TYPES) times
+          const copies = (ROWS * COLS) / N_TYPES;
+          for (let t = 1; t <= N_TYPES; t++) for (let k = 0; k < copies; k++) pool.push(t);
+          for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+          }
+          g = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+          let k = 0;
+          for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) g[r][c] = pool[k++];
+        } while (!anyMove(g));
+        return g;
+      }
+
+      // A cell is empty if it's outside the grid bounds (virtual border) or has no tile
+      function empty(g, r, c) {
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return true;
+        return g[r][c] === 0;
+      }
+
+      // Check all cells strictly between two points on the same row or column are empty
+      function segClear(g, r1, c1, r2, c2) {
+        if (r1 === r2) {
+          const [a, b] = c1 < c2 ? [c1, c2] : [c2, c1];
+          for (let c = a + 1; c < b; c++) if (!empty(g, r1, c)) return false;
+        } else {
+          const [a, b] = r1 < r2 ? [r1, r2] : [r2, r1];
+          for (let r = a + 1; r < b; r++) if (!empty(g, r, c1)) return false;
+        }
+        return true;
+      }
+
+      // Returns connecting path (array of [r,c] waypoints) or null.
+      // Supports 0 turns (straight), 1 turn (L-shape), 2 turns (Z-shape / via border).
+      function findPath(g, r1, c1, r2, c2) {
+        // 0 turns
+        if (r1 === r2 && segClear(g, r1, c1, r1, c2)) return [[r1, c1], [r1, c2]];
+        if (c1 === c2 && segClear(g, r1, c1, r2, c2)) return [[r1, c1], [r2, c2]];
+
+        // 1 turn — corner at (r1, c2)
+        if (empty(g, r1, c2) && segClear(g, r1, c1, r1, c2) && segClear(g, r1, c2, r2, c2))
+          return [[r1, c1], [r1, c2], [r2, c2]];
+        // corner at (r2, c1)
+        if (empty(g, r2, c1) && segClear(g, r1, c1, r2, c1) && segClear(g, r2, c1, r2, c2))
+          return [[r1, c1], [r2, c1], [r2, c2]];
+
+        // 2 turns — bridge via a horizontal row (including virtual rows -1 and ROWS)
+        for (let r = -1; r <= ROWS; r++) {
+          if (r === r1 || r === r2) continue;
+          if (empty(g, r, c1) && empty(g, r, c2) &&
+              segClear(g, r1, c1, r, c1) && segClear(g, r, c1, r, c2) && segClear(g, r, c2, r2, c2))
+            return [[r1, c1], [r, c1], [r, c2], [r2, c2]];
+        }
+        // bridge via a vertical column (including virtual cols -1 and COLS)
+        for (let c = -1; c <= COLS; c++) {
+          if (c === c1 || c === c2) continue;
+          if (empty(g, r1, c) && empty(g, r2, c) &&
+              segClear(g, r1, c1, r1, c) && segClear(g, r1, c, r2, c) && segClear(g, r2, c, r2, c2))
+            return [[r1, c1], [r1, c], [r2, c], [r2, c2]];
+        }
+        return null;
+      }
+
+      function anyMove(g) {
+        for (let r1 = 0; r1 < ROWS; r1++) for (let c1 = 0; c1 < COLS; c1++) {
+          if (!g[r1][c1]) continue;
+          for (let r2 = r1; r2 < ROWS; r2++) {
+            const cs = r2 === r1 ? c1 + 1 : 0;
+            for (let c2 = cs; c2 < COLS; c2++) {
+              if (g[r2][c2] === g[r1][c1] && findPath(g, r1, c1, r2, c2)) return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      function doShuffle() {
+        if (S.pathLife > 0) return;
+        const tiles = [], pos = [];
+        for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+          if (S.grid[r][c]) { tiles.push(S.grid[r][c]); pos.push([r, c]); }
+        }
+        let attempts = 0;
+        do {
+          for (let i = tiles.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+          }
+          tiles.forEach((t, i) => { S.grid[pos[i][0]][pos[i][1]] = t; });
+          attempts++;
+        } while (!anyMove(S.grid) && attempts < 30);
+        S.sel = null;
+        S.noMove = false;
+      }
+
+      function ptXY(r, c) {
+        const PAD = 5;
+        let x = PX + c * TW + TW / 2;
+        let y = PY + r * TH + TH / 2;
+        if (r < 0)    y = PY - PAD;
+        if (r >= ROWS) y = PY + ROWS * TH + PAD;
+        if (c < 0)    x = PX - PAD;
+        if (c >= COLS) x = PX + COLS * TW + PAD;
+        return [x, y];
+      }
+
+      function drawShape(type, cx, cy, size) {
+        const shape = tShape(type);
+        const color = tColor(type);
+        const r = size * 0.29;
+        ctx.fillStyle = color;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = color;
+        ctx.beginPath();
+        if (shape === "circle") {
+          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        } else if (shape === "square") {
+          const s = r * 0.88;
+          ctx.rect(cx - s, cy - s, s * 2, s * 2);
+        } else if (shape === "triangle") {
+          ctx.moveTo(cx, cy - r);
+          ctx.lineTo(cx + r * 0.866, cy + r * 0.5);
+          ctx.lineTo(cx - r * 0.866, cy + r * 0.5);
+          ctx.closePath();
+        } else if (shape === "star") {
+          const inner = r * 0.42;
+          for (let i = 0; i < 10; i++) {
+            const a = (i * Math.PI) / 5 - Math.PI / 2;
+            const rad = i % 2 === 0 ? r : inner;
+            i === 0 ? ctx.moveTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad)
+                    : ctx.lineTo(cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+          }
+          ctx.closePath();
+        } else if (shape === "diamond") {
+          ctx.moveTo(cx, cy - r);
+          ctx.lineTo(cx + r * 0.65, cy);
+          ctx.lineTo(cx, cy + r);
+          ctx.lineTo(cx - r * 0.65, cy);
+          ctx.closePath();
+        } else {
+          for (let i = 0; i < 6; i++) {
+            const a = (i * Math.PI * 2) / 6 - Math.PI / 2;
+            i === 0 ? ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r)
+                    : ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+          }
+          ctx.closePath();
+        }
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#0c0e1a");
+        bg.addColorStop(1, "#14081e");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = "rgba(255,255,255,0.024)";
+        ctx.beginPath();
+        ctx.roundRect(PX, PY, TW * COLS, TH * ROWS, 6);
+        ctx.fill();
+
+        for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+          const type = S.grid[r][c];
+          if (!type) continue;
+
+          const isRemoving = S.removing && S.removing.some(([pr, pc]) => pr === r && pc === c);
+          const isSel = S.sel && S.sel[0] === r && S.sel[1] === c;
+          const alpha = isRemoving ? Math.max(0.05, S.pathLife / 18) : 1;
+
+          ctx.globalAlpha = alpha;
+
+          const tx = PX + c * TW + 2, ty = PY + r * TH + 2;
+          const tw = TW - 4, th = TH - 4;
+
+          ctx.fillStyle = isSel ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.07)";
+          if (isSel) { ctx.shadowBlur = 14; ctx.shadowColor = tColor(type); }
+          ctx.beginPath();
+          ctx.roundRect(tx, ty, tw, th, 5);
+          ctx.fill();
+
+          if (isSel) {
+            ctx.strokeStyle = tColor(type);
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+          }
+
+          drawShape(type, PX + c * TW + TW / 2, PY + r * TH + TH / 2, Math.min(TW, TH));
+          ctx.globalAlpha = 1;
+        }
+
+        // Animated connection path
+        if (S.pathPts && S.pathLife > 0) {
+          const a = S.pathLife / 18;
+          const color = tColor(S.pathType);
+          ctx.globalAlpha = a * 0.9;
+          ctx.strokeStyle = color;
+          ctx.lineWidth = Math.max(2.5, Math.min(TW, TH) * 0.11);
+          ctx.lineCap = "round"; ctx.lineJoin = "round";
+          ctx.shadowBlur = 14; ctx.shadowColor = color;
+          ctx.beginPath();
+          S.pathPts.forEach(([pr, pc], i) => {
+            const [x, y] = ptXY(pr, pc);
+            i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+          ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+        }
+
+        if (S.won) {
+          ctx.fillStyle = "rgba(0,0,0,0.75)";
+          ctx.fillRect(0, 0, W, H);
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#2bd1c4";
+          ctx.font = `800 ${Math.min(38, W * 0.075)}px system-ui`;
+          ctx.fillText("클리어!", W / 2, H / 2 - 12);
+          ctx.font = `700 ${Math.min(18, W * 0.036)}px system-ui`;
+          ctx.fillStyle = "#b8bec9";
+          ctx.fillText("점수  " + S.score, W / 2, H / 2 + 22);
+        }
+
+        if (S.noMove) {
+          ctx.fillStyle = "rgba(0,0,0,0.72)";
+          ctx.beginPath();
+          ctx.roundRect(PX, PY, TW * COLS, TH * ROWS, 6);
+          ctx.fill();
+          ctx.textAlign = "center";
+          const fs = Math.min(16, W * 0.032);
+          ctx.font = `700 ${fs}px system-ui`;
+          ctx.fillStyle = "#f7b84b";
+          ctx.fillText("막힘! 셔플 버튼을 눌러 타일을 재배치하세요", W / 2, H / 2);
+        }
+      }
+
+      function step() {
+        if (S.pathLife <= 0) return;
+        S.pathLife--;
+        if (S.pathLife === 0 && S.removing) {
+          S.removing.forEach(([r, c]) => { S.grid[r][c] = 0; });
+          S.remain -= 2;
+          S.removing = null; S.pathPts = null;
+          remainEl.textContent = S.remain;
+          scoreEl.textContent = S.score;
+          if (S.remain === 0) { S.won = true; return; }
+          if (!anyMove(S.grid)) S.noMove = true;
+        }
+      }
+
+      canvas.addEventListener("pointerdown", e => {
+        if (S.won || S.pathLife > 0 || S.noMove) return;
+        const box = canvas.getBoundingClientRect();
+        const c = Math.floor((e.clientX - box.left - PX) / TW);
+        const r = Math.floor((e.clientY - box.top - PY) / TH);
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
+        const type = S.grid[r][c];
+        if (!type) return;
+
+        if (!S.sel) { S.sel = [r, c]; return; }
+
+        const [r1, c1] = S.sel;
+        if (r1 === r && c1 === c) { S.sel = null; return; }
+
+        if (S.grid[r1][c1] === type) {
+          const path = findPath(S.grid, r1, c1, r, c);
+          if (path) {
+            S.score += 100;
+            S.pathPts = path; S.pathType = type; S.pathLife = 18;
+            S.removing = [[r1, c1], [r, c]];
+            S.sel = null; S.noMove = false;
+            return;
+          }
+        }
+        S.sel = [r, c];
+      });
+
+      function loop() { step(); draw(); requestAnimationFrame(loop); }
+
+      S.grid = makeGrid();
+      resize();
+      addEventListener("resize", resize);
+      loop();
+    })();
+    </script>
+  </body>
+</html>

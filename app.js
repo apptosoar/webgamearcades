@@ -89,6 +89,7 @@
       "lane-rush": "차선을 바꾸며 장애물을 피하고 점수를 올리세요.",
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
       "block-stacker": "떨어지는 블록을 쌓아 줄을 지우고 점수를 올리세요.",
+      "tile-link": "같은 그림의 타일 두 개를 선택해 두 번 이하로 꺾이는 경로로 연결하면 사라집니다.",
       "puzzle-minesweeper": "숫자 단서를 보고 지뢰가 아닌 안전한 칸을 찾으세요.",
       "puzzle-sudoku": "빈칸을 눌러 숫자를 채우고 모든 행과 열을 맞추세요.",
     },
@@ -183,6 +184,7 @@
       "lane-rush": "Change lanes, avoid obstacles, and raise your score.",
       "sample-clicker": "A sample game added as an external HTML file.",
       "block-stacker": "Stack falling blocks, clear full lines, and raise your score.",
+      "tile-link": "Select two matching tiles and connect them with a path that bends no more than twice to clear them.",
       "puzzle-minesweeper": "Use number clues to find safe cells without opening mines.",
       "puzzle-sudoku": "Tap empty cells to fill numbers and complete every row and column.",
     },
@@ -1578,6 +1580,7 @@ const gameMeta = [
   { id: "time-stop", genre: "action", title: "Time Stop", icon: "TS", accent: "#a98bff", url: "./games/time-stop/index.html" },
   { id: "pop-blitz", genre: "action", title: "Pop Blitz", icon: "PB", accent: "#ff6fa3", url: "./games/pop-blitz/index.html" },
   { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
+  { id: "tile-link", genre: "puzzle", title: "Tile Link", icon: "TL", accent: "#2bd1c4", url: "./games/tile-link/index.html" },
   { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
