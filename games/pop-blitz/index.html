@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pop Blitz</title>
+    <link rel="stylesheet" href="../action-style.css" />
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong id="title">Pop Blitz</strong>
+        <span>HP <b id="health">5</b></span>
+        <span>Score <b id="score">0</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const scoreEl = document.getElementById("score");
+      const healthEl = document.getElementById("health");
+      const restartBtn = document.getElementById("restart");
+
+      restartBtn.addEventListener("click", () => location.reload());
+
+      const COLORS = [
+        "#f05d5e", "#2bd1c4", "#f7b84b", "#a98bff",
+        "#73d676", "#ff6fa3", "#4dd8e6", "#ffb347",
+      ];
+      const SHAPES = ["circle", "square", "triangle", "star", "diamond", "pentagon", "hexagon"];
+
+      const state = {
+        w: 0, h: 0, t: 0,
+        score: 0, health: 5,
+        over: false,
+        shapes: [],
+        particles: [],
+        rings: [],
+        spawnTimer: 0,
+        shake: 0,
+      };
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        state.w = box.width;
+        state.h = box.height;
+        canvas.width = Math.floor(state.w * dpr);
+        canvas.height = Math.floor(state.h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function lifeFor() {
+        return Math.max(80, 200 - Math.floor(state.score / 10) * 3);
+      }
+
+      function spawnShape() {
+        const margin = 52;
+        const hud = 56;
+        const type = SHAPES[Math.floor(Math.random() * SHAPES.length)];
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const r = 18 + Math.random() * 14;
+        const lifeMax = lifeFor();
+        state.shapes.push({
+          x: margin + Math.random() * (state.w - margin * 2),
+          y: hud + margin + Math.random() * (state.h - hud - margin * 2),
+          r, type, color,
+          life: lifeMax, lifeMax,
+          scale: 0,
+          pulse: 0,
+        });
+      }
+
+      function popShape(shape, x, y) {
+        const bonus = Math.floor((shape.life / shape.lifeMax) * 20);
+        state.score += 10 + bonus;
+
+        // particles burst
+        const count = 14 + Math.floor(Math.random() * 6);
+        for (let i = 0; i < count; i++) {
+          const angle = (i / count) * Math.PI * 2 + Math.random() * 0.4;
+          const speed = 1.5 + Math.random() * 4.5;
+          state.particles.push({
+            x: shape.x, y: shape.y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            r: 3 + Math.random() * 5,
+            color: shape.color,
+            life: 28 + Math.random() * 18,
+            lifeMax: 46,
+          });
+        }
+
+        // expanding ring flash
+        state.rings.push({ x: shape.x, y: shape.y, r: shape.r, color: shape.color, life: 16, lifeMax: 16 });
+
+        return true;
+      }
+
+      function loseHealth(shape) {
+        state.health--;
+        state.shake = 14;
+        // red flash ring at shape position
+        state.rings.push({ x: shape.x, y: shape.y, r: shape.r, color: "#f05d5e", life: 16, lifeMax: 16 });
+        if (state.health <= 0) { state.health = 0; state.over = true; }
+      }
+
+      function step() {
+        if (state.over) return;
+        state.t++;
+        state.shake = Math.max(0, state.shake - 1);
+
+        // spawn
+        const maxShapes = Math.min(8, 2 + Math.floor(state.score / 50));
+        const spawnRate = Math.max(28, 75 - Math.floor(state.score / 25) * 3);
+        state.spawnTimer--;
+        if (state.spawnTimer <= 0 && state.shapes.length < maxShapes) {
+          spawnShape();
+          state.spawnTimer = spawnRate + Math.floor(Math.random() * 20);
+        }
+
+        // update shapes
+        const dead = [];
+        state.shapes.forEach((s) => {
+          s.scale = Math.min(1, s.scale + 0.1);
+          s.pulse = (s.pulse + 0.08) % (Math.PI * 2);
+          s.life--;
+          if (s.life <= 0) dead.push(s);
+        });
+        dead.forEach((s) => {
+          loseHealth(s);
+          state.shapes = state.shapes.filter((x) => x !== s);
+        });
+
+        // particles
+        state.particles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.91;
+          p.vy *= 0.91;
+          p.life--;
+        });
+        state.particles = state.particles.filter((p) => p.life > 0);
+
+        // rings
+        state.rings.forEach((ring) => { ring.life--; });
+        state.rings = state.rings.filter((ring) => ring.life > 0);
+
+        scoreEl.textContent = state.score;
+        healthEl.textContent = state.health;
+      }
+
+      function drawBackground() {
+        const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
+        grd.addColorStop(0, "#0c0e1a");
+        grd.addColorStop(1, "#14081e");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        // subtle grid dots
+        ctx.fillStyle = "rgba(255,255,255,0.028)";
+        for (let i = 0; i < 24; i++) {
+          const x = (i * 97 + state.t * 0.12) % state.w;
+          const y = (i * 61 + state.t * 0.09) % state.h;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.5 + (i % 3), 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function drawShapeOutline(type, r) {
+        ctx.beginPath();
+        switch (type) {
+          case "circle":
+            ctx.arc(0, 0, r, 0, Math.PI * 2);
+            break;
+          case "square":
+            ctx.rect(-r * 0.8, -r * 0.8, r * 1.6, r * 1.6);
+            break;
+          case "triangle":
+            ctx.moveTo(0, -r);
+            ctx.lineTo(r * 0.866, r * 0.5);
+            ctx.lineTo(-r * 0.866, r * 0.5);
+            ctx.closePath();
+            break;
+          case "star":
+            drawStar(r, 5);
+            return;
+          case "diamond":
+            ctx.moveTo(0, -r);
+            ctx.lineTo(r * 0.62, 0);
+            ctx.lineTo(0, r);
+            ctx.lineTo(-r * 0.62, 0);
+            ctx.closePath();
+            break;
+          case "pentagon":
+            drawPoly(r, 5);
+            return;
+          case "hexagon":
+            drawPoly(r, 6);
+            return;
+        }
+        ctx.fill();
+      }
+
+      function drawStar(r, pts) {
+        const inner = r * 0.42;
+        ctx.beginPath();
+        for (let i = 0; i < pts * 2; i++) {
+          const a = (i * Math.PI) / pts - Math.PI / 2;
+          const rad = i % 2 === 0 ? r : inner;
+          i === 0 ? ctx.moveTo(Math.cos(a) * rad, Math.sin(a) * rad)
+                  : ctx.lineTo(Math.cos(a) * rad, Math.sin(a) * rad);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawPoly(r, sides) {
+        ctx.beginPath();
+        for (let i = 0; i < sides; i++) {
+          const a = (i * Math.PI * 2) / sides - Math.PI / 2;
+          i === 0 ? ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r)
+                  : ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawShape(s) {
+        const urgency = s.life / s.lifeMax;
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.scale(s.scale, s.scale);
+
+        // glow
+        const glow = 10 + Math.sin(s.pulse) * 5 + (1 - urgency) * 12;
+        ctx.shadowBlur = glow;
+        ctx.shadowColor = s.color;
+
+        // fill with alpha that gets lower as time runs out
+        ctx.globalAlpha = 0.35 + 0.65 * urgency;
+        ctx.fillStyle = s.color;
+        drawShapeOutline(s.type, s.r);
+
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+
+        // countdown arc (clockwise drain)
+        const arcR = s.r + 7;
+        const startAngle = -Math.PI / 2;
+        const endAngle = startAngle + urgency * Math.PI * 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, arcR, startAngle, endAngle);
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = urgency > 0.3 ? 2.5 : 3.5;
+        ctx.globalAlpha = 0.75;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        ctx.restore();
+      }
+
+      function drawParticles() {
+        state.particles.forEach((p) => {
+          ctx.globalAlpha = (p.life / p.lifeMax) * 0.9;
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * (p.life / p.lifeMax), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRings() {
+        state.rings.forEach((ring) => {
+          const t = 1 - ring.life / ring.lifeMax;
+          const r = ring.r + t * ring.r * 2.2;
+          ctx.globalAlpha = ring.life / ring.lifeMax * 0.85;
+          ctx.strokeStyle = ring.color;
+          ctx.lineWidth = 3 * (1 - t);
+          ctx.beginPath();
+          ctx.arc(ring.x, ring.y, r, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 1;
+      }
+
+      function drawGameOver() {
+        ctx.fillStyle = "rgba(0,0,0,0.72)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.fillStyle = "#f4f2ea";
+        ctx.textAlign = "center";
+        ctx.font = "800 36px system-ui";
+        ctx.fillText("Game Over", state.w / 2, state.h / 2 - 10);
+        ctx.font = "700 20px system-ui";
+        ctx.fillStyle = "#b8bec9";
+        ctx.fillText("Score  " + state.score, state.w / 2, state.h / 2 + 28);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, state.w, state.h);
+
+        ctx.save();
+        if (state.shake > 0) {
+          const s = state.shake * 0.7;
+          ctx.translate((Math.random() - 0.5) * s, (Math.random() - 0.5) * s);
+        }
+
+        drawBackground();
+        drawRings();
+        drawParticles();
+        state.shapes.forEach(drawShape);
+
+        if (state.over) drawGameOver();
+
+        ctx.restore();
+      }
+
+      function hitTest(cx, cy) {
+        if (state.over) return;
+        for (let i = state.shapes.length - 1; i >= 0; i--) {
+          const s = state.shapes[i];
+          const hit = Math.hypot(cx - s.x, cy - s.y) < (s.r + 12) * s.scale;
+          if (hit) {
+            popShape(s, cx, cy);
+            state.shapes.splice(i, 1);
+            return;
+          }
+        }
+      }
+
+      canvas.addEventListener("pointerdown", (e) => {
+        const box = canvas.getBoundingClientRect();
+        hitTest(e.clientX - box.left, e.clientY - box.top);
+      });
+
+      function loop() {
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      resize();
+      addEventListener("resize", resize);
+      loop();
+    })();
+    </script>
+  </body>
+</html>
