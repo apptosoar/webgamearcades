@@ -1734,35 +1734,280 @@ function render() {
 
 function renderHome() {
   app.innerHTML = `
-    <section class="hero">
-      <div class="hero-content">
-        <h1>${brandName}</h1>
-        <p>${copy.heroText}</p>
-        <div class="hero-actions">
-          <a class="primary-button" href="#genres">${copy.chooseGenre}</a>
-          <a class="ghost-button" href="#games">${copy.viewGames}</a>
-        </div>
+    <div class="app-home">
+      <div class="app-grid">
+        ${getGames().map(gameAppIcon).join("")}
       </div>
-      <div class="preview-strip" aria-label="${copy.featuredGenres}">
-        ${getGenres()
-          .map(
-            (genre) => `
-              <a class="mini-tile" href="#games/${genre.id}">
-                <span class="tile-icon" style="color:${genre.accent}">${genre.icon}</span>
-                <strong>${genre.name}</strong>
-              </a>
-            `,
-          )
-          .join("")}
-      </div>
-    </section>
-    ${featuredGamesSection()}
-    ${howToPlaySection()}
-    ${aboutSection()}
-    ${genreSection()}
-    ${gamesSection("all")}
+    </div>
     ${siteFooter()}
   `;
+  initGameIcons();
+}
+
+function gameAppIcon(game) {
+  return `<a class="app-icon" href="#play/${escapeAttribute(game.id)}">
+    <canvas width="120" height="120" data-id="${escapeAttribute(game.id)}" data-accent="${escapeAttribute(game.accent)}"></canvas>
+    <span>${game.title}</span>
+  </a>`;
+}
+
+function initGameIcons() {
+  app.querySelectorAll(".app-icon canvas").forEach(canvas => {
+    drawGameIcon(canvas.getContext("2d"), canvas.dataset.id, canvas.dataset.accent, 120);
+  });
+}
+
+function shadeColor(hex, amt) {
+  return "#" + [1, 3, 5].map(i => {
+    const v = Math.max(0, Math.min(255, parseInt(hex.slice(i, i + 2), 16) + amt));
+    return v.toString(16).padStart(2, "0");
+  }).join("");
+}
+
+function drawGameIcon(ctx, id, accent, S) {
+  const c = S / 2;
+  const g = ctx.createLinearGradient(0, 0, S, S);
+  g.addColorStop(0, accent);
+  g.addColorStop(1, shadeColor(accent, -40));
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, S, S);
+  ctx.fillStyle = "rgba(255,255,255,0.1)";
+  ctx.fillRect(0, 0, S, S * 0.45);
+  ctx.fillStyle = "rgba(255,255,255,0.92)";
+  ctx.strokeStyle = "rgba(255,255,255,0.92)";
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  drawIconShape(ctx, id, c, S);
+}
+
+function drawIconShape(ctx, id, c, S) {
+  switch (id) {
+    case "neon-dodge":
+      ctx.fillRect(c - S*0.14, c - S*0.14, S*0.28, S*0.28);
+      ctx.fillStyle = "rgba(255,80,80,0.8)";
+      ctx.fillRect(c + S*0.17, c - S*0.1, S*0.2, S*0.2);
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.lineWidth = S*0.032;
+      [-0.1, 0, 0.1].forEach(dy => {
+        ctx.beginPath(); ctx.moveTo(c - S*0.4, c + dy*S); ctx.lineTo(c - S*0.18, c + dy*S); ctx.stroke();
+      });
+      break;
+
+    case "zombie-survival":
+      ctx.beginPath(); ctx.arc(c, c - S*0.1, S*0.15, 0, Math.PI * 2); ctx.fill();
+      ctx.lineWidth = S*0.08;
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.3, c + S*0.08); ctx.lineTo(c, c + S*0.08); ctx.lineTo(c + S*0.3, c + S*0.08);
+      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(c, c + S*0.08); ctx.lineTo(c, c + S*0.3); ctx.stroke();
+      break;
+
+    case "space-shooter":
+      ctx.beginPath();
+      ctx.moveTo(c, c - S*0.3);
+      ctx.lineTo(c + S*0.18, c + S*0.16);
+      ctx.lineTo(c + S*0.09, c + S*0.22);
+      ctx.lineTo(c - S*0.09, c + S*0.22);
+      ctx.lineTo(c - S*0.18, c + S*0.16);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "rgba(255,210,60,0.85)";
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.07, c + S*0.22); ctx.lineTo(c + S*0.07, c + S*0.22);
+      ctx.lineTo(c, c + S*0.36); ctx.closePath(); ctx.fill();
+      break;
+
+    case "ninja-dash":
+      ctx.save(); ctx.translate(c, c);
+      [0, 1, 2, 3].forEach(i => {
+        ctx.save(); ctx.rotate(i * Math.PI / 2);
+        ctx.fillRect(-S*0.07, -S*0.3, S*0.14, S*0.24);
+        ctx.restore();
+      });
+      ctx.restore();
+      ctx.beginPath(); ctx.arc(c, c, S*0.08, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case "robot-arena":
+      ctx.lineWidth = S*0.065;
+      ctx.strokeRect(c - S*0.22, c - S*0.19, S*0.44, S*0.36);
+      ctx.beginPath(); ctx.moveTo(c, c - S*0.19); ctx.lineTo(c, c - S*0.34); ctx.stroke();
+      ctx.beginPath(); ctx.arc(c, c - S*0.34, S*0.05, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c - S*0.1, c - S*0.07, S*0.065, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c + S*0.1, c - S*0.07, S*0.065, 0, Math.PI * 2); ctx.fill();
+      ctx.lineWidth = S*0.05;
+      ctx.beginPath(); ctx.moveTo(c - S*0.1, c + S*0.07); ctx.lineTo(c + S*0.1, c + S*0.07); ctx.stroke();
+      break;
+
+    case "arrow-dodge":
+      ctx.lineWidth = S*0.088;
+      ctx.beginPath(); ctx.moveTo(c + S*0.28, c); ctx.lineTo(c - S*0.1, c); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.07, c - S*0.16); ctx.lineTo(c - S*0.26, c); ctx.lineTo(c - S*0.07, c + S*0.16);
+      ctx.stroke();
+      ctx.beginPath(); ctx.arc(c + S*0.22, c - S*0.26, S*0.08, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case "monster-punch":
+      ctx.lineWidth = S*0.06;
+      ctx.strokeRect(c - S*0.22, c - S*0.07, S*0.44, S*0.24);
+      [-0.12, 0, 0.12].forEach(dx => ctx.fillRect(c + dx*S - S*0.055, c - S*0.2, S*0.11, S*0.15));
+      ctx.fillRect(c + S*0.24, c - S*0.02, S*0.1, S*0.08);
+      break;
+
+    case "laser-escape":
+      [[0.22, 1], [0.44, 0.6], [0.66, 1]].forEach(([ry, alpha]) => {
+        ctx.globalAlpha = alpha * 0.9;
+        ctx.lineWidth = S*0.065;
+        ctx.beginPath(); ctx.moveTo(0, S*ry); ctx.lineTo(S*0.68, S*ry); ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = S*0.05;
+      ctx.beginPath(); ctx.moveTo(S*0.78, S*0.26); ctx.lineTo(S*0.78, S*0.6); ctx.stroke();
+      break;
+
+    case "castle-defender":
+      [-0.2, -0.04, 0.12, 0.28].forEach(dx =>
+        ctx.fillRect(c + dx*S - S*0.13, c - S*0.24, S*0.12, S*0.2));
+      ctx.fillRect(c - S*0.3, c - S*0.06, S*0.6, S*0.3);
+      ctx.fillStyle = "rgba(0,0,0,0.3)";
+      ctx.beginPath(); ctx.arc(c, c + S*0.1, S*0.1, Math.PI, 0); ctx.fill();
+      ctx.fillRect(c - S*0.1, c + S*0.1, S*0.2, S*0.16);
+      break;
+
+    case "bomb-runner":
+      ctx.beginPath(); ctx.arc(c, c + S*0.04, S*0.23, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(0,0,0,0.3)";
+      ctx.beginPath(); ctx.arc(c - S*0.06, c - S*0.01, S*0.08, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.75)";
+      ctx.lineWidth = S*0.042;
+      ctx.beginPath();
+      ctx.moveTo(c + S*0.15, c - S*0.17);
+      ctx.quadraticCurveTo(c + S*0.28, c - S*0.28, c + S*0.21, c - S*0.36);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(255,200,60,0.9)";
+      ctx.beginPath(); ctx.arc(c + S*0.21, c - S*0.36, S*0.06, 0, Math.PI * 2); ctx.fill();
+      break;
+
+    case "meteor-dodge":
+      ctx.save(); ctx.translate(c + S*0.06, c - S*0.12); ctx.rotate(Math.PI / 5);
+      ctx.beginPath(); ctx.ellipse(0, 0, S*0.18, S*0.14, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      [1, 0.6, 0.3].forEach((alpha, i) => {
+        ctx.globalAlpha = alpha * 0.55;
+        ctx.lineWidth = (3 - i) * S*0.028;
+        ctx.strokeStyle = "rgba(255,255,255,0.8)";
+        ctx.beginPath();
+        ctx.moveTo(c + S*(0.22 - i*0.1), c - S*(0.26 - i*0.1));
+        ctx.lineTo(c + S*(0.32 - i*0.1), c - S*(0.36 - i*0.1));
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+      break;
+
+    case "time-stop":
+      ctx.lineWidth = S*0.065;
+      ctx.beginPath(); ctx.arc(c, c, S*0.28, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(c, c, S*0.04, 0, Math.PI * 2); ctx.fill();
+      ctx.lineWidth = S*0.08;
+      ctx.beginPath(); ctx.moveTo(c, c); ctx.lineTo(c, c - S*0.2); ctx.stroke();
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath(); ctx.moveTo(c, c); ctx.lineTo(c + S*0.15, c + S*0.09); ctx.stroke();
+      break;
+
+    case "pop-blitz":
+      [[-0.18,-0.12,0.11],[0.12,-0.18,0.09],[0.18,0.1,0.1],[-0.05,0.18,0.08],[0.02,0.02,0.14]].forEach(([dx,dy,r]) => {
+        ctx.beginPath(); ctx.arc(c + dx*S, c + dy*S, r*S, 0, Math.PI * 2); ctx.fill();
+      });
+      break;
+
+    case "memory-grid":
+      [[0,0,1],[1,0,0],[0,1,0],[1,1,1]].forEach(([col,row,lit]) => {
+        ctx.globalAlpha = lit ? 0.95 : 0.28;
+        const p = S*0.03;
+        ctx.fillRect(c+(col*2-1)*S*0.16-S*0.13+p, c+(row*2-1)*S*0.16-S*0.13+p, S*0.26-p*2, S*0.26-p*2);
+      });
+      ctx.globalAlpha = 1;
+      break;
+
+    case "lane-rush":
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.lineWidth = S*0.04;
+      ctx.setLineDash([S*0.08, S*0.08]);
+      [-S*0.14, S*0.14].forEach(x => {
+        ctx.beginPath(); ctx.moveTo(c+x, S*0.04); ctx.lineTo(c+x, S*0.88); ctx.stroke();
+      });
+      ctx.setLineDash([]);
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      ctx.lineWidth = S*0.06;
+      ctx.strokeRect(c - S*0.14, c - S*0.17, S*0.28, S*0.3);
+      break;
+
+    case "tile-link": {
+      const tr = S*0.11;
+      [[c-S*0.2, c-S*0.2],[c+S*0.2, c+S*0.2]].forEach(([tx,ty]) => {
+        ctx.lineWidth = S*0.055;
+        ctx.strokeRect(tx-tr, ty-tr, tr*2, tr*2);
+      });
+      ctx.strokeStyle = "rgba(255,255,255,0.5)";
+      ctx.lineWidth = S*0.045;
+      ctx.beginPath();
+      ctx.moveTo(c-S*0.2, c-S*0.2); ctx.lineTo(c-S*0.2, c+S*0.2); ctx.lineTo(c+S*0.2, c+S*0.2);
+      ctx.stroke();
+      break;
+    }
+
+    case "block-stacker": {
+      const bs = S*0.2;
+      [[0,1],[1,1],[-1,1],[0,0],[1,0]].forEach(([bx,by], i) => {
+        ctx.globalAlpha = Math.max(0.35, 1 - i*0.08);
+        ctx.fillRect(c+bx*(bs+S*0.02)-bs/2, c+by*(bs+S*0.02)-bs/2-S*0.06, bs-S*0.02, bs-S*0.02);
+      });
+      ctx.globalAlpha = 1;
+      break;
+    }
+
+    case "puzzle-minesweeper": {
+      ctx.lineWidth = S*0.038;
+      ctx.strokeStyle = "rgba(255,255,255,0.38)";
+      for (let r=0; r<3; r++) for (let cc=0; cc<3; cc++)
+        ctx.strokeRect(c+(cc-1)*S*0.22-S*0.1, c+(r-1)*S*0.22-S*0.1, S*0.2, S*0.2);
+      const [fx,fy] = [c+S*0.12, c-S*0.12];
+      ctx.strokeStyle = "rgba(255,255,255,0.9)";
+      ctx.lineWidth = S*0.045;
+      ctx.beginPath(); ctx.moveTo(fx, fy-S*0.14); ctx.lineTo(fx, fy+S*0.08); ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.beginPath();
+      ctx.moveTo(fx, fy-S*0.14); ctx.lineTo(fx+S*0.15, fy-S*0.05); ctx.lineTo(fx, fy+S*0.02);
+      ctx.closePath(); ctx.fill();
+      break;
+    }
+
+    case "puzzle-sudoku": {
+      ctx.lineWidth = S*0.034;
+      ctx.strokeStyle = "rgba(255,255,255,0.35)";
+      for (let r=0; r<3; r++) for (let cc=0; cc<3; cc++)
+        ctx.strokeRect(c+(cc-1)*S*0.22-S*0.1, c+(r-1)*S*0.22-S*0.1, S*0.2, S*0.2);
+      ctx.font = `800 ${S*0.17}px system-ui`;
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      [["5",0,-1],["3",-1,0],["7",1,1]].forEach(([n,dc,dr]) =>
+        ctx.fillText(n, c+dc*S*0.22, c+dr*S*0.22));
+      break;
+    }
+
+    default: {
+      const pts = 5, outerR = S*0.28, innerR = S*0.12;
+      ctx.beginPath();
+      for (let i = 0; i < pts * 2; i++) {
+        const a = (i * Math.PI) / pts - Math.PI / 2;
+        const r = i % 2 === 0 ? outerR : innerR;
+        i === 0 ? ctx.moveTo(c + Math.cos(a)*r, c + Math.sin(a)*r)
+                : ctx.lineTo(c + Math.cos(a)*r, c + Math.sin(a)*r);
+      }
+      ctx.closePath(); ctx.fill();
+      break;
+    }
+  }
 }
 
 function renderGenres() {
@@ -1790,7 +2035,7 @@ function renderPlayer(gameId) {
           <h2>${game.title}</h2>
         </div>
         <div class="hero-actions">
-          <a class="ghost-button" href="#games/${game.genre}">${copy.list}</a>
+          <a class="ghost-button" href="#home">${copy.home}</a>
         </div>
       </div>
       <div class="iframe-frame">
