@@ -1695,10 +1695,7 @@ function applyStaticText() {
   document.querySelector("#brandLink").setAttribute("aria-label", `${brandName} home`);
   document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
-  document.querySelector("#navGenres").textContent = copy.navGenres;
   document.querySelector("#navGames").textContent = copy.navGames;
-  document.querySelector("#navPrivacy").textContent = copy.navPrivacy;
-  document.querySelector("#navContact").textContent = copy.navContact;
 }
 
 function render() {
@@ -1731,6 +1728,11 @@ function render() {
 
   if (route === "terms") {
     renderTerms();
+    return;
+  }
+
+  if (route === "faq") {
+    renderFaq();
     return;
   }
 
@@ -2117,6 +2119,153 @@ function renderPrivacy() {
     </div>
     ${siteFooter()}
   `;
+}
+
+function renderFaq() {
+  const isKo = currentLocale === "ko";
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <a class="lp-genre-tab" href="#home" style="display:inline-block;margin-bottom:32px">${copy.home}</a>
+        <div class="lp-policy">
+          ${isKo ? faqKo() : faqEn()}
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+}
+
+function faqKo() {
+  return `
+<h1>자주 묻는 질문</h1>
+<p class="lp-policy-meta">궁금한 점이 해결되지 않으면 <a href="#contact">문의하기</a>로 연락해 주세요.</p>
+
+<h3>게임 이용</h3>
+
+<h4>게임이 로딩되지 않거나 실행이 안 돼요.</h4>
+<p>아래 방법을 순서대로 시도해 보세요.</p>
+<ul>
+  <li><strong>페이지 새로고침</strong>: 브라우저에서 F5 또는 Ctrl+R(Mac: Cmd+R)을 눌러 주세요.</li>
+  <li><strong>브라우저 캐시 삭제</strong>: Ctrl+Shift+Delete(Mac: Cmd+Shift+Delete)로 캐시를 지우고 다시 시도해 주세요.</li>
+  <li><strong>최신 브라우저 사용</strong>: Chrome, Firefox, Safari, Edge 최신 버전을 사용하는 것을 권장합니다.</li>
+  <li><strong>JavaScript 활성화 확인</strong>: 브라우저 설정에서 JavaScript가 활성화되어 있는지 확인해 주세요.</li>
+  <li>위 방법으로도 해결되지 않으면 <a href="#contact">문의하기</a>로 알려 주세요.</li>
+</ul>
+
+<h4>게임 진행 상황이 저장되나요?</h4>
+<p>게임 데이터(점수, 진행 상황 등)는 이용자 기기의 브라우저 로컬 스토리지에 저장됩니다. 이는 서버로 전송되지 않기 때문에 다음과 같은 경우 데이터가 초기화될 수 있습니다.</p>
+<ul>
+  <li>브라우저 캐시·데이터를 삭제한 경우</li>
+  <li>다른 기기나 브라우저에서 접속한 경우</li>
+  <li>시크릿(InPrivate) 모드로 접속한 경우</li>
+</ul>
+
+<h4>모바일에서도 플레이할 수 있나요?</h4>
+<p>네, 모든 게임은 모바일 브라우저에서도 이용할 수 있도록 터치 조작을 지원합니다. 최적의 경험을 위해 최신 버전의 모바일 브라우저 사용을 권장합니다.</p>
+
+<h4>다운로드나 설치가 필요한가요?</h4>
+<p>아니요. 모든 게임은 브라우저에서 바로 실행되며 앱 설치나 파일 다운로드가 필요하지 않습니다. 인터넷 연결만 있으면 어디서든 즐길 수 있습니다.</p>
+
+<h4>게임 이용이 무료인가요?</h4>
+<p>네, Webgame Arcade의 모든 게임은 완전 무료입니다. 결제나 구독이 없으며 숨겨진 비용도 없습니다. 사이트는 광고 수익으로 운영됩니다.</p>
+
+<h3>광고</h3>
+
+<h4>광고가 너무 많거나 불쾌한 광고가 표시돼요.</h4>
+<p>광고 내용은 Google AdSense가 자동으로 결정하므로 운영자가 직접 제어하기 어렵습니다. 불쾌하거나 부적절한 광고를 발견하면 아래 방법으로 신고해 주세요.</p>
+<ul>
+  <li>광고 우측 상단의 ⓘ 또는 X 버튼을 눌러 Google에 직접 신고</li>
+  <li><a href="#contact">문의하기</a>로 광고 정보를 알려주시면 확인 후 조치합니다.</li>
+</ul>
+
+<h4>광고를 차단하고 싶어요.</h4>
+<p>광고 차단 프로그램 사용은 이용자의 선택입니다. 다만 광고 수익이 사이트 운영의 주요 재원이므로, 광고를 허용해 주시면 서비스 유지에 큰 도움이 됩니다.</p>
+
+<h3>개인정보 및 쿠키</h3>
+
+<h4>쿠키를 비활성화해도 게임을 즐길 수 있나요?</h4>
+<p>네, 쿠키를 비활성화해도 게임 플레이에는 영향이 없습니다. 다만 맞춤 광고 대신 일반 광고가 표시될 수 있습니다.</p>
+
+<h4>개인정보는 어떻게 처리되나요?</h4>
+<p>사이트는 회원가입 없이 이용 가능하며 최소한의 정보만 처리합니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>을 확인해 주세요.</p>
+
+<h3>기타</h3>
+
+<h4>게임을 추천하거나 버그를 신고하고 싶어요.</h4>
+<p><a href="#contact">문의하기</a> 페이지를 통해 게임 추천, 버그 신고, 개선 의견을 보내 주세요. 모든 의견을 소중히 검토합니다.</p>
+
+<h4>게임 콘텐츠를 다른 곳에 사용하고 싶어요.</h4>
+<p>사이트의 게임·코드·디자인은 Webgame Arcade의 지식재산입니다. 상업적 이용이나 재배포를 원하시면 사전에 <a href="#contact">문의하기</a>를 통해 허가를 받아야 합니다.</p>`;
+}
+
+function faqEn() {
+  return `
+<h1>Frequently Asked Questions</h1>
+<p class="lp-policy-meta">If you can't find the answer here, please <a href="#contact">contact us</a>.</p>
+
+<h3>Playing Games</h3>
+
+<h4>A game won't load or run.</h4>
+<p>Please try the following steps in order.</p>
+<ul>
+  <li><strong>Refresh the page</strong>: Press F5 or Ctrl+R (Mac: Cmd+R) in your browser.</li>
+  <li><strong>Clear your browser cache</strong>: Press Ctrl+Shift+Delete (Mac: Cmd+Shift+Delete) to clear cached data and try again.</li>
+  <li><strong>Use a modern browser</strong>: We recommend the latest version of Chrome, Firefox, Safari, or Edge.</li>
+  <li><strong>Check JavaScript is enabled</strong>: Make sure JavaScript is turned on in your browser settings.</li>
+  <li>If none of the above works, please <a href="#contact">contact us</a> and let us know.</li>
+</ul>
+
+<h4>Is my game progress saved?</h4>
+<p>Game data (scores, progress, etc.) is stored in your browser's local storage on your device. It is not sent to any server, which means data may be reset in the following situations.</p>
+<ul>
+  <li>You clear your browser cache or site data.</li>
+  <li>You access the site from a different device or browser.</li>
+  <li>You use Incognito or InPrivate mode.</li>
+</ul>
+
+<h4>Can I play on mobile?</h4>
+<p>Yes. All games support touch controls and work in mobile browsers. For the best experience, we recommend using the latest version of your mobile browser.</p>
+
+<h4>Do I need to download or install anything?</h4>
+<p>No. All games run directly in your browser — no app installation or file download required. All you need is an internet connection.</p>
+
+<h4>Are the games free?</h4>
+<p>Yes, all games on Webgame Arcade are completely free. There are no payments, subscriptions, or hidden fees. The site is funded by advertising.</p>
+
+<h3>Advertising</h3>
+
+<h4>There are too many ads, or I see an inappropriate ad.</h4>
+<p>Ad content is determined automatically by Google AdSense and is not directly controlled by us. If you see an inappropriate or offensive ad, you can:</p>
+<ul>
+  <li>Click the ⓘ or X button in the corner of the ad to report it directly to Google.</li>
+  <li><a href="#contact">Contact us</a> with details of the ad and we will review and take action.</li>
+</ul>
+
+<h4>Can I use an ad blocker?</h4>
+<p>That is your choice. However, advertising revenue is the main source of funding for the site, so allowing ads helps us keep the service running. Thank you for your understanding.</p>
+
+<h3>Privacy and Cookies</h3>
+
+<h4>Can I play with cookies disabled?</h4>
+<p>Yes. Disabling cookies does not affect gameplay. You may see generic ads instead of personalised ones.</p>
+
+<h4>How is my personal information handled?</h4>
+<p>The site can be used without registering an account, and we collect only the minimum necessary information. For full details, please read our <a href="#privacy">Privacy Policy</a>.</p>
+
+<h3>Other</h3>
+
+<h4>I want to suggest a game or report a bug.</h4>
+<p>Please use the <a href="#contact">Contact</a> page to send game suggestions, bug reports, or feedback. We review all messages carefully.</p>
+
+<h4>I want to use game content elsewhere.</h4>
+<p>The games, code, and designs on this site are the intellectual property of Webgame Arcade. If you wish to use them commercially or redistribute them, you must obtain prior permission via the <a href="#contact">Contact</a> page.</p>`;
 }
 
 function renderTerms() {
@@ -2736,12 +2885,15 @@ function gameGuide(game) {
 function siteFooter() {
   return `
     <footer class="site-footer">
-      <span>${brandName}</span>
-      <p>${copy.footerText}</p>
+      <div class="site-footer-brand">
+        <span>${brandName}</span>
+        <p>${copy.footerText}</p>
+      </div>
       <nav aria-label="${copy.mainMenu}">
         <a href="#about">${copy.aboutTitle}</a>
-        <a href="#privacy">${copy.privacyTitle}</a>
+        <a href="./privacy.html">${copy.privacyTitle}</a>
         <a href="#terms">${copy.termsTitle}</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact">${copy.contactTitle}</a>
       </nav>
     </footer>

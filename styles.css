@@ -420,32 +420,54 @@ button {
 .site-footer {
   position: relative;
   z-index: 1;
-  display: grid;
-  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
   width: min(1440px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 26px 0 36px;
+  padding: 24px 0 36px;
   border-top: 1px solid var(--line);
   color: var(--muted);
+  font-size: 0.88rem;
 }
 
-.site-footer span {
+.site-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.site-footer-brand span {
   color: var(--text);
   font-weight: 800;
+  font-size: 0.95rem;
 }
 
-.site-footer p {
+.site-footer-brand p {
   margin: 0;
 }
 
 .site-footer nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
+  gap: 0;
 }
 
-.site-footer a {
+.site-footer nav a {
+  color: var(--muted);
+  padding: 4px 14px;
+  transition: color 150ms ease;
+}
+
+.site-footer nav a:hover {
   color: var(--text);
+}
+
+.site-footer nav a + a {
+  border-left: 1px solid var(--line);
 }
 
 .player-shell {
