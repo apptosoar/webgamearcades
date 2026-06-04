@@ -5,7 +5,7 @@
     navGames: "게임",
     navPrivacy: "개인정보처리방침",
     navContact: "문의",
-    brandHome: "webgame arcade 홈",
+    brandHome: "Webgame Arcade 홈",
     mainMenu: "주요 메뉴",
     heroText: "장르를 고르고 브라우저에서 바로 실행되는<br>미니게임을 즐겨보세요.",
     chooseGenre: "장르 선택",
@@ -46,10 +46,10 @@
     playStep2Text: "각 게임 화면의 설명과 점수 표시를 확인한 뒤 플레이합니다.",
     playStep3Title: "광고와 분리",
     playStep3Text: "광고 영역은 게임 버튼이나 조작 영역과 구분되도록 배치합니다.",
-    aboutTitle: "webgame arcade 소개",
-    aboutText: "webgame arcade는 설치 없이 즐길 수 있는 간단한 브라우저 게임 모음입니다. 게임 설명, 조작법, 개인정보 안내를 명확히 제공해 사용자가 사이트 내용을 쉽게 이해할 수 있도록 구성했습니다.",
+    aboutTitle: "Webgame Arcade 소개",
+    aboutText: "Webgame Arcade는 설치 없이 즐길 수 있는 간단한 브라우저 게임 모음입니다. 게임 설명, 조작법, 개인정보 안내를 명확히 제공해 사용자가 사이트 내용을 쉽게 이해할 수 있도록 구성했습니다.",
     privacyTitle: "개인정보처리방침",
-    privacyIntro: "webgame arcade는 사이트 운영과 광고 제공을 위해 쿠키, 접속 로그, 기기 정보와 같은 기본적인 이용 정보를 처리할 수 있습니다.",
+    privacyIntro: "Webgame Arcade는 사이트 운영과 광고 제공을 위해 쿠키, 접속 로그, 기기 정보와 같은 기본적인 이용 정보를 처리할 수 있습니다.",
     privacyPoint1: "Google AdSense를 사용하는 경우 Google 및 제3자가 쿠키를 사용해 맞춤 광고를 제공할 수 있습니다.",
     privacyPoint2: "사용자는 브라우저 설정 또는 Google 광고 설정(g.co/adsettings)에서 맞춤 광고를 관리하거나 거부할 수 있습니다.",
     privacyPoint3: "수집된 정보는 광고 제공 이외의 목적으로 제3자에게 판매되지 않습니다.",
@@ -100,7 +100,7 @@
     navGames: "Games",
     navPrivacy: "Privacy",
     navContact: "Contact",
-    brandHome: "webgame arcade home",
+    brandHome: "Webgame Arcade home",
     mainMenu: "Main menu",
     heroText: "Choose a genre and play mini games<br>directly in your browser.",
     chooseGenre: "Choose Genre",
@@ -141,10 +141,10 @@
     playStep2Text: "Read the game description and score display before playing.",
     playStep3Title: "Ads Stay Separate",
     playStep3Text: "Ad areas should remain separate from game buttons and control areas.",
-    aboutTitle: "About webgame arcade",
-    aboutText: "webgame arcade is a collection of simple browser games that run without installation. The site provides clear game descriptions, controls, and privacy information so visitors can understand the content easily.",
+    aboutTitle: "About Webgame Arcade",
+    aboutText: "Webgame Arcade is a collection of simple browser games that run without installation. The site provides clear game descriptions, controls, and privacy information so visitors can understand the content easily.",
     privacyTitle: "Privacy Policy",
-    privacyIntro: "webgame arcade may process basic usage information such as cookies, access logs, and device information for site operation and ad delivery.",
+    privacyIntro: "Webgame Arcade may process basic usage information such as cookies, access logs, and device information for site operation and ad delivery.",
     privacyPoint1: "When Google AdSense is active, Google and third parties may use cookies to serve personalized ads based on your browsing activity.",
     privacyPoint2: "You can manage or opt out of personalized ads through your browser settings or Google Ad Settings (g.co/adsettings).",
     privacyPoint3: "Collected information is not sold to third parties for purposes beyond ad delivery.",
@@ -202,7 +202,7 @@
   translations.es = mk({
     localeName: "Español",
     navGenres: "Géneros", navGames: "Juegos", navPrivacy: "Privacidad", navContact: "Contacto",
-    brandHome: "inicio de webgame arcade", mainMenu: "Menú principal",
+    brandHome: "inicio de Webgame Arcade", mainMenu: "Menú principal",
     heroText: "Elige un género y juega minijuegos<br>directamente en tu navegador.",
     chooseGenre: "Elegir género", viewGames: "Ver juegos", featuredGenres: "Géneros destacados",
     genresEyebrow: "Géneros", genresTitle: "Elegir un género",
@@ -246,7 +246,7 @@
   translations.zh = mk({
     localeName: "中文",
     navGenres: "类别", navGames: "游戏", navPrivacy: "隐私", navContact: "联系",
-    brandHome: "webgame arcade 主页", mainMenu: "主菜单",
+    brandHome: "Webgame Arcade 主页", mainMenu: "主菜单",
     heroText: "选择类别，直接在浏览器中<br>畅玩迷你游戏。",
     chooseGenre: "选择类别", viewGames: "查看游戏", featuredGenres: "精选类别",
     genresEyebrow: "类别", genresTitle: "选择类别",
@@ -290,7 +290,7 @@
   translations.ja = mk({
     localeName: "日本語",
     navGenres: "ジャンル", navGames: "ゲーム", navPrivacy: "プライバシー", navContact: "お問い合わせ",
-    brandHome: "webgame arcade ホーム", mainMenu: "メインメニュー",
+    brandHome: "Webgame Arcade ホーム", mainMenu: "メインメニュー",
     heroText: "ジャンルを選んでブラウザで<br>ミニゲームを楽しもう。",
     chooseGenre: "ジャンルを選ぶ", viewGames: "ゲームを見る", featuredGenres: "注目ジャンル",
     genresEyebrow: "ジャンル", genresTitle: "ジャンルを選ぶ",
@@ -334,7 +334,7 @@
   translations.de = mk({
     localeName: "Deutsch",
     navGenres: "Genres", navGames: "Spiele", navPrivacy: "Datenschutz", navContact: "Kontakt",
-    brandHome: "webgame arcade Startseite", mainMenu: "Hauptmenü",
+    brandHome: "Webgame Arcade Startseite", mainMenu: "Hauptmenü",
     heroText: "Wähle ein Genre und spiele Minispiele<br>direkt in deinem Browser.",
     chooseGenre: "Genre wählen", viewGames: "Spiele ansehen", featuredGenres: "Ausgewählte Genres",
     genresEyebrow: "Genres", genresTitle: "Ein Genre wählen",
@@ -378,7 +378,7 @@
   translations.fr = mk({
     localeName: "Français",
     navGenres: "Genres", navGames: "Jeux", navPrivacy: "Confidentialité", navContact: "Contact",
-    brandHome: "accueil webgame arcade", mainMenu: "Menu principal",
+    brandHome: "accueil Webgame Arcade", mainMenu: "Menu principal",
     heroText: "Choisissez un genre et jouez à des mini-jeux<br>directement dans votre navigateur.",
     chooseGenre: "Choisir un genre", viewGames: "Voir les jeux", featuredGenres: "Genres en vedette",
     genresEyebrow: "Genres", genresTitle: "Choisir un genre",
@@ -422,7 +422,7 @@
   translations.hi = mk({
     localeName: "हिन्दी",
     navGenres: "शैलियाँ", navGames: "गेम्स", navPrivacy: "गोपनीयता", navContact: "संपर्क",
-    brandHome: "webgame arcade होम", mainMenu: "मुख्य मेनू",
+    brandHome: "Webgame Arcade होम", mainMenu: "मुख्य मेनू",
     heroText: "एक शैली चुनें और ब्राउज़र में सीधे<br>मिनीगेम खेलें।",
     chooseGenre: "शैली चुनें", viewGames: "गेम देखें", featuredGenres: "विशेष शैलियाँ",
     genresEyebrow: "शैलियाँ", genresTitle: "एक शैली चुनें",
@@ -466,7 +466,7 @@
   translations.cs = mk({
     localeName: "Čeština",
     navGenres: "Žánry", navGames: "Hry", navPrivacy: "Soukromí", navContact: "Kontakt",
-    brandHome: "domovská stránka webgame arcade", mainMenu: "Hlavní nabídka",
+    brandHome: "domovská stránka Webgame Arcade", mainMenu: "Hlavní nabídka",
     heroText: "Vyberte žánr a hrajte minihry<br>přímo v prohlížeči.",
     chooseGenre: "Vybrat žánr", viewGames: "Zobrazit hry", featuredGenres: "Doporučené žánry",
     genresEyebrow: "Žánry", genresTitle: "Vyberte žánr",
@@ -510,7 +510,7 @@
   translations.nl = mk({
     localeName: "Nederlands",
     navGenres: "Genres", navGames: "Spellen", navPrivacy: "Privacy", navContact: "Contact",
-    brandHome: "webgame arcade startpagina", mainMenu: "Hoofdmenu",
+    brandHome: "Webgame Arcade startpagina", mainMenu: "Hoofdmenu",
     heroText: "Kies een genre en speel minigames<br>rechtstreeks in je browser.",
     chooseGenre: "Genre kiezen", viewGames: "Spellen bekijken", featuredGenres: "Uitgelichte genres",
     genresEyebrow: "Genres", genresTitle: "Een genre kiezen",
@@ -554,7 +554,7 @@
   translations.fi = mk({
     localeName: "Suomi",
     navGenres: "Lajit", navGames: "Pelit", navPrivacy: "Tietosuoja", navContact: "Yhteystiedot",
-    brandHome: "webgame arcade etusivu", mainMenu: "Päävalikko",
+    brandHome: "Webgame Arcade etusivu", mainMenu: "Päävalikko",
     heroText: "Valitse laji ja pelaa minipelejä<br>suoraan selaimessa.",
     chooseGenre: "Valitse laji", viewGames: "Näytä pelit", featuredGenres: "Esitellyt lajit",
     genresEyebrow: "Lajit", genresTitle: "Valitse laji",
@@ -598,7 +598,7 @@
   translations.he = mk({
     localeName: "עברית",
     navGenres: "ז'אנרים", navGames: "משחקים", navPrivacy: "פרטיות", navContact: "צור קשר",
-    brandHome: "דף הבית של webgame arcade", mainMenu: "תפריט ראשי",
+    brandHome: "דף הבית של Webgame Arcade", mainMenu: "תפריט ראשי",
     heroText: "בחר ז'אנר ושחק במשחקי מיני<br>ישירות בדפדפן שלך.",
     chooseGenre: "בחר ז'אנר", viewGames: "צפה במשחקים", featuredGenres: "ז'אנרים מומלצים",
     genresEyebrow: "ז'אנרים", genresTitle: "בחר ז'אנר",
@@ -642,7 +642,7 @@
   translations.ro = mk({
     localeName: "Română",
     navGenres: "Genuri", navGames: "Jocuri", navPrivacy: "Confidențialitate", navContact: "Contact",
-    brandHome: "pagina principală webgame arcade", mainMenu: "Meniu principal",
+    brandHome: "pagina principală Webgame Arcade", mainMenu: "Meniu principal",
     heroText: "Alege un gen și joacă minijocuri<br>direct în browser.",
     chooseGenre: "Alege genul", viewGames: "Vezi jocuri", featuredGenres: "Genuri recomandate",
     genresEyebrow: "Genuri", genresTitle: "Alege un gen",
@@ -686,7 +686,7 @@
   translations.uk = mk({
     localeName: "Українська",
     navGenres: "Жанри", navGames: "Ігри", navPrivacy: "Конфіденційність", navContact: "Контакт",
-    brandHome: "домашня сторінка webgame arcade", mainMenu: "Головне меню",
+    brandHome: "домашня сторінка Webgame Arcade", mainMenu: "Головне меню",
     heroText: "Вибери жанр і грай у міні-ігри<br>прямо в браузері.",
     chooseGenre: "Вибрати жанр", viewGames: "Переглянути ігри", featuredGenres: "Вибрані жанри",
     genresEyebrow: "Жанри", genresTitle: "Вибрати жанр",
@@ -730,7 +730,7 @@
   translations.pt = mk({
     localeName: "Português",
     navGenres: "Gêneros", navGames: "Jogos", navPrivacy: "Privacidade", navContact: "Contato",
-    brandHome: "página inicial webgame arcade", mainMenu: "Menu principal",
+    brandHome: "página inicial Webgame Arcade", mainMenu: "Menu principal",
     heroText: "Escolha um gênero e jogue minigames<br>diretamente no seu navegador.",
     chooseGenre: "Escolher gênero", viewGames: "Ver jogos", featuredGenres: "Gêneros em destaque",
     genresEyebrow: "Gêneros", genresTitle: "Escolha um gênero",
@@ -774,7 +774,7 @@
   translations.id = mk({
     localeName: "Bahasa Indonesia",
     navGenres: "Genre", navGames: "Game", navPrivacy: "Privasi", navContact: "Kontak",
-    brandHome: "beranda webgame arcade", mainMenu: "Menu utama",
+    brandHome: "beranda Webgame Arcade", mainMenu: "Menu utama",
     heroText: "Pilih genre dan mainkan minigame<br>langsung di browser kamu.",
     chooseGenre: "Pilih genre", viewGames: "Lihat game", featuredGenres: "Genre unggulan",
     genresEyebrow: "Genre", genresTitle: "Pilih genre",
@@ -818,7 +818,7 @@
   translations.bn = mk({
     localeName: "বাংলা",
     navGenres: "ধরন", navGames: "গেম", navPrivacy: "গোপনীয়তা", navContact: "যোগাযোগ",
-    brandHome: "webgame arcade হোম", mainMenu: "মূল মেনু",
+    brandHome: "Webgame Arcade হোম", mainMenu: "মূল মেনু",
     heroText: "একটি ধরন বেছে নিন এবং সরাসরি<br>ব্রাউজারে মিনিগেম খেলুন।",
     chooseGenre: "ধরন বেছে নিন", viewGames: "গেম দেখুন", featuredGenres: "বিশেষ ধরন",
     genresEyebrow: "ধরন", genresTitle: "একটি ধরন বেছে নিন",
@@ -842,7 +842,7 @@
   translations.bg = mk({
     localeName: "Български",
     navGenres: "Жанрове", navGames: "Игри", navPrivacy: "Поверителност", navContact: "Контакт",
-    brandHome: "начало на webgame arcade", mainMenu: "Главно меню",
+    brandHome: "начало на Webgame Arcade", mainMenu: "Главно меню",
     heroText: "Избери жанр и играй мини игри<br>директно в браузъра.",
     chooseGenre: "Избери жанр", viewGames: "Виж игри", featuredGenres: "Препоръчани жанрове",
     genresEyebrow: "Жанрове", genresTitle: "Избери жанр",
@@ -866,7 +866,7 @@
   translations.ca = mk({
     localeName: "Català",
     navGenres: "Gèneres", navGames: "Jocs", navPrivacy: "Privadesa", navContact: "Contacte",
-    brandHome: "inici de webgame arcade", mainMenu: "Menú principal",
+    brandHome: "inici de Webgame Arcade", mainMenu: "Menú principal",
     heroText: "Tria un gènere i juga a minijocs<br>directament al navegador.",
     chooseGenre: "Triar gènere", viewGames: "Veure jocs", featuredGenres: "Gèneres destacats",
     genresEyebrow: "Gèneres", genresTitle: "Triar un gènere",
@@ -890,7 +890,7 @@
   translations["zh-TW"] = mk({
     localeName: "繁體中文",
     navGenres: "類別", navGames: "遊戲", navPrivacy: "隱私", navContact: "聯繫",
-    brandHome: "webgame arcade 首頁", mainMenu: "主選單",
+    brandHome: "Webgame Arcade 首頁", mainMenu: "主選單",
     heroText: "選擇類別，直接在瀏覽器中<br>暢玩迷你遊戲。",
     chooseGenre: "選擇類別", viewGames: "查看遊戲", featuredGenres: "精選類別",
     genresEyebrow: "類別", genresTitle: "選擇類別",
@@ -914,7 +914,7 @@
   translations.hr = mk({
     localeName: "Hrvatski",
     navGenres: "Žanrovi", navGames: "Igre", navPrivacy: "Privatnost", navContact: "Kontakt",
-    brandHome: "webgame arcade početna", mainMenu: "Glavni izbornik",
+    brandHome: "Webgame Arcade početna", mainMenu: "Glavni izbornik",
     heroText: "Odaberi žanr i igraj minigame<br>izravno u pregledniku.",
     chooseGenre: "Odaberi žanr", viewGames: "Pogledaj igre", featuredGenres: "Istaknuti žanrovi",
     genresEyebrow: "Žanrovi", genresTitle: "Odaberi žanr",
@@ -938,7 +938,7 @@
   translations.da = mk({
     localeName: "Dansk",
     navGenres: "Genrer", navGames: "Spil", navPrivacy: "Privatliv", navContact: "Kontakt",
-    brandHome: "webgame arcade startside", mainMenu: "Hovedmenu",
+    brandHome: "Webgame Arcade startside", mainMenu: "Hovedmenu",
     heroText: "Vælg en genre og spil minispil<br>direkte i din browser.",
     chooseGenre: "Vælg genre", viewGames: "Se spil", featuredGenres: "Udvalgte genrer",
     genresEyebrow: "Genrer", genresTitle: "Vælg en genre",
@@ -962,7 +962,7 @@
   translations.et = mk({
     localeName: "Eesti",
     navGenres: "Žanrid", navGames: "Mängud", navPrivacy: "Privaatsus", navContact: "Kontakt",
-    brandHome: "webgame arcade avaleht", mainMenu: "Peamenüü",
+    brandHome: "Webgame Arcade avaleht", mainMenu: "Peamenüü",
     heroText: "Vali žanr ja mängi minimänge<br>otse brauseris.",
     chooseGenre: "Vali žanr", viewGames: "Vaata mänge", featuredGenres: "Soovitatud žanrid",
     genresEyebrow: "Žanrid", genresTitle: "Vali žanr",
@@ -986,7 +986,7 @@
   translations.fil = mk({
     localeName: "Filipino",
     navGenres: "Mga Genre", navGames: "Mga Laro", navPrivacy: "Privacy", navContact: "Makipag-ugnayan",
-    brandHome: "webgame arcade tahanan", mainMenu: "Pangunahing menu",
+    brandHome: "Webgame Arcade tahanan", mainMenu: "Pangunahing menu",
     heroText: "Pumili ng genre at maglaro ng mini-games<br>nang direkta sa iyong browser.",
     chooseGenre: "Pumili ng genre", viewGames: "Tingnan ang mga laro", featuredGenres: "Mga tampok na genre",
     genresEyebrow: "Mga Genre", genresTitle: "Pumili ng genre",
@@ -1010,7 +1010,7 @@
   translations.el = mk({
     localeName: "Ελληνικά",
     navGenres: "Είδη", navGames: "Παιχνίδια", navPrivacy: "Απόρρητο", navContact: "Επικοινωνία",
-    brandHome: "αρχική webgame arcade", mainMenu: "Κύριο μενού",
+    brandHome: "αρχική Webgame Arcade", mainMenu: "Κύριο μενού",
     heroText: "Επίλεξε είδος και παίξε mini-games<br>απευθείας στον browser σου.",
     chooseGenre: "Επιλογή είδους", viewGames: "Δες παιχνίδια", featuredGenres: "Προτεινόμενα είδη",
     genresEyebrow: "Είδη", genresTitle: "Επίλεξε είδος",
@@ -1034,7 +1034,7 @@
   translations.gu = mk({
     localeName: "ગુજરાતી",
     navGenres: "શૈલીઓ", navGames: "ગેમ્સ", navPrivacy: "ગોપનીયતા", navContact: "સંપર્ક",
-    brandHome: "webgame arcade હોમ", mainMenu: "મુખ્ય મેનૂ",
+    brandHome: "Webgame Arcade હોમ", mainMenu: "મુખ્ય મેનૂ",
     heroText: "એક શૈલી પસંદ કરો અને સીધા<br>બ્રાઉઝરમાં મિનીગેમ રમો.",
     chooseGenre: "શૈલી પસંદ કરો", viewGames: "ગેમ્સ જુઓ", featuredGenres: "વિશેષ શૈલીઓ",
     genresEyebrow: "શૈલીઓ", genresTitle: "એક શૈલી પસંદ કરો",
@@ -1058,7 +1058,7 @@
   translations.hu = mk({
     localeName: "Magyar",
     navGenres: "Műfajok", navGames: "Játékok", navPrivacy: "Adatvédelem", navContact: "Kapcsolat",
-    brandHome: "webgame arcade főoldal", mainMenu: "Főmenü",
+    brandHome: "Webgame Arcade főoldal", mainMenu: "Főmenü",
     heroText: "Válassz műfajt és játssz minijátékokat<br>közvetlenül a böngészőben.",
     chooseGenre: "Műfaj választása", viewGames: "Játékok megtekintése", featuredGenres: "Kiemelt műfajok",
     genresEyebrow: "Műfajok", genresTitle: "Válassz műfajt",
@@ -1082,7 +1082,7 @@
   translations.it = mk({
     localeName: "Italiano",
     navGenres: "Generi", navGames: "Giochi", navPrivacy: "Privacy", navContact: "Contatti",
-    brandHome: "home di webgame arcade", mainMenu: "Menu principale",
+    brandHome: "home di Webgame Arcade", mainMenu: "Menu principale",
     heroText: "Scegli un genere e gioca a minigiochi<br>direttamente nel tuo browser.",
     chooseGenre: "Scegli genere", viewGames: "Vedi giochi", featuredGenres: "Generi in evidenza",
     genresEyebrow: "Generi", genresTitle: "Scegli un genere",
@@ -1106,7 +1106,7 @@
   translations.kn = mk({
     localeName: "ಕನ್ನಡ",
     navGenres: "ಪ್ರಕಾರಗಳು", navGames: "ಆಟಗಳು", navPrivacy: "ಗೌಪ್ಯತೆ", navContact: "ಸಂಪರ್ಕ",
-    brandHome: "webgame arcade ಹೋಮ್", mainMenu: "ಮುಖ್ಯ ಮೆನು",
+    brandHome: "Webgame Arcade ಹೋಮ್", mainMenu: "ಮುಖ್ಯ ಮೆನು",
     heroText: "ಒಂದು ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ ಮತ್ತು<br>ನೇರವಾಗಿ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಿನಿಗೇಮ್ ಆಡಿ.",
     chooseGenre: "ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ", viewGames: "ಆಟಗಳು ನೋಡಿ", featuredGenres: "ವಿಶೇಷ ಪ್ರಕಾರಗಳು",
     genresEyebrow: "ಪ್ರಕಾರಗಳು", genresTitle: "ಒಂದು ಪ್ರಕಾರ ಆಯ್ಕೆ ಮಾಡಿ",
@@ -1130,7 +1130,7 @@
   translations.lv = mk({
     localeName: "Latviešu",
     navGenres: "Žanri", navGames: "Spēles", navPrivacy: "Privātums", navContact: "Kontakts",
-    brandHome: "webgame arcade sākumlapa", mainMenu: "Galvenā izvēlne",
+    brandHome: "Webgame Arcade sākumlapa", mainMenu: "Galvenā izvēlne",
     heroText: "Izvēlies žanru un spēlē minispēles<br>tieši pārlūkprogrammā.",
     chooseGenre: "Izvēlēties žanru", viewGames: "Skatīt spēles", featuredGenres: "Ieteiktie žanri",
     genresEyebrow: "Žanri", genresTitle: "Izvēlies žanru",
@@ -1154,7 +1154,7 @@
   translations.lt = mk({
     localeName: "Lietuvių",
     navGenres: "Žanrai", navGames: "Žaidimai", navPrivacy: "Privatumas", navContact: "Kontaktas",
-    brandHome: "webgame arcade pradžia", mainMenu: "Pagrindinis meniu",
+    brandHome: "Webgame Arcade pradžia", mainMenu: "Pagrindinis meniu",
     heroText: "Pasirink žanrą ir žaisk mini žaidimus<br>tiesiogiai naršyklėje.",
     chooseGenre: "Pasirinkti žanrą", viewGames: "Peržiūrėti žaidimus", featuredGenres: "Rekomenduojami žanrai",
     genresEyebrow: "Žanrai", genresTitle: "Pasirinkti žanrą",
@@ -1178,7 +1178,7 @@
   translations.ms = mk({
     localeName: "Bahasa Melayu",
     navGenres: "Genre", navGames: "Permainan", navPrivacy: "Privasi", navContact: "Hubungi",
-    brandHome: "laman utama webgame arcade", mainMenu: "Menu utama",
+    brandHome: "laman utama Webgame Arcade", mainMenu: "Menu utama",
     heroText: "Pilih genre dan main permainan mini<br>terus dalam pelayar anda.",
     chooseGenre: "Pilih genre", viewGames: "Lihat permainan", featuredGenres: "Genre unggulan",
     genresEyebrow: "Genre", genresTitle: "Pilih genre",
@@ -1202,7 +1202,7 @@
   translations.ml = mk({
     localeName: "മലയാളം",
     navGenres: "വിഭാഗങ്ങൾ", navGames: "ഗെയിമുകൾ", navPrivacy: "സ്വകാര്യത", navContact: "ബന്ധപ്പെടുക",
-    brandHome: "webgame arcade ഹോം", mainMenu: "പ്രധാന മെനു",
+    brandHome: "Webgame Arcade ഹോം", mainMenu: "പ്രധാന മെനു",
     heroText: "ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക,<br>ബ്രൗസറിൽ നേരിട്ട് കളിക്കുക.",
     chooseGenre: "വിഭാഗം തിരഞ്ഞെടുക്കുക", viewGames: "ഗെയിമുകൾ കാണുക", featuredGenres: "പ്രത്യേക വിഭാഗങ്ങൾ",
     genresEyebrow: "വിഭാഗങ്ങൾ", genresTitle: "ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക",
@@ -1226,7 +1226,7 @@
   translations.mr = mk({
     localeName: "मराठी",
     navGenres: "शैली", navGames: "खेळ", navPrivacy: "गोपनीयता", navContact: "संपर्क",
-    brandHome: "webgame arcade होम", mainMenu: "मुख्य मेनू",
+    brandHome: "Webgame Arcade होम", mainMenu: "मुख्य मेनू",
     heroText: "शैली निवडा आणि थेट<br>ब्राउझरमध्ये मिनीगेम खेळा.",
     chooseGenre: "शैली निवडा", viewGames: "खेळ पहा", featuredGenres: "विशेष शैली",
     genresEyebrow: "शैली", genresTitle: "शैली निवडा",
@@ -1250,7 +1250,7 @@
   translations.no = mk({
     localeName: "Norsk",
     navGenres: "Sjangre", navGames: "Spill", navPrivacy: "Personvern", navContact: "Kontakt",
-    brandHome: "webgame arcade startside", mainMenu: "Hovedmeny",
+    brandHome: "Webgame Arcade startside", mainMenu: "Hovedmeny",
     heroText: "Velg en sjanger og spill minispill<br>direkte i nettleseren.",
     chooseGenre: "Velg sjanger", viewGames: "Se spill", featuredGenres: "Utvalgte sjangre",
     genresEyebrow: "Sjangre", genresTitle: "Velg en sjanger",
@@ -1274,7 +1274,7 @@
   translations.pl = mk({
     localeName: "Polski",
     navGenres: "Gatunki", navGames: "Gry", navPrivacy: "Prywatność", navContact: "Kontakt",
-    brandHome: "strona główna webgame arcade", mainMenu: "Menu główne",
+    brandHome: "strona główna Webgame Arcade", mainMenu: "Menu główne",
     heroText: "Wybierz gatunek i graj w minigry<br>bezpośrednio w przeglądarce.",
     chooseGenre: "Wybierz gatunek", viewGames: "Zobacz gry", featuredGenres: "Polecane gatunki",
     genresEyebrow: "Gatunki", genresTitle: "Wybierz gatunek",
@@ -1298,7 +1298,7 @@
   translations.pa = mk({
     localeName: "ਪੰਜਾਬੀ",
     navGenres: "ਕਿਸਮਾਂ", navGames: "ਗੇਮਾਂ", navPrivacy: "ਗੋਪਨੀਯਤਾ", navContact: "ਸੰਪਰਕ",
-    brandHome: "webgame arcade ਹੋਮ", mainMenu: "ਮੁੱਖ ਮੀਨੂ",
+    brandHome: "Webgame Arcade ਹੋਮ", mainMenu: "ਮੁੱਖ ਮੀਨੂ",
     heroText: "ਇੱਕ ਕਿਸਮ ਚੁਣੋ ਅਤੇ ਸਿੱਧੇ<br>ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਮਿਨੀਗੇਮ ਖੇਡੋ।",
     chooseGenre: "ਕਿਸਮ ਚੁਣੋ", viewGames: "ਗੇਮਾਂ ਵੇਖੋ", featuredGenres: "ਖਾਸ ਕਿਸਮਾਂ",
     genresEyebrow: "ਕਿਸਮਾਂ", genresTitle: "ਇੱਕ ਕਿਸਮ ਚੁਣੋ",
@@ -1322,7 +1322,7 @@
   translations.ru = mk({
     localeName: "Русский",
     navGenres: "Жанры", navGames: "Игры", navPrivacy: "Конфиденциальность", navContact: "Контакт",
-    brandHome: "главная webgame arcade", mainMenu: "Главное меню",
+    brandHome: "главная Webgame Arcade", mainMenu: "Главное меню",
     heroText: "Выбери жанр и играй в мини-игры<br>прямо в браузере.",
     chooseGenre: "Выбрать жанр", viewGames: "Смотреть игры", featuredGenres: "Выбранные жанры",
     genresEyebrow: "Жанры", genresTitle: "Выбрать жанр",
@@ -1346,7 +1346,7 @@
   translations.sr = mk({
     localeName: "Српски",
     navGenres: "Жанрови", navGames: "Игре", navPrivacy: "Приватност", navContact: "Контакт",
-    brandHome: "почетна webgame arcade", mainMenu: "Главни мени",
+    brandHome: "почетна Webgame Arcade", mainMenu: "Главни мени",
     heroText: "Одабери жанр и играј мини игре<br>директно у прегледачу.",
     chooseGenre: "Одабери жанр", viewGames: "Погледај игре", featuredGenres: "Истакнути жанрови",
     genresEyebrow: "Жанрови", genresTitle: "Одабери жанр",
@@ -1370,7 +1370,7 @@
   translations.sk = mk({
     localeName: "Slovenčina",
     navGenres: "Žánre", navGames: "Hry", navPrivacy: "Súkromie", navContact: "Kontakt",
-    brandHome: "domovská stránka webgame arcade", mainMenu: "Hlavná ponuka",
+    brandHome: "domovská stránka Webgame Arcade", mainMenu: "Hlavná ponuka",
     heroText: "Vyber žáner a hraj minihry<br>priamo v prehliadači.",
     chooseGenre: "Vybrať žáner", viewGames: "Zobraziť hry", featuredGenres: "Odporúčané žánre",
     genresEyebrow: "Žánre", genresTitle: "Vyber žáner",
@@ -1394,7 +1394,7 @@
   translations.sl = mk({
     localeName: "Slovenščina",
     navGenres: "Žanri", navGames: "Igre", navPrivacy: "Zasebnost", navContact: "Kontakt",
-    brandHome: "domača stran webgame arcade", mainMenu: "Glavni meni",
+    brandHome: "domača stran Webgame Arcade", mainMenu: "Glavni meni",
     heroText: "Izberi žanr in igraj mini igre<br>neposredno v brskalniku.",
     chooseGenre: "Izberi žanr", viewGames: "Poglej igre", featuredGenres: "Priporočeni žanri",
     genresEyebrow: "Žanri", genresTitle: "Izberi žanr",
@@ -1418,7 +1418,7 @@
   translations.sv = mk({
     localeName: "Svenska",
     navGenres: "Genrer", navGames: "Spel", navPrivacy: "Integritet", navContact: "Kontakt",
-    brandHome: "webgame arcade startsida", mainMenu: "Huvudmeny",
+    brandHome: "Webgame Arcade startsida", mainMenu: "Huvudmeny",
     heroText: "Välj en genre och spela minispel<br>direkt i din webbläsare.",
     chooseGenre: "Välj genre", viewGames: "Se spel", featuredGenres: "Utvalda genrer",
     genresEyebrow: "Genrer", genresTitle: "Välj en genre",
@@ -1442,7 +1442,7 @@
   translations.ta = mk({
     localeName: "தமிழ்",
     navGenres: "வகைகள்", navGames: "விளையாட்டுகள்", navPrivacy: "தனியுரிமை", navContact: "தொடர்பு",
-    brandHome: "webgame arcade முகப்பு", mainMenu: "முதன்மை மெனு",
+    brandHome: "Webgame Arcade முகப்பு", mainMenu: "முதன்மை மெனு",
     heroText: "ஒரு வகையை தேர்ந்தெடுத்து<br>நேரடியாக உலாவியில் விளையாடுங்கள்.",
     chooseGenre: "வகை தேர்ந்தெடு", viewGames: "விளையாட்டுகள் காண்க", featuredGenres: "சிறப்பு வகைகள்",
     genresEyebrow: "வகைகள்", genresTitle: "ஒரு வகையை தேர்ந்தெடுக்கவும்",
@@ -1466,7 +1466,7 @@
   translations.te = mk({
     localeName: "తెలుగు",
     navGenres: "శైలులు", navGames: "ఆటలు", navPrivacy: "గోప్యత", navContact: "సంప్రదింపు",
-    brandHome: "webgame arcade హోమ్", mainMenu: "ప్రధాన మెనూ",
+    brandHome: "Webgame Arcade హోమ్", mainMenu: "ప్రధాన మెనూ",
     heroText: "ఒక శైలిని ఎంచుకోండి మరియు<br>నేరుగా బ్రౌజర్‌లో ఆడండి.",
     chooseGenre: "శైలి ఎంచుకోండి", viewGames: "ఆటలు చూడండి", featuredGenres: "ప్రత్యేక శైలులు",
     genresEyebrow: "శైలులు", genresTitle: "ఒక శైలిని ఎంచుకోండి",
@@ -1490,7 +1490,7 @@
   translations.th = mk({
     localeName: "ภาษาไทย",
     navGenres: "ประเภท", navGames: "เกม", navPrivacy: "ความเป็นส่วนตัว", navContact: "ติดต่อ",
-    brandHome: "หน้าหลัก webgame arcade", mainMenu: "เมนูหลัก",
+    brandHome: "หน้าหลัก Webgame Arcade", mainMenu: "เมนูหลัก",
     heroText: "เลือกประเภทและเล่นมินิเกม<br>โดยตรงในเบราว์เซอร์ของคุณ",
     chooseGenre: "เลือกประเภท", viewGames: "ดูเกม", featuredGenres: "ประเภทแนะนำ",
     genresEyebrow: "ประเภท", genresTitle: "เลือกประเภท",
@@ -1514,7 +1514,7 @@
   translations.tr = mk({
     localeName: "Türkçe",
     navGenres: "Türler", navGames: "Oyunlar", navPrivacy: "Gizlilik", navContact: "İletişim",
-    brandHome: "webgame arcade ana sayfa", mainMenu: "Ana menü",
+    brandHome: "Webgame Arcade ana sayfa", mainMenu: "Ana menü",
     heroText: "Bir tür seçin ve mini oyunları<br>doğrudan tarayıcınızda oynayın.",
     chooseGenre: "Tür seç", viewGames: "Oyunları gör", featuredGenres: "Öne çıkan türler",
     genresEyebrow: "Türler", genresTitle: "Bir tür seçin",
@@ -1538,7 +1538,7 @@
   translations.ur = mk({
     localeName: "اردو",
     navGenres: "اقسام", navGames: "گیمز", navPrivacy: "رازداری", navContact: "رابطہ",
-    brandHome: "webgame arcade ہوم", mainMenu: "مرکزی مینو",
+    brandHome: "Webgame Arcade ہوم", mainMenu: "مرکزی مینو",
     heroText: "ایک قسم منتخب کریں اور<br>براہ راست براؤزر میں مینی گیمز کھیلیں۔",
     chooseGenre: "قسم منتخب کریں", viewGames: "گیمز دیکھیں", featuredGenres: "نمایاں اقسام",
     genresEyebrow: "اقسام", genresTitle: "ایک قسم منتخب کریں",
@@ -1595,7 +1595,7 @@ const supportedLocales = Object.keys(translations);
 const currentLocale = detectLocale();
 const copy = translations[currentLocale];
 const app = document.querySelector("#app");
-const brandName = "webgame arcade";
+const brandName = "Webgame Arcade";
 
 const state = {
   selectedGenre: "all",
@@ -1724,7 +1724,12 @@ function render() {
     return;
   }
 
-  if (["privacy", "terms", "contact", "about"].includes(route)) {
+  if (route === "privacy") {
+    renderPrivacy();
+    return;
+  }
+
+  if (["terms", "contact", "about"].includes(route)) {
     renderInfoPage(route);
     return;
   }
@@ -2025,12 +2030,39 @@ function drawIconShape(ctx, id, c, S) {
 }
 
 function renderGenres() {
-  app.innerHTML = genreSection(true) + siteFooter();
+  renderGames("all");
 }
 
 function renderGames(genreId = "all") {
   state.selectedGenre = genreId;
-  app.innerHTML = gamesSection(genreId, true) + siteFooter();
+  const genres = getGenres();
+  const visibleGames = genreId === "all" ? getGames() : getGames().filter(g => g.genre === genreId);
+  const label = genreId === "all" ? copy.allGames : copy.genreGames.replace("{genre}", getGenre(genreId).name);
+
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <div class="lp-genre-tabs">
+          <a class="lp-genre-tab ${genreId === "all" ? "active" : ""}" href="#games/all">${copy.all}</a>
+          ${genres.map(g => `
+            <a class="lp-genre-tab ${genreId === g.id ? "active" : ""}" href="#games/${escapeAttribute(g.id)}" style="--tab-accent:${escapeAttribute(g.accent)}">${g.name}</a>
+          `).join("")}
+        </div>
+        <p class="lp-shelf-label">${label}</p>
+        <div class="app-grid">
+          ${visibleGames.map(gameAppIcon).join("")}
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+  initGameIcons();
 }
 
 function renderPlayer(gameId) {
@@ -2059,6 +2091,260 @@ function renderPlayer(gameId) {
     </section>
   `;
   focusPlayerFrame();
+}
+
+function renderPrivacy() {
+  const isKo = currentLocale === "ko";
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <a class="lp-genre-tab" href="#home" style="display:inline-block;margin-bottom:32px">${copy.home}</a>
+        <div class="lp-policy">
+          ${isKo ? privacyKo() : privacyEn()}
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+}
+
+function privacyKo() {
+  return `
+<h1>개인정보처리방침</h1>
+<p class="lp-policy-meta">최종 수정일: 2026년 6월 4일</p>
+
+<h3>1. 개요</h3>
+<p>Webgame Arcade(이하 "사이트")는 설치 없이 브라우저에서 바로 즐길 수 있는 무료 미니게임 모음 서비스입니다. 본 방침은 사이트 이용 과정에서 처리되는 정보의 종류, 목적, 보호 방법 및 이용자 권리를 안내합니다. 사이트를 계속 이용하면 본 방침에 동의한 것으로 간주합니다.</p>
+
+<h3>2. 수집하는 정보</h3>
+<h4>자동 수집 정보</h4>
+<p>사이트에 접속하면 아래 정보가 자동으로 기록될 수 있습니다.</p>
+<ul>
+  <li>접속 IP 주소 및 대략적인 지역 정보</li>
+  <li>사용 중인 브라우저 종류 및 버전</li>
+  <li>운영체제 및 기기 유형</li>
+  <li>방문한 페이지 URL 및 접속 시간</li>
+  <li>이전 방문 페이지(리퍼러)</li>
+</ul>
+<h4>게임 데이터</h4>
+<p>게임 점수·진행 현황 등 게임 관련 데이터는 이용자 기기의 브라우저 로컬 스토리지에만 저장됩니다. 외부 서버로 전송되거나 제3자와 공유되지 않습니다.</p>
+<h4>직접 제공 정보</h4>
+<p>사이트는 회원가입 기능을 제공하지 않습니다. 문의 이메일을 통해 연락할 경우, 이용자가 직접 입력한 이메일 주소와 문의 내용이 수집될 수 있습니다.</p>
+
+<h3>3. 정보 이용 목적</h3>
+<p>수집된 정보는 아래 목적으로만 사용됩니다.</p>
+<ul>
+  <li>사이트 운영 및 서비스 품질 유지·개선</li>
+  <li>방문 통계 분석 및 게임 성능 최적화</li>
+  <li>광고 서비스 제공 (Google AdSense)</li>
+  <li>기술적 오류 감지 및 보안 유지</li>
+  <li>관련 법령에 따른 의무 이행</li>
+</ul>
+
+<h3>4. 쿠키 및 유사 기술</h3>
+<h4>쿠키란?</h4>
+<p>쿠키는 웹사이트가 이용자의 브라우저에 저장하는 작은 데이터 파일입니다. 사이트는 서비스 운영과 광고 제공을 위해 쿠키를 사용합니다.</p>
+<h4>사용하는 쿠키 유형</h4>
+<ul>
+  <li><strong>필수 쿠키</strong>: 사이트가 정상적으로 작동하기 위해 반드시 필요한 쿠키입니다. 이 쿠키는 비활성화할 수 없습니다.</li>
+  <li><strong>분석 쿠키</strong>: 방문자 수·페이지뷰·이용 패턴 등 통계를 수집하여 서비스 개선에 활용합니다.</li>
+  <li><strong>광고 쿠키</strong>: Google AdSense가 이용자의 관심사에 맞는 맞춤 광고를 제공하기 위해 사용합니다.</li>
+</ul>
+<h4>쿠키 관리 방법</h4>
+<ul>
+  <li>브라우저 설정 → '쿠키 및 사이트 데이터'에서 쿠키를 차단하거나 삭제할 수 있습니다.</li>
+  <li>Google 광고 설정(<a href="https://g.co/adsettings" target="_blank" rel="noopener">g.co/adsettings</a>)에서 맞춤 광고를 거부할 수 있습니다.</li>
+  <li>쿠키를 비활성화하면 광고 표시 방식이 달라질 수 있으나, 게임 이용에는 영향이 없습니다.</li>
+</ul>
+
+<h3>5. 제3자 광고 (Google AdSense)</h3>
+<p>사이트는 Google LLC가 운영하는 광고 플랫폼 Google AdSense를 사용합니다. 이를 통해 Google 및 파트너사는 쿠키·광고 식별자를 활용하여 이용자의 관심사에 맞는 광고를 표시할 수 있습니다.</p>
+<ul>
+  <li>Google 개인정보처리방침: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+  <li>Google 광고 설정 관리: <a href="https://g.co/adsettings" target="_blank" rel="noopener">g.co/adsettings</a></li>
+  <li>수집된 정보는 광고 목적 이외로 제3자에게 판매되지 않습니다.</li>
+  <li>EU·EEA 이용자의 경우 동의 없이 맞춤 광고가 제공되지 않습니다.</li>
+</ul>
+
+<h3>6. 제3자 정보 제공</h3>
+<p>사이트는 아래의 경우를 제외하고 이용자 정보를 제3자에게 제공하지 않습니다.</p>
+<ul>
+  <li>법령에 따른 수사기관의 적법한 요청이 있는 경우</li>
+  <li>서비스 운영에 필수적인 파트너(Google AdSense 등 광고 서비스 제공자)</li>
+  <li>이용자 본인의 명시적 사전 동의가 있는 경우</li>
+</ul>
+
+<h3>7. 이용자 권리</h3>
+<h4>국내 이용자</h4>
+<p>개인정보 보호법에 따라 다음 권리를 언제든 행사할 수 있습니다.</p>
+<ul>
+  <li>본인 개인정보 열람 요청</li>
+  <li>오류 정정 및 삭제 요청</li>
+  <li>수집·이용 동의 철회</li>
+  <li>처리 정지 요청</li>
+</ul>
+<h4>EU · EEA 이용자 (GDPR)</h4>
+<ul>
+  <li>개인정보 접근·수정·삭제 요청 (잊힐 권리 포함)</li>
+  <li>처리 제한 및 반대 요청</li>
+  <li>데이터 이동성 요청</li>
+  <li>소재 국가 감독 기관에 불만 제기</li>
+</ul>
+<h4>캘리포니아 이용자 (CCPA)</h4>
+<ul>
+  <li>수집 항목·목적·제3자 공유 현황 고지 요청</li>
+  <li>개인정보 삭제 요청</li>
+  <li>개인정보 판매 거부권 (사이트는 개인정보를 판매하지 않습니다)</li>
+  <li>권리 행사로 인한 차별 없는 서비스 이용권</li>
+</ul>
+<h4>권리 행사 방법</h4>
+<p>아래 이메일로 요청하시면 30일 이내에 처리합니다.<br><strong>apptosoar@gmail.com</strong></p>
+
+<h3>8. 아동 개인정보 보호</h3>
+<p>사이트는 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다. 아동의 개인정보가 수집되었음을 인지한 경우 즉시 삭제 조치합니다. 부모 또는 보호자는 아래 이메일로 관련 사항을 신고할 수 있습니다.</p>
+
+<h3>9. 정보 보유 기간</h3>
+<div class="lp-policy-table-wrap"><table>
+  <thead><tr><th>정보 유형</th><th>보유 기간</th></tr></thead>
+  <tbody>
+    <tr><td>서버 접속 로그 (IP, 브라우저 등)</td><td>최대 12개월</td></tr>
+    <tr><td>광고 쿠키 (Google AdSense)</td><td>종류에 따라 세션 종료 시 ~ 최대 24개월</td></tr>
+    <tr><td>문의 이메일 및 내용</td><td>처리 완료 후 6개월</td></tr>
+    <tr><td>브라우저 로컬 스토리지 (게임 데이터)</td><td>이용자가 직접 삭제할 때까지</td></tr>
+  </tbody>
+</table></div>
+
+<h3>10. 보안</h3>
+<p>수집된 정보는 무단 접근·변경·유출·삭제로부터 보호하기 위해 합리적인 기술적·관리적 보호 조치를 적용합니다. 다만 인터넷을 통한 데이터 전송이나 전자적 저장이 100% 안전하다고 보장할 수는 없습니다. 보안 취약점을 발견한 경우 아래 이메일로 신고해 주세요.</p>
+
+<h3>11. 방침 변경</h3>
+<p>본 방침은 관련 법령 개정 또는 서비스 변경에 따라 업데이트될 수 있습니다. 중요한 변경이 있을 경우 사이트 상단 공지 또는 본 페이지 수정일 변경을 통해 안내합니다. 변경 후 사이트를 계속 이용하면 변경된 방침에 동의한 것으로 간주합니다.</p>
+
+<h3>12. 문의</h3>
+<p>개인정보 관련 모든 문의·요청·불만 사항은 아래로 연락해 주세요.</p>
+<ul>
+  <li><strong>이메일</strong>: apptosoar@gmail.com</li>
+  <li><strong>운영자</strong>: Webgame Arcade</li>
+  <li><strong>적용 법령</strong>: 대한민국 개인정보 보호법 · EU GDPR · 캘리포니아 CCPA</li>
+</ul>`;
+}
+
+function privacyEn() {
+  return `
+<h1>Privacy Policy</h1>
+<p class="lp-policy-meta">Last updated: June 4, 2026</p>
+
+<h3>1. Overview</h3>
+<p>Webgame Arcade ("the Site") is a free collection of browser-based mini games requiring no installation. This policy explains what information we collect, why we collect it, how we protect it, and your rights as a user. By continuing to use the Site, you agree to this policy.</p>
+
+<h3>2. Information We Collect</h3>
+<h4>Automatically collected</h4>
+<p>When you visit the Site, the following may be recorded automatically.</p>
+<ul>
+  <li>IP address and approximate location</li>
+  <li>Browser type and version</li>
+  <li>Operating system and device type</li>
+  <li>Pages visited and access timestamps</li>
+  <li>Referring page (where you came from)</li>
+</ul>
+<h4>Game data</h4>
+<p>Game scores and progress are stored only in your browser's local storage. They are never sent to our servers or shared with third parties.</p>
+<h4>Information you provide</h4>
+<p>The Site does not require account registration. If you contact us via email, your email address and message content may be collected.</p>
+
+<h3>3. How We Use Your Information</h3>
+<ul>
+  <li>Operating and improving the Site</li>
+  <li>Analysing visit statistics and optimising game performance</li>
+  <li>Delivering advertising (Google AdSense)</li>
+  <li>Detecting technical errors and maintaining security</li>
+  <li>Complying with applicable laws</li>
+</ul>
+
+<h3>4. Cookies and Similar Technologies</h3>
+<h4>What are cookies?</h4>
+<p>Cookies are small data files stored in your browser. The Site uses cookies for operation and advertising purposes.</p>
+<h4>Types of cookies used</h4>
+<ul>
+  <li><strong>Essential cookies</strong>: Required for the Site to function correctly. These cannot be disabled.</li>
+  <li><strong>Analytics cookies</strong>: Collect visitor counts, page views, and usage patterns to help us improve the Site.</li>
+  <li><strong>Advertising cookies</strong>: Used by Google AdSense to deliver personalised ads based on your interests.</li>
+</ul>
+<h4>Managing cookies</h4>
+<ul>
+  <li>You can block or delete cookies through your browser settings.</li>
+  <li>Opt out of personalised ads via Google Ad Settings: <a href="https://g.co/adsettings" target="_blank" rel="noopener">g.co/adsettings</a></li>
+  <li>Disabling cookies may change how ads appear but will not affect gameplay.</li>
+</ul>
+
+<h3>5. Third-Party Advertising (Google AdSense)</h3>
+<p>The Site uses Google AdSense, operated by Google LLC. Google and its partners may use cookies and advertising identifiers to serve ads tailored to your interests.</p>
+<ul>
+  <li>Google Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+  <li>Google Ad Settings: <a href="https://g.co/adsettings" target="_blank" rel="noopener">g.co/adsettings</a></li>
+  <li>Collected information is not sold to third parties beyond ad delivery.</li>
+  <li>EU/EEA users will not receive personalised ads without explicit consent.</li>
+</ul>
+
+<h3>6. Sharing Your Information</h3>
+<p>We do not share your information with third parties except in the following cases.</p>
+<ul>
+  <li>Lawful requests from law enforcement agencies</li>
+  <li>Essential service partners (e.g. Google AdSense)</li>
+  <li>With your explicit prior consent</li>
+</ul>
+
+<h3>7. Your Rights</h3>
+<h4>EU · EEA users (GDPR)</h4>
+<ul>
+  <li>Right to access, rectify, or erase your personal data</li>
+  <li>Right to restrict or object to processing</li>
+  <li>Right to data portability</li>
+  <li>Right to lodge a complaint with a supervisory authority</li>
+</ul>
+<h4>California users (CCPA)</h4>
+<ul>
+  <li>Right to know what personal information is collected and why</li>
+  <li>Right to request deletion of personal information</li>
+  <li>Right to opt out of the sale of personal information (we do not sell data)</li>
+  <li>Right to non-discrimination for exercising your rights</li>
+</ul>
+<h4>How to exercise your rights</h4>
+<p>Send your request to the email below. We will respond within 30 days.<br><strong>apptosoar@gmail.com</strong></p>
+
+<h3>8. Children's Privacy</h3>
+<p>The Site does not knowingly collect personal information from children under the age of 13 (or 16 in the EU/EEA). If we become aware that such data has been collected, we will delete it promptly. Parents or guardians may report concerns to our email address.</p>
+
+<h3>9. Data Retention</h3>
+<div class="lp-policy-table-wrap"><table>
+  <thead><tr><th>Data type</th><th>Retention period</th></tr></thead>
+  <tbody>
+    <tr><td>Server access logs (IP, browser, etc.)</td><td>Up to 12 months</td></tr>
+    <tr><td>Advertising cookies (Google AdSense)</td><td>Session to up to 24 months depending on type</td></tr>
+    <tr><td>Contact emails and content</td><td>6 months after resolution</td></tr>
+    <tr><td>Browser local storage (game data)</td><td>Until deleted by the user</td></tr>
+  </tbody>
+</table></div>
+
+<h3>10. Security</h3>
+<p>We apply reasonable technical and administrative measures to protect collected information from unauthorised access, modification, disclosure, or deletion. However, no method of transmission over the internet or electronic storage is 100% secure. Please report any security vulnerabilities to our email address.</p>
+
+<h3>11. Changes to This Policy</h3>
+<p>This policy may be updated when applicable laws change or the Site changes. Significant changes will be communicated via a site notice or by updating the "Last updated" date on this page. Continued use of the Site after changes constitutes acceptance of the revised policy.</p>
+
+<h3>12. Contact</h3>
+<p>For all privacy-related enquiries, requests, or complaints, please contact us.</p>
+<ul>
+  <li><strong>Email</strong>: apptosoar@gmail.com</li>
+  <li><strong>Operator</strong>: Webgame Arcade</li>
+  <li><strong>Applicable law</strong>: Korean Personal Information Protection Act · EU GDPR · California CCPA</li>
+</ul>`;
 }
 
 function renderInfoPage(page) {
