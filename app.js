@@ -1643,8 +1643,8 @@ const puzzleExamples = [
 ];
 
 const supportedLocales = Object.keys(translations);
-const currentLocale = detectLocale();
-const copy = translations[currentLocale];
+let currentLocale = detectLocale();
+let copy = translations[currentLocale];
 const app = document.querySelector("#app");
 const brandName = "Webgame Arcade";
 
@@ -1763,6 +1763,9 @@ function buildLangSelector() {
     `${translations[locale].localeName}</button>`
   ).join("");
 
+  if (btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+
   // 드롭다운 토글
   btn.addEventListener("click", e => {
     e.stopPropagation();
@@ -1797,12 +1800,24 @@ function buildLangSelector() {
 }
 
 function changeLocale(locale) {
+  if (!translations[locale]) return;
   localStorage.setItem("locale", locale);
-  // URL 파라미터 제거 후 리로드
+  currentLocale = locale;
+  copy = translations[currentLocale];
+
   const url = new URL(location.href);
   url.searchParams.delete("lang");
   url.searchParams.delete("locale");
-  location.href = url.toString();
+  history.replaceState(null, "", url.toString());
+
+  applyStaticText();
+  render();
+
+  const banner = document.getElementById("cookie-banner");
+  if (banner) {
+    banner.remove();
+    initCookieBanner();
+  }
 }
 
 function render() {
