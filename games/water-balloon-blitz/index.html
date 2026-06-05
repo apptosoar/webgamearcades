@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Water Balloon Blitz</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game { width: min(840px, 100%); height: min(620px, 100vh); }
+      .hud { flex-wrap: wrap; }
+      .hint { color: #4dd8f0; font-weight: 800; }
+      canvas { cursor: crosshair; background: #0d1720; }
+      .action { min-width: 104px; background: #4dd8f0; color: #031118; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Water Balloon Blitz</strong>
+        <span>Stage <b id="stage">1</b>/10</span>
+        <span>Goal <b id="goal">10</b></span>
+        <span>Popped <b id="popped">0</b></span>
+        <span>HP <b id="hp">3</b></span>
+        <span>Time <b id="time">30</b>s</span>
+        <span class="hint" id="hint">Pop balloons</span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+      <button id="next" type="button" style="display:none">Next Stage</button>
+      <button class="action" id="wave" type="button">Splash</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const stageEl = document.getElementById("stage");
+      const goalEl = document.getElementById("goal");
+      const poppedEl = document.getElementById("popped");
+      const hpEl = document.getElementById("hp");
+      const timeEl = document.getElementById("time");
+      const hintEl = document.getElementById("hint");
+      const restartBtn = document.getElementById("restart");
+      const nextBtn = document.getElementById("next");
+      const waveBtn = document.getElementById("wave");
+
+      const STAGES = Array.from({ length: 10 }, (_, i) => ({
+        goal: 10 + i * 4,
+        time: 32 - Math.min(12, i * 2),
+        max: 7 + Math.floor(i / 2),
+        spawn: Math.max(12, 34 - i * 2),
+        speed: 1.45 + i * 0.38,
+        bomb: i < 3 ? 0 : 0.06 + i * 0.012,
+        special: i < 4 ? 0.08 : 0.14,
+      }));
+      const BALLOON_COLORS = [
+        "#4dd8f0", "#36b8ff", "#8cf4ff", "#73d676", "#f7b84b",
+        "#ff8ac8", "#d87bff", "#ff7a45", "#6aa8ff", "#9cffb7",
+      ];
+
+      const state = {
+        w: 0,
+        h: 0,
+        stage: 0,
+        timeLeft: STAGES[0].time,
+        hp: 3,
+        popped: 0,
+        score: 0,
+        t: 0,
+        tick: 0,
+        lastTs: 0,
+        spawn: 0,
+        slow: 0,
+        over: false,
+        clear: false,
+        complete: false,
+        wave: 100,
+        balloons: [],
+        drops: [],
+        rings: [],
+        floatText: [],
+        pointer: { x: 0, y: 0 },
+      };
+
+      restartBtn.addEventListener("click", () => location.reload());
+      nextBtn.addEventListener("click", () => {
+        if (!state.clear || state.stage >= STAGES.length - 1) return;
+        state.stage += 1;
+        resetStage();
+      });
+      waveBtn.addEventListener("click", () => {
+        if (state.wave < 100 || state.over) return;
+        state.wave = 0;
+        state.rings.push({ x: state.w / 2, y: state.h / 2, r: 20, life: 32, max: 32, color: "#4dd8f0" });
+        [...state.balloons].forEach((b) => {
+          if (b.kind !== "bomb") popBalloon(b, true);
+        });
+        hint("Splash wave", "#4dd8f0");
+      });
+
+      function level() {
+        return STAGES[state.stage];
+      }
+
+      function resetStage() {
+        state.timeLeft = level().time;
+        state.hp = 3;
+        state.popped = 0;
+        state.spawn = 0;
+        state.slow = 0;
+        state.over = false;
+        state.clear = false;
+        state.complete = false;
+        state.balloons = [];
+        state.drops = [];
+        state.rings = [];
+        state.floatText = [];
+        state.wave = 100;
+        nextBtn.style.display = "none";
+        hint(`Stage ${state.stage + 1}`, "#4dd8f0");
+        updateHud();
+      }
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const ratio = devicePixelRatio || 1;
+        state.w = Math.max(320, box.width);
+        state.h = Math.max(320, box.height);
+        canvas.width = Math.floor(state.w * ratio);
+        canvas.height = Math.floor(state.h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function pos(event) {
+        const box = canvas.getBoundingClientRect();
+        return { x: event.clientX - box.left, y: event.clientY - box.top };
+      }
+
+      canvas.addEventListener("pointermove", (event) => {
+        state.pointer = pos(event);
+      });
+      canvas.addEventListener("pointerdown", (event) => {
+        canvas.setPointerCapture?.(event.pointerId);
+        const p = pos(event);
+        state.pointer = p;
+        hitAt(p.x, p.y);
+      });
+
+      function spawnBalloon() {
+        const cfg = level();
+        let kind = "normal";
+        const roll = Math.random();
+        if (roll < cfg.bomb) kind = "bomb";
+        else if (roll < cfg.bomb + cfg.special) kind = ["ice", "rainbow", "small", "big"][Math.floor(Math.random() * 4)];
+
+        const randomColor = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
+        const spec = {
+          normal: { hp: 1, r: 28, color: randomColor, score: 1 },
+          small: { hp: 1, r: 20, color: randomColor, score: 2 },
+          big: { hp: 2, r: 38, color: randomColor, score: 3 },
+          ice: { hp: 1, r: 28, color: "#a8f5ff", score: 1 },
+          rainbow: { hp: 1, r: 31, color: "#d87bff", score: 4 },
+          bomb: { hp: 1, r: 29, color: "#ff4f6f", score: 0 },
+        }[kind];
+        const x = rand(spec.r + 16, state.w - spec.r - 16);
+        state.balloons.push({
+          ...spec,
+          kind,
+          x,
+          y: state.h + spec.r + rand(0, 80),
+          vx: rand(-1.35, 1.35) * (1 + state.stage * 0.2),
+          vy: -(cfg.speed + rand(0.75, 1.85) + (kind === "small" ? 1.15 : 0)),
+          wobble: rand(0, Math.PI * 2),
+          scale: 0,
+          dead: false,
+        });
+      }
+
+      function hitAt(x, y) {
+        if (state.over) return;
+        const hit = state.balloons
+          .filter((b) => dist(b, { x, y }) <= b.r + 12)
+          .sort((a, b) => dist(a, { x, y }) - dist(b, { x, y }))[0];
+        state.rings.push({ x, y, r: 8, life: 12, max: 12, color: hit ? hit.color : "#b8bec9" });
+        if (!hit) {
+          hint("Miss", "#b8bec9");
+          return;
+        }
+        if (hit.kind === "bomb") {
+          hit.dead = true;
+          state.hp -= 1;
+          splash(hit.x, hit.y, "#ff4f6f", 28);
+          hint("Bomb balloon!", "#ff4f6f");
+          if (state.hp <= 0) end(false);
+          return;
+        }
+        hit.hp -= 1;
+        splash(hit.x, hit.y, hit.color, hit.kind === "big" ? 16 : 12);
+        if (hit.hp > 0) {
+          hit.scale = 1.18;
+          hint("Again!", "#f7b84b");
+          return;
+        }
+        popBalloon(hit, false);
+      }
+
+      function popBalloon(b, wave) {
+        if (b.dead) return;
+        b.dead = true;
+        state.popped += b.score;
+        state.score += b.score * 10 + state.stage * 3;
+        state.wave = Math.min(100, state.wave + 8);
+        splash(b.x, b.y, b.color, b.kind === "rainbow" ? 34 : 20);
+        state.rings.push({ x: b.x, y: b.y, r: b.r, life: 18, max: 18, color: b.color });
+        state.floatText.push({ x: b.x, y: b.y - b.r, text: `+${b.score}`, color: b.color, life: 38 });
+        if (b.kind === "ice") {
+          state.slow = 220;
+          hint("Freeze!", "#a8f5ff");
+        } else if (b.kind === "rainbow" && !wave) {
+          [...state.balloons].forEach((other) => {
+            if (other !== b && other.kind !== "bomb" && dist(b, other) < 105) popBalloon(other, true);
+          });
+          hint("Rainbow pop", "#d87bff");
+        } else {
+          hint("Splash!", "#4dd8f0");
+        }
+        if (state.popped >= level().goal) end(true);
+      }
+
+      function step(ts) {
+        if (!state.lastTs) state.lastTs = ts;
+        const dt = Math.min(34, ts - state.lastTs);
+        state.lastTs = ts;
+        state.t += 1;
+        if (!state.over) {
+          state.tick += dt;
+          if (state.tick >= 1000) {
+            state.tick -= 1000;
+            state.timeLeft -= 1;
+            state.wave = Math.min(100, state.wave + 7);
+            if (state.timeLeft <= 0) end(false);
+          }
+          state.spawn -= 1;
+          if (state.spawn <= 0 && state.balloons.length < level().max) {
+            spawnBalloon();
+            state.spawn = level().spawn + Math.floor(Math.random() * 16);
+          }
+          state.slow = Math.max(0, state.slow - 1);
+          updateBalloons();
+        }
+        updateEffects();
+        updateHud();
+      }
+
+      function updateBalloons() {
+        const slow = state.slow ? 0.42 : 1;
+        state.balloons.forEach((b) => {
+          b.scale += (1 - b.scale) * 0.14;
+          b.wobble += 0.05;
+          b.x += (b.vx + Math.sin(b.wobble) * 0.32) * slow;
+          b.y += b.vy * slow;
+          if (b.x < b.r || b.x > state.w - b.r) b.vx *= -1;
+          if (b.y < -b.r * 2) {
+            b.dead = true;
+            if (b.kind !== "bomb") {
+              state.hp -= 1;
+              hint("Escaped", "#ff4f6f");
+              if (state.hp <= 0) end(false);
+            }
+          }
+        });
+        state.balloons = state.balloons.filter((b) => !b.dead);
+      }
+
+      function updateEffects() {
+        state.drops.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.94;
+          p.vy = p.vy * 0.94 + 0.08;
+          p.life -= 1;
+        });
+        state.drops = state.drops.filter((p) => p.life > 0);
+        state.rings.forEach((r) => r.life -= 1);
+        state.rings = state.rings.filter((r) => r.life > 0);
+        state.floatText.forEach((f) => {
+          f.y -= 0.8;
+          f.life -= 1;
+        });
+        state.floatText = state.floatText.filter((f) => f.life > 0);
+      }
+
+      function splash(x, y, color, count) {
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = rand(1.4, 6);
+          state.drops.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, r: rand(2, 7), color, life: rand(18, 38), max: 38 });
+        }
+      }
+
+      function end(clear) {
+        state.over = true;
+        state.clear = clear;
+        if (clear && state.stage === STAGES.length - 1) {
+          state.complete = true;
+          hint("All stages clear", "#4dd8f0");
+        } else if (clear) {
+          nextBtn.style.display = "inline-block";
+          hint("Stage clear", "#4dd8f0");
+        } else {
+          hint("Game over", "#ff4f6f");
+        }
+      }
+
+      function updateHud() {
+        stageEl.textContent = state.stage + 1;
+        goalEl.textContent = level().goal;
+        poppedEl.textContent = Math.min(state.popped, level().goal);
+        hpEl.textContent = state.hp;
+        timeEl.textContent = Math.max(0, state.timeLeft);
+        waveBtn.textContent = `Splash ${state.wave}%`;
+      }
+
+      function hint(text, color) {
+        hintEl.textContent = text;
+        hintEl.style.color = color;
+      }
+
+      function draw() {
+        drawBackground();
+        state.balloons.forEach(drawBalloon);
+        drawDrops();
+        drawRings();
+        drawFloatText();
+        drawCursor();
+        if (state.over) drawOverlay();
+      }
+
+      function drawBackground() {
+        const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
+        grd.addColorStop(0, "#071522");
+        grd.addColorStop(0.55, "#0d2332");
+        grd.addColorStop(1, "#123044");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.strokeStyle = "rgba(120,220,255,0.08)";
+        ctx.lineWidth = 2;
+        for (let y = 36; y < state.h; y += 46) {
+          ctx.beginPath();
+          for (let x = 0; x <= state.w; x += 24) {
+            const yy = y + Math.sin(x * 0.025 + state.t * 0.025) * 5;
+            x ? ctx.lineTo(x, yy) : ctx.moveTo(x, yy);
+          }
+          ctx.stroke();
+        }
+        if (state.slow) {
+          ctx.fillStyle = "rgba(168,245,255,0.08)";
+          ctx.fillRect(0, 0, state.w, state.h);
+        }
+      }
+
+      function drawBalloon(b) {
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.scale(b.scale, b.scale);
+        const glow = b.kind === "bomb" ? "#ff4f6f" : b.color;
+        ctx.shadowBlur = 18;
+        ctx.shadowColor = glow;
+        const grad = ctx.createRadialGradient(-b.r * 0.28, -b.r * 0.35, b.r * 0.1, 0, 0, b.r * 1.1);
+        grad.addColorStop(0, "rgba(255,255,255,0.95)");
+        grad.addColorStop(0.22, b.color);
+        grad.addColorStop(1, b.kind === "bomb" ? "#7d1f32" : shade(b.color, 0.46));
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, b.r * 0.82, b.r, Math.sin(b.wobble) * 0.08, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "rgba(255,255,255,0.72)";
+        ctx.beginPath(); ctx.arc(-b.r * 0.26, -b.r * 0.32, b.r * 0.16, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = b.kind === "bomb" ? "#2a1018" : "rgba(10,50,75,0.55)";
+        ctx.beginPath();
+        ctx.moveTo(-b.r * 0.16, b.r * 0.82);
+        ctx.lineTo(0, b.r * 1.18);
+        ctx.lineTo(b.r * 0.16, b.r * 0.82);
+        ctx.closePath();
+        ctx.fill();
+        if (b.kind === "bomb") {
+          ctx.strokeStyle = "#f7b84b";
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(b.r * 0.25, -b.r * 0.75); ctx.quadraticCurveTo(b.r * 0.55, -b.r * 1.05, b.r * 0.34, -b.r * 1.22); ctx.stroke();
+        }
+        if (b.kind === "ice") {
+          ctx.strokeStyle = "rgba(255,255,255,0.75)";
+          ctx.lineWidth = 2;
+          [-0.3, 0, 0.3].forEach((dx) => {
+            ctx.beginPath(); ctx.moveTo(dx * b.r, -b.r * 0.52); ctx.lineTo(-dx * b.r, b.r * 0.38); ctx.stroke();
+          });
+        }
+        if (b.kind === "rainbow") {
+          ["#ff4f6f", "#f7b84b", "#73d676", "#4dd8f0"].forEach((color, i) => {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.arc(0, 0, b.r * (0.36 + i * 0.13), Math.PI * 0.2, Math.PI * 0.82); ctx.stroke();
+          });
+        }
+        if (b.hp > 1) {
+          ctx.fillStyle = "rgba(255,255,255,0.85)";
+          ctx.font = `800 ${b.r * 0.42}px system-ui`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(b.hp, 0, 2);
+        }
+        ctx.restore();
+      }
+
+      function drawDrops() {
+        state.drops.forEach((p) => {
+          ctx.globalAlpha = p.life / p.max;
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRings() {
+        state.rings.forEach((r) => {
+          const t = 1 - r.life / r.max;
+          ctx.globalAlpha = r.life / r.max;
+          ctx.strokeStyle = r.color;
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(r.x, r.y, r.r + t * 46, 0, Math.PI * 2); ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawFloatText() {
+        ctx.font = "800 18px system-ui";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        state.floatText.forEach((f) => {
+          ctx.globalAlpha = f.life / 38;
+          ctx.fillStyle = f.color;
+          ctx.fillText(f.text, f.x, f.y);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawCursor() {
+        if (!state.pointer.x && !state.pointer.y) return;
+        ctx.strokeStyle = "rgba(255,255,255,0.55)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(state.pointer.x, state.pointer.y, 18, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      function drawOverlay() {
+        ctx.fillStyle = "rgba(5,11,18,0.72)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = state.clear ? "#4dd8f0" : "#ff4f6f";
+        ctx.shadowBlur = 28;
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.font = "800 34px system-ui";
+        ctx.fillText(state.complete ? "All Stages Clear" : state.clear ? "Stage Clear" : "Game Over", state.w / 2, state.h / 2 - 18);
+        ctx.shadowBlur = 0;
+        ctx.font = "700 17px system-ui";
+        ctx.fillStyle = "#f4f2ea";
+        ctx.fillText(`Popped ${Math.min(state.popped, level().goal)} / ${level().goal}`, state.w / 2, state.h / 2 + 26);
+      }
+
+      function dist(a, b) {
+        return Math.hypot(a.x - b.x, a.y - b.y);
+      }
+
+      function shade(color, factor) {
+        const n = parseInt(color.slice(1), 16);
+        const r = Math.round(((n >> 16) & 255) * factor);
+        const g = Math.round(((n >> 8) & 255) * factor);
+        const b = Math.round((n & 255) * factor);
+        return `rgb(${r},${g},${b})`;
+      }
+
+      function rand(min, max) {
+        return min + Math.random() * (max - min);
+      }
+
+      function loop(ts) {
+        step(ts);
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      addEventListener("resize", resize);
+      resize();
+      resetStage();
+      loop(0);
+    })();
+    </script>
+  </body>
+</html>

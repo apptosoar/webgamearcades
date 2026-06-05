@@ -1,5 +1,26 @@
 (() => {
   const config = window.ACTION_GAME_CONFIG;
+  const GAME_I18N = {
+    ko: { score: "점수", restart: "다시 시작", gameOver: "게임 종료" },
+    en: { score: "Score", restart: "Restart", gameOver: "Game Over" },
+    es: { score: "Puntuación", restart: "Reiniciar", gameOver: "Fin del juego" },
+    zh: { score: "分数", restart: "重新开始", gameOver: "游戏结束" },
+    "zh-TW": { score: "分數", restart: "重新開始", gameOver: "遊戲結束" },
+    ja: { score: "スコア", restart: "再開", gameOver: "ゲームオーバー" },
+    de: { score: "Punkte", restart: "Neu starten", gameOver: "Spiel vorbei" },
+    fr: { score: "Score", restart: "Recommencer", gameOver: "Partie terminée" },
+    hi: { score: "स्कोर", restart: "फिर शुरू करें", gameOver: "खेल समाप्त" },
+    pt: { score: "Pontuação", restart: "Reiniciar", gameOver: "Fim de jogo" },
+    ru: { score: "Счет", restart: "Начать заново", gameOver: "Игра окончена" },
+    id: { score: "Skor", restart: "Mulai ulang", gameOver: "Game over" },
+    it: { score: "Punteggio", restart: "Riavvia", gameOver: "Fine partita" },
+    tr: { score: "Skor", restart: "Yeniden başlat", gameOver: "Oyun bitti" },
+    th: { score: "คะแนน", restart: "เริ่มใหม่", gameOver: "จบเกม" },
+    he: { score: "ניקוד", restart: "התחל מחדש", gameOver: "המשחק נגמר" },
+    ur: { score: "اسکور", restart: "دوبارہ شروع کریں", gameOver: "گیم ختم" },
+  };
+  const currentLocale = detectLocale();
+  const copy = GAME_I18N[currentLocale] || GAME_I18N.en;
   const canvas = document.querySelector("#game");
   const ctx = canvas.getContext("2d");
   const scoreEl = document.querySelector("#score");
@@ -38,8 +59,14 @@
     green: "#73d676",
   };
 
+  document.documentElement.lang = currentLocale;
+  document.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
   titleEl.textContent = config.title;
-  restart.textContent = config.restartLabel || "Restart";
+  restart.textContent = config.restartLabel || copy.restart;
+  document.querySelectorAll(".hud span").forEach((node) => {
+    const first = node.firstChild;
+    if (first?.nodeType === Node.TEXT_NODE) first.textContent = first.textContent.replace(/\bScore\b/i, copy.score);
+  });
   restart.addEventListener("click", () => location.reload());
   action?.addEventListener("click", () => {
     if (config.type === "click") punchNearest();
@@ -559,9 +586,9 @@
     ctx.fillStyle = palette.text;
     ctx.textAlign = "center";
     ctx.font = "800 34px system-ui";
-    ctx.fillText(config.gameOverLabel || "Game Over", state.w / 2, state.h / 2 - 8);
+    ctx.fillText(config.gameOverLabel || copy.gameOver, state.w / 2, state.h / 2 - 8);
     ctx.font = "700 18px system-ui";
-    ctx.fillText(`${config.scoreLabel || "Score"} ${state.score}`, state.w / 2, state.h / 2 + 28);
+    ctx.fillText(`${config.scoreLabel || copy.score} ${state.score}`, state.w / 2, state.h / 2 + 28);
   }
 
   function pulse(x, y, color) {
@@ -603,6 +630,32 @@
 
   function distance(a, b) {
     return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+
+  function detectLocale() {
+    const params = new URLSearchParams(location.search);
+    const direct = normalizeLocale(params.get("locale") || params.get("lang"));
+    if (direct) {
+      localStorage.setItem("locale", direct);
+      return direct;
+    }
+    const saved = normalizeLocale(localStorage.getItem("locale"));
+    if (saved) return saved;
+    const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
+    for (const language of languages) {
+      const locale = normalizeLocale(language);
+      if (locale) return locale;
+    }
+    return "en";
+  }
+
+  function normalizeLocale(value) {
+    if (!value) return "";
+    const code = String(value).trim().replace("_", "-").toLowerCase();
+    if (code === "zh-tw" || code === "zh-hk" || code === "zh-mo" || code.startsWith("zh-hant")) return "zh-TW";
+    if (code.startsWith("zh")) return "zh";
+    if (code.startsWith("he") || code.startsWith("iw")) return "he";
+    return Object.keys(GAME_I18N).find((locale) => code === locale.toLowerCase() || code.startsWith(`${locale.toLowerCase()}-`)) || "";
   }
 
   resize();

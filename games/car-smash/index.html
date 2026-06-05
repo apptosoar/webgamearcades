@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Smash</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .hud { flex-wrap: wrap; }
+      .hint { color: #f7b84b; font-weight: 800; }
+      canvas { cursor: crosshair; }
+      .action { min-width: 92px; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Car Smash</strong>
+        <span><b id="vehicle">Compact</b> <b id="garage">1/10</b></span>
+        <span>Damage <b id="damage">0</b>%</span>
+        <span>Hits <b id="hits">0</b></span>
+        <span>Score <b id="score">0</b></span>
+        <span class="hint" id="hint">Tap the car</span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+      <button class="action" id="action" type="button">Smash</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const vehicleEl = document.getElementById("vehicle");
+      const garageEl = document.getElementById("garage");
+      const damageEl = document.getElementById("damage");
+      const hitsEl = document.getElementById("hits");
+      const scoreEl = document.getElementById("score");
+      const hintEl = document.getElementById("hint");
+      const restartBtn = document.getElementById("restart");
+      const actionBtn = document.getElementById("action");
+
+      const STAGE_LABELS = ["Clean", "Dented", "Crumpled", "Crushed", "Flattened"];
+      const VEHICLES = [
+        { name: "Compact", color: "#ff7a45", dark: "#5a3328", w: 286, h: 118, roof: 56, hits: 18, style: "hatch" },
+        { name: "Sedan", color: "#4dd8f0", dark: "#244c58", w: 318, h: 122, roof: 54, hits: 21, style: "sedan" },
+        { name: "Taxi", color: "#f7b84b", dark: "#5b431f", w: 322, h: 124, roof: 58, hits: 22, style: "taxi" },
+        { name: "Police", color: "#6aa8ff", dark: "#253650", w: 326, h: 124, roof: 56, hits: 23, style: "police" },
+        { name: "Sports", color: "#f05d5e", dark: "#55292d", w: 332, h: 108, roof: 38, hits: 22, style: "sports" },
+        { name: "Van", color: "#73d676", dark: "#2f5a34", w: 344, h: 142, roof: 72, hits: 26, style: "van" },
+        { name: "Pickup", color: "#c9935b", dark: "#58402c", w: 350, h: 130, roof: 54, hits: 26, style: "pickup" },
+        { name: "SUV", color: "#a98bff", dark: "#44385e", w: 356, h: 142, roof: 68, hits: 28, style: "suv" },
+        { name: "Bus", color: "#ff9b55", dark: "#5c3925", w: 390, h: 158, roof: 82, hits: 32, style: "bus" },
+        { name: "Truck", color: "#b8bec9", dark: "#454a54", w: 404, h: 162, roof: 74, hits: 34, style: "truck" },
+      ];
+
+      const state = {
+        w: 0,
+        h: 0,
+        t: 0,
+        carIndex: 0,
+        hits: 0,
+        totalHits: 0,
+        score: 0,
+        damage: 0,
+        over: false,
+        pendingNext: 0,
+        shake: 0,
+        hitFlash: 0,
+        lastHit: { x: 0, y: 0 },
+        particles: [],
+        rings: [],
+        dents: [],
+        glass: [],
+        sparks: [],
+      };
+
+      restartBtn.addEventListener("click", () => location.reload());
+      actionBtn.addEventListener("click", () => {
+        const c = carBox();
+        smashAt(c.x + rand(-c.w * 0.28, c.w * 0.28), c.y + rand(-c.h * 0.28, c.h * 0.28));
+      });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        canvas.setPointerCapture?.(event.pointerId);
+        const p = pointer(event);
+        smashAt(p.x, p.y);
+      });
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const ratio = devicePixelRatio || 1;
+        state.w = Math.max(320, box.width);
+        state.h = Math.max(320, box.height);
+        canvas.width = Math.floor(state.w * ratio);
+        canvas.height = Math.floor(state.h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function pointer(event) {
+        const box = canvas.getBoundingClientRect();
+        return { x: event.clientX - box.left, y: event.clientY - box.top };
+      }
+
+      function carBox() {
+        const car = currentCar();
+        const scale = Math.min(state.w / 520, state.h / 360, 1);
+        const crush = state.damage / 100;
+        return {
+          x: state.w * 0.5,
+          y: state.h * 0.58 + crush * 34,
+          w: car.w * scale,
+          h: (car.h - crush * car.h * 0.56) * scale,
+          scale,
+        };
+      }
+
+      function currentCar() {
+        return VEHICLES[state.carIndex];
+      }
+
+      function smashAt(x, y) {
+        if (state.over || state.pendingNext) return;
+        const c = carBox();
+        const inside = x > c.x - c.w * 0.58 && x < c.x + c.w * 0.58 &&
+          y > c.y - c.h * 1.45 && y < c.y + c.h * 0.72;
+
+        state.rings.push({ x, y, r: 10, color: inside ? "#f7b84b" : "#b8bec9", life: 15, max: 15 });
+        if (!inside) {
+          state.shake = 3;
+          hint("Hit the car", "#b8bec9");
+          return;
+        }
+
+        state.hits += 1;
+        state.totalHits += 1;
+        state.damage = Math.min(100, Math.round((state.hits / currentCar().hits) * 100));
+        state.score += 12 + stage() * 7 + state.carIndex;
+        state.shake = 7 + stage() * 2;
+        state.hitFlash = 10;
+        state.lastHit = { x, y };
+        state.dents.push({
+          x: (x - c.x) / c.w,
+          y: (y - c.y) / Math.max(c.h, 1),
+          r: rand(11, 23),
+          angle: rand(0, Math.PI),
+          life: 1,
+        });
+        if (state.dents.length > 34) state.dents.shift();
+        burst(x, y, stageColor(), 16 + stage() * 5);
+        addGlass(x, y);
+        addSparks(x, y);
+
+        if (state.damage >= 100) {
+          state.damage = 100;
+          state.pendingNext = 70;
+          hint(`${currentCar().name} flattened`, "#73d676");
+          crushBurst(c);
+        } else {
+          hint(STAGE_LABELS[stage()], stageColor());
+        }
+      }
+
+      function stage() {
+        return Math.min(4, Math.floor(state.damage / 25));
+      }
+
+      function stageColor() {
+        return ["#f7b84b", "#ff9b55", "#ff7a45", "#f05d5e", "#73d676"][stage()];
+      }
+
+      function hint(text, color) {
+        hintEl.textContent = text;
+        hintEl.style.color = color;
+      }
+
+      function burst(x, y, color, count) {
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = rand(1.4, 6.6);
+          state.particles.push({
+            x, y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            size: rand(3, 8),
+            color,
+            life: rand(22, 42),
+            max: 42,
+          });
+        }
+      }
+
+      function addGlass(x, y) {
+        if (state.damage < 30) return;
+        for (let i = 0; i < 5; i++) {
+          const a = rand(-Math.PI, 0);
+          const sp = rand(1, 4);
+          state.glass.push({
+            x, y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            r: rand(3, 7),
+            life: rand(26, 48),
+            max: 48,
+          });
+        }
+      }
+
+      function addSparks(x, y) {
+        if (state.damage < 55) return;
+        for (let i = 0; i < 7; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = rand(2, 7);
+          state.sparks.push({
+            x, y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            life: rand(12, 24),
+            max: 24,
+          });
+        }
+      }
+
+      function crushBurst(c) {
+        const car = currentCar();
+        for (let i = 0; i < 46; i++) {
+          burst(c.x + rand(-c.w * 0.45, c.w * 0.45), c.y + rand(-c.h, c.h * 0.4), car.color, 1);
+        }
+        state.rings.push({ x: c.x, y: c.y, r: 28, color: "#73d676", life: 32, max: 32 });
+      }
+
+      function nextCar() {
+        if (state.carIndex >= VEHICLES.length - 1) {
+          state.over = true;
+          hint("All cars flattened", "#73d676");
+          return;
+        }
+        state.carIndex += 1;
+        state.hits = 0;
+        state.damage = 0;
+        state.pendingNext = 0;
+        state.hitFlash = 12;
+        state.dents = [];
+        state.glass = [];
+        state.sparks = [];
+        state.rings = [];
+        state.shake = 10;
+        hint(`Next: ${currentCar().name}`, currentCar().color);
+      }
+
+      function step() {
+        state.t += 1;
+        state.shake = Math.max(0, state.shake - 1);
+        state.hitFlash = Math.max(0, state.hitFlash - 1);
+        if (state.pendingNext) {
+          state.pendingNext -= 1;
+          if (state.pendingNext <= 0) nextCar();
+        }
+
+        updateBits(state.particles, 0.1, 0.92);
+        updateBits(state.glass, 0.18, 0.96);
+        updateBits(state.sparks, 0.02, 0.9);
+        state.rings.forEach((r) => r.life -= 1);
+        state.rings = state.rings.filter((r) => r.life > 0);
+
+        vehicleEl.textContent = currentCar().name;
+        garageEl.textContent = `${state.carIndex + 1}/${VEHICLES.length}`;
+        damageEl.textContent = state.damage;
+        hitsEl.textContent = state.hits;
+        scoreEl.textContent = state.score;
+      }
+
+      function updateBits(list, gravity, drag) {
+        list.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= drag;
+          p.vy = p.vy * drag + gravity;
+          p.life -= 1;
+        });
+        for (let i = list.length - 1; i >= 0; i--) {
+          if (list[i].life <= 0) list.splice(i, 1);
+        }
+      }
+
+      function draw() {
+        const ox = state.shake ? rand(-state.shake, state.shake) : 0;
+        const oy = state.shake ? rand(-state.shake, state.shake) : 0;
+        ctx.save();
+        ctx.translate(ox, oy);
+        drawBackground();
+        drawCar();
+        drawParticles();
+        drawGlass();
+        drawSparks();
+        drawRings();
+        ctx.restore();
+
+        if (state.over) drawComplete();
+      }
+
+      function drawBackground() {
+        const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
+        grd.addColorStop(0, "#101114");
+        grd.addColorStop(0.55, "#181923");
+        grd.addColorStop(1, "#261711");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        ctx.fillStyle = "rgba(255,255,255,0.028)";
+        for (let i = 0; i < 28; i++) {
+          const x = (i * 97 + state.t * 0.24) % state.w;
+          const y = 62 + ((i * 53) % Math.max(1, state.h - 90));
+          ctx.fillRect(x, y, 2, 2);
+        }
+
+        const floorY = state.h * 0.76;
+        ctx.fillStyle = "rgba(0,0,0,0.26)";
+        ctx.fillRect(0, floorY, state.w, state.h - floorY);
+        ctx.strokeStyle = "rgba(247,184,75,0.2)";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([26, 20]);
+        ctx.beginPath();
+        ctx.moveTo(0, floorY + 24);
+        ctx.lineTo(state.w, floorY + 24);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function drawCar() {
+        const c = carBox();
+        const car = currentCar();
+        const crush = state.damage / 100;
+        const s = c.scale;
+        const bodyW = c.w;
+        const bodyH = c.h;
+        const roofH = Math.max(8, car.roof * s * (1 - crush * 0.84));
+        const skew = Math.sin(state.hits * 1.9) * crush * 16 * s;
+        const flash = state.hitFlash / 10;
+
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.shadowColor = car.color;
+        ctx.shadowBlur = 16 + flash * 16;
+
+        drawCarShadow(c, crush);
+
+        const bodyGrad = ctx.createLinearGradient(0, -bodyH * 0.58, 0, bodyH * 0.58);
+        bodyGrad.addColorStop(0, mix(car.color, "#ffffff", 0.22));
+        bodyGrad.addColorStop(0.45, mix(car.color, car.dark, crush * 0.42));
+        bodyGrad.addColorStop(1, mix(car.dark, "#050608", 0.2 + crush * 0.22));
+        ctx.fillStyle = bodyGrad;
+        bodyPath(c, crush, skew);
+        ctx.fill();
+
+        ctx.strokeStyle = `rgba(255,255,255,${0.32 - crush * 0.18})`;
+        ctx.lineWidth = 2.4 * s;
+        bodyPath(c, crush, skew);
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = `rgba(255,255,255,${0.08 + flash * 0.16})`;
+        bodyPath(c, crush, skew);
+        ctx.fill();
+
+        drawRoof(c, roofH, crush, skew);
+        drawWindows(c, roofH, crush, skew);
+        drawBodyHighlights(c, crush, skew);
+        drawLightsAndTrim(c, crush);
+        drawVehicleDetails(c, crush);
+        drawDents(c);
+        drawWheels(c, crush);
+        drawBumpers(c, crush);
+        drawCrackLines(c, crush);
+
+        ctx.restore();
+      }
+
+      function bodyPath(c, crush, skew) {
+        const bodyW = c.w;
+        const bodyH = c.h;
+        const s = c.scale;
+        const car = currentCar();
+        ctx.beginPath();
+        if (car.style === "sports") {
+          ctx.moveTo(-bodyW * 0.58, bodyH * 0.06 + crush * 18 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.5, -bodyH * 0.24 + crush * 24 * s, -bodyW * 0.2, -bodyH * 0.34 + crush * 36 * s);
+          ctx.quadraticCurveTo(bodyW * 0.12 + skew * 0.35, -bodyH * 0.46 + crush * 42 * s, bodyW * 0.43, -bodyH * 0.18 + crush * 24 * s);
+          ctx.quadraticCurveTo(bodyW * 0.57, -bodyH * 0.04 + crush * 18 * s, bodyW * 0.58, bodyH * 0.22);
+          ctx.lineTo(bodyW * 0.5, bodyH * 0.38);
+          ctx.quadraticCurveTo(bodyW * 0.12, bodyH * (0.5 + crush * 0.24), -bodyW * 0.34, bodyH * 0.42);
+          ctx.quadraticCurveTo(-bodyW * 0.55, bodyH * 0.36, -bodyW * 0.58, bodyH * 0.06 + crush * 18 * s);
+        } else if (car.style === "van" || car.style === "bus") {
+          const top = car.style === "bus" ? -bodyH * 0.72 : -bodyH * 0.62;
+          ctx.moveTo(-bodyW * 0.55, top + crush * 58 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.56, top + 8 * s + crush * 52 * s, -bodyW * 0.52, -bodyH * 0.22 + crush * 34 * s);
+          ctx.lineTo(-bodyW * 0.52, bodyH * 0.34);
+          ctx.quadraticCurveTo(-bodyW * 0.32, bodyH * (0.54 + crush * 0.22), bodyW * 0.38, bodyH * (0.5 + crush * 0.22));
+          ctx.quadraticCurveTo(bodyW * 0.55, bodyH * 0.42, bodyW * 0.55, bodyH * 0.18);
+          ctx.lineTo(bodyW * 0.55, top + 14 * s + crush * 54 * s);
+          ctx.quadraticCurveTo(bodyW * 0.4, top + crush * 50 * s, -bodyW * 0.42, top + crush * 58 * s);
+          ctx.closePath();
+          return;
+        } else if (car.style === "truck") {
+          ctx.moveTo(-bodyW * 0.56, -bodyH * 0.36 + crush * 42 * s);
+          ctx.lineTo(-bodyW * 0.2, -bodyH * 0.36 + crush * 42 * s);
+          ctx.lineTo(-bodyW * 0.12, -bodyH * 0.58 + crush * 54 * s);
+          ctx.lineTo(bodyW * 0.16, -bodyH * 0.58 + crush * 54 * s);
+          ctx.lineTo(bodyW * 0.28, -bodyH * 0.34 + crush * 42 * s);
+          ctx.lineTo(bodyW * 0.56, -bodyH * 0.28 + crush * 36 * s);
+          ctx.lineTo(bodyW * 0.56, bodyH * 0.34);
+          ctx.quadraticCurveTo(bodyW * 0.22, bodyH * (0.55 + crush * 0.24), -bodyW * 0.42, bodyH * 0.5);
+          ctx.quadraticCurveTo(-bodyW * 0.56, bodyH * 0.42, -bodyW * 0.56, -bodyH * 0.36 + crush * 42 * s);
+        } else if (car.style === "pickup") {
+          ctx.moveTo(-bodyW * 0.56, -bodyH * 0.1 + crush * 28 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.48, -bodyH * 0.42 + crush * 36 * s, -bodyW * 0.2, -bodyH * 0.48 + crush * 46 * s);
+          ctx.lineTo(bodyW * 0.06 + skew * 0.3, -bodyH * 0.5 + crush * 48 * s);
+          ctx.quadraticCurveTo(bodyW * 0.18, -bodyH * 0.34 + crush * 34 * s, bodyW * 0.22, -bodyH * 0.12 + crush * 26 * s);
+          ctx.lineTo(bodyW * 0.55, -bodyH * 0.1 + crush * 22 * s);
+          ctx.lineTo(bodyW * 0.55, bodyH * 0.35);
+          ctx.quadraticCurveTo(bodyW * 0.28, bodyH * (0.52 + crush * 0.24), -bodyW * 0.3, bodyH * 0.48);
+          ctx.quadraticCurveTo(-bodyW * 0.54, bodyH * 0.42, -bodyW * 0.56, -bodyH * 0.1 + crush * 28 * s);
+        } else if (car.style === "suv") {
+          ctx.moveTo(-bodyW * 0.55, -bodyH * 0.16 + crush * 28 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.48, -bodyH * 0.5 + crush * 42 * s, -bodyW * 0.2, -bodyH * 0.58 + crush * 54 * s);
+          ctx.lineTo(bodyW * 0.2 + skew * 0.25, -bodyH * 0.58 + crush * 54 * s);
+          ctx.quadraticCurveTo(bodyW * 0.47, -bodyH * 0.48 + crush * 42 * s, bodyW * 0.55, -bodyH * 0.1 + crush * 26 * s);
+          ctx.lineTo(bodyW * 0.52, bodyH * 0.38);
+          ctx.quadraticCurveTo(bodyW * 0.22, bodyH * (0.58 + crush * 0.24), -bodyW * 0.28, bodyH * 0.52);
+          ctx.quadraticCurveTo(-bodyW * 0.52, bodyH * 0.46, -bodyW * 0.55, -bodyH * 0.16 + crush * 28 * s);
+        } else if (car.style === "hatch") {
+          ctx.moveTo(-bodyW * 0.54, -bodyH * 0.04 + crush * 26 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.52, -bodyH * 0.38 + crush * 34 * s, -bodyW * 0.26, -bodyH * 0.5 + crush * 48 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.04, -bodyH * 0.62 + crush * 56 * s, bodyW * 0.22 + skew * 0.32, -bodyH * 0.44 + crush * 44 * s);
+          ctx.quadraticCurveTo(bodyW * 0.5, -bodyH * 0.26 + crush * 30 * s, bodyW * 0.54, bodyH * 0.08 + crush * 14 * s);
+          ctx.lineTo(bodyW * 0.46, bodyH * 0.36);
+          ctx.quadraticCurveTo(bodyW * 0.14, bodyH * (0.54 + crush * 0.24), -bodyW * 0.22, bodyH * 0.5);
+          ctx.quadraticCurveTo(-bodyW * 0.5, bodyH * 0.42, -bodyW * 0.54, -bodyH * 0.04 + crush * 26 * s);
+        } else {
+          ctx.moveTo(-bodyW * 0.56, -bodyH * 0.08 + crush * 28 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.5, -bodyH * 0.34 + crush * 32 * s, -bodyW * 0.28, -bodyH * 0.42 + crush * 42 * s);
+          ctx.quadraticCurveTo(-bodyW * 0.08, -bodyH * 0.58 + crush * 54 * s, bodyW * 0.22 + skew * 0.35, -bodyH * 0.48 + crush * 48 * s);
+          ctx.quadraticCurveTo(bodyW * 0.46, -bodyH * 0.4 + crush * 36 * s, bodyW * 0.56, -bodyH * 0.04 + crush * 24 * s);
+          ctx.lineTo(bodyW * 0.5, bodyH * 0.34);
+          ctx.quadraticCurveTo(bodyW * 0.24, bodyH * (0.56 + crush * 0.26), -bodyW * 0.16, bodyH * (0.5 + crush * 0.24));
+          ctx.quadraticCurveTo(-bodyW * 0.46, bodyH * 0.48, -bodyW * 0.56, bodyH * 0.18);
+        }
+        ctx.closePath();
+      }
+
+      function drawCarShadow(c, crush) {
+        ctx.fillStyle = "rgba(0,0,0,0.42)";
+        ctx.beginPath();
+        ctx.ellipse(0, c.h * 0.74, c.w * (0.5 + crush * 0.08), 20 * c.scale, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = `rgba(247,184,75,${0.08 + (state.hitFlash / 10) * 0.09})`;
+        ctx.beginPath();
+        ctx.ellipse(0, c.h * 0.61, c.w * 0.36, 8 * c.scale, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawRoof(c, roofH, crush, skew) {
+        const s = c.scale;
+        if (roofH < 9) return;
+        const car = currentCar();
+        if (car.style === "bus" || car.style === "truck") return;
+        const roofGrad = ctx.createLinearGradient(0, -c.h * 0.48 - roofH, 0, -c.h * 0.2);
+        roofGrad.addColorStop(0, mix(car.color, "#ffffff", 0.18));
+        roofGrad.addColorStop(1, mix(car.color, car.dark, Math.min(1, crush + 0.3)));
+        ctx.fillStyle = roofGrad;
+        ctx.beginPath();
+        if (car.style === "sports") {
+          ctx.moveTo(-c.w * 0.16 + skew, -c.h * 0.42 + crush * 32 * s);
+          ctx.lineTo(-c.w * 0.02 + skew * 0.5, -c.h * 0.5 - roofH * 0.55);
+          ctx.lineTo(c.w * 0.23 + skew * 0.18, -c.h * 0.4 - roofH * 0.32);
+          ctx.lineTo(c.w * 0.36, -c.h * 0.28 + crush * 25 * s);
+        } else if (car.style === "van" || car.style === "suv") {
+          ctx.moveTo(-c.w * 0.34 + skew, -c.h * 0.5 + crush * 44 * s);
+          ctx.lineTo(-c.w * 0.2 + skew * 0.5, -c.h * 0.5 - roofH * 0.7);
+          ctx.lineTo(c.w * 0.28 + skew * 0.18, -c.h * 0.5 - roofH * 0.62);
+          ctx.lineTo(c.w * 0.42, -c.h * 0.47 + crush * 38 * s);
+        } else if (car.style === "pickup") {
+          ctx.moveTo(-c.w * 0.32 + skew, -c.h * 0.46 + crush * 42 * s);
+          ctx.lineTo(-c.w * 0.18 + skew * 0.5, -c.h * 0.48 - roofH * 0.7);
+          ctx.lineTo(c.w * 0.08 + skew * 0.2, -c.h * 0.48 - roofH * 0.62);
+          ctx.lineTo(c.w * 0.2, -c.h * 0.42 + crush * 38 * s);
+        } else {
+          ctx.moveTo(-c.w * 0.24 + skew, -c.h * 0.48 + crush * 44 * s);
+          ctx.lineTo(-c.w * 0.08 + skew * 0.5, -c.h * 0.48 - roofH);
+          ctx.lineTo(c.w * 0.18 + skew * 0.2, -c.h * 0.48 - roofH * (0.92 - crush * 0.4));
+          ctx.lineTo(c.w * 0.32, -c.h * 0.48 + crush * 38 * s);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = `rgba(255,255,255,${0.24 - crush * 0.12})`;
+        ctx.lineWidth = 2 * s;
+        ctx.stroke();
+      }
+
+      function drawWindows(c, roofH, crush, skew) {
+        const car = currentCar();
+        const s = c.scale;
+        const alpha = Math.max(0.18, 0.82 - crush * 0.7);
+        const glassGrad = ctx.createLinearGradient(0, -c.h * 0.58 - roofH * 0.4, 0, -c.h * 0.34);
+        glassGrad.addColorStop(0, `rgba(210,245,255,${alpha})`);
+        glassGrad.addColorStop(0.58, `rgba(86,166,194,${alpha * 0.88})`);
+        glassGrad.addColorStop(1, `rgba(18,42,56,${alpha})`);
+        ctx.fillStyle = glassGrad;
+        if (car.style === "bus") {
+          for (let i = 0; i < 6; i++) {
+            roundedRect(-c.w * 0.42 + i * c.w * 0.14, -c.h * 0.66 + crush * 44 * s, c.w * 0.1, Math.max(8, c.h * 0.24), 4 * s);
+          }
+          return;
+        }
+        if (car.style === "truck") {
+          roundedRect(-c.w * 0.12, -c.h * 0.52 + crush * 42 * s, c.w * 0.16, Math.max(8, c.h * 0.24), 4 * s);
+          roundedRect(c.w * 0.07, -c.h * 0.52 + crush * 42 * s, c.w * 0.12, Math.max(8, c.h * 0.22), 4 * s);
+          return;
+        }
+        if (car.style === "van") {
+          for (let i = 0; i < 4; i++) {
+            roundedRect(-c.w * 0.28 + i * c.w * 0.13, -c.h * 0.57 + crush * 38 * s, c.w * 0.1, Math.max(8, roofH * 0.38), 4 * s);
+          }
+          return;
+        }
+        if (car.style === "pickup") {
+          roundedRect(-c.w * 0.22 + skew * 0.4, -c.h * 0.56 + crush * 38 * s, c.w * 0.13, Math.max(8, roofH * 0.42), 4 * s);
+          roundedRect(-c.w * 0.06 + skew * 0.2, -c.h * 0.55 + crush * 38 * s, c.w * 0.12, Math.max(8, roofH * 0.4), 4 * s);
+          return;
+        }
+        if (car.style === "sports") {
+          ctx.beginPath();
+          ctx.moveTo(-c.w * 0.07 + skew * 0.4, -c.h * 0.47 + crush * 30 * s);
+          ctx.lineTo(c.w * 0.02 + skew * 0.2, -c.h * 0.47 - roofH * 0.34);
+          ctx.lineTo(c.w * 0.24, -c.h * 0.37 - roofH * 0.2);
+          ctx.lineTo(c.w * 0.3, -c.h * 0.31 + crush * 24 * s);
+          ctx.closePath();
+          ctx.fill();
+          return;
+        }
+        ctx.beginPath();
+        ctx.moveTo(-c.w * 0.15 + skew * 0.6, -c.h * 0.53 + crush * 38 * s);
+        ctx.lineTo(-c.w * 0.06 + skew * 0.4, -c.h * 0.5 - roofH * 0.62);
+        ctx.lineTo(c.w * 0.08 + skew * 0.2, -c.h * 0.5 - roofH * 0.58);
+        ctx.lineTo(c.w * 0.12, -c.h * 0.52 + crush * 34 * s);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(c.w * 0.15, -c.h * 0.52 + crush * 34 * s);
+        ctx.lineTo(c.w * 0.11 + skew * 0.2, -c.h * 0.5 - roofH * 0.56);
+        ctx.lineTo(c.w * 0.24, -c.h * 0.47 - roofH * 0.38);
+        ctx.lineTo(c.w * 0.3, -c.h * 0.49 + crush * 32 * s);
+        ctx.closePath();
+        ctx.fill();
+
+        if (car.style === "van" || car.style === "bus" || car.style === "truck") {
+          for (let i = 0; i < (car.style === "bus" ? 5 : 3); i++) {
+            ctx.fillRect(-c.w * 0.24 + i * c.w * 0.12, -c.h * 0.52 + crush * 34 * s, c.w * 0.08, Math.max(6, roofH * 0.34));
+          }
+        }
+
+        ctx.strokeStyle = `rgba(255,255,255,${0.26 - crush * 0.1})`;
+        ctx.lineWidth = 1.5 * s;
+        ctx.beginPath();
+        ctx.moveTo(-c.w * 0.04 + skew * 0.3, -c.h * 0.5 - roofH * 0.58);
+        ctx.lineTo(-c.w * 0.02 + skew * 0.2, -c.h * 0.52 + crush * 34 * s);
+        ctx.moveTo(c.w * 0.12, -c.h * 0.5 - roofH * 0.52);
+        ctx.lineTo(c.w * 0.15, -c.h * 0.52 + crush * 34 * s);
+        ctx.stroke();
+      }
+
+      function roundedRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.fill();
+      }
+
+      function drawBodyHighlights(c, crush, skew) {
+        const s = c.scale;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0.16, 0.48 - crush * 0.28);
+        ctx.strokeStyle = "rgba(255,255,255,0.88)";
+        ctx.lineWidth = 3 * s;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-c.w * 0.38, -c.h * 0.2 + crush * 22 * s);
+        ctx.quadraticCurveTo(-c.w * 0.04 + skew * 0.2, -c.h * 0.38 + crush * 34 * s, c.w * 0.34, -c.h * 0.18 + crush * 22 * s);
+        ctx.stroke();
+
+        ctx.globalAlpha = Math.max(0.12, 0.35 - crush * 0.22);
+        ctx.strokeStyle = "rgba(0,0,0,0.75)";
+        ctx.lineWidth = 2.2 * s;
+        ctx.beginPath();
+        ctx.moveTo(-c.w * 0.3, c.h * 0.02 + crush * 18 * s);
+        ctx.lineTo(c.w * 0.34, c.h * 0.02 + crush * 17 * s);
+        ctx.stroke();
+
+        const doorTop = -c.h * 0.12 + crush * 24 * s;
+        const doorBottom = c.h * 0.28 + crush * 14 * s;
+        [-0.08, 0.18].forEach((dx) => {
+          ctx.globalAlpha = Math.max(0.16, 0.42 - crush * 0.28);
+          ctx.strokeStyle = "rgba(0,0,0,0.48)";
+          ctx.lineWidth = 1.8 * s;
+          ctx.beginPath();
+          ctx.moveTo(c.w * dx, doorTop);
+          ctx.lineTo(c.w * (dx + 0.02), doorBottom);
+          ctx.stroke();
+        });
+
+        ctx.fillStyle = "rgba(255,255,255,0.55)";
+        ctx.globalAlpha = Math.max(0.12, 0.45 - crush * 0.24);
+        ctx.fillRect(-c.w * 0.02, doorTop + 12 * s, 18 * s, 4 * s);
+        ctx.fillRect(c.w * 0.24, doorTop + 13 * s, 18 * s, 4 * s);
+        ctx.restore();
+      }
+
+      function drawLightsAndTrim(c, crush) {
+        const s = c.scale;
+        const y = -c.h * 0.02 + crush * 22 * s;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0.28, 1 - crush * 0.55);
+
+        ctx.fillStyle = "rgba(255,235,165,0.92)";
+        ctx.beginPath();
+        ctx.ellipse(c.w * 0.47, y, 15 * s, 7 * s, -0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "rgba(240,70,70,0.85)";
+        ctx.beginPath();
+        ctx.ellipse(-c.w * 0.49, y + 2 * s, 13 * s, 7 * s, 0.12, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(10,12,16,0.68)";
+        ctx.lineWidth = 4 * s;
+        ctx.beginPath();
+        ctx.moveTo(c.w * 0.32, y + 2 * s);
+        ctx.lineTo(c.w * 0.43, y + 1 * s);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(230,230,220,0.34)";
+        ctx.lineWidth = 3 * s;
+        ctx.beginPath();
+        ctx.moveTo(-c.w * 0.48, c.h * 0.32 + crush * 12 * s);
+        ctx.lineTo(c.w * 0.48, c.h * 0.32 + crush * 12 * s);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawVehicleDetails(c, crush) {
+        const car = currentCar();
+        const s = c.scale;
+        ctx.save();
+        if (car.style === "taxi") {
+          ctx.fillStyle = "rgba(20,20,20,0.72)";
+          ctx.fillRect(-22 * s, -c.h * 0.9 + crush * 42 * s, 44 * s, 12 * s);
+        }
+        if (car.style === "police") {
+          ctx.fillStyle = "#f05d5e";
+          ctx.fillRect(-18 * s, -c.h * 0.88 + crush * 42 * s, 16 * s, 9 * s);
+          ctx.fillStyle = "#4dd8f0";
+          ctx.fillRect(2 * s, -c.h * 0.88 + crush * 42 * s, 16 * s, 9 * s);
+        }
+        if (car.style === "pickup") {
+          ctx.fillStyle = "rgba(0,0,0,0.28)";
+          ctx.fillRect(c.w * 0.14, -c.h * 0.24 + crush * 24 * s, c.w * 0.36, c.h * 0.36);
+          ctx.strokeStyle = "rgba(255,255,255,0.24)";
+          ctx.lineWidth = 2 * s;
+          ctx.strokeRect(c.w * 0.14, -c.h * 0.24 + crush * 24 * s, c.w * 0.36, c.h * 0.36);
+        }
+        if (car.style === "sports") {
+          ctx.fillStyle = "rgba(255,255,255,0.55)";
+          ctx.fillRect(c.w * 0.33, -c.h * 0.06 + crush * 18 * s, c.w * 0.14, 5 * s);
+        }
+        if (car.style === "bus") {
+          ctx.fillStyle = "rgba(0,0,0,0.35)";
+          ctx.fillRect(-c.w * 0.45, c.h * 0.03 + crush * 14 * s, c.w * 0.12, c.h * 0.3);
+          ctx.fillStyle = "rgba(255,255,255,0.5)";
+          ctx.fillRect(-c.w * 0.5, -c.h * 0.02 + crush * 15 * s, c.w * 0.08, 5 * s);
+          ctx.fillRect(c.w * 0.42, -c.h * 0.02 + crush * 15 * s, c.w * 0.08, 5 * s);
+        }
+        if (car.style === "truck") {
+          ctx.fillStyle = "rgba(0,0,0,0.22)";
+          ctx.fillRect(c.w * 0.05, -c.h * 0.28 + crush * 18 * s, c.w * 0.38, c.h * 0.48);
+          ctx.strokeStyle = "rgba(255,255,255,0.22)";
+          ctx.lineWidth = 2 * s;
+          ctx.strokeRect(c.w * 0.05, -c.h * 0.28 + crush * 18 * s, c.w * 0.38, c.h * 0.48);
+        }
+        ctx.restore();
+      }
+
+      function drawDents(c) {
+        state.dents.forEach((d, i) => {
+          const x = d.x * c.w;
+          const y = d.y * Math.max(c.h, 1);
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(d.angle);
+          ctx.strokeStyle = i % 2 ? "rgba(0,0,0,0.38)" : "rgba(255,255,255,0.18)";
+          ctx.lineWidth = 2.5 * c.scale;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, d.r * c.scale, d.r * 0.44 * c.scale, 0, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      function drawWheels(c, crush) {
+        const wheelY = c.h * (0.42 + crush * 0.38);
+        const wheelR = Math.max(5, 22 * c.scale * (1 - crush * 0.58));
+        const car = currentCar();
+        let wheels = [-0.32, 0.32];
+        if (car.style === "sports") wheels = [-0.38, 0.38];
+        if (car.style === "pickup") wheels = [-0.36, 0.42];
+        if (car.style === "van" || car.style === "suv") wheels = [-0.34, 0.34];
+        if (car.style === "bus") wheels = [-0.4, -0.06, 0.36];
+        if (car.style === "truck") wheels = [-0.42, 0.1, 0.4];
+        wheels.forEach((dx) => {
+          ctx.fillStyle = "rgba(0,0,0,0.32)";
+          ctx.beginPath();
+          ctx.ellipse(c.w * dx, wheelY + wheelR * 0.42, wheelR * 1.22, wheelR * 0.42, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#111318";
+          ctx.beginPath();
+          ctx.ellipse(c.w * dx, wheelY, wheelR, wheelR * (1 - crush * 0.55), 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(255,255,255,0.38)";
+          ctx.lineWidth = 3.2 * c.scale;
+          ctx.stroke();
+          ctx.fillStyle = "rgba(210,216,226,0.7)";
+          ctx.beginPath();
+          ctx.ellipse(c.w * dx, wheelY, wheelR * 0.38, wheelR * 0.38 * (1 - crush * 0.55), 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(15,17,22,0.52)";
+          ctx.lineWidth = 1.3 * c.scale;
+          for (let i = 0; i < 5; i++) {
+            const a = (i / 5) * Math.PI * 2 + state.t * 0.01;
+            ctx.beginPath();
+            ctx.moveTo(c.w * dx, wheelY);
+            ctx.lineTo(c.w * dx + Math.cos(a) * wheelR * 0.34, wheelY + Math.sin(a) * wheelR * 0.34 * (1 - crush * 0.55));
+            ctx.stroke();
+          }
+        });
+      }
+
+      function drawBumpers(c, crush) {
+        ctx.fillStyle = "rgba(230,230,220,0.42)";
+        ctx.fillRect(-c.w * 0.57, c.h * (0.08 + crush * 0.18), c.w * 0.12, 8 * c.scale);
+        ctx.fillRect(c.w * 0.45, c.h * (0.08 + crush * 0.2), c.w * 0.12, 8 * c.scale);
+      }
+
+      function drawCrackLines(c, crush) {
+        if (crush < 0.18) return;
+        ctx.strokeStyle = "rgba(0,0,0,0.34)";
+        ctx.lineWidth = 2 * c.scale;
+        const lines = Math.floor(4 + crush * 13);
+        for (let i = 0; i < lines; i++) {
+          const x = -c.w * 0.42 + ((i * 67) % 100) / 100 * c.w * 0.84;
+          const y = -c.h * 0.22 + ((i * 41) % 100) / 100 * c.h * 0.62;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + Math.sin(i) * 18 * c.scale, y + (8 + i % 3 * 5) * c.scale);
+          ctx.lineTo(x + Math.cos(i * 1.7) * 26 * c.scale, y + (18 + i % 4 * 4) * c.scale);
+          ctx.stroke();
+        }
+      }
+
+      function drawParticles() {
+        state.particles.forEach((p) => {
+          ctx.globalAlpha = Math.max(0, p.life / p.max);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawGlass() {
+        ctx.fillStyle = "rgba(145,220,240,0.7)";
+        state.glass.forEach((g) => {
+          ctx.globalAlpha = g.life / g.max;
+          ctx.beginPath();
+          ctx.moveTo(g.x, g.y - g.r);
+          ctx.lineTo(g.x + g.r, g.y + g.r * 0.5);
+          ctx.lineTo(g.x - g.r, g.y + g.r);
+          ctx.closePath();
+          ctx.fill();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawSparks() {
+        ctx.strokeStyle = "#f7b84b";
+        ctx.lineWidth = 2;
+        state.sparks.forEach((s) => {
+          ctx.globalAlpha = s.life / s.max;
+          ctx.beginPath();
+          ctx.moveTo(s.x, s.y);
+          ctx.lineTo(s.x - s.vx * 2, s.y - s.vy * 2);
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRings() {
+        state.rings.forEach((r) => {
+          const age = 1 - r.life / r.max;
+          ctx.globalAlpha = r.life / r.max;
+          ctx.strokeStyle = r.color;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.r + age * 42, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawComplete() {
+        ctx.fillStyle = "rgba(11,12,15,0.38)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.fillStyle = "#f4f2ea";
+        ctx.font = "800 30px system-ui";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("All Cars Flattened", state.w / 2, state.h * 0.26);
+        ctx.font = "700 17px system-ui";
+        ctx.fillStyle = "#b8bec9";
+        ctx.fillText(`Score ${state.score}`, state.w / 2, state.h * 0.26 + 34);
+      }
+
+      function mix(a, b, t) {
+        const ca = hex(a);
+        const cb = hex(b);
+        const c = ca.map((v, i) => Math.round(v + (cb[i] - v) * t));
+        return `rgb(${c[0]},${c[1]},${c[2]})`;
+      }
+
+      function hex(color) {
+        const n = parseInt(color.slice(1), 16);
+        return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+      }
+
+      function rand(min, max) {
+        return min + Math.random() * (max - min);
+      }
+
+      function loop() {
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      addEventListener("resize", resize);
+      resize();
+      loop();
+    })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paint Race</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game { width: min(860px, 100%); height: min(620px, 100vh); }
+      .hud { flex-wrap: wrap; }
+      .blue { color: #2bd1ff; font-weight: 800; }
+      .red { color: #ff3f5f; font-weight: 800; }
+      .hint { color: #f7b84b; font-weight: 800; }
+      canvas { cursor: crosshair; background: #11131a; }
+      .action { min-width: 96px; background: #2bd1ff; color: #041016; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Paint Race</strong>
+        <span>Stage <b id="stage">1</b>/10</span>
+        <span class="blue">You <b id="bluePct">0</b>%</span>
+        <span class="red">CPU <b id="redPct">0</b>%</span>
+        <span>Target <b id="targetPct">55</b>%</span>
+        <span>Time <b id="time">45</b>s</span>
+        <span class="hint" id="hint">Drag to paint</span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+      <button id="next" type="button" style="display:none">Next Stage</button>
+      <button class="action" id="boost" type="button">Boost</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const stageEl = document.getElementById("stage");
+      const bluePctEl = document.getElementById("bluePct");
+      const redPctEl = document.getElementById("redPct");
+      const targetPctEl = document.getElementById("targetPct");
+      const timeEl = document.getElementById("time");
+      const hintEl = document.getElementById("hint");
+      const restartBtn = document.getElementById("restart");
+      const nextBtn = document.getElementById("next");
+      const boostBtn = document.getElementById("boost");
+
+      const COLS = 82;
+      const ROWS = 52;
+      const BLUE = 1;
+      const RED = 2;
+      const grid = new Uint8Array(COLS * ROWS);
+      const STAGES = [
+        { target: 48, time: 48, cpuRadius: 25, playerRadius: 34, cpuSearch: 24 },
+        { target: 50, time: 46, cpuRadius: 26, playerRadius: 33, cpuSearch: 28 },
+        { target: 52, time: 44, cpuRadius: 27, playerRadius: 32, cpuSearch: 32 },
+        { target: 54, time: 42, cpuRadius: 28, playerRadius: 32, cpuSearch: 36 },
+        { target: 56, time: 40, cpuRadius: 29, playerRadius: 31, cpuSearch: 40 },
+        { target: 58, time: 38, cpuRadius: 30, playerRadius: 31, cpuSearch: 44 },
+        { target: 60, time: 36, cpuRadius: 31, playerRadius: 30, cpuSearch: 48 },
+        { target: 62, time: 34, cpuRadius: 32, playerRadius: 30, cpuSearch: 52 },
+        { target: 64, time: 32, cpuRadius: 33, playerRadius: 29, cpuSearch: 56 },
+        { target: 66, time: 30, cpuRadius: 34, playerRadius: 29, cpuSearch: 62 },
+      ];
+
+      const state = {
+        w: 0,
+        h: 0,
+        t: 0,
+        stage: 0,
+        timeLeft: STAGES[0].time,
+        lastTs: 0,
+        tick: 0,
+        over: false,
+        winner: "",
+        stageClear: false,
+        complete: false,
+        pointer: { x: 0, y: 0, down: false },
+        playerTrail: [],
+        cpuTrail: [],
+        splashes: [],
+        bluePct: 0,
+        redPct: 0,
+        boost: 100,
+        boostFlash: 0,
+        cpu: { x: 0, y: 0, tx: 0, ty: 0, cooldown: 0 },
+      };
+
+      restartBtn.addEventListener("click", () => location.reload());
+      nextBtn.addEventListener("click", nextStage);
+      boostBtn.addEventListener("click", () => {
+        if (state.boost < 35 || state.over) return;
+        state.boost -= 35;
+        state.boostFlash = 18;
+        paintCircle(state.pointer.x || state.w * 0.3, state.pointer.y || state.h * 0.5, 54 + state.stage * 1.2, BLUE);
+        splash(state.pointer.x || state.w * 0.3, state.pointer.y || state.h * 0.5, "#2bd1ff", 26);
+        hint("Blue burst", "#2bd1ff");
+      });
+
+      function level() {
+        return STAGES[state.stage];
+      }
+
+      function resetRound() {
+        grid.fill(0);
+        state.timeLeft = level().time;
+        state.tick = 0;
+        state.over = false;
+        state.winner = "";
+        state.stageClear = false;
+        state.complete = false;
+        state.pointer.down = false;
+        state.playerTrail = [];
+        state.cpuTrail = [];
+        state.splashes = [];
+        state.bluePct = 0;
+        state.redPct = 0;
+        state.boost = 100;
+        state.boostFlash = 0;
+        state.cpu.x = state.w ? state.w * 0.72 : 0;
+        state.cpu.y = state.h ? state.h * 0.48 : 0;
+        state.cpu.tx = state.w ? state.w * 0.75 : 0;
+        state.cpu.ty = state.h ? state.h * 0.5 : 0;
+        state.cpu.cooldown = 0;
+        nextBtn.style.display = "none";
+        hint(`Stage ${state.stage + 1}`, "#f7b84b");
+        updateHud();
+        if (state.w) chooseCpuTarget();
+      }
+
+      function nextStage() {
+        if (!state.stageClear) return;
+        if (state.stage >= STAGES.length - 1) return;
+        state.stage += 1;
+        resetRound();
+      }
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const ratio = devicePixelRatio || 1;
+        state.w = Math.max(320, box.width);
+        state.h = Math.max(320, box.height);
+        canvas.width = Math.floor(state.w * ratio);
+        canvas.height = Math.floor(state.h * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        state.cpu.x = state.cpu.x || state.w * 0.72;
+        state.cpu.y = state.cpu.y || state.h * 0.48;
+        state.cpu.tx = state.cpu.tx || state.w * 0.75;
+        state.cpu.ty = state.cpu.ty || state.h * 0.5;
+      }
+
+      function pos(event) {
+        const box = canvas.getBoundingClientRect();
+        return { x: event.clientX - box.left, y: event.clientY - box.top };
+      }
+
+      canvas.addEventListener("pointerdown", (event) => {
+        canvas.setPointerCapture?.(event.pointerId);
+        const p = pos(event);
+        state.pointer = { ...p, down: true };
+        paintPlayer(p.x, p.y);
+      });
+      canvas.addEventListener("pointermove", (event) => {
+        const p = pos(event);
+        state.pointer.x = p.x;
+        state.pointer.y = p.y;
+        if (state.pointer.down) paintPlayer(p.x, p.y);
+      });
+      canvas.addEventListener("pointerup", stopPaint);
+      canvas.addEventListener("pointercancel", stopPaint);
+      canvas.addEventListener("pointerleave", stopPaint);
+
+      function stopPaint() {
+        state.pointer.down = false;
+      }
+
+      function paintPlayer(x, y) {
+        if (state.over) return;
+        paintCircle(x, y, level().playerRadius + state.boostFlash * 0.9, BLUE);
+        state.playerTrail.push({ x, y, life: 22, r: 18 + Math.random() * 12 });
+        if (Math.random() < 0.45) splash(x, y, "#2bd1ff", 2);
+      }
+
+      function chooseCpuTarget() {
+        let best = null;
+        for (let i = 0; i < level().cpuSearch * 3; i++) {
+          const gx = Math.floor(Math.random() * COLS);
+          const gy = Math.floor(Math.random() * ROWS);
+          const owner = grid[gy * COLS + gx];
+          const x = (gx + 0.5) * state.w / COLS;
+          const y = (gy + 0.5) * state.h / ROWS;
+          const d = dist(state.cpu, { x, y });
+          const localRed = redAround(gx, gy);
+          const score = (owner === BLUE ? 8 : owner === 0 ? 5 : -10) - localRed * 1.4 + Math.min(3, d / 180);
+          if (!best || score > best.score) best = { gx, gy, score };
+        }
+        state.cpu.tx = (best.gx + 0.5) * state.w / COLS;
+        state.cpu.ty = (best.gy + 0.5) * state.h / ROWS;
+      }
+
+      function redAround(gx, gy) {
+        let red = 0;
+        let total = 0;
+        for (let y = gy - 2; y <= gy + 2; y++) {
+          for (let x = gx - 2; x <= gx + 2; x++) {
+            if (x < 0 || y < 0 || x >= COLS || y >= ROWS) continue;
+            total += 1;
+            if (grid[y * COLS + x] === RED) red += 1;
+          }
+        }
+        return total ? red / total : 1;
+      }
+
+      function ownerAt(x, y) {
+        const gx = clamp(Math.floor((x / state.w) * COLS), 0, COLS - 1);
+        const gy = clamp(Math.floor((y / state.h) * ROWS), 0, ROWS - 1);
+        return grid[gy * COLS + gx];
+      }
+
+      function findCpuDirection() {
+        let best = null;
+        const base = Math.atan2(state.cpu.ty - state.cpu.y, state.cpu.tx - state.cpu.x);
+        const look = 46 + Math.min(70, level().cpuRadius * 1.6);
+        for (let i = 0; i < 12; i++) {
+          const a = base + (i - 5.5) * 0.42;
+          const x = clamp(state.cpu.x + Math.cos(a) * look, 8, state.w - 8);
+          const y = clamp(state.cpu.y + Math.sin(a) * look, 8, state.h - 8);
+          const gx = clamp(Math.floor((x / state.w) * COLS), 0, COLS - 1);
+          const gy = clamp(Math.floor((y / state.h) * ROWS), 0, ROWS - 1);
+          const owner = grid[gy * COLS + gx];
+          const score = (owner === BLUE ? 9 : owner === 0 ? 6 : -12) - redAround(gx, gy) * 2 - Math.abs(i - 5.5) * 0.12;
+          if (!best || score > best.score) best = { angle: a, score, owner };
+        }
+        if (best && best.score < -5) chooseCpuTarget();
+        return best ? best.angle : base;
+      }
+
+      function updateCpu() {
+        if (state.over) return;
+        state.cpu.cooldown -= 1;
+        if (state.cpu.cooldown <= 0 || dist(state.cpu, { x: state.cpu.tx, y: state.cpu.ty }) < 24) {
+          chooseCpuTarget();
+          state.cpu.cooldown = 40 + Math.floor(Math.random() * 34);
+        }
+        const baseSpeed = 5 * 2 ** state.stage;
+        const speed = baseSpeed + Math.min(1.65, state.redPct / 48);
+        const steps = Math.min(90, Math.max(1, Math.ceil(speed / 18)));
+        const stepSpeed = speed / steps;
+        for (let i = 0; i < steps; i++) {
+          const angle = findCpuDirection();
+          state.cpu.x += Math.cos(angle) * stepSpeed;
+          state.cpu.y += Math.sin(angle) * stepSpeed;
+          state.cpu.x = clamp(state.cpu.x, 8, state.w - 8);
+          state.cpu.y = clamp(state.cpu.y, 8, state.h - 8);
+          const radius = ownerAt(state.cpu.x, state.cpu.y) === RED ? level().cpuRadius * 0.34 : level().cpuRadius;
+          paintCircle(state.cpu.x, state.cpu.y, radius, RED);
+        }
+        state.cpuTrail.push({ x: state.cpu.x, y: state.cpu.y, life: 20, r: 16 + Math.random() * 10 });
+        if (Math.random() < 0.28) splash(state.cpu.x, state.cpu.y, "#ff3f5f", 1);
+      }
+
+      function paintCircle(x, y, radius, owner) {
+        const minX = clamp(Math.floor(((x - radius) / state.w) * COLS), 0, COLS - 1);
+        const maxX = clamp(Math.floor(((x + radius) / state.w) * COLS), 0, COLS - 1);
+        const minY = clamp(Math.floor(((y - radius) / state.h) * ROWS), 0, ROWS - 1);
+        const maxY = clamp(Math.floor(((y + radius) / state.h) * ROWS), 0, ROWS - 1);
+        for (let gy = minY; gy <= maxY; gy++) {
+          for (let gx = minX; gx <= maxX; gx++) {
+            const px = (gx + 0.5) * state.w / COLS;
+            const py = (gy + 0.5) * state.h / ROWS;
+            if (Math.hypot(px - x, py - y) <= radius) grid[gy * COLS + gx] = owner;
+          }
+        }
+      }
+
+      function updatePct() {
+        let blue = 0;
+        let red = 0;
+        for (let i = 0; i < grid.length; i++) {
+          if (grid[i] === BLUE) blue += 1;
+          if (grid[i] === RED) red += 1;
+        }
+        state.bluePct = Math.round((blue / grid.length) * 100);
+        state.redPct = Math.round((red / grid.length) * 100);
+      }
+
+      function splash(x, y, color, count) {
+        for (let i = 0; i < count; i++) {
+          const a = Math.random() * Math.PI * 2;
+          const sp = 1 + Math.random() * 4;
+          state.splashes.push({
+            x, y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            r: 3 + Math.random() * 8,
+            color,
+            life: 18 + Math.random() * 16,
+            max: 34,
+          });
+        }
+      }
+
+      function step(ts) {
+        if (!state.lastTs) state.lastTs = ts;
+        const dt = Math.min(34, ts - state.lastTs);
+        state.lastTs = ts;
+        state.t += 1;
+        state.boostFlash = Math.max(0, state.boostFlash - 1);
+        if (!state.over) {
+          state.tick += dt;
+          if (state.tick >= 1000) {
+            state.tick -= 1000;
+            state.timeLeft -= 1;
+            state.boost = Math.min(100, state.boost + 12);
+          }
+          updateCpu();
+          updatePct();
+          if (state.bluePct >= level().target) end("Stage Clear");
+          if (state.redPct >= level().target) end("CPU wins");
+          if (state.timeLeft <= 0) end(state.bluePct >= state.redPct ? "Stage Clear" : "CPU wins");
+        }
+        updateTrail(state.playerTrail);
+        updateTrail(state.cpuTrail);
+        state.splashes.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.9;
+          p.vy *= 0.9;
+          p.life -= 1;
+        });
+        state.splashes = state.splashes.filter((p) => p.life > 0);
+
+        updateHud();
+      }
+
+      function updateHud() {
+        stageEl.textContent = state.stage + 1;
+        targetPctEl.textContent = level().target;
+        bluePctEl.textContent = state.bluePct;
+        redPctEl.textContent = state.redPct;
+        timeEl.textContent = Math.max(0, state.timeLeft);
+        boostBtn.textContent = `Boost ${state.boost}%`;
+      }
+
+      function updateTrail(list) {
+        list.forEach((p) => p.life -= 1);
+        for (let i = list.length - 1; i >= 0; i--) {
+          if (list[i].life <= 0) list.splice(i, 1);
+        }
+      }
+
+      function end(text) {
+        state.over = true;
+        if (text === "Stage Clear" || text === "You win") {
+          state.stageClear = true;
+          if (state.stage >= STAGES.length - 1) {
+            state.complete = true;
+            state.winner = "All Stages Clear";
+            hint("All stages clear", "#2bd1ff");
+          } else {
+            state.winner = "Stage Clear";
+            nextBtn.style.display = "inline-block";
+            hint("Next stage ready", "#2bd1ff");
+          }
+        } else {
+          state.stageClear = false;
+          state.winner = text;
+          hint(text, "#ff3f5f");
+        }
+      }
+
+      function hint(text, color) {
+        hintEl.textContent = text;
+        hintEl.style.color = color;
+      }
+
+      function draw() {
+        drawBackground();
+        drawPaint();
+        drawTrails();
+        drawSplashes();
+        drawRacers();
+        drawProgressLine();
+        if (state.over) drawOverlay();
+      }
+
+      function drawBackground() {
+        const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
+        grd.addColorStop(0, "#0a0d12");
+        grd.addColorStop(0.55, "#11131a");
+        grd.addColorStop(1, "#191520");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        ctx.strokeStyle = "rgba(255,255,255,0.045)";
+        ctx.lineWidth = 1;
+        const step = Math.max(22, state.w / 22);
+        for (let x = 0; x < state.w; x += step) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, state.h); ctx.stroke();
+        }
+        for (let y = 0; y < state.h; y += step) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(state.w, y); ctx.stroke();
+        }
+      }
+
+      function drawPaint() {
+        const cw = state.w / COLS;
+        const ch = state.h / ROWS;
+        ctx.save();
+        ctx.shadowBlur = 18;
+        for (let gy = 0; gy < ROWS; gy++) {
+          for (let gx = 0; gx < COLS; gx++) {
+            const owner = grid[gy * COLS + gx];
+            if (!owner) continue;
+            const color = owner === BLUE ? "#2bd1ff" : "#ff3f5f";
+            ctx.shadowColor = color;
+            ctx.fillStyle = owner === BLUE ? "rgba(43,209,255,0.72)" : "rgba(255,63,95,0.7)";
+            ctx.fillRect(gx * cw - 0.5, gy * ch - 0.5, cw + 1, ch + 1);
+          }
+        }
+        ctx.restore();
+      }
+
+      function drawTrails() {
+        drawTrail(state.playerTrail, "#2bd1ff");
+        drawTrail(state.cpuTrail, "#ff3f5f");
+      }
+
+      function drawTrail(list, color) {
+        ctx.save();
+        ctx.shadowBlur = 22;
+        ctx.shadowColor = color;
+        list.forEach((p) => {
+          ctx.globalAlpha = p.life / 22;
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.restore();
+        ctx.globalAlpha = 1;
+      }
+
+      function drawSplashes() {
+        state.splashes.forEach((p) => {
+          ctx.globalAlpha = p.life / p.max;
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 16;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawRacers() {
+        drawBrush(state.pointer.x || state.w * 0.25, state.pointer.y || state.h * 0.5, "#2bd1ff", "YOU", state.pointer.down);
+        drawBrush(state.cpu.x, state.cpu.y, "#ff3f5f", "CPU", true);
+      }
+
+      function drawBrush(x, y, color, label, active) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.shadowColor = color;
+        ctx.shadowBlur = active ? 28 : 12;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(0, 0, active ? 13 : 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(255,255,255,0.82)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-14, 14);
+        ctx.lineTo(15, -15);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.font = "800 11px system-ui";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f4f2ea";
+        ctx.fillText(label, 0, -22);
+        ctx.restore();
+      }
+
+      function drawProgressLine() {
+        const y = state.h - 14;
+        const blueW = (state.w - 24) * Math.min(1, state.bluePct / level().target);
+        const redW = (state.w - 24) * Math.min(1, state.redPct / level().target);
+        ctx.fillStyle = "rgba(255,255,255,0.12)";
+        ctx.fillRect(12, y, state.w - 24, 5);
+        ctx.fillStyle = "#2bd1ff";
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = "#2bd1ff";
+        ctx.fillRect(12, y, blueW, 5);
+        ctx.fillStyle = "#ff3f5f";
+        ctx.shadowColor = "#ff3f5f";
+        ctx.fillRect(state.w - 12 - redW, y - 8, redW, 5);
+        ctx.shadowBlur = 0;
+      }
+
+      function drawOverlay() {
+        ctx.fillStyle = "rgba(7,8,12,0.68)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        const blueWin = state.stageClear || state.winner === "You win" || state.complete;
+        ctx.fillStyle = blueWin ? "#2bd1ff" : "#ff3f5f";
+        ctx.shadowColor = ctx.fillStyle;
+        ctx.shadowBlur = 28;
+        ctx.font = "800 38px system-ui";
+        ctx.fillText(state.winner, state.w / 2, state.h / 2 - 18);
+        ctx.shadowBlur = 0;
+        ctx.font = "700 18px system-ui";
+        ctx.fillStyle = "#f4f2ea";
+        const line = state.stageClear && !state.complete
+          ? `Stage ${state.stage + 1} complete. Press Next Stage.`
+          : `Blue ${state.bluePct}%  /  Red ${state.redPct}%`;
+        ctx.fillText(line, state.w / 2, state.h / 2 + 28);
+      }
+
+      function dist(a, b) {
+        return Math.hypot(a.x - b.x, a.y - b.y);
+      }
+
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+      }
+
+      function loop(ts) {
+        step(ts);
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      addEventListener("resize", resize);
+      resize();
+      resetRound();
+      loop(0);
+    })();
+    </script>
+  </body>
+</html>

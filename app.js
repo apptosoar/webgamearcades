@@ -79,19 +79,24 @@
       "robot-arena": "로봇 아레나에서 적 로봇을 피하며 오래 버티세요.",
       "arrow-dodge": "옆에서 날아오는 화살을 피하며 반응 속도를 시험하세요.",
       "monster-punch": "등장하는 몬스터를 빠르게 눌러 처치하세요.",
+      "car-smash": "10가지 차량을 터치해 단계적으로 찌그러뜨리고 완전히 뭉개세요.",
       "laser-escape": "움직이는 레이저 벽을 피해 오래 살아남으세요.",
       "castle-defender": "성으로 몰려오는 적을 조준해 막아내세요.",
       "bomb-runner": "폭탄 장애물을 넘어 최대한 멀리 달리세요.",
       "meteor-dodge": "떨어지는 운석을 피해 우주선을 지키세요.",
       "pop-blitz": "화면에 나타나는 도형들을 시간이 다 되기 전에 빠르게 터치해 없애세요.",
+      "water-balloon-blitz": "제한시간 안에 물풍선을 터트리고 폭탄 풍선은 피하며 10스테이지를 클리어하세요.",
       "time-stop": "목표 시간을 설정하고 타이머가 딱 그 순간에 멈추도록 STOP을 눌러보세요.",
       "memory-grid": "짧게 켜지는 타일 순서를 기억해 다시 누르세요.",
       "lane-rush": "차선을 바꾸며 장애물을 피하고 점수를 올리세요.",
+      "paint-race": "형광 파란 페인트로 캔버스를 칠하며 빨간 컴퓨터와 점유율 대결을 하세요.",
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
       "block-stacker": "떨어지는 블록을 쌓아 줄을 지우고 점수를 올리세요.",
       "tile-link": "같은 그림의 타일 두 개를 선택해 두 번 이하로 꺾이는 경로로 연결하면 사라집니다.",
       "puzzle-minesweeper": "숫자 단서를 보고 지뢰가 아닌 안전한 칸을 찾으세요.",
       "puzzle-sudoku": "빈칸을 눌러 숫자를 채우고 모든 행과 열을 맞추세요.",
+      "window-wash": "스퀴지로 창문을 문질러 오염을 닦아내세요. 새똥과 빗자국을 조심하세요!",
+      "maze-escape": "매번 새로 생성되는 미로를 탈출하세요. 레벨이 올라갈수록 미로가 커지고 어두워집니다.",
     },
   },
   en: {
@@ -174,19 +179,24 @@
       "robot-arena": "Survive in a robot arena while hostile bots chase you.",
       "arrow-dodge": "Dodge arrows flying in from the side and test your reactions.",
       "monster-punch": "Punch monsters as they appear and clear the screen quickly.",
+      "car-smash": "Tap through 10 vehicle types and crush each one until it is flattened.",
       "laser-escape": "Avoid moving laser walls and survive as long as possible.",
       "castle-defender": "Aim at enemies rushing the castle and hold the line.",
       "bomb-runner": "Jump over bomb hazards and run as far as you can.",
       "meteor-dodge": "Protect your ship by dodging falling meteors.",
       "pop-blitz": "Tap shapes before their timers run out and clear the screen fast.",
+      "water-balloon-blitz": "Pop water balloons before time runs out, avoid bomb balloons, and clear 10 stages.",
       "time-stop": "Set a target time and press STOP to freeze the timer at exactly that moment.",
       "memory-grid": "Remember the briefly lit tile sequence and press it again.",
       "lane-rush": "Change lanes, avoid obstacles, and raise your score.",
+      "paint-race": "Cover the canvas with neon blue paint before the red computer wins the turf race.",
       "sample-clicker": "A sample game added as an external HTML file.",
       "block-stacker": "Stack falling blocks, clear full lines, and raise your score.",
       "tile-link": "Select two matching tiles and connect them with a path that bends no more than twice to clear them.",
       "puzzle-minesweeper": "Use number clues to find safe cells without opening mines.",
       "puzzle-sudoku": "Tap empty cells to fill numbers and complete every row and column.",
+      "window-wash": "Scrub the window clean with your squeegee before time runs out. Watch out for bird droppings and rain streaks!",
+      "maze-escape": "Escape a randomly generated maze each time. Mazes grow larger and darker as you advance.",
     },
   },
 };
@@ -240,6 +250,12 @@
       "block-stacker": "Apila los bloques que caen, completa filas y aumenta tu puntuación.",
       "puzzle-minesweeper": "Usa pistas numéricas para encontrar celdas seguras sin abrir minas.",
       "puzzle-sudoku": "Toca las celdas vacías para llenar números y completar cada fila y columna.",
+      "car-smash": "Toca los 10 tipos de vehículos y aplana cada uno por completo.",
+      "paint-race": "Cubre el lienzo con pintura azul neón antes de que el ordenador rojo gane.",
+      "pop-blitz": "Toca las formas antes de que sus temporizadores se agoten y limpia la pantalla rápido.",
+      "tile-link": "Selecciona dos fichas iguales y conéctalas con un camino que gire como máximo dos veces.",
+      "window-wash": "Limpia la ventana con tu escobilla antes de que se acabe el tiempo. ¡Cuidado con las heces de pájaro y las manchas de lluvia!",
+      "maze-escape": "Escapa de un laberinto generado aleatoriamente. Los laberintos se vuelven más grandes y oscuros al avanzar.",
     },
   });
 
@@ -284,6 +300,12 @@
       "block-stacker": "堆叠下落方块，消除整行，提高分数。",
       "puzzle-minesweeper": "利用数字线索找到安全格，不要踩雷。",
       "puzzle-sudoku": "点击空格填入数字，完成每行每列。",
+      "car-smash": "点击10种车辆，逐步将每辆车压扁击碎。",
+      "paint-race": "用荧光蓝色油漆覆盖画布，在红色电脑赢得领土战前取得胜利。",
+      "pop-blitz": "在计时器耗尽前点击图形，快速清空屏幕。",
+      "tile-link": "选择两个相同的图块，用最多转两次的路径连接消除。",
+      "window-wash": "在时间耗尽前用刮水器把窗户擦干净。小心鸟粪和雨水痕迹！",
+      "maze-escape": "从随机生成的迷宫中逃脱。随着关卡提升，迷宫变得更大更黑暗。",
     },
   });
 
@@ -328,6 +350,12 @@
       "block-stacker": "落ちてくるブロックを積んでラインを消し、スコアを伸ばそう。",
       "puzzle-minesweeper": "数字のヒントを使って、地雷のない安全なマスを見つけよう。",
       "puzzle-sudoku": "空白のマスをタップして数字を入れ、全ての行と列を完成させよう。",
+      "car-smash": "10種類の車両をタップして、それぞれを完全に潰そう。",
+      "paint-race": "ネオンブルーのペイントでキャンバスを塗りつぶし、赤いコンピューターに勝とう。",
+      "pop-blitz": "タイマーが切れる前に図形をタップして、素早く画面をクリアしよう。",
+      "tile-link": "同じ絵のタイルを2枚選んで、2回以内に曲がる経路でつなごう。",
+      "window-wash": "時間内にスクイージーで窓をきれいに磨こう。鳥のフンや雨跡に注意！",
+      "maze-escape": "ランダムに生成された迷路を脱出しよう。レベルが上がるほど迷路は大きく暗くなる。",
     },
   });
 
@@ -372,6 +400,12 @@
       "block-stacker": "Stapele fallende Blöcke, lösche volle Reihen und erhöhe deinen Score.",
       "puzzle-minesweeper": "Benutze Zahlhinweise, um sichere Felder zu finden, ohne Minen zu öffnen.",
       "puzzle-sudoku": "Tippe auf leere Felder, um Zahlen einzugeben und jede Zeile und Spalte zu vervollständigen.",
+      "car-smash": "Tippe durch 10 Fahrzeugtypen und zerstöre jedes vollständig.",
+      "paint-race": "Bemale die Leinwand mit Neonblau, bevor der rote Computer das Territorium gewinnt.",
+      "pop-blitz": "Tippe auf Formen, bevor ihre Timer ablaufen, und räume schnell auf.",
+      "tile-link": "Wähle zwei gleiche Kacheln und verbinde sie mit einem Weg, der höchstens zweimal biegt.",
+      "window-wash": "Schrubbe das Fenster mit deinem Wischer sauber, bevor die Zeit abläuft. Vorsicht vor Vogelkot und Regenspuren!",
+      "maze-escape": "Entkommen aus einem zufällig generierten Labyrinth. Mit jedem Level wird es größer und dunkler.",
     },
   });
 
@@ -416,6 +450,12 @@
       "block-stacker": "Empile les blocs qui tombent, efface les lignes complètes et augmente ton score.",
       "puzzle-minesweeper": "Utilise les indices numériques pour trouver les cases sûres sans ouvrir de mines.",
       "puzzle-sudoku": "Appuie sur les cases vides pour remplir les chiffres et compléter chaque ligne et colonne.",
+      "car-smash": "Tape sur 10 types de véhicules et écrase chacun jusqu'à l'aplatir complètement.",
+      "paint-race": "Couvre la toile de peinture bleue néon avant que l'ordinateur rouge ne gagne.",
+      "pop-blitz": "Tape sur les formes avant que leur minuterie ne s'épuise et nettoie l'écran vite.",
+      "tile-link": "Sélectionne deux tuiles identiques et relie-les avec un chemin qui se courbe au maximum deux fois.",
+      "window-wash": "Nettoie la vitre avec ta raclette avant la fin du temps. Méfie-toi des fientes d'oiseaux et des traces de pluie !",
+      "maze-escape": "Échappe d'un labyrinthe généré aléatoirement. Les labyrinthes grandissent et s'obscurcissent à mesure que tu avances.",
     },
   });
 
@@ -460,6 +500,12 @@
       "block-stacker": "गिरते ब्लॉक स्टैक करें, पूरी लाइनें हटाएं और स्कोर बढ़ाएं।",
       "puzzle-minesweeper": "संख्या सुराग से सुरक्षित सेल ढूंढें।",
       "puzzle-sudoku": "खाली सेल पर टैप कर नंबर भरें और हर पंक्ति-स्तंभ पूरा करें।",
+      "car-smash": "10 वाहनों को टैप करके एक-एक करके पूरी तरह कुचलें।",
+      "paint-race": "लाल कंप्यूटर से पहले नियॉन नीले रंग से कैनवास भरें।",
+      "pop-blitz": "टाइमर खत्म होने से पहले आकृतियों को टैप करें और जल्दी स्क्रीन साफ करें।",
+      "tile-link": "दो समान टाइलें चुनें और उन्हें अधिकतम दो मोड़ वाले रास्ते से जोड़ें।",
+      "window-wash": "समय खत्म होने से पहले स्क्वीजी से खिड़की साफ करें। चिड़िया की बीट और बारिश के निशान से सावधान!",
+      "maze-escape": "हर बार नई बनाई भूलभुलैया से बाहर निकलें। स्तर बढ़ने पर भूलभुलैया बड़ी और अंधेरी होती जाती है।",
     },
   });
 
@@ -1573,15 +1619,20 @@ const gameMeta = [
   { id: "robot-arena", genre: "action", title: "Robot Arena", icon: "RA", accent: "#a98bff", url: "./games/robot-arena/index.html" },
   { id: "arrow-dodge", genre: "action", title: "Arrow Dodge", icon: "AD", accent: "#f7b84b", url: "./games/arrow-dodge/index.html" },
   { id: "monster-punch", genre: "action", title: "Monster Punch", icon: "MP", accent: "#f05d5e", url: "./games/monster-punch/index.html" },
+  { id: "car-smash", genre: "action", title: "Car Smash", icon: "CS", accent: "#ff7a45", url: "./games/car-smash/index.html" },
   { id: "laser-escape", genre: "action", title: "Laser Escape", icon: "LE", accent: "#73d676", url: "./games/laser-escape/index.html" },
   { id: "castle-defender", genre: "action", title: "Castle Defender", icon: "CD", accent: "#f7b84b", url: "./games/castle-defender/index.html" },
   { id: "bomb-runner", genre: "action", title: "Bomb Runner", icon: "BR", accent: "#f05d5e", url: "./games/bomb-runner/index.html" },
   { id: "meteor-dodge", genre: "action", title: "Meteor Dodge", icon: "MD", accent: "#2bd1c4", url: "./games/meteor-dodge/index.html" },
   { id: "time-stop", genre: "action", title: "Time Stop", icon: "TS", accent: "#a98bff", url: "./games/time-stop/index.html" },
   { id: "pop-blitz", genre: "action", title: "Pop Blitz", icon: "PB", accent: "#ff6fa3", url: "./games/pop-blitz/index.html" },
+  { id: "water-balloon-blitz", genre: "action", title: "Water Balloon Blitz", icon: "WB", accent: "#4dd8f0", url: "./games/water-balloon-blitz/index.html" },
+  { id: "window-wash", genre: "action", title: "Window Wash", icon: "WW", accent: "#4dd8f0", url: "./games/window-wash/index.html" },
+  { id: "maze-escape", genre: "puzzle", title: "Maze Escape", icon: "ME", accent: "#f7b84b", url: "./games/maze-escape/index.html" },
   { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
   { id: "tile-link", genre: "puzzle", title: "Tile Link", icon: "TL", accent: "#2bd1c4", url: "./games/tile-link/index.html" },
   { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
+  { id: "paint-race", genre: "racing", title: "Paint Race", icon: "PR", accent: "#2bd1ff", url: "./games/paint-race/index.html" },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
 
@@ -1608,15 +1659,29 @@ app.addEventListener("click", handleAppClick);
 render();
 initCookieBanner();
 
+// 쿠키 배너 다국어 텍스트 (주요 언어만 — 나머지는 영어 폴백)
+const COOKIE_I18N = {
+  ko: { msg: "이 사이트는 서비스 운영과 광고 제공을 위해 쿠키를 사용합니다.", accept: "동의", learn: "자세히" },
+  ja: { msg: "このサイトはサービス運営と広告配信のためCookieを使用します。", accept: "同意する", learn: "詳細" },
+  zh: { msg: "本站使用Cookie进行运营和广告投放。", accept: "接受", learn: "了解更多" },
+  "zh-TW": { msg: "本站使用Cookie進行運營和廣告投放。", accept: "接受", learn: "瞭解更多" },
+  es: { msg: "Este sitio usa cookies para operar y mostrar anuncios.", accept: "Aceptar", learn: "Más info" },
+  fr: { msg: "Ce site utilise des cookies pour fonctionner et diffuser des annonces.", accept: "Accepter", learn: "En savoir plus" },
+  de: { msg: "Diese Website verwendet Cookies für Betrieb und Werbung.", accept: "Akzeptieren", learn: "Mehr" },
+  hi: { msg: "यह साइट कुकीज़ का उपयोग करती है।", accept: "स्वीकार", learn: "अधिक जानें" },
+  pt: { msg: "Este site usa cookies para operação e publicidade.", accept: "Aceitar", learn: "Saiba mais" },
+  ru: { msg: "Этот сайт использует файлы cookie.", accept: "Принять", learn: "Подробнее" },
+  ar: { msg: "يستخدم هذا الموقع ملفات تعريف الارتباط.", accept: "قبول", learn: "المزيد" },
+};
+
 function initCookieBanner() {
   if (localStorage.getItem("cookie_ok")) return;
   const banner = document.createElement("div");
   banner.id = "cookie-banner";
-  const msg = currentLocale === "ko"
-    ? "이 사이트는 서비스 운영과 광고 제공을 위해 쿠키를 사용합니다."
-    : "This site uses cookies for operation and ad delivery.";
-  const acceptLabel = currentLocale === "ko" ? "동의" : "Accept";
-  const learnLabel  = currentLocale === "ko" ? "자세히" : "Learn more";
+  const t = COOKIE_I18N[currentLocale] || COOKIE_I18N.en || {};
+  const msg         = t.msg    || "This site uses cookies for operation and ad delivery.";
+  const acceptLabel = t.accept || "Accept";
+  const learnLabel  = t.learn  || "Learn more";
   banner.innerHTML = `
     <span>${msg}</span>
     <div class="cookie-actions">
@@ -1635,67 +1700,109 @@ function initCookieBanner() {
 }
 
 function detectLocale() {
+  // 1순위: URL ?lang= / ?locale= 파라미터 (링크 공유 및 iframe 전달용)
+  const params = new URLSearchParams(location.search);
+  const urlLocale = normalizeLocale(params.get("lang") || params.get("locale"));
+  if (urlLocale) {
+    localStorage.setItem("locale", urlLocale);
+    return urlLocale;
+  }
+  // 2순위: localStorage 저장값 (수동 선택 기억)
+  const saved = normalizeLocale(localStorage.getItem("locale"));
+  if (saved) return saved;
+  // 3순위: 첫 접속 환경의 브라우저 언어/지역
   const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
   for (const language of languages) {
-    const code = language.toLowerCase();
-    if (code.startsWith("ko")) return "ko";
-    if (code.startsWith("es")) return "es";
-    if (code.startsWith("zh-tw") || code.startsWith("zh-hk") || code.startsWith("zh-mo")) return "zh-TW";
-    if (code.startsWith("zh")) return "zh";
-    if (code.startsWith("ja")) return "ja";
-    if (code.startsWith("de")) return "de";
-    if (code.startsWith("fr")) return "fr";
-    if (code.startsWith("hi")) return "hi";
-    if (code.startsWith("cs")) return "cs";
-    if (code.startsWith("nl")) return "nl";
-    if (code.startsWith("fi")) return "fi";
-    if (code.startsWith("he") || code.startsWith("iw")) return "he";
-    if (code.startsWith("ro")) return "ro";
-    if (code.startsWith("uk")) return "uk";
-    if (code.startsWith("pt")) return "pt";
-    if (code.startsWith("id")) return "id";
-    if (code.startsWith("bn")) return "bn";
-    if (code.startsWith("bg")) return "bg";
-    if (code.startsWith("ca")) return "ca";
-    if (code.startsWith("hr")) return "hr";
-    if (code.startsWith("da")) return "da";
-    if (code.startsWith("et")) return "et";
-    if (code.startsWith("fil") || code.startsWith("tl")) return "fil";
-    if (code.startsWith("el")) return "el";
-    if (code.startsWith("gu")) return "gu";
-    if (code.startsWith("hu")) return "hu";
-    if (code.startsWith("it")) return "it";
-    if (code.startsWith("kn")) return "kn";
-    if (code.startsWith("lv")) return "lv";
-    if (code.startsWith("lt")) return "lt";
-    if (code.startsWith("ms")) return "ms";
-    if (code.startsWith("ml")) return "ml";
-    if (code.startsWith("mr")) return "mr";
-    if (code.startsWith("no") || code.startsWith("nb") || code.startsWith("nn")) return "no";
-    if (code.startsWith("pl")) return "pl";
-    if (code.startsWith("pa")) return "pa";
-    if (code.startsWith("ru")) return "ru";
-    if (code.startsWith("sr")) return "sr";
-    if (code.startsWith("sk")) return "sk";
-    if (code.startsWith("sl")) return "sl";
-    if (code.startsWith("sv")) return "sv";
-    if (code.startsWith("ta")) return "ta";
-    if (code.startsWith("te")) return "te";
-    if (code.startsWith("th")) return "th";
-    if (code.startsWith("tr")) return "tr";
-    if (code.startsWith("ur")) return "ur";
-    if (code.startsWith("en")) return "en";
+    const locale = normalizeLocale(language);
+    if (locale) {
+      localStorage.setItem("locale", locale);
+      return locale;
+    }
   }
+  localStorage.setItem("locale", "en");
   return "en";
+}
+
+function normalizeLocale(value) {
+  if (!value) return "";
+  const code = String(value).trim().replace("_", "-").toLowerCase();
+  if (translations[value]) return value;
+  if (code === "zh-tw" || code === "zh-hk" || code === "zh-mo" || code.startsWith("zh-hant")) return "zh-TW";
+  if (code.startsWith("zh")) return "zh";
+  if (code.startsWith("fil") || code.startsWith("tl")) return "fil";
+  if (code.startsWith("he") || code.startsWith("iw")) return "he";
+  if (code.startsWith("no") || code.startsWith("nb") || code.startsWith("nn")) return "no";
+  return supportedLocales.find((locale) => code === locale.toLowerCase() || code.startsWith(`${locale.toLowerCase()}-`)) || "";
 }
 
 function applyStaticText() {
   document.documentElement.lang = currentLocale;
   document.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
-  document.querySelector("#brandLink").setAttribute("aria-label", `${brandName} home`);
+  document.querySelector("#brandLink").setAttribute("aria-label", copy.brandHome || `${brandName} home`);
   document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
   document.querySelector("#navGames").textContent = copy.navGames;
+  buildLangSelector();
+}
+
+function buildLangSelector() {
+  const btn      = document.getElementById("langBtn");
+  const dropdown = document.getElementById("langDropdown");
+  const label    = document.getElementById("langLabel");
+  if (!btn || !dropdown) return;
+
+  // 현재 언어 이름 표시
+  label.textContent = translations[currentLocale].localeName;
+
+  // 언어 목록 — localeName 기준 알파벳 정렬
+  const sorted = Object.keys(translations).sort((a, b) =>
+    translations[a].localeName.localeCompare(translations[b].localeName)
+  );
+  dropdown.innerHTML = sorted.map(locale =>
+    `<button class="lang-option${locale === currentLocale ? " active" : ""}" data-locale="${locale}">` +
+    `${translations[locale].localeName}</button>`
+  ).join("");
+
+  // 드롭다운 토글
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const open = !dropdown.hidden;
+    dropdown.hidden = open;
+    btn.setAttribute("aria-expanded", String(!open));
+    if (!open) {
+      // 선택된 항목으로 스크롤
+      dropdown.querySelector(".active")?.scrollIntoView({ block: "nearest" });
+    }
+  });
+
+  // 언어 선택
+  dropdown.addEventListener("click", e => {
+    const locale = e.target.closest("[data-locale]")?.dataset.locale;
+    if (locale && locale !== currentLocale) changeLocale(locale);
+  });
+
+  // 외부 클릭 시 닫기
+  document.addEventListener("click", () => {
+    dropdown.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+  });
+
+  // 키보드 Escape
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      dropdown.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+function changeLocale(locale) {
+  localStorage.setItem("locale", locale);
+  // URL 파라미터 제거 후 리로드
+  const url = new URL(location.href);
+  url.searchParams.delete("lang");
+  url.searchParams.delete("locale");
+  location.href = url.toString();
 }
 
 function render() {
@@ -1880,6 +1987,19 @@ function drawIconShape(ctx, id, c, S) {
       ctx.fillRect(c + S*0.24, c - S*0.02, S*0.1, S*0.08);
       break;
 
+    case "car-smash":
+      ctx.lineWidth = S*0.055;
+      ctx.strokeRect(c - S*0.28, c - S*0.08, S*0.56, S*0.22);
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.16, c - S*0.08);
+      ctx.lineTo(c - S*0.06, c - S*0.22);
+      ctx.lineTo(c + S*0.14, c - S*0.22);
+      ctx.lineTo(c + S*0.23, c - S*0.08);
+      ctx.stroke();
+      ctx.beginPath(); ctx.arc(c - S*0.18, c + S*0.16, S*0.08, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c + S*0.18, c + S*0.16, S*0.08, 0, Math.PI * 2); ctx.fill();
+      break;
+
     case "laser-escape":
       [[0.22, 1], [0.44, 0.6], [0.66, 1]].forEach(([ry, alpha]) => {
         ctx.globalAlpha = alpha * 0.9;
@@ -1946,6 +2066,18 @@ function drawIconShape(ctx, id, c, S) {
       });
       break;
 
+    case "water-balloon-blitz":
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath(); ctx.ellipse(c, c, S*0.23, S*0.3, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.beginPath(); ctx.arc(c - S*0.08, c - S*0.12, S*0.06, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      [-0.22, 0, 0.22].forEach(dx => {
+        ctx.beginPath(); ctx.arc(c + dx*S, c + S*0.32, S*0.045, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      break;
+
     case "memory-grid":
       [[0,0,1],[1,0,0],[0,1,0],[1,1,1]].forEach(([col,row,lit]) => {
         ctx.globalAlpha = lit ? 0.95 : 0.28;
@@ -1966,6 +2098,18 @@ function drawIconShape(ctx, id, c, S) {
       ctx.strokeStyle = "rgba(255,255,255,0.92)";
       ctx.lineWidth = S*0.06;
       ctx.strokeRect(c - S*0.14, c - S*0.17, S*0.28, S*0.3);
+      break;
+
+    case "paint-race":
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = "#2bd1ff";
+      ctx.beginPath(); ctx.arc(c - S*0.12, c + S*0.08, S*0.18, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#ff3f5f";
+      ctx.beginPath(); ctx.arc(c + S*0.14, c - S*0.08, S*0.17, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = "rgba(255,255,255,0.72)";
+      ctx.lineWidth = S*0.045;
+      ctx.beginPath(); ctx.moveTo(c - S*0.32, c + S*0.28); ctx.lineTo(c + S*0.3, c - S*0.28); ctx.stroke();
       break;
 
     case "tile-link": {
@@ -2097,11 +2241,15 @@ function renderPlayer(gameId) {
       ${gameGuide(game)}
     </section>
   `;
-  focusPlayerFrame();
+  focusPlayerFrame(game);
 }
 
 function renderPrivacy() {
   const isKo = currentLocale === "ko";
+  if (!isKo && currentLocale !== "en") {
+    renderInfoPage("privacy");
+    return;
+  }
   app.innerHTML = `
     <div class="app-home">
       <div class="lp-bg" aria-hidden="true">
@@ -2123,6 +2271,10 @@ function renderPrivacy() {
 
 function renderFaq() {
   const isKo = currentLocale === "ko";
+  if (!isKo && currentLocale !== "en") {
+    renderInfoPage("about");
+    return;
+  }
   app.innerHTML = `
     <div class="app-home">
       <div class="lp-bg" aria-hidden="true">
@@ -2270,6 +2422,10 @@ function faqEn() {
 
 function renderTerms() {
   const isKo = currentLocale === "ko";
+  if (!isKo && currentLocale !== "en") {
+    renderInfoPage("terms");
+    return;
+  }
   app.innerHTML = `
     <div class="app-home">
       <div class="lp-bg" aria-hidden="true">
@@ -2726,13 +2882,13 @@ function renderInfoPage(page) {
 
 function gameFrame(game) {
   if (game.url) {
-    return `<iframe title="${game.title}" src="${escapeAttribute(game.url)}" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe>`;
+    return `<iframe title="${game.title}" src="${escapeAttribute(localizedGameUrl(game.url))}" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe>`;
   }
 
   return `<iframe title="${game.title}" srcdoc="${escapeAttribute(game.srcdoc)}" sandbox="allow-scripts" tabindex="-1"></iframe>`;
 }
 
-function focusPlayerFrame() {
+function focusPlayerFrame(game) {
   const frame = app.querySelector(".iframe-frame iframe");
   if (!frame) return;
   const focus = () => {
@@ -2743,8 +2899,45 @@ function focusPlayerFrame() {
       // Sandboxed frames can reject direct window access; focusing the iframe element is enough.
     }
   };
-  frame.addEventListener("load", () => requestAnimationFrame(focus), { once: true });
+  frame.addEventListener("load", () => {
+    localizeEmbeddedGame(frame, game);
+    requestAnimationFrame(focus);
+  }, { once: true });
   requestAnimationFrame(focus);
+}
+
+function localizedGameUrl(url) {
+  const gameUrl = new URL(url, location.href);
+  gameUrl.searchParams.set("locale", currentLocale);
+  return gameUrl.pathname.replace(location.pathname.replace(/[^/]*$/, ""), "./") + gameUrl.search + gameUrl.hash;
+}
+
+function localizeEmbeddedGame(frame, game) {
+  try {
+    const doc = frame.contentDocument;
+    if (!doc) return;
+    doc.documentElement.lang = currentLocale;
+    doc.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
+    doc.title = game.title;
+    const labelMap = [
+      ["#scoreLabel", copy.score],
+      ["#restart", copy.restart],
+      ["#reset", copy.restart],
+      ["#title", game.title],
+    ];
+    labelMap.forEach(([selector, text]) => {
+      const node = doc.querySelector(selector);
+      if (node && text) node.textContent = text;
+    });
+    doc.querySelectorAll(".hud span").forEach((node) => {
+      const first = node.firstChild;
+      if (first?.nodeType === Node.TEXT_NODE) {
+        first.textContent = first.textContent.replace(/\bScore\b/i, copy.score).replace(/\bHP\b/i, "HP");
+      }
+    });
+  } catch {
+    // Cross-document access can fail on some hosts; the locale query still reaches the game.
+  }
 }
 
 function genreSection(standalone = false) {
@@ -2891,7 +3084,7 @@ function siteFooter() {
       </div>
       <nav aria-label="${copy.mainMenu}">
         <a href="#about">${copy.aboutTitle}</a>
-        <a href="./privacy.html">${copy.privacyTitle}</a>
+        <a href="#privacy">${copy.privacyTitle}</a>
         <a href="#terms">${copy.termsTitle}</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">${copy.contactTitle}</a>

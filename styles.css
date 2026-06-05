@@ -44,7 +44,7 @@ button {
   top: 0;
   z-index: 10;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 18px;
   min-height: 68px;
@@ -859,7 +859,8 @@ button {
   .lp-b3 { display: none; }
 
   .topbar {
-    gap: 10px;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
     padding-inline: 12px;
   }
 
@@ -907,6 +908,78 @@ button {
   }
 }
 
+/* ── Language selector ─────────────────────────────────────────── */
+.lang-wrap {
+  position: relative;
+  z-index: 20;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 160ms ease, color 160ms ease;
+}
+.lang-btn:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.lang-btn[aria-expanded="true"] { background: rgba(255,255,255,0.08); color: var(--text); }
+
+#langLabel {
+  max-width: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 200px;
+  max-height: 340px;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  scrollbar-width: thin;
+}
+.lang-dropdown:not([hidden]) { display: block; }
+
+.lang-option {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  text-align: start;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--muted);
+  font: 14px/1.4 system-ui, sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lang-option:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.lang-option.active { color: var(--amber); background: rgba(247,184,75,0.08); font-weight: 600; }
+
+@media (max-width: 460px) {
+  .lang-dropdown { right: -10px; width: 180px; }
+  #langLabel { display: none; }
+  .lang-btn { padding: 0 8px; }
+}
+
+/* ────────────────────────────────────────────────────────────────── */
 #cookie-banner {
   position: fixed;
   bottom: 0;
