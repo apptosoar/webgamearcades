@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crate Shift</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game {
+        position: relative;
+        width: min(760px, 100%);
+        height: min(620px, 100dvh);
+      }
+
+      .hud {
+        flex-wrap: wrap;
+      }
+
+      .move-meter {
+        padding: 5px 9px;
+        border: 1px solid rgba(247, 184, 75, 0.38);
+        border-radius: 8px;
+        background: rgba(247, 184, 75, 0.13);
+        color: #f4f2ea;
+        font-weight: 700;
+      }
+
+      .move-meter b {
+        color: #f7b84b;
+      }
+
+      .move-meter.low {
+        border-color: rgba(240, 93, 94, 0.55);
+        background: rgba(240, 93, 94, 0.16);
+      }
+
+      .move-meter.low b {
+        color: #f05d5e;
+      }
+
+      canvas {
+        background: #12151a;
+      }
+
+      .controls {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .controls button {
+        grid-row: auto;
+      }
+
+      .dpad {
+        position: absolute;
+        right: 14px;
+        bottom: 68px;
+        z-index: 3;
+        display: grid;
+        grid-template-areas: ". up ." "left . right" ". down .";
+        grid-template-columns: repeat(3, 42px);
+        grid-template-rows: repeat(3, 42px);
+        gap: 4px;
+      }
+
+      .dpad button {
+        width: 42px;
+        min-height: 42px;
+        padding: 0;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.13);
+        font-size: 20px;
+        line-height: 1;
+        opacity: 0.74;
+      }
+
+      .dpad button:active {
+        transform: scale(0.94);
+        opacity: 1;
+      }
+
+      #up { grid-area: up; }
+      #left { grid-area: left; }
+      #right { grid-area: right; }
+      #down { grid-area: down; }
+
+      @media (pointer: fine) and (min-width: 760px) {
+        .dpad {
+          opacity: 0.28;
+        }
+
+        .dpad:hover {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Crate Shift</strong>
+        <span>레벨 <b id="level">1</b>/<b id="levelTotal">1</b></span>
+        <span class="move-meter" id="moveMeter">남은 이동 <b id="moveLeft">0</b>회 <small>(<b id="moves">0</b>/<b id="moveLimit">0</b>)</small></span>
+        <span>완료 <b id="placed">0</b>/<b id="targets">0</b></span>
+      </div>
+      <canvas id="game" aria-label="Crate Shift game board"></canvas>
+      <div class="controls">
+        <button id="restart" type="button">다시 시작</button>
+        <button id="undo" type="button">되돌리기</button>
+        <button id="next" class="action" type="button" disabled>다음 레벨</button>
+      </div>
+      <div class="dpad" aria-label="touch controls">
+        <button id="up" type="button" aria-label="up">▲</button>
+        <button id="left" type="button" aria-label="left">◀</button>
+        <button id="right" type="button" aria-label="right">▶</button>
+        <button id="down" type="button" aria-label="down">▼</button>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+        const levelEl = document.getElementById("level");
+        const totalEl = document.getElementById("levelTotal");
+        const moveMeterEl = document.getElementById("moveMeter");
+        const moveLeftEl = document.getElementById("moveLeft");
+        const movesEl = document.getElementById("moves");
+        const moveLimitEl = document.getElementById("moveLimit");
+        const placedEl = document.getElementById("placed");
+        const targetsEl = document.getElementById("targets");
+        const restartBtn = document.getElementById("restart");
+        const undoBtn = document.getElementById("undo");
+        const nextBtn = document.getElementById("next");
+
+        const levels = [
+          {
+            limit: 5,
+            map: [
+              "########",
+              "#      #",
+              "# .B@  #",
+              "#      #",
+              "########",
+            ],
+          },
+          {
+            limit: 6,
+            map: [
+              "#########",
+              "#   .   #",
+              "#   B   #",
+              "#   @   #",
+              "#       #",
+              "#########",
+            ],
+          },
+          {
+            limit: 10,
+            map: [
+              "#########",
+              "#       #",
+              "# .B B. #",
+              "#   @   #",
+              "#       #",
+              "#########",
+            ],
+          },
+          {
+            limit: 15,
+            map: [
+              "##########",
+              "#   #    #",
+              "# . B    #",
+              "#   # B. #",
+              "#   @    #",
+              "##########",
+            ],
+          },
+          {
+            limit: 17,
+            map: [
+              "###########",
+              "#   .     #",
+              "#   B#    #",
+              "# @  # B. #",
+              "#         #",
+              "###########",
+            ],
+          },
+          {
+            limit: 17,
+            map: [
+              "############",
+              "#   .  .   #",
+              "#   B  B   #",
+              "#     #    #",
+              "#   @      #",
+              "############",
+            ],
+          },
+          {
+            limit: 18,
+            map: [
+              "############",
+              "# .      . #",
+              "# B  ##  B #",
+              "#    @     #",
+              "#          #",
+              "############",
+            ],
+          },
+          {
+            limit: 18,
+            map: [
+              "#############",
+              "#     .     #",
+              "#  #  B  #  #",
+              "#  . B@B .  #",
+              "#     #     #",
+              "#############",
+            ],
+          },
+          {
+            limit: 24,
+            map: [
+              "#############",
+              "# .     .   #",
+              "# B  ## B   #",
+              "#    #      #",
+              "# .  B  @   #",
+              "#           #",
+              "#############",
+            ],
+          },
+          {
+            limit: 36,
+            map: [
+              "##############",
+              "# .   .      #",
+              "# B # B   #  #",
+              "#   #     #  #",
+              "#   B  B  .  #",
+              "# @       .  #",
+              "##############",
+            ],
+          },
+        ];
+
+        const state = {
+          level: 0,
+          grid: [],
+          targets: new Set(),
+          boxes: [],
+          player: { r: 0, c: 0 },
+          moves: 0,
+          moveLimit: 0,
+          history: [],
+          won: false,
+          failed: false,
+          tile: 0,
+          ox: 0,
+          oy: 0,
+          boardW: 0,
+          boardH: 0,
+        };
+
+        totalEl.textContent = levels.length;
+
+        function key(r, c) {
+          return `${r},${c}`;
+        }
+
+        function loadLevel(index) {
+          const level = levels[index];
+          const map = level.map;
+          state.level = index;
+          state.grid = map.map((row) => row.split("").map((ch) => (ch === "#" ? "#" : " ")));
+          state.targets = new Set();
+          state.boxes = [];
+          state.moves = 0;
+          state.moveLimit = level.limit;
+          state.history = [];
+          state.won = false;
+          state.failed = false;
+
+          for (let r = 0; r < map.length; r++) {
+            for (let c = 0; c < map[r].length; c++) {
+              const ch = map[r][c];
+              if (ch === "." || ch === "+" || ch === "*") state.targets.add(key(r, c));
+              if (ch === "B" || ch === "*") state.boxes.push({ r, c });
+              if (ch === "@" || ch === "+") state.player = { r, c };
+            }
+          }
+
+          updateHud();
+          resize();
+        }
+
+        function boxAt(r, c) {
+          return state.boxes.findIndex((box) => box.r === r && box.c === c);
+        }
+
+        function isWall(r, c) {
+          return !state.grid[r] || state.grid[r][c] === "#";
+        }
+
+        function saveSnapshot() {
+          state.history.push({
+            player: { ...state.player },
+            boxes: state.boxes.map((box) => ({ ...box })),
+            moves: state.moves,
+            won: state.won,
+            failed: state.failed,
+          });
+          if (state.history.length > 150) state.history.shift();
+        }
+
+        function move(dr, dc) {
+          if (state.won || state.failed) return;
+          if (state.moves >= state.moveLimit) {
+            state.failed = true;
+            updateHud();
+            draw();
+            return;
+          }
+
+          const nr = state.player.r + dr;
+          const nc = state.player.c + dc;
+          if (isWall(nr, nc)) return;
+
+          const pushed = boxAt(nr, nc);
+          if (pushed >= 0) {
+            const br = nr + dr;
+            const bc = nc + dc;
+            if (isWall(br, bc) || boxAt(br, bc) >= 0) return;
+            saveSnapshot();
+            state.boxes[pushed] = { r: br, c: bc };
+          } else {
+            saveSnapshot();
+          }
+
+          state.player = { r: nr, c: nc };
+          state.moves++;
+          checkWin();
+          if (!state.won && state.moves >= state.moveLimit) state.failed = true;
+          updateHud();
+          draw();
+        }
+
+        function undo() {
+          const previous = state.history.pop();
+          if (!previous) return;
+          state.player = previous.player;
+          state.boxes = previous.boxes;
+          state.moves = previous.moves;
+          state.won = previous.won;
+          state.failed = previous.failed;
+          updateHud();
+          draw();
+        }
+
+        function checkWin() {
+          state.won = state.boxes.every((box) => state.targets.has(key(box.r, box.c)));
+        }
+
+        function updateHud() {
+          const placed = state.boxes.filter((box) => state.targets.has(key(box.r, box.c))).length;
+          const moveLeft = Math.max(0, state.moveLimit - state.moves);
+          levelEl.textContent = state.level + 1;
+          moveLeftEl.textContent = moveLeft;
+          movesEl.textContent = state.moves;
+          moveLimitEl.textContent = state.moveLimit;
+          moveMeterEl.classList.toggle("low", moveLeft <= 3 && !state.won);
+          placedEl.textContent = placed;
+          targetsEl.textContent = state.targets.size;
+          undoBtn.disabled = state.history.length === 0;
+          nextBtn.disabled = !state.won;
+          nextBtn.textContent = state.level === levels.length - 1 ? "처음으로" : "다음 레벨";
+        }
+
+        function resize() {
+          const rect = canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = Math.floor(rect.width * dpr);
+          canvas.height = Math.floor(rect.height * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          state.boardH = state.grid.length;
+          state.boardW = Math.max(...state.grid.map((row) => row.length));
+          state.tile = Math.floor(Math.min((rect.width - 24) / state.boardW, (rect.height - 24) / state.boardH));
+          state.ox = Math.floor((rect.width - state.tile * state.boardW) / 2);
+          state.oy = Math.floor((rect.height - state.tile * state.boardH) / 2);
+          draw();
+        }
+
+        function roundedRect(x, y, w, h, r) {
+          ctx.beginPath();
+          ctx.moveTo(x + r, y);
+          ctx.arcTo(x + w, y, x + w, y + h, r);
+          ctx.arcTo(x + w, y + h, x, y + h, r);
+          ctx.arcTo(x, y + h, x, y, r);
+          ctx.arcTo(x, y, x + w, y, r);
+          ctx.closePath();
+        }
+
+        function drawFloor(x, y, r, c) {
+          const t = state.tile;
+          ctx.fillStyle = (r + c) % 2 ? "#1a2028" : "#171c24";
+          ctx.fillRect(x, y, t, t);
+          ctx.strokeStyle = "rgba(255,255,255,0.035)";
+          ctx.strokeRect(x + 0.5, y + 0.5, t - 1, t - 1);
+        }
+
+        function drawTarget(x, y) {
+          const t = state.tile;
+          ctx.fillStyle = "rgba(43, 209, 196, 0.18)";
+          ctx.beginPath();
+          ctx.arc(x + t / 2, y + t / 2, t * 0.28, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#2bd1c4";
+          ctx.lineWidth = Math.max(2, t * 0.04);
+          ctx.beginPath();
+          ctx.arc(x + t / 2, y + t / 2, t * 0.2, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        function drawWall(x, y) {
+          const t = state.tile;
+          const g = ctx.createLinearGradient(x, y, x, y + t);
+          g.addColorStop(0, "#3b4658");
+          g.addColorStop(1, "#222a36");
+          ctx.fillStyle = g;
+          roundedRect(x + 1, y + 1, t - 2, t - 2, Math.max(3, t * 0.08));
+          ctx.fill();
+          ctx.fillStyle = "rgba(255,255,255,0.08)";
+          ctx.fillRect(x + t * 0.12, y + t * 0.22, t * 0.76, Math.max(1, t * 0.05));
+          ctx.fillRect(x + t * 0.12, y + t * 0.62, t * 0.76, Math.max(1, t * 0.05));
+        }
+
+        function drawBox(box) {
+          const t = state.tile;
+          const x = state.ox + box.c * t;
+          const y = state.oy + box.r * t;
+          const placed = state.targets.has(key(box.r, box.c));
+          const g = ctx.createLinearGradient(x, y, x + t, y + t);
+          g.addColorStop(0, placed ? "#48e0c9" : "#f7b84b");
+          g.addColorStop(1, placed ? "#168f88" : "#b86f2b");
+          ctx.fillStyle = g;
+          roundedRect(x + t * 0.12, y + t * 0.12, t * 0.76, t * 0.76, Math.max(4, t * 0.1));
+          ctx.fill();
+          ctx.strokeStyle = "rgba(27,18,5,0.42)";
+          ctx.lineWidth = Math.max(2, t * 0.045);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x + t * 0.26, y + t * 0.26);
+          ctx.lineTo(x + t * 0.74, y + t * 0.74);
+          ctx.moveTo(x + t * 0.74, y + t * 0.26);
+          ctx.lineTo(x + t * 0.26, y + t * 0.74);
+          ctx.stroke();
+        }
+
+        function drawPlayer() {
+          const t = state.tile;
+          const x = state.ox + state.player.c * t + t / 2;
+          const y = state.oy + state.player.r * t + t / 2;
+          ctx.fillStyle = "#f4f2ea";
+          ctx.beginPath();
+          ctx.arc(x, y - t * 0.1, t * 0.18, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = "#a98bff";
+          roundedRect(x - t * 0.22, y + t * 0.05, t * 0.44, t * 0.34, t * 0.1);
+          ctx.fill();
+        }
+
+        function drawEndBanner() {
+          if (!state.won && !state.failed) return;
+          const w = canvas.getBoundingClientRect().width;
+          const h = canvas.getBoundingClientRect().height;
+          ctx.fillStyle = "rgba(11,12,15,0.62)";
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = "#f4f2ea";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.font = "800 30px system-ui";
+          const title = state.failed ? "횟수 초과" : state.level === levels.length - 1 ? "모든 레벨 완료!" : "레벨 완료!";
+          ctx.fillText(title, w / 2, h / 2 - 12);
+          ctx.font = "600 15px system-ui";
+          ctx.fillStyle = "#b8bec9";
+          ctx.fillText(state.failed ? "되돌리기나 다시 시작으로 다시 도전하세요." : "다음 레벨 버튼을 누르세요.", w / 2, h / 2 + 22);
+        }
+
+        function draw() {
+          const rect = canvas.getBoundingClientRect();
+          ctx.clearRect(0, 0, rect.width, rect.height);
+          ctx.fillStyle = "#12151a";
+          ctx.fillRect(0, 0, rect.width, rect.height);
+
+          for (let r = 0; r < state.boardH; r++) {
+            for (let c = 0; c < state.boardW; c++) {
+              const x = state.ox + c * state.tile;
+              const y = state.oy + r * state.tile;
+              drawFloor(x, y, r, c);
+              if (state.targets.has(key(r, c))) drawTarget(x, y);
+              if (state.grid[r][c] === "#") drawWall(x, y);
+            }
+          }
+
+          state.boxes.forEach(drawBox);
+          drawPlayer();
+          drawEndBanner();
+        }
+
+        restartBtn.addEventListener("click", () => loadLevel(state.level));
+        undoBtn.addEventListener("click", undo);
+        nextBtn.addEventListener("click", () => loadLevel(state.level === levels.length - 1 ? 0 : state.level + 1));
+
+        document.getElementById("up").addEventListener("click", () => move(-1, 0));
+        document.getElementById("left").addEventListener("click", () => move(0, -1));
+        document.getElementById("right").addEventListener("click", () => move(0, 1));
+        document.getElementById("down").addEventListener("click", () => move(1, 0));
+
+        window.addEventListener("keydown", (event) => {
+          const dirs = {
+            ArrowUp: [-1, 0],
+            KeyW: [-1, 0],
+            ArrowLeft: [0, -1],
+            KeyA: [0, -1],
+            ArrowRight: [0, 1],
+            KeyD: [0, 1],
+            ArrowDown: [1, 0],
+            KeyS: [1, 0],
+          };
+          if (dirs[event.code]) {
+            event.preventDefault();
+            move(dirs[event.code][0], dirs[event.code][1]);
+          } else if (event.code === "KeyZ" || event.code === "Backspace") {
+            event.preventDefault();
+            undo();
+          } else if (event.code === "KeyR") {
+            event.preventDefault();
+            loadLevel(state.level);
+          }
+        });
+
+        window.addEventListener("resize", resize);
+        loadLevel(0);
+      })();
+    </script>
+  </body>
+</html>

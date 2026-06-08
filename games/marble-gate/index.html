@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marble Gate</title>
+    <link rel="stylesheet" href="../action-style.css" />
+    <style>
+      .game {
+        position: relative;
+        width: min(760px, 100%);
+        height: min(620px, 100dvh);
+      }
+
+      .hud {
+        flex-wrap: wrap;
+      }
+
+      .move-meter {
+        padding: 5px 9px;
+        border: 1px solid rgba(77, 216, 240, 0.4);
+        border-radius: 8px;
+        background: rgba(77, 216, 240, 0.13);
+        color: #f4f2ea;
+        font-weight: 700;
+      }
+
+      .move-meter b {
+        color: #4dd8f0;
+      }
+
+      .move-meter.low {
+        border-color: rgba(240, 93, 94, 0.55);
+        background: rgba(240, 93, 94, 0.16);
+      }
+
+      .move-meter.low b {
+        color: #f05d5e;
+      }
+
+      canvas {
+        background: #11151b;
+      }
+
+      .controls {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .controls button {
+        grid-row: auto;
+      }
+
+      .slide-pad {
+        position: absolute;
+        right: 14px;
+        bottom: 68px;
+        z-index: 3;
+        display: flex;
+        gap: 6px;
+      }
+
+      .slide-pad button {
+        width: 46px;
+        min-height: 46px;
+        padding: 0;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.13);
+        font-size: 22px;
+        line-height: 1;
+        opacity: 0.78;
+      }
+
+      .slide-pad button:active {
+        transform: scale(0.94);
+        opacity: 1;
+      }
+
+      @media (pointer: fine) and (min-width: 760px) {
+        .slide-pad {
+          opacity: 0.35;
+        }
+
+        .slide-pad:hover {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Marble Gate</strong>
+        <span>스테이지 <b id="level">1</b>/<b id="levelTotal">10</b></span>
+        <span class="move-meter" id="moveMeter">남은 이동 <b id="moveLeft">0</b>회 <small>(<b id="moves">0</b>/<b id="moveLimit">0</b>)</small></span>
+        <span id="hint">블록을 좌우로 밀어 길을 여세요</span>
+      </div>
+      <canvas id="game" aria-label="Marble Gate game board"></canvas>
+      <div class="controls">
+        <button id="restart" type="button">다시 시작</button>
+        <button id="undo" type="button">되돌리기</button>
+        <button id="next" class="action" type="button" disabled>다음 스테이지</button>
+      </div>
+      <div class="slide-pad" aria-label="slide controls">
+        <button id="left" type="button" aria-label="left">◀</button>
+        <button id="right" type="button" aria-label="right">▶</button>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+        const levelEl = document.getElementById("level");
+        const totalEl = document.getElementById("levelTotal");
+        const moveMeterEl = document.getElementById("moveMeter");
+        const moveLeftEl = document.getElementById("moveLeft");
+        const movesEl = document.getElementById("moves");
+        const moveLimitEl = document.getElementById("moveLimit");
+        const hintEl = document.getElementById("hint");
+        const restartBtn = document.getElementById("restart");
+        const undoBtn = document.getElementById("undo");
+        const nextBtn = document.getElementById("next");
+
+        const COLS = 7;
+        const levels = [
+          { limit: 8, holes: [1, 5, 3, 3] },
+          { limit: 12, holes: [5, 1, 5, 1, 3] },
+          { limit: 15, holes: [0, 6, 2, 5, 1] },
+          { limit: 20, holes: [6, 0, 6, 0, 6, 3] },
+          { limit: 18, holes: [0, 5, 1, 6, 2, 5] },
+          { limit: 21, holes: [6, 1, 5, 0, 6, 1, 4] },
+          { limit: 22, holes: [0, 6, 0, 6, 1, 5, 2] },
+          { limit: 22, holes: [5, 0, 6, 1, 6, 0, 3] },
+          { limit: 25, holes: [0, 6, 1, 5, 0, 6, 2, 5] },
+          { limit: 28, holes: [6, 0, 6, 1, 5, 0, 6, 1] },
+        ];
+
+        const state = {
+          level: 0,
+          grid: [],
+          moves: 0,
+          moveLimit: 0,
+          selected: null,
+          history: [],
+          won: false,
+          failed: false,
+          path: [],
+          rows: 0,
+          tile: 0,
+          ox: 0,
+          oy: 0,
+        };
+
+        totalEl.textContent = levels.length;
+
+        function makeGrid(holes) {
+          return holes.map((hole) => {
+            const row = Array(COLS).fill("B");
+            row[hole] = ".";
+            return row;
+          });
+        }
+
+        function loadLevel(index) {
+          const level = levels[index];
+          state.level = index;
+          state.grid = makeGrid(level.holes);
+          state.rows = state.grid.length;
+          state.moves = 0;
+          state.moveLimit = level.limit;
+          state.selected = null;
+          state.history = [];
+          state.won = false;
+          state.failed = false;
+          updatePath();
+          updateHud();
+          resize();
+        }
+
+        function saveSnapshot() {
+          state.history.push({
+            grid: state.grid.map((row) => row.slice()),
+            moves: state.moves,
+            selected: state.selected ? { ...state.selected } : null,
+            won: state.won,
+            failed: state.failed,
+          });
+          if (state.history.length > 150) state.history.shift();
+        }
+
+        function isEmpty(r, c) {
+          return r >= 0 && r < state.rows && c >= 0 && c < COLS && state.grid[r][c] === ".";
+        }
+
+        function canMove(r, c, dc) {
+          return state.grid[r]?.[c] === "B" && isEmpty(r, c + dc);
+        }
+
+        function moveSelected(dc) {
+          if (state.won || state.failed || !state.selected) return;
+          const { r, c } = state.selected;
+          if (!canMove(r, c, dc)) return;
+          if (state.moves >= state.moveLimit) {
+            state.failed = true;
+            updateHud();
+            draw();
+            return;
+          }
+
+          saveSnapshot();
+          state.grid[r][c + dc] = "B";
+          state.grid[r][c] = ".";
+          state.selected = { r, c: c + dc };
+          state.moves++;
+          updatePath();
+          if (!state.won && state.moves >= state.moveLimit) state.failed = true;
+          updateHud();
+          draw();
+        }
+
+        function undo() {
+          const previous = state.history.pop();
+          if (!previous) return;
+          state.grid = previous.grid;
+          state.moves = previous.moves;
+          state.selected = previous.selected;
+          state.won = previous.won;
+          state.failed = previous.failed;
+          updatePath();
+          updateHud();
+          draw();
+        }
+
+        function updatePath() {
+          const path = [];
+          let c = Math.floor(COLS / 2);
+          path.push({ r: -1, c });
+
+          for (let r = 0; r < state.rows; r++) {
+            let next = null;
+            if (isEmpty(r, c)) next = c;
+            else if (isEmpty(r, c - 1)) next = c - 1;
+            else if (isEmpty(r, c + 1)) next = c + 1;
+
+            if (next === null) {
+              state.path = path;
+              state.won = false;
+              return;
+            }
+            c = next;
+            path.push({ r, c });
+          }
+
+          path.push({ r: state.rows, c });
+          state.path = path;
+          state.won = true;
+          state.failed = false;
+        }
+
+        function updateHud() {
+          const moveLeft = Math.max(0, state.moveLimit - state.moves);
+          levelEl.textContent = state.level + 1;
+          moveLeftEl.textContent = moveLeft;
+          movesEl.textContent = state.moves;
+          moveLimitEl.textContent = state.moveLimit;
+          moveMeterEl.classList.toggle("low", moveLeft <= 3 && !state.won);
+          undoBtn.disabled = state.history.length === 0;
+          nextBtn.disabled = !state.won;
+          nextBtn.textContent = state.level === levels.length - 1 ? "처음으로" : "다음 스테이지";
+          hintEl.textContent = state.won ? "구슬이 출구로 빠져나갔습니다" : state.failed ? "횟수 초과" : "블록을 좌우로 밀어 길을 여세요";
+        }
+
+        function resize() {
+          const rect = canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = Math.floor(rect.width * dpr);
+          canvas.height = Math.floor(rect.height * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          const topSpace = 1.25;
+          const bottomSpace = 0.9;
+          state.tile = Math.floor(Math.min((rect.width - 28) / COLS, (rect.height - 28) / (state.rows + topSpace + bottomSpace)));
+          state.ox = Math.floor((rect.width - state.tile * COLS) / 2);
+          state.oy = Math.floor((rect.height - state.tile * (state.rows + topSpace + bottomSpace)) / 2 + state.tile * topSpace);
+          draw();
+        }
+
+        function roundedRect(x, y, w, h, r) {
+          ctx.beginPath();
+          ctx.moveTo(x + r, y);
+          ctx.arcTo(x + w, y, x + w, y + h, r);
+          ctx.arcTo(x + w, y + h, x, y + h, r);
+          ctx.arcTo(x, y + h, x, y, r);
+          ctx.arcTo(x, y, x + w, y, r);
+          ctx.closePath();
+        }
+
+        function cellCenter(r, c) {
+          return {
+            x: state.ox + c * state.tile + state.tile / 2,
+            y: state.oy + r * state.tile + state.tile / 2,
+          };
+        }
+
+        function drawPath() {
+          if (state.path.length < 2) return;
+          ctx.save();
+          ctx.strokeStyle = state.won ? "rgba(115, 214, 118, 0.86)" : "rgba(77, 216, 240, 0.5)";
+          ctx.lineWidth = Math.max(3, state.tile * 0.08);
+          ctx.setLineDash([state.tile * 0.12, state.tile * 0.13]);
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          state.path.forEach((p, i) => {
+            const pt = cellCenter(p.r, p.c);
+            if (p.r < 0) pt.y = state.oy - state.tile * 0.55;
+            if (p.r >= state.rows) pt.y = state.oy + state.rows * state.tile + state.tile * 0.5;
+            if (i === 0) ctx.moveTo(pt.x, pt.y);
+            else ctx.lineTo(pt.x, pt.y);
+          });
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        function drawBoard() {
+          const t = state.tile;
+          ctx.fillStyle = "#151a22";
+          roundedRect(state.ox - 8, state.oy - 8, COLS * t + 16, state.rows * t + 16, 10);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(255,255,255,0.12)";
+          ctx.stroke();
+
+          for (let r = 0; r < state.rows; r++) {
+            for (let c = 0; c < COLS; c++) {
+              const x = state.ox + c * t;
+              const y = state.oy + r * t;
+              ctx.fillStyle = (r + c) % 2 ? "#111820" : "#10151d";
+              ctx.fillRect(x, y, t, t);
+              ctx.strokeStyle = "rgba(255,255,255,0.035)";
+              ctx.strokeRect(x + 0.5, y + 0.5, t - 1, t - 1);
+              if (state.grid[r][c] === "B") drawBlock(r, c);
+            }
+          }
+        }
+
+        function drawBlock(r, c) {
+          const t = state.tile;
+          const x = state.ox + c * t;
+          const y = state.oy + r * t;
+          const selected = state.selected && state.selected.r === r && state.selected.c === c;
+          const movable = canMove(r, c, -1) || canMove(r, c, 1);
+          const g = ctx.createLinearGradient(x, y, x + t, y + t);
+          g.addColorStop(0, selected ? "#4dd8f0" : movable ? "#f7b84b" : "#596272");
+          g.addColorStop(1, selected ? "#178aa2" : movable ? "#a9632a" : "#303846");
+          ctx.fillStyle = g;
+          roundedRect(x + t * 0.08, y + t * 0.08, t * 0.84, t * 0.84, Math.max(4, t * 0.1));
+          ctx.fill();
+          ctx.strokeStyle = selected ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.28)";
+          ctx.lineWidth = Math.max(2, t * 0.04);
+          ctx.stroke();
+          ctx.fillStyle = "rgba(255,255,255,0.12)";
+          ctx.fillRect(x + t * 0.18, y + t * 0.24, t * 0.64, Math.max(1, t * 0.05));
+          ctx.fillRect(x + t * 0.18, y + t * 0.62, t * 0.64, Math.max(1, t * 0.05));
+        }
+
+        function drawMarble() {
+          const t = state.tile;
+          const last = state.path[state.path.length - 1] || { r: -1, c: Math.floor(COLS / 2) };
+          const show = state.won ? last : state.path[0];
+          const pt = cellCenter(show.r, show.c);
+          if (show.r < 0) pt.y = state.oy - t * 0.55;
+          if (show.r >= state.rows) pt.y = state.oy + state.rows * t + t * 0.5;
+          const r = t * 0.24;
+          const g = ctx.createRadialGradient(pt.x - r * 0.35, pt.y - r * 0.45, r * 0.15, pt.x, pt.y, r);
+          g.addColorStop(0, "#ffffff");
+          g.addColorStop(0.34, "#9eefff");
+          g.addColorStop(1, "#1a89a6");
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(255,255,255,0.72)";
+          ctx.lineWidth = Math.max(2, t * 0.035);
+          ctx.stroke();
+        }
+
+        function drawExit() {
+          const t = state.tile;
+          const x = state.ox + Math.floor(COLS / 2) * t;
+          const y = state.oy + state.rows * t + t * 0.18;
+          ctx.fillStyle = "rgba(115,214,118,0.18)";
+          ctx.fillRect(state.ox, y, COLS * t, t * 0.28);
+          ctx.fillStyle = "#73d676";
+          roundedRect(x - t * 0.42, y - t * 0.04, t * 0.84, t * 0.22, t * 0.08);
+          ctx.fill();
+        }
+
+        function drawEndBanner() {
+          if (!state.won && !state.failed) return;
+          const rect = canvas.getBoundingClientRect();
+          ctx.fillStyle = "rgba(11,12,15,0.62)";
+          ctx.fillRect(0, 0, rect.width, rect.height);
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#f4f2ea";
+          ctx.font = "800 30px system-ui";
+          const title = state.failed ? "횟수 초과" : state.level === levels.length - 1 ? "모든 스테이지 완료!" : "클리어!";
+          ctx.fillText(title, rect.width / 2, rect.height / 2 - 12);
+          ctx.font = "600 15px system-ui";
+          ctx.fillStyle = "#b8bec9";
+          ctx.fillText(state.failed ? "되돌리기나 다시 시작으로 다시 도전하세요." : "구슬이 출구로 빠져나갔습니다.", rect.width / 2, rect.height / 2 + 22);
+        }
+
+        function draw() {
+          const rect = canvas.getBoundingClientRect();
+          ctx.clearRect(0, 0, rect.width, rect.height);
+          ctx.fillStyle = "#11151b";
+          ctx.fillRect(0, 0, rect.width, rect.height);
+          drawExit();
+          drawBoard();
+          drawPath();
+          drawMarble();
+          drawEndBanner();
+        }
+
+        function pointerToCell(event) {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const c = Math.floor((x - state.ox) / state.tile);
+          const r = Math.floor((y - state.oy) / state.tile);
+          if (r < 0 || r >= state.rows || c < 0 || c >= COLS) return null;
+          return { r, c };
+        }
+
+        canvas.addEventListener("pointerdown", (event) => {
+          const cell = pointerToCell(event);
+          if (!cell || state.won || state.failed) return;
+          const { r, c } = cell;
+
+          if (state.grid[r][c] === ".") {
+            if (state.selected && state.selected.r === r && Math.abs(state.selected.c - c) === 1) {
+              moveSelected(c > state.selected.c ? 1 : -1);
+            } else {
+              state.selected = null;
+              updateHud();
+              draw();
+            }
+            return;
+          }
+
+          state.selected = { r, c };
+          const leftOpen = canMove(r, c, -1);
+          const rightOpen = canMove(r, c, 1);
+          if (leftOpen !== rightOpen) moveSelected(leftOpen ? -1 : 1);
+          else draw();
+        });
+
+        restartBtn.addEventListener("click", () => loadLevel(state.level));
+        undoBtn.addEventListener("click", undo);
+        nextBtn.addEventListener("click", () => loadLevel(state.level === levels.length - 1 ? 0 : state.level + 1));
+        document.getElementById("left").addEventListener("click", () => moveSelected(-1));
+        document.getElementById("right").addEventListener("click", () => moveSelected(1));
+
+        window.addEventListener("keydown", (event) => {
+          if (event.code === "ArrowLeft" || event.code === "KeyA") {
+            event.preventDefault();
+            moveSelected(-1);
+          } else if (event.code === "ArrowRight" || event.code === "KeyD") {
+            event.preventDefault();
+            moveSelected(1);
+          } else if (event.code === "KeyZ" || event.code === "Backspace") {
+            event.preventDefault();
+            undo();
+          } else if (event.code === "KeyR") {
+            event.preventDefault();
+            loadLevel(state.level);
+          }
+        });
+
+        window.addEventListener("resize", resize);
+        loadLevel(0);
+      })();
+    </script>
+  </body>
+</html>
