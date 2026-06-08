@@ -93,10 +93,12 @@
       "sample-clicker": "외부 HTML 파일로 추가한 샘플 게임입니다.",
       "block-stacker": "떨어지는 블록을 쌓아 줄을 지우고 점수를 올리세요.",
       "tile-link": "같은 그림의 타일 두 개를 선택해 두 번 이하로 꺾이는 경로로 연결하면 사라집니다.",
-      "puzzle-minesweeper": "숫자 단서를 보고 지뢰가 아닌 안전한 칸을 찾으세요.",
+      "puzzle-trap-scout": "숫자 힌트로 함정 위치를 파악하고, 안전한 칸을 모두 열어보세요.",
       "puzzle-sudoku": "빈칸을 눌러 숫자를 채우고 모든 행과 열을 맞추세요.",
       "window-wash": "스퀴지로 창문을 문질러 오염을 닦아내세요. 새똥과 빗자국을 조심하세요!",
       "maze-escape": "매번 새로 생성되는 미로를 탈출하세요. 레벨이 올라갈수록 미로가 커지고 어두워집니다.",
+      "crate-shift": "정해진 이동 횟수 안에 창고 상자를 모든 목표 칸에 올려놓으세요.",
+      "marble-gate": "블록을 좌우로 밀어 빈길을 만들고 구슬을 아래 출구로 굴려 보내세요.",
     },
   },
   en: {
@@ -193,10 +195,12 @@
       "sample-clicker": "A sample game added as an external HTML file.",
       "block-stacker": "Stack falling blocks, clear full lines, and raise your score.",
       "tile-link": "Select two matching tiles and connect them with a path that bends no more than twice to clear them.",
-      "puzzle-minesweeper": "Use number clues to find safe cells without opening mines.",
+      "puzzle-trap-scout": "Open all safe zones using number hints. Right-click or long-press to flag traps.",
       "puzzle-sudoku": "Tap empty cells to fill numbers and complete every row and column.",
       "window-wash": "Scrub the window clean with your squeegee before time runs out. Watch out for bird droppings and rain streaks!",
       "maze-escape": "Escape a randomly generated maze each time. Mazes grow larger and darker as you advance.",
+      "crate-shift": "Push every crate onto its target tile before the move limit runs out.",
+      "marble-gate": "Slide blocks sideways to open a path and guide the marble down through the exit.",
     },
   },
 };
@@ -248,7 +252,7 @@
       "lane-rush": "Cambia de carril, evita obstáculos y aumenta tu puntuación.",
       "sample-clicker": "Un juego de muestra añadido como archivo HTML externo.",
       "block-stacker": "Apila los bloques que caen, completa filas y aumenta tu puntuación.",
-      "puzzle-minesweeper": "Usa pistas numéricas para encontrar celdas seguras sin abrir minas.",
+      "puzzle-trap-scout": "Usa pistas numéricas para encontrar celdas seguras sin abrir minas.",
       "puzzle-sudoku": "Toca las celdas vacías para llenar números y completar cada fila y columna.",
       "car-smash": "Toca los 10 tipos de vehículos y aplana cada uno por completo.",
       "paint-race": "Cubre el lienzo con pintura azul neón antes de que el ordenador rojo gane.",
@@ -298,7 +302,7 @@
       "lane-rush": "换道躲避障碍，不断提高分数。",
       "sample-clicker": "作为外部HTML文件添加的示例游戏。",
       "block-stacker": "堆叠下落方块，消除整行，提高分数。",
-      "puzzle-minesweeper": "利用数字线索找到安全格，不要踩雷。",
+      "puzzle-trap-scout": "利用数字线索找到安全格，不要踩雷。",
       "puzzle-sudoku": "点击空格填入数字，完成每行每列。",
       "car-smash": "点击10种车辆，逐步将每辆车压扁击碎。",
       "paint-race": "用荧光蓝色油漆覆盖画布，在红色电脑赢得领土战前取得胜利。",
@@ -348,7 +352,7 @@
       "lane-rush": "車線を変えて障害物を避け、スコアを伸ばそう。",
       "sample-clicker": "外部HTMLファイルとして追加されたサンプルゲームです。",
       "block-stacker": "落ちてくるブロックを積んでラインを消し、スコアを伸ばそう。",
-      "puzzle-minesweeper": "数字のヒントを使って、地雷のない安全なマスを見つけよう。",
+      "puzzle-trap-scout": "数字のヒントを使って、地雷のない安全なマスを見つけよう。",
       "puzzle-sudoku": "空白のマスをタップして数字を入れ、全ての行と列を完成させよう。",
       "car-smash": "10種類の車両をタップして、それぞれを完全に潰そう。",
       "paint-race": "ネオンブルーのペイントでキャンバスを塗りつぶし、赤いコンピューターに勝とう。",
@@ -398,7 +402,7 @@
       "lane-rush": "Wechsle die Spur, weiche Hindernissen aus und erhöhe deinen Score.",
       "sample-clicker": "Ein Beispielspiel, das als externe HTML-Datei hinzugefügt wurde.",
       "block-stacker": "Stapele fallende Blöcke, lösche volle Reihen und erhöhe deinen Score.",
-      "puzzle-minesweeper": "Benutze Zahlhinweise, um sichere Felder zu finden, ohne Minen zu öffnen.",
+      "puzzle-trap-scout": "Benutze Zahlhinweise, um sichere Felder zu finden, ohne Minen zu öffnen.",
       "puzzle-sudoku": "Tippe auf leere Felder, um Zahlen einzugeben und jede Zeile und Spalte zu vervollständigen.",
       "car-smash": "Tippe durch 10 Fahrzeugtypen und zerstöre jedes vollständig.",
       "paint-race": "Bemale die Leinwand mit Neonblau, bevor der rote Computer das Territorium gewinnt.",
@@ -448,7 +452,7 @@
       "lane-rush": "Change de voie, évite les obstacles et augmente ton score.",
       "sample-clicker": "Un jeu exemple ajouté comme fichier HTML externe.",
       "block-stacker": "Empile les blocs qui tombent, efface les lignes complètes et augmente ton score.",
-      "puzzle-minesweeper": "Utilise les indices numériques pour trouver les cases sûres sans ouvrir de mines.",
+      "puzzle-trap-scout": "Utilise les indices numériques pour trouver les cases sûres sans ouvrir de mines.",
       "puzzle-sudoku": "Appuie sur les cases vides pour remplir les chiffres et compléter chaque ligne et colonne.",
       "car-smash": "Tape sur 10 types de véhicules et écrase chacun jusqu'à l'aplatir complètement.",
       "paint-race": "Couvre la toile de peinture bleue néon avant que l'ordinateur rouge ne gagne.",
@@ -498,7 +502,7 @@
       "lane-rush": "लेन बदलें, बाधाओं से बचें और स्कोर बढ़ाएं।",
       "sample-clicker": "बाहरी HTML फ़ाइल के रूप में जोड़ा गया नमूना गेम।",
       "block-stacker": "गिरते ब्लॉक स्टैक करें, पूरी लाइनें हटाएं और स्कोर बढ़ाएं।",
-      "puzzle-minesweeper": "संख्या सुराग से सुरक्षित सेल ढूंढें।",
+      "puzzle-trap-scout": "संख्या सुराग से सुरक्षित सेल ढूंढें।",
       "puzzle-sudoku": "खाली सेल पर टैप कर नंबर भरें और हर पंक्ति-स्तंभ पूरा करें।",
       "car-smash": "10 वाहनों को टैप करके एक-एक करके पूरी तरह कुचलें।",
       "paint-race": "लाल कंप्यूटर से पहले नियॉन नीले रंग से कैनवास भरें।",
@@ -548,7 +552,7 @@
       "lane-rush": "Měň pruhy, vyhýbej se překážkám a zvyšuj skóre.",
       "sample-clicker": "Ukázková hra přidaná jako externí HTML soubor.",
       "block-stacker": "Skládej padající bloky, maž plné řady a zvyšuj skóre.",
-      "puzzle-minesweeper": "Použ číselné nápovědy k nalezení bezpečných políček bez min.",
+      "puzzle-trap-scout": "Použ číselné nápovědy k nalezení bezpečných políček bez min.",
       "puzzle-sudoku": "Klepni na prázdná políčka a doplň čísla tak, aby každý řádek a sloupec byly správné.",
     },
   });
@@ -592,7 +596,7 @@
       "lane-rush": "Wissel van rijstrook, vermijd obstakels en verhoog je score.",
       "sample-clicker": "Een voorbeeldspel toegevoegd als extern HTML-bestand.",
       "block-stacker": "Stapel vallende blokken, verwijder volle rijen en verhoog je score.",
-      "puzzle-minesweeper": "Gebruik getallenaanwijzingen om veilige cellen te vinden zonder mijnen te openen.",
+      "puzzle-trap-scout": "Gebruik getallenaanwijzingen om veilige cellen te vinden zonder mijnen te openen.",
       "puzzle-sudoku": "Tik op lege cellen om getallen in te vullen en elke rij en kolom te voltooien.",
     },
   });
@@ -636,7 +640,7 @@
       "lane-rush": "Vaihda kaistaa, vältä esteitä ja nosta pisteitäsi.",
       "sample-clicker": "Esimerkkipeli lisätty ulkoisena HTML-tiedostona.",
       "block-stacker": "Pinoa putoavia paloja, tyhjennä täydet rivit ja nosta pisteitäsi.",
-      "puzzle-minesweeper": "Käytä numero vihjeitä löytääksesi turvalliset ruudut avaamatta miinoja.",
+      "puzzle-trap-scout": "Käytä numero vihjeitä löytääksesi turvalliset ruudut avaamatta miinoja.",
       "puzzle-sudoku": "Napauta tyhjiä ruutuja täyttääksesi numerot ja täydentääksesi jokainen rivi ja sarake.",
     },
   });
@@ -680,7 +684,7 @@
       "lane-rush": "החלף נתיבים, הימנע ממכשולים והעלה את הניקוד.",
       "sample-clicker": "משחק לדוגמה שנוסף כקובץ HTML חיצוני.",
       "block-stacker": "ערום בלוקים נופלים, מחק שורות מלאות והעלה את הניקוד.",
-      "puzzle-minesweeper": "השתמש ברמזים מספריים למציאת תאים בטוחים בלי לפתוח מוקשים.",
+      "puzzle-trap-scout": "השתמש ברמזים מספריים למציאת תאים בטוחים בלי לפתוח מוקשים.",
       "puzzle-sudoku": "לחץ על תאים ריקים, מלא מספרים והשלם כל שורה ועמודה.",
     },
   });
@@ -724,7 +728,7 @@
       "lane-rush": "Schimbă benzile, evită obstacolele și crește scorul.",
       "sample-clicker": "Un joc exemplu adăugat ca fișier HTML extern.",
       "block-stacker": "Stivuiește blocuri care cad, șterge rânduri complete și crește scorul.",
-      "puzzle-minesweeper": "Folosește indicii numerice pentru a găsi celule sigure fără a deschide mine.",
+      "puzzle-trap-scout": "Folosește indicii numerice pentru a găsi celule sigure fără a deschide mine.",
       "puzzle-sudoku": "Atinge celulele goale pentru a completa numerele și fiecare rând și coloană.",
     },
   });
@@ -768,7 +772,7 @@
       "lane-rush": "Міняй смуги, уникай перешкод і підвищуй рахунок.",
       "sample-clicker": "Зразкова гра, додана як зовнішній HTML-файл.",
       "block-stacker": "Складай блоки, що падають, очищуй повні ряди та підвищуй рахунок.",
-      "puzzle-minesweeper": "Використовуй числові підказки для пошуку безпечних клітинок без мін.",
+      "puzzle-trap-scout": "Використовуй числові підказки для пошуку безпечних клітинок без мін.",
       "puzzle-sudoku": "Натискай на порожні клітинки, заповнюй цифри і доповни кожен рядок і стовпець.",
     },
   });
@@ -812,7 +816,7 @@
       "lane-rush": "Mude de faixa, evite obstáculos e aumente sua pontuação.",
       "sample-clicker": "Um jogo de amostra adicionado como arquivo HTML externo.",
       "block-stacker": "Empilhe blocos que caem, limpe linhas completas e aumente sua pontuação.",
-      "puzzle-minesweeper": "Use dicas numéricas para encontrar células seguras sem abrir minas.",
+      "puzzle-trap-scout": "Use dicas numéricas para encontrar células seguras sem abrir minas.",
       "puzzle-sudoku": "Toque nas células vazias para preencher números e completar cada linha e coluna.",
     },
   });
@@ -856,7 +860,7 @@
       "lane-rush": "Ganti lajur, hindari rintangan, dan tingkatkan skor.",
       "sample-clicker": "Game sampel yang ditambahkan sebagai file HTML eksternal.",
       "block-stacker": "Tumpuk blok yang jatuh, hapus baris penuh, dan tingkatkan skor.",
-      "puzzle-minesweeper": "Gunakan petunjuk angka untuk menemukan sel aman tanpa membuka ranjau.",
+      "puzzle-trap-scout": "Gunakan petunjuk angka untuk menemukan sel aman tanpa membuka ranjau.",
       "puzzle-sudoku": "Ketuk sel kosong untuk mengisi angka dan selesaikan setiap baris dan kolom.",
     },
   });
@@ -1629,6 +1633,8 @@ const gameMeta = [
   { id: "water-balloon-blitz", genre: "action", title: "Water Balloon Blitz", icon: "WB", accent: "#4dd8f0", url: "./games/water-balloon-blitz/index.html" },
   { id: "window-wash", genre: "action", title: "Window Wash", icon: "WW", accent: "#4dd8f0", url: "./games/window-wash/index.html" },
   { id: "maze-escape", genre: "puzzle", title: "Maze Escape", icon: "ME", accent: "#f7b84b", url: "./games/maze-escape/index.html" },
+  { id: "crate-shift", genre: "puzzle", title: "Crate Shift", icon: "CS", accent: "#f7b84b", url: "./games/crate-shift/index.html" },
+  { id: "marble-gate", genre: "puzzle", title: "Marble Gate", icon: "MG", accent: "#4dd8f0", url: "./games/marble-gate/index.html" },
   { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
   { id: "tile-link", genre: "puzzle", title: "Tile Link", icon: "TL", accent: "#2bd1c4", url: "./games/tile-link/index.html" },
   { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
@@ -1638,7 +1644,7 @@ const gameMeta = [
 
 const puzzleExamples = [
   { id: "block-stacker", title: "block-stacker", type: "Block puzzle", icon: "B", description: "Stack falling blocks and clear full lines." },
-  { title: "Minesweeper", type: "Logic puzzle", icon: "M", description: "Use number clues to find safe cells." },
+  { title: "Trap Scout", type: "Logic puzzle", icon: "TS", description: "Open all safe zones using number hints. Right-click or long-press to flag traps." },
   { title: "Sudoku", type: "Number puzzle", icon: "9", description: "Fill the grid so each row and column follows the rule." },
 ];
 
@@ -2141,6 +2147,56 @@ function drawIconShape(ctx, id, c, S) {
       break;
     }
 
+    case "crate-shift": {
+      ctx.strokeStyle = "rgba(255,255,255,0.3)";
+      ctx.lineWidth = S*0.025;
+      for (let i = 0; i < 3; i++) {
+        ctx.strokeRect(c - S*0.33 + i*S*0.22, c - S*0.33, S*0.22, S*0.22);
+        ctx.strokeRect(c - S*0.33 + i*S*0.22, c - S*0.11, S*0.22, S*0.22);
+        ctx.strokeRect(c - S*0.33 + i*S*0.22, c + S*0.11, S*0.22, S*0.22);
+      }
+      ctx.fillStyle = "rgba(43,209,196,0.75)";
+      ctx.beginPath(); ctx.arc(c + S*0.22, c - S*0.22, S*0.075, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c + S*0.22, c + S*0.22, S*0.075, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "#f7b84b";
+      ctx.fillRect(c - S*0.08, c - S*0.3, S*0.2, S*0.2);
+      ctx.fillRect(c - S*0.08, c + S*0.14, S*0.2, S*0.2);
+      ctx.strokeStyle = "rgba(27,18,5,0.42)";
+      ctx.lineWidth = S*0.035;
+      ctx.strokeRect(c - S*0.08, c - S*0.3, S*0.2, S*0.2);
+      ctx.strokeRect(c - S*0.08, c + S*0.14, S*0.2, S*0.2);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.beginPath(); ctx.arc(c - S*0.22, c, S*0.095, 0, Math.PI*2); ctx.fill();
+      break;
+    }
+
+    case "marble-gate": {
+      ctx.strokeStyle = "rgba(255,255,255,0.24)";
+      ctx.lineWidth = S*0.022;
+      for (let r = 0; r < 4; r++) {
+        for (let cc = 0; cc < 4; cc++) {
+          ctx.strokeRect(c - S*0.32 + cc*S*0.16, c - S*0.18 + r*S*0.16, S*0.16, S*0.16);
+        }
+      }
+      ctx.fillStyle = "#f7b84b";
+      [[0,0],[1,0],[3,0],[0,1],[2,1],[3,1],[0,2],[1,2],[3,2],[1,3],[2,3]].forEach(([cc,r]) => {
+        ctx.fillRect(c - S*0.32 + cc*S*0.16 + S*0.02, c - S*0.18 + r*S*0.16 + S*0.02, S*0.12, S*0.12);
+      });
+      ctx.strokeStyle = "rgba(77,216,240,0.78)";
+      ctx.lineWidth = S*0.04;
+      ctx.beginPath();
+      ctx.moveTo(c, c - S*0.38);
+      ctx.lineTo(c, c - S*0.06);
+      ctx.lineTo(c - S*0.16, c + S*0.1);
+      ctx.lineTo(c - S*0.16, c + S*0.36);
+      ctx.stroke();
+      ctx.fillStyle = "#9eefff";
+      ctx.beginPath();
+      ctx.arc(c, c - S*0.38, S*0.1, 0, Math.PI*2);
+      ctx.fill();
+      break;
+    }
+
     case "block-stacker": {
       const bs = S*0.2;
       [[0,1],[1,1],[-1,1],[0,0],[1,0]].forEach(([bx,by], i) => {
@@ -2151,7 +2207,7 @@ function drawIconShape(ctx, id, c, S) {
       break;
     }
 
-    case "puzzle-minesweeper": {
+    case "puzzle-trap-scout": {
       ctx.lineWidth = S*0.038;
       ctx.strokeStyle = "rgba(255,255,255,0.38)";
       for (let r=0; r<3; r++) for (let cc=0; cc<3; cc++)
@@ -2984,7 +3040,7 @@ function genreSection(standalone = false) {
 }
 
 function featuredGamesSection() {
-  const featured = getGames().filter((game) => ["memory-grid", "sample-clicker", "block-stacker", "puzzle-minesweeper", "puzzle-sudoku"].includes(game.id));
+  const featured = getGames().filter((game) => ["memory-grid", "sample-clicker", "block-stacker", "puzzle-trap-scout", "puzzle-sudoku"].includes(game.id));
   return `
     <section class="section" id="featured">
       <div class="section-header">
@@ -3091,18 +3147,19 @@ function gameGuide(game) {
 }
 
 function siteFooter() {
+  const fc = currentLocale === "ko" ? copy : translations.en;
   return `
     <footer class="site-footer">
       <div class="site-footer-brand">
         <span>${brandName}</span>
-        <p>${copy.footerText}</p>
+        <p>${fc.footerText}</p>
       </div>
-      <nav aria-label="${copy.mainMenu}">
-        <a href="#about">${copy.aboutTitle}</a>
-        <a href="#privacy">${copy.privacyTitle}</a>
-        <a href="#terms">${copy.termsTitle}</a>
+      <nav aria-label="${fc.mainMenu}">
+        <a href="#about">${fc.aboutTitle}</a>
+        <a href="#privacy">${fc.privacyTitle}</a>
+        <a href="#terms">${fc.termsTitle}</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">${copy.contactTitle}</a>
+        <a href="#contact">${fc.contactTitle}</a>
       </nav>
     </footer>
   `;
@@ -3138,7 +3195,7 @@ function getGenre(id) {
 }
 
 function getGames() {
-  const visiblePuzzleExamples = new Set(["block-stacker", "Minesweeper", "Sudoku"]);
+  const visiblePuzzleExamples = new Set(["block-stacker", "Trap Scout", "Sudoku"]);
   const catalog = [
     ...gameMeta,
     ...puzzleExamples
@@ -3197,7 +3254,7 @@ function gameHtml(title, body) {
     .game-memory-grid{--scene:radial-gradient(circle at 50% 22%,rgba(43,209,196,.18),transparent 34%),linear-gradient(45deg,rgba(255,255,255,.05) 25%,transparent 25% 50%,rgba(255,255,255,.05) 50% 75%,transparent 75%),linear-gradient(135deg,#11151f,#22202a);--scene-size:auto,72px 72px,auto}
     .game-lane-rush{--scene:linear-gradient(90deg,transparent 0 31%,rgba(255,255,255,.16) 31% 32%,transparent 32% 64%,rgba(255,255,255,.16) 64% 65%,transparent 65%),repeating-linear-gradient(0deg,rgba(247,184,75,.28) 0 34px,transparent 34px 78px),linear-gradient(180deg,#16181c,#24272d)}
     .game-block-stacker{--scene:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 26px),linear-gradient(135deg,#111820,#1b2230)}
-    .game-minesweeper{--scene:radial-gradient(circle at 18% 20%,rgba(240,93,94,.18),transparent 28%),repeating-linear-gradient(45deg,rgba(115,214,118,.1) 0 16px,rgba(43,209,196,.06) 16px 32px),linear-gradient(135deg,#132016,#182329)}
+    .game-trap-scout{--scene:radial-gradient(circle at 18% 20%,rgba(240,93,94,.18),transparent 28%),repeating-linear-gradient(45deg,rgba(115,214,118,.1) 0 16px,rgba(43,209,196,.06) 16px 32px),linear-gradient(135deg,#132016,#182329)}
     .game-sudoku{--scene:linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px),radial-gradient(circle at 78% 18%,rgba(169,139,255,.2),transparent 32%),linear-gradient(135deg,#141620,#201d27);--scene-size:64px 64px,64px 64px,auto,auto}
     .stage.center{padding:14px;align-items:start;overflow-y:auto}
     .center{display:grid;place-items:center;text-align:center}.pill{padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.08)}
@@ -3226,7 +3283,7 @@ function gameHtml(title, body) {
 
 function makePuzzleExampleGame(game) {
   if (game.id === "block-stacker") return makeBlockStackerMini(game);
-  if (game.title === "Minesweeper") return makeMinesweeperMini(game);
+  if (game.title === "Trap Scout") return makeMinesweeperMini(game);
   if (game.title === "Sudoku") return makeSudokuMini(game);
   return makeMatchMini(game);
 }
@@ -3239,11 +3296,25 @@ function puzzleShell(game, body, stat = "Moves <b id=\"moves\">0</b>") {
 }
 
 function makeMinesweeperMini(game) {
-  return puzzleShell(game, `<div id="board" style="display:grid;grid-template-columns:repeat(5,52px);gap:6px;justify-content:center"></div><script>
-    const mines=[3,8,16,22],safe=25-mines.length,board=document.querySelector("#board"),status=document.querySelector("#status"),success=${jsString(copy.success)},over=${jsString(copy.gameOver)};let open=0;
-    function count(i){return[-6,-5,-4,-1,1,4,5,6].filter(d=>{const n=i+d;return n>=0&&n<25&&Math.abs(n%5-i%5)<2&&mines.includes(n)}).length}
-    for(let i=0;i<25;i++){const b=document.createElement("button");b.textContent="";b.style.cssText="width:52px;height:52px;padding:0;background:rgba(255,255,255,.08);color:#f4f2ea";b.onclick=()=>{if(mines.includes(i)){b.textContent="X";b.style.background="#f05d5e";status.textContent=over;return}b.textContent=count(i);b.disabled=true;b.style.background="#2bd1c4";b.style.color="#0b0c0f";open++;if(open===safe)status.textContent=success};board.appendChild(b)}
-  <\/script>`, "Safe cells");
+  return puzzleShell(game, `<style>#diffs{display:flex;gap:6px;justify-content:center;margin-bottom:10px}#diffs button{min-width:56px;height:36px;padding:0 10px;font-size:.82rem}#info{display:flex;justify-content:space-between;margin-bottom:6px;font-size:.85rem;color:#b8bec9}#board{display:grid;gap:3px;justify-content:center;margin:0 auto}.cell{display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:800;cursor:pointer;background:rgba(255,255,255,.12);border:none;color:#f4f2ea;padding:0}.cell.open{background:rgba(255,255,255,.05);cursor:default}.cell.flag{background:rgba(247,184,75,.2);color:#f7b84b}.cell.hit{background:#f05d5e!important;color:#fff}.cell.trap{background:rgba(240,93,94,.18)!important;color:#f05d5e}.cell[data-n="1"]{color:#4f8cff}.cell[data-n="2"]{color:#73d676}.cell[data-n="3"]{color:#f05d5e}.cell[data-n="4"]{color:#a98bff}.cell[data-n="5"]{color:#ff8f3d}.cell[data-n="6"]{color:#2bd1c4}.cell[data-n="7"]{color:#f4f2ea}.cell[data-n="8"]{color:#b8bec9}</style><div id="diffs"></div><div id="info"><span id="fc"></span><span id="ck">0:00</span></div><div id="board"></div><script>
+    const board=document.querySelector("#board"),diffs=document.querySelector("#diffs"),fcEl=document.querySelector("#fc"),ckEl=document.querySelector("#ck");
+    const WIN=${jsString(copy.success)},LOSE=${jsString(copy.gameOver)};
+    const CFGS=[{l:"Easy",c:8,r:8,t:10},{l:"Med",c:10,r:10,t:20},{l:"Hard",c:12,r:10,t:30}];
+    let C,R,T,cells,rev,flg,done,fresh,sec,tid,px=30,hitIdx=-1,ci=0;
+    function setStatus(t){const el=document.querySelector("#status");if(el)el.textContent=t}
+    CFGS.forEach((cfg,i)=>{const b=document.createElement("button");b.textContent=cfg.l;b.addEventListener("click",()=>newGame(i));diffs.appendChild(b)});
+    function newGame(i){const cfg=CFGS[ci=i];C=cfg.c;R=cfg.r;T=cfg.t;cells=Array(C*R).fill(0);rev=Array(C*R).fill(false);flg=Array(C*R).fill(false);done=false;fresh=true;hitIdx=-1;sec=0;clearInterval(tid);ckEl.textContent="0:00";setStatus("");[...diffs.children].forEach((b,j)=>{b.style.background=j===i?"#2bd1c4":"#f7b84b";b.style.color=j===i?"#0b0c0f":"#1b1205"});fit()}
+    function placeMines(safe){const p=Array.from({length:C*R},(_,i)=>i).filter(i=>i!==safe);for(let i=0;i<T;i++){const j=i+Math.floor(Math.random()*(p.length-i));[p[i],p[j]]=[p[j],p[i]]}const ms=new Set(p.slice(0,T));cells=Array.from({length:C*R},(_,i)=>ms.has(i)?-1:0);for(let i=0;i<cells.length;i++){if(cells[i]===-1)continue;cells[i]=nb(i).filter(n=>cells[n]===-1).length}}
+    function nb(i){const r=Math.floor(i/C),c=i%C,o=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dr&&!dc)continue;const nr=r+dr,nc=c+dc;if(nr>=0&&nr<R&&nc>=0&&nc<C)o.push(nr*C+nc)}return o}
+    function reveal(i){if(done||rev[i]||flg[i])return;if(fresh){fresh=false;placeMines(i);tid=setInterval(()=>{sec++;const m=Math.floor(sec/60),s=sec%60;ckEl.textContent=m+":"+(s<10?"0"+s:s)},1000)}if(cells[i]===-1){hitIdx=i;done=true;clearInterval(tid);cells.forEach((_,j)=>{if(cells[j]===-1)rev[j]=true});rev[i]=true;draw();setStatus(LOSE);return}flood(i);draw();if(rev.filter((v,j)=>v&&cells[j]!==-1).length===cells.filter(v=>v!==-1).length){done=true;clearInterval(tid);setStatus(WIN)}}
+    function flood(i){if(rev[i]||flg[i]||cells[i]===-1)return;rev[i]=true;if(cells[i]===0)nb(i).forEach(flood)}
+    function tog(i){if(done||rev[i])return;flg[i]=!flg[i];fcount();draw()}
+    function fcount(){fcEl.textContent="⚑ "+(T-flg.filter(Boolean).length)}
+    function fit(){const stg=board.closest?board.closest(".stage"):board.parentElement;const w=Math.min(stg?stg.clientWidth:300,440);px=Math.max(22,Math.min(42,Math.floor((w-24-3*(C-1))/C)));board.style.gridTemplateColumns="repeat("+C+","+px+"px)";fcount();draw()}
+    function draw(){board.innerHTML="";const fs=Math.max(9,Math.floor(px*0.5));for(let i=0;i<C*R;i++){const el=document.createElement("button");el.type="button";el.style.cssText="width:"+px+"px;height:"+px+"px;font-size:"+fs+"px";el.className="cell";if(rev[i]){el.classList.add("open");if(cells[i]===-1){el.classList.add(i===hitIdx?"hit":"trap");el.textContent="✕"}else if(cells[i]>0){el.textContent=cells[i];el.dataset.n=cells[i]}}else if(flg[i]){el.classList.add("flag");el.textContent="⚑"}el.addEventListener("contextmenu",e=>{e.preventDefault();tog(i)});let pt,lp=false;el.addEventListener("pointerdown",()=>{lp=false;pt=setTimeout(()=>{lp=true;tog(i);draw()},500)});el.addEventListener("pointerup",()=>clearTimeout(pt));el.addEventListener("pointercancel",()=>clearTimeout(pt));el.addEventListener("click",()=>{if(!lp)reveal(i)});board.appendChild(el)}}
+    window.addEventListener("resize",()=>fit());
+    newGame(0);
+  <\/script>`, `Right-click / long-press = ⚑`);
 }
 
 function makeBlockStackerMiniLegacy(game) {
@@ -3258,7 +3329,7 @@ function makeBlockStackerMiniLegacy(game) {
 }
 
 function makeBlockStackerMini(game) {
-  return puzzleShell(game, `<style>body{overflow:hidden}.wrap{height:100vh;gap:8px}.stage{overflow:hidden;padding:6px!important}.stage.center{align-items:stretch}.stage.center>div{position:relative;width:100%;height:100%;display:grid;place-items:center}.stage.center p:first-child{display:none}.stage.center #status{position:absolute;top:0;left:0;right:0;margin:0;min-height:0!important;pointer-events:none}.touch-controls{display:none!important}#board{display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(24,1fr);gap:2px;aspect-ratio:10/24;align-self:center;justify-self:center}</style><div id="board"></div><script>
+  return puzzleShell(game, `<style>html,body{overflow:hidden;height:100dvh;min-height:0}.wrap{height:100dvh;gap:8px}.stage{overflow:hidden;padding:6px!important}.stage.center{align-items:stretch}.stage.center>div{position:relative;width:100%;height:100%;display:grid;place-items:center}.stage.center p:first-child{display:none}.stage.center #status{position:absolute;top:0;left:0;right:0;margin:0;min-height:0!important;pointer-events:none}.touch-controls{display:none!important}#board{display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(24,1fr);gap:2px;aspect-ratio:10/24;align-self:center;justify-self:center}</style><div id="board"></div><script>
     const board=document.querySelector("#board"),status=document.querySelector("#status"),scoreEl=document.querySelector("#blockScore"),over=${jsString(copy.gameOver)};
     const w=10,h=24,colors={I:"#2bd1c4",J:"#4f8cff",L:"#f7b84b",O:"#ffd95a",S:"#73d676",T:"#a98bff",Z:"#f05d5e",X:"#ffffff",C:"#ff8f3d"};
     const shapes={I:[[0,1],[1,1],[2,1],[3,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]],O:[[1,0],[2,0],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],T:[[1,0],[0,1],[1,1],[2,1]],Z:[[0,0],[1,0],[1,1],[2,1]],X:[[1,0],[0,1],[1,1],[2,1],[1,2]],C:[[0,0],[1,0],[0,1],[0,2],[1,2]]};
