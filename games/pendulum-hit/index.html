@@ -82,7 +82,7 @@
         state.stage = Math.max(0, Math.min(9, idx));
         state.t     = 0;
         state.phase = "ready";
-        state.angle = MAX_ANGLE;
+        state.angle = -MAX_ANGLE;
         state.inZone = false;
         state.tappedThisWindow = false;
         state.windows = 0;
@@ -127,7 +127,7 @@
 
       function tap() {
         if (state.phase === "result") { handleResult(); return; }
-        if (state.phase === "ready")  { state.phase = "race"; return; }
+        if (state.phase === "ready")  { state.phase = "race"; state.t = 0; return; }
         if (state.phase !== "race")   return;
 
         if (state.inZone && !state.tappedThisWindow) {
@@ -167,7 +167,7 @@
         // Pendulum animates in race and result phases
         if (state.phase === "ready") return;
 
-        state.angle = MAX_ANGLE * Math.cos(state.t * cfg().speed);
+        state.angle = -MAX_ANGLE * Math.cos(state.t * cfg().speed);
 
         if (state.phase !== "race") return;
 
