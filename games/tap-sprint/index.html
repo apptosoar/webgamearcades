@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tap Sprint — Webgame Arcades</title>
+    <meta name="description" content="Tap as fast as you can to sprint ahead of the pack. Race against up to 10 opponents across 10 stages." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/games/tap-sprint/" />
+    <meta property="og:title" content="Tap Sprint — Webgame Arcades" />
+    <meta property="og:description" content="Tap as fast as you can to sprint ahead of the pack. Race against up to 10 opponents across 10 stages." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://webgamearcades.com/games/tap-sprint/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <link rel="stylesheet" href="../action-style.css" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      .action { background: #2bd1c4; color: #031210; font-weight: 900; font-size: 1.05rem; letter-spacing: 0.04em; }
+      canvas { background: #0d0f12; touch-action: none; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Tap Sprint</strong>
+        <span>Stage <b id="stageNum">1</b>/10</span>
+        <span>Rank <b id="rankVal">—</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+      <button class="action" id="action" type="button">TAP!</button>
+    </main>
+    <script>
+    (() => {
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const stageEl = document.getElementById("stageNum");
+      const rankEl  = document.getElementById("rankVal");
+      const restartBtn = document.getElementById("restart");
+      const actionBtn  = document.getElementById("action");
+
+      const RACE_DIST = 2200;
+      const TAP_BOOST = 0.46;
+      const DECAY     = 0.021;
+      const MAX_SPEED = 4.5;
+
+      const CHARS = [
+        { name: "You",  color: "#2bd1c4" },
+        { name: "Rex",  color: "#f05d5e" },
+        { name: "Zap",  color: "#f7b84b" },
+        { name: "Nova", color: "#a98bff" },
+        { name: "Bolt", color: "#73d676" },
+        { name: "Ace",  color: "#ff7a45" },
+        { name: "Dash", color: "#4dd8f0" },
+        { name: "Neon", color: "#ff6bb3" },
+        { name: "Grit", color: "#c9935b" },
+        { name: "Vex",  color: "#6aa8ff" },
+        { name: "Kira", color: "#b8bec9" },
+      ];
+
+      const STAGE_CFG = [
+        { aiMin: 1.4, aiMax: 1.8 },
+        { aiMin: 1.6, aiMax: 2.0 },
+        { aiMin: 1.8, aiMax: 2.2 },
+        { aiMin: 2.0, aiMax: 2.4 },
+        { aiMin: 2.2, aiMax: 2.6 },
+        { aiMin: 2.4, aiMax: 2.8 },
+        { aiMin: 2.5, aiMax: 3.0 },
+        { aiMin: 2.6, aiMax: 3.2 },
+        { aiMin: 2.7, aiMax: 3.4 },
+        { aiMin: 2.8, aiMax: 3.6 },
+      ];
+
+      const state = {
+        w: 0, h: 0, t: 0,
+        stage: 0,
+        phase: "ready",
+        runners: [],
+        finishOrder: [],
+        tapFlash: 0,
+      };
+
+      function player() { return state.runners[0]; }
+
+      function initStage(idx) {
+        state.stage = Math.max(0, Math.min(9, idx));
+        state.t = 0;
+        state.phase = "ready";
+        state.finishOrder = [];
+        state.tapFlash = 0;
+        actionBtn.textContent = "TAP!";
+
+        const cfg = STAGE_CFG[state.stage];
+        state.runners = [];
+
+        state.runners.push({
+          pos: 0, speed: 0, finished: false, finalRank: 0,
+          isPlayer: true, char: CHARS[0], legAngle: 0,
+          baseSpeed: 0, seedOff: 0,
+        });
+
+        for (let i = 0; i < state.stage + 1; i++) {
+          const bs = cfg.aiMin + Math.random() * (cfg.aiMax - cfg.aiMin);
+          state.runners.push({
+            pos: 0, speed: bs, finished: false, finalRank: 0,
+            isPlayer: false, char: CHARS[i + 1],
+            legAngle: Math.random() * Math.PI * 2,
+            baseSpeed: bs, seedOff: Math.random() * 100,
+          });
+        }
+
+        updateHUD();
+      }
+
+      function tap() {
+        if (state.phase === "result") return;
+        if (state.phase === "ready") state.phase = "race";
+        const p = player();
+        p.speed = Math.min(MAX_SPEED, p.speed + TAP_BOOST);
+        state.tapFlash = 10;
+      }
+
+      function handleResult() {
+        const p = player();
+        if (p.finalRank === 1) {
+          initStage(state.stage >= 9 ? 0 : state.stage + 1);
+        } else {
+          initStage(state.stage);
+        }
+      }
+
+      function calcRank() {
+        const p = player();
+        let rank = 1;
+        state.runners.forEach(r => { if (!r.isPlayer && r.pos > p.pos) rank++; });
+        return rank;
+      }
+
+      function updateHUD() {
+        stageEl.textContent = state.stage + 1;
+        if (state.phase === "race") {
+          rankEl.textContent = "#" + calcRank();
+        } else if (state.phase === "result") {
+          rankEl.textContent = "#" + player().finalRank;
+        } else {
+          rankEl.textContent = "—";
+        }
+      }
+
+      function step() {
+        state.t++;
+        state.tapFlash = Math.max(0, state.tapFlash - 1);
+        if (state.phase !== "race") return;
+
+        state.runners.forEach(r => {
+          if (r.finished) return;
+          if (r.isPlayer) {
+            r.speed = Math.max(0, r.speed - DECAY);
+          } else {
+            r.speed = Math.max(0.3, r.baseSpeed + Math.sin(state.t * 0.025 + r.seedOff) * 0.15);
+          }
+          r.pos = Math.min(RACE_DIST, r.pos + r.speed);
+          r.legAngle += r.speed * 0.20;
+          if (r.pos >= RACE_DIST && !r.finished) {
+            r.finished = true;
+            r.finalRank = state.finishOrder.length + 1;
+            state.finishOrder.push(r);
+          }
+        });
+
+        const p = player();
+        if (p.finished || state.runners.slice(1).every(r => r.finished)) {
+          state.runners.forEach(r => {
+            if (!r.finished) {
+              r.finished = true;
+              r.finalRank = state.finishOrder.length + 1;
+              state.finishOrder.push(r);
+            }
+          });
+          state.phase = "result";
+          actionBtn.textContent = p.finalRank === 1
+            ? (state.stage >= 9 ? "Play Again" : "Next Stage")
+            : "Retry";
+        }
+
+        updateHUD();
+      }
+
+      function draw() {
+        const p = player();
+        const camX = p.pos - state.w * 0.30;
+        const n = state.runners.length;
+        const laneH = Math.min(68, Math.floor(state.h / n));
+        const totalH = laneH * n;
+        const lanesY = Math.floor((state.h - totalH) / 2);
+
+        ctx.clearRect(0, 0, state.w, state.h);
+        ctx.fillStyle = "#0d0f12";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        drawLanes(camX, n, laneH, lanesY);
+        drawFinishLine(camX, n, laneH, lanesY);
+        drawRunners(camX, n, laneH, lanesY);
+        drawProgressBar();
+
+        if (state.phase === "ready")  drawReady();
+        if (state.phase === "result") drawResult();
+
+        if (state.tapFlash > 0) {
+          ctx.fillStyle = `rgba(43,209,196,${state.tapFlash / 10 * 0.09})`;
+          ctx.fillRect(0, 0, state.w, state.h);
+        }
+      }
+
+      function drawLanes(camX, n, laneH, lanesY) {
+        for (let i = 0; i < n; i++) {
+          const y = lanesY + i * laneH;
+          ctx.fillStyle = i % 2 === 0 ? "#121419" : "#0f1115";
+          ctx.fillRect(0, y, state.w, laneH);
+
+          const groundY = y + laneH * 0.86;
+          const dashSpacing = 120;
+          const dashStart = Math.floor(camX / dashSpacing) * dashSpacing;
+          for (let mx = dashStart; mx < camX + state.w + dashSpacing; mx += dashSpacing) {
+            const sx = mx - camX;
+            if (sx < -20 || sx > state.w + 20) continue;
+            ctx.fillStyle = "rgba(255,255,255,0.09)";
+            ctx.fillRect(sx - 15, groundY, 30, 2);
+          }
+
+          ctx.strokeStyle = "rgba(255,255,255,0.13)";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, groundY);
+          ctx.lineTo(state.w, groundY);
+          ctx.stroke();
+
+          if (i < n - 1) {
+            ctx.strokeStyle = "rgba(255,255,255,0.04)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, y + laneH);
+            ctx.lineTo(state.w, y + laneH);
+            ctx.stroke();
+          }
+        }
+      }
+
+      function drawFinishLine(camX, n, laneH, lanesY) {
+        const fx = RACE_DIST - camX;
+        if (fx < -80 || fx > state.w + 80) return;
+
+        const y0 = lanesY;
+        const totalH = n * laneH;
+        const sq = Math.max(8, Math.min(14, laneH / 4));
+        const rows = Math.ceil(totalH / sq);
+
+        for (let row = 0; row < rows; row++) {
+          for (let col = -1; col <= 1; col++) {
+            ctx.fillStyle = (row + col + 1) % 2 === 0 ? "rgba(255,255,255,0.88)" : "rgba(0,0,0,0.78)";
+            ctx.fillRect(fx + col * sq, y0 + row * sq, sq, Math.min(sq, totalH - row * sq));
+          }
+        }
+
+        ctx.save();
+        ctx.strokeStyle = "#f7b84b";
+        ctx.lineWidth = 2;
+        ctx.shadowColor = "#f7b84b";
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.moveTo(fx, y0);
+        ctx.lineTo(fx, y0 + totalH);
+        ctx.stroke();
+        ctx.restore();
+
+        if (fx > 8 && fx < state.w - 8) {
+          ctx.fillStyle = "#f7b84b";
+          ctx.font = `700 ${Math.max(9, Math.min(12, laneH * 0.22))}px system-ui`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "bottom";
+          ctx.fillText("FINISH", fx, y0 - 3);
+        }
+      }
+
+      function drawRunners(camX, n, laneH, lanesY) {
+        state.runners.forEach((r, i) => {
+          const sx = r.pos - camX;
+          if (sx < -60 || sx > state.w + 60) return;
+          const groundY = lanesY + i * laneH + laneH * 0.86;
+          drawRunner(r, sx, groundY, laneH);
+        });
+      }
+
+      function drawRunner(r, sx, groundY, laneH) {
+        const s  = Math.min(1, laneH / 56);
+        const sz = 28 * s;
+
+        ctx.save();
+        ctx.translate(sx, groundY);
+
+        ctx.fillStyle = "rgba(0,0,0,0.22)";
+        ctx.beginPath();
+        ctx.ellipse(0, 2 * s, sz * 0.44, 3.2 * s, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        const leg  = r.legAngle;
+        const lean = Math.min(0.40, r.speed * 0.09);
+
+        ctx.save();
+        ctx.rotate(-lean);
+
+        ctx.strokeStyle = r.char.color;
+        ctx.lineWidth   = Math.max(1.5, 2.2 * s);
+        ctx.lineCap     = "round";
+
+        // Legs
+        ctx.beginPath();
+        ctx.moveTo(0, -sz * 0.30);
+        ctx.lineTo( Math.sin(leg) * sz * 0.38, 0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -sz * 0.30);
+        ctx.lineTo(-Math.sin(leg) * sz * 0.38, 0);
+        ctx.stroke();
+
+        // Body
+        ctx.beginPath();
+        ctx.moveTo(0, -sz * 0.30);
+        ctx.lineTo(0, -sz * 0.72);
+        ctx.stroke();
+
+        // Arms
+        ctx.beginPath();
+        ctx.moveTo(0, -sz * 0.55);
+        ctx.lineTo(-Math.sin(leg) * sz * 0.26, -sz * 0.36);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, -sz * 0.55);
+        ctx.lineTo( Math.sin(leg) * sz * 0.26, -sz * 0.36);
+        ctx.stroke();
+
+        // Head
+        ctx.fillStyle = r.char.color;
+        if (r.isPlayer) { ctx.shadowColor = r.char.color; ctx.shadowBlur = 10; }
+        ctx.beginPath();
+        ctx.arc(0, -sz * 0.87, sz * 0.15, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.restore();
+
+        if (laneH >= 40) {
+          ctx.fillStyle  = r.char.color;
+          ctx.globalAlpha = 0.80;
+          ctx.font        = `${Math.max(7, Math.round(8 * s))}px system-ui`;
+          ctx.textAlign   = "center";
+          ctx.textBaseline = "bottom";
+          ctx.fillText(r.char.name, 0, -sz * 1.04 - 2);
+          ctx.globalAlpha = 1;
+        }
+
+        ctx.restore();
+      }
+
+      function drawProgressBar() {
+        const bx = 6, by = 4, bw = state.w - 12, bh = 10;
+
+        ctx.fillStyle = "rgba(255,255,255,0.07)";
+        ctx.beginPath();
+        rrect(bx, by, bw, bh, 4);
+        ctx.fill();
+
+        ctx.fillStyle = "#f7b84b";
+        ctx.fillRect(bx + bw - 3, by, 3, bh);
+
+        state.runners.forEach(r => {
+          const px = bx + (r.pos / RACE_DIST) * bw;
+          const pr = r.isPlayer ? 5.5 : 3.5;
+          if (r.isPlayer) { ctx.save(); ctx.shadowColor = r.char.color; ctx.shadowBlur = 7; }
+          ctx.fillStyle = r.char.color;
+          ctx.beginPath();
+          ctx.arc(px, by + bh / 2, pr, 0, Math.PI * 2);
+          ctx.fill();
+          if (r.isPlayer) ctx.restore();
+        });
+      }
+
+      function rrect(x, y, w, h, r) {
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+        ctx.closePath();
+      }
+
+      function drawReady() {
+        ctx.fillStyle = "rgba(0,0,0,0.58)";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        const cx = state.w / 2, cy = state.h / 2;
+        const fs = Math.min(30, state.w * 0.065);
+
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.font      = `800 ${fs}px system-ui`;
+        ctx.fillStyle = "#f4f2ea";
+        ctx.fillText(`Stage ${state.stage + 1}`, cx, cy - 34);
+
+        const n = state.runners.length - 1;
+        ctx.font      = `500 ${Math.min(15, fs * 0.54)}px system-ui`;
+        ctx.fillStyle = "#b8bec9";
+        ctx.fillText(`Race against ${n} opponent${n !== 1 ? "s" : ""}`, cx, cy - 4);
+
+        const pulse = 0.62 + 0.38 * Math.sin(state.t * 0.09);
+        ctx.globalAlpha = pulse;
+        ctx.font      = `700 ${Math.min(17, fs * 0.6)}px system-ui`;
+        ctx.fillStyle = "#2bd1c4";
+        ctx.fillText("TAP to start!", cx, cy + 32);
+        ctx.globalAlpha = 1;
+      }
+
+      function drawResult() {
+        const p   = player();
+        const won = p.finalRank === 1;
+
+        ctx.fillStyle = "rgba(0,0,0,0.64)";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        const cx = state.w / 2, cy = state.h / 2;
+        const fs = Math.min(30, state.w * 0.065);
+
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.save();
+        ctx.font = `800 ${fs}px system-ui`;
+        if (won) {
+          ctx.fillStyle    = "#f7b84b";
+          ctx.shadowColor  = "#f7b84b";
+          ctx.shadowBlur   = 18;
+          ctx.fillText(state.stage >= 9 ? "All Stages Clear!" : "Stage Clear!", cx, cy - 46);
+        } else {
+          ctx.fillStyle   = "#f05d5e";
+          ctx.shadowColor = "#f05d5e";
+          ctx.shadowBlur  = 14;
+          ctx.fillText("Race Lost", cx, cy - 46);
+        }
+        ctx.restore();
+
+        if (!won) {
+          ctx.font      = `500 ${Math.min(13, fs * 0.47)}px system-ui`;
+          ctx.fillStyle = "#b8bec9";
+          ctx.fillText(`Finished #${p.finalRank} — tap faster!`, cx, cy - 20);
+        }
+
+        const showN  = Math.min(state.finishOrder.length, 5);
+        const lineH  = Math.min(20, (state.h * 0.32) / Math.max(1, showN));
+        const listY  = won ? cy - 10 : cy + 4;
+
+        for (let i = 0; i < showN; i++) {
+          const r = state.finishOrder[i];
+          const medal = ["1st", "2nd", "3rd", "4th", "5th"][i] || `${i + 1}th`;
+          ctx.font      = `${Math.max(9, Math.round(lineH * 0.72))}px system-ui`;
+          ctx.fillStyle = r.char.color;
+          ctx.fillText(`${medal}  ${r.char.name}`, cx, listY + i * lineH);
+        }
+
+        const pulse = 0.52 + 0.48 * Math.sin(state.t * 0.09);
+        ctx.globalAlpha = pulse;
+        ctx.font      = `500 ${Math.min(12, fs * 0.42)}px system-ui`;
+        ctx.fillStyle = "#b8bec9";
+        const hint = won ? (state.stage >= 9 ? "TAP to play again" : "TAP to continue") : "TAP to retry";
+        ctx.fillText(hint, cx, listY + showN * lineH + 14);
+        ctx.globalAlpha = 1;
+      }
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        state.w   = Math.max(320, box.width);
+        state.h   = Math.max(200, box.height);
+        canvas.width  = Math.floor(state.w * dpr);
+        canvas.height = Math.floor(state.h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      canvas.addEventListener("pointerdown", e => {
+        e.preventDefault();
+        if (state.phase === "result") handleResult();
+        else tap();
+      });
+
+      actionBtn.addEventListener("click", () => {
+        if (state.phase === "result") handleResult();
+        else tap();
+      });
+
+      restartBtn.addEventListener("click", () => initStage(0));
+
+      document.addEventListener("keydown", e => {
+        if (e.code === "Space" || e.code === "Enter") {
+          e.preventDefault();
+          if (state.phase === "result") handleResult();
+          else tap();
+        }
+      });
+
+      function loop() {
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      addEventListener("resize", resize);
+      resize();
+      initStage(0);
+      loop();
+    })();
+    </script>
+    <section class="game-info">
+      <a href="../../" class="back-link">← Webgame Arcades</a>
+      <h1>Tap Sprint</h1>
+      <p>Race against opponents in a pure tap-speed challenge. The faster you tap, the faster your runner moves — but speed fades between taps, so keep the rhythm going to stay ahead.</p>
+      <p>Start with 1 opponent and work up to 10 across 10 stages. Each stage brings faster rivals. Finish 1st to advance.</p>
+      <h2>How to Play</h2>
+      <ul>
+        <li><strong>Speed up:</strong> Tap, click, or press Space / Enter as fast as you can</li>
+        <li>Your speed decays between taps — keep tapping to maintain pace</li>
+        <li>Finish 1st to clear the stage and face more opponents next round</li>
+        <li>Mobile: tap anywhere on the screen or use the TAP! button</li>
+      </ul>
+      <a href="../../" class="more-games-link">Browse All Games</a>
+    </section>
+  </body>
+</html>
