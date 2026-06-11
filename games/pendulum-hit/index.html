@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendulum Hit — Webgame Arcades</title>
+    <meta name="description" content="Watch the pendulum swing and tap at the perfect moment to hit the target. 10 stages of precision timing." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/games/pendulum-hit/" />
+    <meta property="og:title" content="Pendulum Hit — Webgame Arcades" />
+    <meta property="og:description" content="Watch the pendulum swing and tap at the perfect moment to hit the target. 10 stages of precision timing." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://webgamearcades.com/games/pendulum-hit/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <link rel="stylesheet" href="../action-style.css" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      .action { background: #f7b84b; color: #1b1205; font-weight: 900; font-size: 1.05rem; }
+      canvas  { background: #0d0f12; touch-action: none; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Pendulum Hit</strong>
+        <span>Stage <b id="stageNum">1</b>/10</span>
+        <span>Hits <b id="hitsVal">0</b>/<b id="hitsReq">4</b></span>
+        <span>Score <b id="scoreVal">0</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+      <button class="action" id="action" type="button">HIT!</button>
+    </main>
+    <script>
+    (() => {
+      const canvas    = document.getElementById("game");
+      const ctx       = canvas.getContext("2d");
+      const stageEl   = document.getElementById("stageNum");
+      const hitsEl    = document.getElementById("hitsVal");
+      const hitsReqEl = document.getElementById("hitsReq");
+      const scoreEl   = document.getElementById("scoreVal");
+      const restartBtn = document.getElementById("restart");
+      const actionBtn  = document.getElementById("action");
+
+      const MAX_ANGLE    = 1.10;  // ~63° max swing
+      const PERFECT_FRAC = 0.28;  // inner 28% of target zone = perfect
+
+      // speed: angular velocity (rad/frame), targetHalf: zone half-width (rad),
+      // required: min hits to pass, windows: total swing-throughs per stage
+      const STAGES = [
+        { speed: 0.028, targetHalf: 0.44, required: 4, windows: 8 },
+        { speed: 0.031, targetHalf: 0.37, required: 4, windows: 8 },
+        { speed: 0.034, targetHalf: 0.31, required: 5, windows: 8 },
+        { speed: 0.037, targetHalf: 0.26, required: 5, windows: 8 },
+        { speed: 0.040, targetHalf: 0.21, required: 5, windows: 8 },
+        { speed: 0.043, targetHalf: 0.18, required: 6, windows: 8 },
+        { speed: 0.046, targetHalf: 0.15, required: 6, windows: 8 },
+        { speed: 0.049, targetHalf: 0.13, required: 6, windows: 8 },
+        { speed: 0.052, targetHalf: 0.11, required: 7, windows: 8 },
+        { speed: 0.055, targetHalf: 0.09, required: 7, windows: 8 },
+      ];
+
+      const state = {
+        w: 0, h: 0,
+        t: 0,
+        stage: 0,
+        phase: "ready",  // ready | race | result
+        angle: MAX_ANGLE,
+        inZone: false,
+        tappedThisWindow: false,
+        windows: 0,
+        hits: 0,
+        score: 0,
+        streak: 0,
+        feedback: [],     // [{text, color, x, y, vy, alpha}]
+        dotStates: [],    // null | "perfect" | "good" | "miss"
+      };
+
+      function cfg() { return STAGES[state.stage]; }
+
+      function initStage(idx) {
+        state.stage = Math.max(0, Math.min(9, idx));
+        state.t     = 0;
+        state.phase = "ready";
+        state.angle = MAX_ANGLE;
+        state.inZone = false;
+        state.tappedThisWindow = false;
+        state.windows = 0;
+        state.hits    = 0;
+        state.score   = 0;
+        state.streak  = 0;
+        state.feedback  = [];
+        state.dotStates = new Array(cfg().windows).fill(null);
+        actionBtn.textContent = "HIT!";
+        updateHUD();
+      }
+
+      function updateHUD() {
+        stageEl.textContent   = state.stage + 1;
+        hitsEl.textContent    = state.hits;
+        hitsReqEl.textContent = cfg().required;
+        scoreEl.textContent   = state.score;
+      }
+
+      function addFeedback(text, color) {
+        state.feedback.push({
+          text, color,
+          x: state.w / 2 + (Math.random() - 0.5) * 50,
+          y: state.h * 0.52,
+          vy: -1.4,
+          alpha: 1.0,
+        });
+      }
+
+      function endStage() {
+        state.phase = "result";
+        const won = state.hits >= cfg().required;
+        actionBtn.textContent = won
+          ? (state.stage >= 9 ? "Play Again" : "Next Stage")
+          : "Retry";
+      }
+
+      function handleResult() {
+        const won = state.hits >= cfg().required;
+        initStage(won ? (state.stage >= 9 ? 0 : state.stage + 1) : state.stage);
+      }
+
+      function tap() {
+        if (state.phase === "result") { handleResult(); return; }
+        if (state.phase === "ready")  { state.phase = "race"; return; }
+        if (state.phase !== "race")   return;
+
+        if (state.inZone && !state.tappedThisWindow) {
+          state.tappedThisWindow = true;
+          const proximity = Math.abs(state.angle) / cfg().targetHalf;
+          const bonus = Math.min(state.streak, 4);
+
+          if (proximity < PERFECT_FRAC) {
+            state.dotStates[state.windows] = "perfect";
+            state.hits++;
+            state.streak++;
+            state.score += 100 + bonus * 25;
+            addFeedback("PERFECT!", "#f7b84b");
+          } else {
+            state.dotStates[state.windows] = "good";
+            state.hits++;
+            state.streak++;
+            state.score += 50 + bonus * 10;
+            addFeedback("GOOD", "#73d676");
+          }
+          updateHUD();
+        } else if (!state.inZone) {
+          state.streak = 0;
+          const side = state.angle < 0 ? "TOO EARLY" : "TOO LATE";
+          addFeedback(side, "#b8bec9");
+        }
+      }
+
+      // ---- GAME LOOP ----
+
+      function step() {
+        state.t++;
+
+        state.feedback.forEach(f => { f.y += f.vy; f.alpha -= 0.016; });
+        state.feedback = state.feedback.filter(f => f.alpha > 0);
+
+        // Pendulum animates in race and result phases
+        if (state.phase === "ready") return;
+
+        state.angle = MAX_ANGLE * Math.cos(state.t * cfg().speed);
+
+        if (state.phase !== "race") return;
+
+        const wasInZone = state.inZone;
+        state.inZone = Math.abs(state.angle) < cfg().targetHalf;
+
+        if (!wasInZone && state.inZone) {
+          state.tappedThisWindow = false;
+        }
+
+        if (wasInZone && !state.inZone) {
+          if (!state.tappedThisWindow) {
+            state.dotStates[state.windows] = "miss";
+            state.streak = 0;
+            addFeedback("MISS", "#f05d5e");
+          }
+          state.windows++;
+          updateHUD();
+          if (state.windows >= cfg().windows) endStage();
+        }
+      }
+
+      // ---- DRAWING ----
+
+      function draw() {
+        ctx.clearRect(0, 0, state.w, state.h);
+        ctx.fillStyle = "#0d0f12";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        const px  = state.w / 2;
+        const py  = state.h * 0.14;
+        const len = Math.min(state.w * 0.42, state.h * 0.58);
+
+        drawBackground(px, py, len);
+        drawTargetZones(px, py, len);
+        drawSwingArc(px, py, len);
+        drawPendulum(px, py, len);
+        drawAttemptDots();
+        drawFeedback();
+
+        if (state.phase === "ready")  drawReady();
+        if (state.phase === "result") drawResult();
+      }
+
+      function drawBackground(px, py, len) {
+        // Subtle radial glow at pivot
+        const grad = ctx.createRadialGradient(px, py + len, 0, px, py + len, len * 0.5);
+        grad.addColorStop(0, "rgba(43,209,196,0.04)");
+        grad.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, state.w, state.h);
+      }
+
+      function drawTargetZones(px, py, len) {
+        const tHalf = cfg().targetHalf;
+        const pHalf = tHalf * PERFECT_FRAC;
+        const inZone = state.phase === "race" && state.inZone;
+        const inPerfect = inZone && Math.abs(state.angle) < pHalf;
+
+        // Good zone sector
+        ctx.fillStyle = inZone
+          ? "rgba(115,214,118,0.20)"
+          : "rgba(115,214,118,0.09)";
+        sector(px, py, len, tHalf);
+
+        // Perfect zone sector
+        ctx.fillStyle = inPerfect
+          ? "rgba(247,184,75,0.45)"
+          : "rgba(247,184,75,0.18)";
+        sector(px, py, len, pHalf);
+
+        // Zone boundary arcs
+        ctx.strokeStyle = inZone ? "rgba(115,214,118,0.50)" : "rgba(115,214,118,0.22)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(px, py, len, Math.PI / 2 + tHalf, Math.PI / 2 - tHalf, true);
+        ctx.stroke();
+
+        // Center guide line
+        ctx.save();
+        ctx.strokeStyle = inPerfect ? "rgba(247,184,75,0.7)" : "rgba(247,184,75,0.28)";
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px, py + len + 8);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+
+      function sector(px, py, r, halfAngle) {
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.arc(px, py, r, Math.PI / 2 + halfAngle, Math.PI / 2 - halfAngle, true);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawSwingArc(px, py, len) {
+        ctx.strokeStyle = "rgba(255,255,255,0.07)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(px, py, len, Math.PI / 2 + MAX_ANGLE, Math.PI / 2 - MAX_ANGLE, true);
+        ctx.stroke();
+      }
+
+      function drawPendulum(px, py, len) {
+        const a    = state.angle;
+        const bobX = px  + Math.sin(a) * len;
+        const bobY = py  + Math.cos(a) * len;
+        const inZone  = state.phase === "race" && state.inZone;
+        const perfect = inZone && Math.abs(a) < cfg().targetHalf * PERFECT_FRAC;
+        const bobColor = perfect ? "#f7b84b" : inZone ? "#2bd1c4" : "#c8cdd6";
+
+        // Rod shadow
+        ctx.strokeStyle = "rgba(0,0,0,0.4)";
+        ctx.lineWidth = 5;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(px + 2, py + 2);
+        ctx.lineTo(bobX + 2, bobY + 2);
+        ctx.stroke();
+
+        // Rod
+        ctx.save();
+        if (inZone) { ctx.shadowColor = bobColor; ctx.shadowBlur = 14; }
+        ctx.strokeStyle = inZone ? bobColor : "rgba(200,205,214,0.55)";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(bobX, bobY);
+        ctx.stroke();
+        ctx.restore();
+
+        // Pivot mount
+        ctx.fillStyle = "#4a4f5c";
+        ctx.beginPath();
+        ctx.arc(px, py, 9, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#b8bec9";
+        ctx.beginPath();
+        ctx.arc(px, py, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bob
+        const bobR = Math.max(10, Math.min(18, state.h * 0.038));
+        ctx.save();
+        if (inZone) { ctx.shadowColor = bobColor; ctx.shadowBlur = 24; }
+        ctx.fillStyle = bobColor;
+        ctx.beginPath();
+        ctx.arc(bobX, bobY, bobR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Bob shine
+        ctx.fillStyle = "rgba(255,255,255,0.30)";
+        ctx.beginPath();
+        ctx.arc(bobX - bobR * 0.3, bobY - bobR * 0.3, bobR * 0.36, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bob ring
+        ctx.strokeStyle = inZone ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.18)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(bobX, bobY, bobR, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      function drawAttemptDots() {
+        const total   = cfg().windows;
+        const dotR    = Math.max(5, Math.min(8, state.w * 0.015));
+        const spacing = dotR * 2.8;
+        const totalW  = (total - 1) * spacing;
+        const startX  = (state.w - totalW) / 2;
+        const y       = state.h * 0.90;
+
+        for (let i = 0; i < total; i++) {
+          const x  = startX + i * spacing;
+          const ds = state.dotStates[i];
+          const color = ds === "perfect" ? "#f7b84b"
+            : ds === "good"    ? "#73d676"
+            : ds === "miss"    ? "#f05d5e"
+            : null;
+
+          if (color) {
+            ctx.save();
+            ctx.shadowColor = color;
+            ctx.shadowBlur  = 7;
+            ctx.fillStyle   = color;
+            ctx.beginPath();
+            ctx.arc(x, y, dotR, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          } else {
+            ctx.fillStyle   = "rgba(255,255,255,0.10)";
+            ctx.strokeStyle = "rgba(255,255,255,0.28)";
+            ctx.lineWidth   = 1.5;
+            ctx.beginPath();
+            ctx.arc(x, y, dotR, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+      }
+
+      function drawFeedback() {
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+        state.feedback.forEach(f => {
+          ctx.save();
+          ctx.globalAlpha = f.alpha;
+          ctx.font        = `700 ${Math.min(20, state.w * 0.045)}px system-ui`;
+          ctx.fillStyle   = f.color;
+          if (f.color === "#f7b84b") { ctx.shadowColor = f.color; ctx.shadowBlur = 12; }
+          ctx.fillText(f.text, f.x, f.y);
+          ctx.restore();
+        });
+      }
+
+      function drawReady() {
+        ctx.fillStyle = "rgba(0,0,0,0.60)";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        const cx = state.w / 2, cy = state.h * 0.48;
+        const fs = Math.min(30, state.w * 0.066);
+
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+
+        ctx.font      = `800 ${fs}px system-ui`;
+        ctx.fillStyle = "#f4f2ea";
+        ctx.fillText(`Stage ${state.stage + 1}`, cx, cy - 30);
+
+        ctx.font      = `500 ${Math.min(15, fs * 0.53)}px system-ui`;
+        ctx.fillStyle = "#b8bec9";
+        ctx.fillText(`Hit the target ${cfg().required} times out of ${cfg().windows}`, cx, cy + 2);
+
+        const pulse = 0.60 + 0.40 * Math.sin(state.t * 0.09);
+        ctx.save();
+        ctx.globalAlpha = pulse;
+        ctx.font        = `700 ${Math.min(17, fs * 0.60)}px system-ui`;
+        ctx.fillStyle   = "#f7b84b";
+        ctx.fillText("TAP to start!", cx, cy + 36);
+        ctx.restore();
+      }
+
+      function drawResult() {
+        const won = state.hits >= cfg().required;
+
+        ctx.fillStyle = "rgba(0,0,0,0.65)";
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        const cx = state.w / 2, cy = state.h * 0.44;
+        const fs = Math.min(30, state.w * 0.066);
+
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+
+        ctx.save();
+        ctx.font = `800 ${fs}px system-ui`;
+        if (won) {
+          ctx.fillStyle   = "#f7b84b";
+          ctx.shadowColor = "#f7b84b";
+          ctx.shadowBlur  = 20;
+          ctx.fillText(state.stage >= 9 ? "All Stages Clear!" : "Stage Clear!", cx, cy - 36);
+        } else {
+          ctx.fillStyle   = "#f05d5e";
+          ctx.shadowColor = "#f05d5e";
+          ctx.shadowBlur  = 16;
+          ctx.fillText("Stage Failed", cx, cy - 36);
+        }
+        ctx.restore();
+
+        ctx.font      = `500 ${Math.min(15, fs * 0.52)}px system-ui`;
+        ctx.fillStyle = "#b8bec9";
+        ctx.fillText(`${state.hits}/${cfg().windows} hits   Score: ${state.score}`, cx, cy - 4);
+
+        // Accuracy stars
+        const pct     = state.hits / cfg().windows;
+        const stars   = pct >= 0.88 ? 3 : pct >= 0.63 ? 2 : pct >= 0.38 ? 1 : 0;
+        const starStr = "★".repeat(stars) + "☆".repeat(3 - stars);
+        ctx.font      = `${Math.min(22, fs * 0.76)}px system-ui`;
+        ctx.fillStyle = "#f7b84b";
+        ctx.fillText(starStr, cx, cy + 22);
+
+        const pulse = 0.55 + 0.45 * Math.sin(state.t * 0.09);
+        ctx.save();
+        ctx.globalAlpha = pulse;
+        ctx.font        = `500 ${Math.min(13, fs * 0.44)}px system-ui`;
+        ctx.fillStyle   = "#b8bec9";
+        const hint = won
+          ? (state.stage >= 9 ? "TAP to play again" : "TAP to continue")
+          : "TAP to retry";
+        ctx.fillText(hint, cx, cy + 50);
+        ctx.restore();
+      }
+
+      // ---- RESIZE ----
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        state.w   = Math.max(320, box.width);
+        state.h   = Math.max(200, box.height);
+        canvas.width  = Math.floor(state.w * dpr);
+        canvas.height = Math.floor(state.h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      // ---- INPUT ----
+
+      canvas.addEventListener("pointerdown", e => {
+        e.preventDefault();
+        tap();
+      });
+
+      actionBtn.addEventListener("click", () => tap());
+      restartBtn.addEventListener("click", () => initStage(0));
+
+      document.addEventListener("keydown", e => {
+        if (e.code === "Space" || e.code === "Enter") {
+          e.preventDefault();
+          tap();
+        }
+      });
+
+      function loop() {
+        step();
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      addEventListener("resize", resize);
+      resize();
+      initStage(0);
+      loop();
+    })();
+    </script>
+    <section class="game-info">
+      <a href="../../" class="back-link">← Webgame Arcades</a>
+      <h1>Pendulum Hit</h1>
+      <p>Watch the pendulum swing back and forth and tap at the exact moment the bob passes through the target zone. The gold inner zone scores a PERFECT — the green outer zone scores GOOD. Miss the zone and it counts as a miss.</p>
+      <p>Clear 10 stages by landing enough hits per stage. The pendulum speeds up and the target zone shrinks with each stage, demanding sharper timing to advance.</p>
+      <h2>How to Play</h2>
+      <ul>
+        <li><strong>Hit:</strong> Tap, click, or press Space / Enter when the bob is inside the target zone</li>
+        <li>Gold center zone = PERFECT (+100), green outer zone = GOOD (+50)</li>
+        <li>Consecutive hits give a streak bonus</li>
+        <li>Each stage has 8 swings — hit the required number to advance</li>
+        <li>Mobile: tap anywhere on screen or use the HIT! button</li>
+      </ul>
+      <a href="../../" class="more-games-link">Browse All Games</a>
+    </section>
+  </body>
+</html>
