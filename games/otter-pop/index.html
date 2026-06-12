@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Otter Pop — Webgame Arcades</title>
+    <meta name="description" content="Tap otters as they pop up from their river burrows! A fun reflex arcade game with 10 stages. Play free in your browser — no download needed." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/games/otter-pop/" />
+    <meta property="og:title" content="Otter Pop — Webgame Arcades" />
+    <meta property="og:description" content="Tap otters as they pop up from their river burrows! A fun reflex arcade game with 10 stages." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://webgamearcades.com/games/otter-pop/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <link rel="stylesheet" href="../action-style.css" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      canvas { cursor: pointer; background: #0a1624; }
+      .hud { flex-wrap: wrap; gap: 6px 14px; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Otter Pop</strong>
+        <span>Stage <b id="stage">1</b>/10</span>
+        <span>Hit <b id="hit">0</b>/<b id="goal">6</b></span>
+        <span>HP <b id="health">5</b></span>
+        <span>Time <b id="time">40</b>s</span>
+        <span>Score <b id="score">0</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+    </main>
+    <script>
+    (() => {
+      const STAGE_CONFIGS = [
+        { spawn: 90, up: 175, max: 1, goal:  6, time: 40, pts: 10 },
+        { spawn: 80, up: 158, max: 1, goal:  8, time: 40, pts: 10 },
+        { spawn: 72, up: 142, max: 2, goal: 10, time: 38, pts: 12 },
+        { spawn: 64, up: 126, max: 2, goal: 12, time: 38, pts: 12 },
+        { spawn: 56, up: 112, max: 2, goal: 14, time: 36, pts: 14 },
+        { spawn: 50, up:  98, max: 3, goal: 16, time: 36, pts: 14 },
+        { spawn: 44, up:  85, max: 3, goal: 18, time: 34, pts: 16 },
+        { spawn: 38, up:  73, max: 4, goal: 20, time: 34, pts: 18 },
+        { spawn: 33, up:  62, max: 4, goal: 22, time: 32, pts: 20 },
+        { spawn: 28, up:  52, max: 5, goal: 25, time: 32, pts: 25 },
+      ];
+      const RISE_FRAMES = 12;
+      const HIDE_FRAMES = 10;
+      const COLS = 3;
+      const ROWS = 3;
+
+      const canvas = document.getElementById("game");
+      const ctx    = canvas.getContext("2d");
+      const scoreEl  = document.getElementById("score");
+      const healthEl = document.getElementById("health");
+      const stageEl  = document.getElementById("stage");
+      const hitEl    = document.getElementById("hit");
+      const goalEl   = document.getElementById("goal");
+      const timeEl   = document.getElementById("time");
+      const restartBtn = document.getElementById("restart");
+      restartBtn.addEventListener("click", () => location.reload());
+
+      const state = {
+        w: 0, h: 0, t: 0, groundY: 0,
+        score: 0, health: 5,
+        stageIdx: 0, stageScore: 0, stageTimer: 0,
+        over: false, win: false,
+        stageClear: false, stageClearTimer: 0, clearedNum: 0,
+        holes: [], effects: [],
+        nextSpawn: 40,
+      };
+
+      const cfg = () => STAGE_CONFIGS[state.stageIdx];
+
+      // ── Resize / Layout ───────────────────────────────────────
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        state.w = Math.max(300, box.width);
+        state.h = Math.max(380, box.height);
+        canvas.width  = Math.floor(state.w * dpr);
+        canvas.height = Math.floor(state.h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        state.groundY = Math.round(state.h * 0.26);
+        buildHoles();
+      }
+
+      function buildHoles() {
+        state.holes = [];
+        const gY = state.groundY;
+        const padX  = Math.max(38, state.w * 0.10);
+        const padT  = 18;
+        const padB  = 56;
+        const areaW = state.w - padX * 2;
+        const areaH = state.h - gY - padT - padB;
+        const rx = Math.min(areaW / COLS * 0.36, areaH / ROWS * 0.56, 54);
+        const ry = rx * 0.38;
+        state.stageTimer = cfg().time * 60;
+
+        for (let row = 0; row < ROWS; row++) {
+          for (let col = 0; col < COLS; col++) {
+            state.holes.push({
+              x: padX + areaW / COLS * (col + 0.5),
+              y: gY + padT + areaH / ROWS * (row + 0.5),
+              rx, ry,
+              otter: null,
+            });
+          }
+        }
+      }
+
+      // ── Game Loop ─────────────────────────────────────────────
+
+      function loop() { step(); draw(); requestAnimationFrame(loop); }
+
+      function step() {
+        if (state.over || state.win) return;
+        state.t++;
+
+        // Stage-clear cooldown
+        if (state.stageClear) {
+          state.stageClearTimer--;
+          if (state.stageClearTimer <= 0) {
+            state.stageClear = false;
+            state.stageIdx++;
+            state.stageScore = 0;
+            state.stageTimer = cfg().time * 60;
+            state.nextSpawn  = 40;
+            state.holes.forEach(h => { h.otter = null; });
+          }
+          updateHUD();
+          return;
+        }
+
+        // Stage timer
+        state.stageTimer--;
+        if (state.stageTimer <= 0) {
+          state.over = true;
+          return;
+        }
+
+        // Spawn
+        const c = cfg();
+        const active = state.holes.filter(h => h.otter && !h.otter.bopped).length;
+        state.nextSpawn--;
+        if (state.nextSpawn <= 0 && active < c.max) {
+          spawnOtter();
+          state.nextSpawn = c.spawn + Math.floor(Math.random() * 18 - 9);
+        }
+
+        // Update otters
+        state.holes.forEach(hole => {
+          if (!hole.otter) return;
+          const o = hole.otter;
+          if (o.phase === "rising") {
+            o.riseAmt = Math.min(1, o.riseAmt + 1 / RISE_FRAMES);
+            if (o.riseAmt >= 1) { o.phase = "up"; o.upTimer = cfg().up; }
+          } else if (o.phase === "up") {
+            o.upTimer--;
+            if (o.upTimer <= 0 && !o.bopped) {
+              o.phase = "hiding";
+              state.health--;
+              if (state.health <= 0) state.over = true;
+              addFx(hole.x, hole.y - hole.rx, "Miss!", "#f05d5e");
+            }
+          } else if (o.phase === "hiding" || o.phase === "bopped") {
+            o.riseAmt = Math.max(0, o.riseAmt - 1 / HIDE_FRAMES);
+            if (o.riseAmt <= 0) hole.otter = null;
+          }
+        });
+
+        // Update effects
+        state.effects = state.effects.filter(e => { e.life--; e.y -= 1.4; return e.life > 0; });
+        updateHUD();
+      }
+
+      function updateHUD() {
+        scoreEl.textContent  = state.score;
+        healthEl.textContent = state.health;
+        stageEl.textContent  = state.stageIdx + 1;
+        hitEl.textContent    = state.stageScore;
+        goalEl.textContent   = cfg().goal;
+        timeEl.textContent   = Math.ceil(state.stageTimer / 60);
+      }
+
+      function spawnOtter() {
+        const empty = state.holes.filter(h => !h.otter);
+        if (!empty.length) return;
+        const hole = empty[Math.floor(Math.random() * empty.length)];
+        hole.otter = { phase: "rising", riseAmt: 0, upTimer: 0, bopped: false };
+      }
+
+      function otterHeadY(hole, riseAmt) {
+        const r = hole.rx * 0.6;
+        const headUp   = hole.y - hole.rx * 0.6;
+        const headDown = hole.y + hole.ry + r;
+        return headDown - riseAmt * (headDown - headUp);
+      }
+
+      function bopAt(px, py) {
+        if (state.over || state.win || state.stageClear) return;
+        for (const hole of state.holes) {
+          if (!hole.otter) continue;
+          const o = hole.otter;
+          if ((o.phase !== "up" && o.phase !== "rising") || o.riseAmt < 0.25) continue;
+
+          const r = hole.rx * 0.6;
+          const headCy = otterHeadY(hole, o.riseAmt);
+          if (Math.hypot(px - hole.x, py - headCy) < r + 14) {
+            o.bopped = true;
+            o.phase  = "bopped";
+            const pts = cfg().pts;
+            state.score += pts;
+            state.stageScore++;
+            addFx(hole.x, headCy - 24, "+" + pts, "#f7b84b");
+
+            if (state.stageScore >= cfg().goal) {
+              if (state.stageIdx >= 9) {
+                state.win = true;
+              } else {
+                state.clearedNum = state.stageIdx + 1;
+                state.stageClear = true;
+                state.stageClearTimer = 110;
+                state.holes.forEach(h => { if (h.otter) h.otter.phase = "hiding"; });
+              }
+            }
+            return;
+          }
+        }
+      }
+
+      function addFx(x, y, text, color) {
+        state.effects.push({ x, y, text, color, life: 38 });
+      }
+
+      // ── Drawing ───────────────────────────────────────────────
+
+      function draw() {
+        ctx.clearRect(0, 0, state.w, state.h);
+        drawSky();
+        drawGround();
+        state.holes.forEach(drawHolePit);
+        state.holes.forEach(drawOtter);
+        state.holes.forEach(drawHoleRim);
+        drawEffects();
+        if (state.stageClear) drawStageClearOverlay();
+        if (state.over)       drawGameOver();
+        if (state.win)        drawWin();
+      }
+
+      function drawSky() {
+        const gY = state.groundY;
+        const grad = ctx.createLinearGradient(0, 0, 0, gY);
+        grad.addColorStop(0, "#071420");
+        grad.addColorStop(1, "#163528");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, state.w, gY);
+
+        // Animated ripple lines (river/pond surface effect)
+        ctx.strokeStyle = "rgba(43,209,196,0.11)";
+        ctx.lineWidth = 1.5;
+        for (let i = 0; i < 5; i++) {
+          const bx = ((state.t * 0.38 + i * 190) % (state.w + 160)) - 80;
+          ctx.beginPath();
+          ctx.moveTo(bx, gY * 0.35 + i * 9);
+          for (let xp = bx; xp < bx + 140; xp += 7) {
+            ctx.lineTo(xp, gY * 0.35 + i * 9 + Math.sin((xp + state.t) * 0.055) * 4.5);
+          }
+          ctx.stroke();
+        }
+
+        // Silhouette trees/bushes at horizon
+        ctx.fillStyle = "#132a1e";
+        for (let x = 16; x < state.w; x += 68) {
+          const th = 22 + (x % 7) * 5;
+          ctx.beginPath();
+          ctx.arc(x + 24, gY - th * 0.5, 20 + (x % 4) * 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function drawGround() {
+        const gY = state.groundY;
+        const grad = ctx.createLinearGradient(0, gY, 0, state.h);
+        grad.addColorStop(0.00, "#507a5f");
+        grad.addColorStop(0.04, "#3d6b4a");
+        grad.addColorStop(1.00, "#2a4e36");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, gY, state.w, state.h - gY);
+
+        // Grass top highlight
+        ctx.fillStyle = "#5ea06e";
+        ctx.fillRect(0, gY, state.w, 4);
+
+        // Subtle soil patches (texture)
+        ctx.fillStyle = "rgba(0,0,0,0.08)";
+        for (let x = 30; x < state.w; x += 110) {
+          ctx.beginPath();
+          ctx.ellipse(x + 20, gY + 28 + (x % 5) * 14, 18, 8, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function drawHolePit(hole) {
+        const { x, y, rx, ry } = hole;
+        // Shadow ring
+        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + ry * 0.3, rx + 5, ry + 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // Dark pit
+        const pit = ctx.createRadialGradient(x, y - ry * 0.2, ry * 0.1, x, y, rx * 0.9);
+        pit.addColorStop(0, "#283a18");
+        pit.addColorStop(1, "#0e1a0c");
+        ctx.fillStyle = pit;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawOtter(hole) {
+        if (!hole.otter) return;
+        const o = hole.otter;
+        if (o.riseAmt <= 0.01) return;
+
+        const { x, y, rx, ry } = hole;
+        const r = rx * 0.6;
+        const headCy = otterHeadY(hole, o.riseAmt);
+
+        // Clip to: ground surface down to hole's lower rim (otter stays in ground area)
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, state.groundY, state.w, y + ry * 0.6 - state.groundY);
+        ctx.clip();
+        drawOtterShape(x, headCy, r, o.bopped);
+        ctx.restore();
+      }
+
+      function drawOtterShape(cx, cy, r, bopped) {
+        const brown  = bopped ? "#7a4820" : "#8b5e3c";
+        const pale   = bopped ? "#b07840" : "#b8845a";
+        const muzzle = "#cfa882";
+
+        // Body
+        ctx.fillStyle = brown;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + r * 0.62, r * 0.62, r * 0.96, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Head
+        ctx.fillStyle = brown;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.78, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Ears
+        const earOff = r * 0.64;
+        ctx.fillStyle = brown;
+        ctx.beginPath(); ctx.ellipse(cx - earOff, cy - r * 0.58, r * 0.27, r * 0.21, -0.28, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(cx + earOff, cy - r * 0.58, r * 0.27, r * 0.21,  0.28, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#e0967a";
+        ctx.beginPath(); ctx.ellipse(cx - earOff, cy - r * 0.58, r * 0.15, r * 0.11, -0.28, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(cx + earOff, cy - r * 0.58, r * 0.15, r * 0.11,  0.28, 0, Math.PI * 2); ctx.fill();
+
+        // Lighter top of head / back fur
+        ctx.fillStyle = pale;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - r * 0.22, r * 0.5, r * 0.32, 0, Math.PI, Math.PI * 2);
+        ctx.fill();
+
+        // Muzzle
+        ctx.fillStyle = muzzle;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + r * 0.1, r * 0.42, r * 0.36, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Eyes
+        if (bopped) {
+          ctx.strokeStyle = "#1a0e04";
+          ctx.lineWidth = Math.max(1.5, r * 0.12);
+          ctx.lineCap = "round";
+          const xEye = (ex, ey) => {
+            const s = r * 0.13;
+            ctx.beginPath(); ctx.moveTo(ex - s, ey - s); ctx.lineTo(ex + s, ey + s); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(ex + s, ey - s); ctx.lineTo(ex - s, ey + s); ctx.stroke();
+          };
+          xEye(cx - r * 0.28, cy - r * 0.1);
+          xEye(cx + r * 0.28, cy - r * 0.1);
+        } else {
+          ctx.fillStyle = "#1a0e04";
+          ctx.beginPath(); ctx.arc(cx - r * 0.28, cy - r * 0.1, r * 0.14, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(cx + r * 0.28, cy - r * 0.1, r * 0.14, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "rgba(255,255,255,0.9)";
+          ctx.beginPath(); ctx.arc(cx - r * 0.22, cy - r * 0.15, r * 0.056, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(cx + r * 0.34, cy - r * 0.15, r * 0.056, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Nose
+        ctx.fillStyle = "#3a1a06";
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - r * 0.02, r * 0.14, r * 0.1, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Whiskers
+        ctx.strokeStyle = "rgba(240,220,190,0.65)";
+        ctx.lineWidth = 1;
+        ctx.lineCap = "round";
+        for (let s = -1; s <= 1; s += 2) {
+          for (let wi = -1; wi <= 1; wi++) {
+            const wy = cy + r * 0.08 + wi * r * 0.1;
+            ctx.beginPath();
+            ctx.moveTo(cx + s * r * 0.1, wy);
+            ctx.lineTo(cx + s * r * 0.58, wy + wi * r * 0.04);
+            ctx.stroke();
+          }
+        }
+      }
+
+      function drawHoleRim(hole) {
+        const { x, y, rx, ry } = hole;
+        // Ground-colored cover over lower half (painter's trick — makes otter appear to emerge)
+        const gY = state.groundY;
+        const rowFrac = Math.max(0, Math.min(1, (y - gY) / (state.h - gY)));
+        const rimColor = interpolateColor("#507a5f", "#2a4e36", rowFrac);
+        ctx.fillStyle = rimColor;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx + 3, ry + 3, 0, 0, Math.PI); // 0→PI = bottom half
+        ctx.fill();
+        // Hole outline
+        ctx.strokeStyle = "#1e3018";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      function interpolateColor(a, b, t) {
+        const pa = parseInt(a.slice(1), 16);
+        const pb = parseInt(b.slice(1), 16);
+        const r = Math.round(((pa >> 16) & 0xff) * (1 - t) + ((pb >> 16) & 0xff) * t);
+        const g = Math.round(((pa >>  8) & 0xff) * (1 - t) + ((pb >>  8) & 0xff) * t);
+        const bl= Math.round(( pa        & 0xff) * (1 - t) + ( pb        & 0xff) * t);
+        return `rgb(${r},${g},${bl})`;
+      }
+
+      function drawEffects() {
+        ctx.textAlign = "center";
+        state.effects.forEach(e => {
+          ctx.globalAlpha = Math.min(1, e.life / 20);
+          ctx.fillStyle = e.color;
+          const size = Math.round(15 + (38 - e.life) * 0.25);
+          ctx.font = `800 ${size}px system-ui`;
+          ctx.fillText(e.text, e.x, e.y);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      function drawStageClearOverlay() {
+        ctx.fillStyle = "rgba(0,0,0,0.52)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f7b84b";
+        ctx.font = "800 34px system-ui";
+        ctx.fillText(`Stage ${state.clearedNum} Clear!`, state.w / 2, state.h / 2 - 14);
+        if (state.stageIdx < 9) {
+          ctx.fillStyle = "#b8bec9";
+          ctx.font = "600 18px system-ui";
+          ctx.fillText(`Next: Stage ${state.clearedNum + 1}`, state.w / 2, state.h / 2 + 22);
+        }
+      }
+
+      function drawGameOver() {
+        ctx.fillStyle = "rgba(0,0,0,0.68)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f05d5e";
+        ctx.font = "800 36px system-ui";
+        ctx.fillText("Game Over", state.w / 2, state.h / 2 - 20);
+        ctx.fillStyle = "#f4f2ea";
+        ctx.font = "700 20px system-ui";
+        ctx.fillText("Score: " + state.score, state.w / 2, state.h / 2 + 18);
+        ctx.fillStyle = "#b8bec9";
+        ctx.font = "500 14px system-ui";
+        ctx.fillText("Press Restart to try again", state.w / 2, state.h / 2 + 48);
+      }
+
+      function drawWin() {
+        ctx.fillStyle = "rgba(0,0,0,0.68)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f7b84b";
+        ctx.font = "800 36px system-ui";
+        ctx.fillText("All Clear!", state.w / 2, state.h / 2 - 26);
+        ctx.fillStyle = "#73d676";
+        ctx.font = "700 22px system-ui";
+        ctx.fillText("Final Score: " + state.score, state.w / 2, state.h / 2 + 16);
+        ctx.fillStyle = "#b8bec9";
+        ctx.font = "500 14px system-ui";
+        ctx.fillText("All 10 stages cleared!", state.w / 2, state.h / 2 + 50);
+      }
+
+      // ── Events ────────────────────────────────────────────────
+
+      canvas.addEventListener("pointerdown", e => {
+        const box = canvas.getBoundingClientRect();
+        bopAt(e.clientX - box.left, e.clientY - box.top);
+      });
+
+      resize();
+      addEventListener("resize", resize);
+      loop();
+    })();
+    </script>
+    <section class="game-info">
+      <a href="../../" class="back-link">← Webgame Arcades</a>
+      <h1>Otter Pop</h1>
+      <p>Otters are popping up from their riverside burrows — tap each one before it dives back in! Miss too many and you'll lose HP. Get through all 10 stages as otters appear faster and stay up for shorter and shorter windows.</p>
+      <p>Start slow in Stage 1 with one otter at a time, and work your way up to juggling five lightning-fast otters by Stage 10.</p>
+      <h2>How to Play</h2>
+      <ul>
+        <li><strong>Tap / Click</strong> an otter while it's above its burrow</li>
+        <li>Each otter hit scores points and counts toward the stage goal</li>
+        <li>Letting an otter escape costs 1 HP — you have 5</li>
+        <li>Reach the hit goal before the timer runs out to clear the stage</li>
+        <li>10 stages total — good luck on the final stretch!</li>
+      </ul>
+      <a href="../../" class="more-games-link">Browse All Games</a>
+    </section>
+  </body>
+</html>

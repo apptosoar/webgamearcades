@@ -101,6 +101,8 @@
       "maze-escape": "매번 새로 생성되는 미로를 탈출하세요. 레벨이 올라갈수록 미로가 커지고 어두워집니다.",
       "crate-shift": "정해진 이동 횟수 안에 창고 상자를 모든 목표 칸에 올려놓으세요.",
       "marble-gate": "블록을 좌우로 밀어 빈길을 만들고 구슬을 아래 출구로 굴려 보내세요.",
+      "otter-pop": "강가 굴에서 수달이 튀어나옵니다. 타이밍에 맞게 탭해 수달을 잡으세요. 10스테이지에 걸쳐 점점 빠르게 나타나고 올라와 있는 시간도 짧아집니다.",
+      "shelf-snap": "책장에서 책이 하나씩 삐져나옵니다. 바닥으로 떨어지기 전에 탭해서 제자리로 밀어 넣으세요. 10스테이지로 갈수록 속도가 빨라지고 동시에 여러 권이 튀어나옵니다.",
     },
   },
   en: {
@@ -205,6 +207,8 @@
       "maze-escape": "Escape a randomly generated maze each time. Mazes grow larger and darker as you advance.",
       "crate-shift": "Push every crate onto its target tile before the move limit runs out.",
       "marble-gate": "Slide blocks sideways to open a path and guide the marble down through the exit.",
+      "otter-pop": "Tap otters as they pop up from riverside burrows. Hit the stage goal before time runs out. 10 stages — otters get faster and stay up for shorter windows each round.",
+      "shelf-snap": "Books keep sliding off the shelf one by one. Tap each protruding book to snap it back before it falls. 10 stages — books slide faster and more pop out at once as you advance.",
     },
   },
 };
@@ -1673,6 +1677,8 @@ const gameMeta = [
   { id: "paint-race", genre: "racing", title: "Paint Race", icon: "PR", accent: "#2bd1ff", url: "./games/paint-race/index.html" },
   { id: "tap-sprint", genre: "racing", title: "Tap Sprint", icon: "SP", accent: "#2bd1c4", url: "./games/tap-sprint/index.html" },
   { id: "pendulum-hit", genre: "action", title: "Pendulum Hit", icon: "PH", accent: "#f7b84b", url: "./games/pendulum-hit/index.html" },
+  { id: "otter-pop", genre: "action", title: "Otter Pop", icon: "OP", accent: "#4dd8f0", url: "./games/otter-pop/index.html" },
+  { id: "shelf-snap", genre: "action", title: "Shelf Snap", icon: "SN", accent: "#c4850a", url: "./games/shelf-snap/index.html" },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
 
