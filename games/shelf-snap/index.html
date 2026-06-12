@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shelf Snap — Webgame Arcades</title>
+    <meta name="description" content="Books keep sliding off the shelf! Tap each protruding book to snap it back before it falls. 10 stages of increasingly frantic library action." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/games/shelf-snap/" />
+    <meta property="og:title" content="Shelf Snap — Webgame Arcades" />
+    <meta property="og:description" content="Books keep sliding off the shelf! Tap each protruding book to snap it back before it falls." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://webgamearcades.com/games/shelf-snap/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <link rel="stylesheet" href="../action-style.css" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      canvas { cursor: pointer; background: #2c1a0e; }
+      .hud { flex-wrap: wrap; gap: 6px 14px; }
+    </style>
+  </head>
+  <body>
+    <main class="game">
+      <div class="hud">
+        <strong>Shelf Snap</strong>
+        <span>Stage <b id="stageNum">1</b>/10</span>
+        <span>Pushed <b id="pushed">0</b>/<b id="goal">8</b></span>
+        <span>HP <b id="health">5</b></span>
+        <span>Score <b id="scoreVal">0</b></span>
+      </div>
+      <canvas id="game"></canvas>
+      <button id="restart" type="button">Restart</button>
+    </main>
+    <script>
+    (() => {
+      // spawnRate: frames between spawns, popSpeed: px/frame protrusion rate,
+      // maxPop: max simultaneous protruding books, goal: pushes to complete stage, pts: per push
+      const STAGES = [
+        { spawnRate: 130, popSpeed: 0.55, maxPop: 1, goal:  8, pts: 10 },
+        { spawnRate: 115, popSpeed: 0.65, maxPop: 1, goal: 10, pts: 10 },
+        { spawnRate: 100, popSpeed: 0.75, maxPop: 2, goal: 12, pts: 12 },
+        { spawnRate:  88, popSpeed: 0.88, maxPop: 2, goal: 14, pts: 12 },
+        { spawnRate:  76, popSpeed: 1.00, maxPop: 2, goal: 16, pts: 14 },
+        { spawnRate:  65, popSpeed: 1.15, maxPop: 3, goal: 18, pts: 14 },
+        { spawnRate:  55, popSpeed: 1.30, maxPop: 3, goal: 20, pts: 16 },
+        { spawnRate:  46, popSpeed: 1.50, maxPop: 4, goal: 22, pts: 18 },
+        { spawnRate:  38, popSpeed: 1.72, maxPop: 4, goal: 24, pts: 20 },
+        { spawnRate:  30, popSpeed: 2.00, maxPop: 5, goal: 28, pts: 25 },
+      ];
+
+      const ROWS = 2;
+      const COLS = 6;
+      const BOOK_COLORS = [
+        "#c0392b", "#e67e22", "#27ae60", "#2980b9", "#8e44ad", "#16a085",
+        "#d35400", "#1a6b9a", "#8b0000", "#1abc9c", "#e74c3c", "#f39c12",
+      ];
+
+      const canvas    = document.getElementById("game");
+      const ctx       = canvas.getContext("2d");
+      const stageEl   = document.getElementById("stageNum");
+      const pushedEl  = document.getElementById("pushed");
+      const goalEl    = document.getElementById("goal");
+      const healthEl  = document.getElementById("health");
+      const scoreEl   = document.getElementById("scoreVal");
+      const restartBtn = document.getElementById("restart");
+      restartBtn.addEventListener("click", () => location.reload());
+
+      const state = {
+        w: 0, h: 0, t: 0,
+        score: 0, health: 5,
+        stageIdx: 0, stagePushed: 0,
+        over: false, win: false,
+        stageClear: false, stageClearTimer: 0, clearedNum: 0,
+        books: [], effects: [],
+        nextSpawn: 60,
+        layout: null,
+      };
+
+      const cfg = () => STAGES[state.stageIdx];
+
+      // ── Layout ───────────────────────────────────────────────────
+
+      function resize() {
+        const box = canvas.getBoundingClientRect();
+        const dpr = devicePixelRatio || 1;
+        state.w = Math.max(300, box.width);
+        state.h = Math.max(380, box.height);
+        canvas.width  = Math.floor(state.w * dpr);
+        canvas.height = Math.floor(state.h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buildShelf();
+      }
+
+      function buildShelf() {
+        const padX   = Math.max(24, state.w * 0.07);
+        const areaW  = state.w - padX * 2;
+        const bookW  = areaW / COLS * 0.84;
+        const bookH  = Math.min(state.h * 0.26, areaW / COLS * 1.9);
+        const plankH = Math.max(12, state.h * 0.034);
+        const maxPop = bookH * 0.70;
+
+        // shelfY = front edge of shelf (top of plank band). Books extend upward from here.
+        const shelfYs = [Math.round(state.h * 0.40), Math.round(state.h * 0.78)];
+
+        state.books = [];
+        for (let row = 0; row < ROWS; row++) {
+          for (let col = 0; col < COLS; col++) {
+            const cx = padX + areaW / COLS * (col + 0.5);
+            state.books.push({
+              row, col, cx,
+              shelfY: shelfYs[row],
+              bookW, bookH, plankH, maxPop,
+              color: BOOK_COLORS[(row * COLS + col) % BOOK_COLORS.length],
+              protrude: 0,
+              active: false,
+              pushing: false,
+            });
+          }
+        }
+
+        state.layout = { padX, plankH, shelfYs, bookH, bookW };
+      }
+
+      // ── Game Logic ───────────────────────────────────────────────
+
+      function loop() { step(); draw(); requestAnimationFrame(loop); }
+
+      function step() {
+        if (state.over || state.win) return;
+        state.t++;
+
+        if (state.stageClear) {
+          state.stageClearTimer--;
+          if (state.stageClearTimer <= 0) {
+            state.stageClear  = false;
+            state.stageIdx++;
+            state.stagePushed = 0;
+            state.nextSpawn   = 60;
+            state.books.forEach(b => { b.active = false; b.protrude = 0; b.pushing = false; });
+          }
+          updateHUD();
+          return;
+        }
+
+        const c = cfg();
+        const activeCount = state.books.filter(b => b.active).length;
+        state.nextSpawn--;
+        if (state.nextSpawn <= 0 && activeCount < c.maxPop) {
+          spawnBook();
+          state.nextSpawn = c.spawnRate + Math.floor(Math.random() * 24 - 12);
+        }
+
+        for (const book of state.books) {
+          if (!book.active) continue;
+          if (book.pushing) {
+            book.protrude = Math.max(0, book.protrude - c.popSpeed * 4.5);
+            if (book.protrude <= 0) { book.active = false; book.pushing = false; }
+          } else {
+            book.protrude += c.popSpeed;
+            if (book.protrude >= book.maxPop) {
+              book.active = false; book.protrude = 0; book.pushing = false;
+              state.health--;
+              addFx(book.cx, book.shelfY + 24, "Miss!", "#f05d5e");
+              if (state.health <= 0) { state.over = true; return; }
+            }
+          }
+        }
+
+        state.effects = state.effects.filter(e => { e.life--; e.y -= 1.2; return e.life > 0; });
+        updateHUD();
+      }
+
+      function updateHUD() {
+        stageEl.textContent  = state.stageIdx + 1;
+        pushedEl.textContent = state.stagePushed;
+        goalEl.textContent   = cfg().goal;
+        healthEl.textContent = state.health;
+        scoreEl.textContent  = state.score;
+      }
+
+      function spawnBook() {
+        const idle = state.books.filter(b => !b.active);
+        if (!idle.length) return;
+        const book = idle[Math.floor(Math.random() * idle.length)];
+        book.active   = true;
+        book.protrude = 0;
+        book.pushing  = false;
+      }
+
+      function pushAt(px, py) {
+        if (state.over || state.win || state.stageClear) return;
+        for (const book of state.books) {
+          if (!book.active || book.pushing || book.protrude < 3) continue;
+          // Hit region: the protruding portion below shelfY, plus a small buffer above
+          const bLeft = book.cx - book.bookW / 2 - 8;
+          const bRight = book.cx + book.bookW / 2 + 8;
+          const bTop  = book.shelfY - 12;
+          const bBot  = book.shelfY + book.protrude + 8;
+          if (px >= bLeft && px <= bRight && py >= bTop && py <= bBot) {
+            book.pushing = true;
+            const pts = cfg().pts;
+            state.score += pts;
+            state.stagePushed++;
+            addFx(book.cx, book.shelfY - book.bookH * 0.4, "+" + pts, "#f7b84b");
+
+            if (state.stagePushed >= cfg().goal) {
+              if (state.stageIdx >= 9) {
+                state.win = true;
+              } else {
+                state.clearedNum  = state.stageIdx + 1;
+                state.stageClear  = true;
+                state.stageClearTimer = 110;
+                state.books.forEach(b => { if (b.active && !b.pushing) b.pushing = true; });
+              }
+            }
+            return;
+          }
+        }
+      }
+
+      function addFx(x, y, text, color) {
+        state.effects.push({ x, y, text, color, life: 40 });
+      }
+
+      // ── Drawing ──────────────────────────────────────────────────
+
+      function draw() {
+        ctx.clearRect(0, 0, state.w, state.h);
+        drawWall();
+        if (state.layout) drawAllRows();
+        drawEffects();
+        if (state.stageClear) drawStageClear();
+        if (state.over)       drawGameOver();
+        if (state.win)        drawWin();
+      }
+
+      function drawWall() {
+        const grad = ctx.createLinearGradient(0, 0, 0, state.h);
+        grad.addColorStop(0, "#3b2211");
+        grad.addColorStop(1, "#1c0e07");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, state.w, state.h);
+
+        // Subtle grid pattern (wallpaper)
+        ctx.strokeStyle = "rgba(255,190,80,0.032)";
+        ctx.lineWidth = 1;
+        for (let x = 0; x < state.w; x += 30) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, state.h); ctx.stroke();
+        }
+        for (let y = 0; y < state.h; y += 30) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(state.w, y); ctx.stroke();
+        }
+      }
+
+      function drawAllRows() {
+        const { padX, plankH, shelfYs, bookH } = state.layout;
+
+        for (let row = 0; row < ROWS; row++) {
+          const rowBooks  = state.books.filter(b => b.row === row);
+          const shelfY    = shelfYs[row];
+          const shelfLeft = padX * 0.38;
+          const shelfW    = state.w - padX * 0.76;
+          const backTop   = shelfY - bookH - 8;
+          const backH     = bookH + 8;
+
+          // 1. Shelf backing (dark interior behind books)
+          const backGrad = ctx.createLinearGradient(0, backTop, 0, shelfY);
+          backGrad.addColorStop(0, "#0e0702");
+          backGrad.addColorStop(1, "#1c0e06");
+          ctx.fillStyle = backGrad;
+          ctx.fillRect(shelfLeft, backTop, shelfW, backH);
+
+          // Top edge trim of backing
+          ctx.fillStyle = "rgba(160,90,35,0.25)";
+          ctx.fillRect(shelfLeft, backTop, shelfW, 2);
+
+          // 2. In-shelf portions of books (clipped to above shelfY)
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(shelfLeft, backTop, shelfW, backH);
+          ctx.clip();
+          for (const book of rowBooks) {
+            drawBookShape(book);
+          }
+          ctx.restore();
+
+          // 3. Shelf edge plank (drawn over in-shelf book bottoms)
+          drawPlank(shelfLeft, shelfY, shelfW, plankH);
+
+          // 4. Protruding portions (drawn below shelfY, over the plank)
+          for (const book of rowBooks) {
+            if (book.protrude <= 1) continue;
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(book.cx - book.bookW / 2 - 3, shelfY, book.bookW + 6, book.maxPop + 8);
+            ctx.clip();
+            drawBookShape(book);
+            // Shadow at plank edge to show depth
+            const shadowGrad = ctx.createLinearGradient(0, shelfY, 0, shelfY + 18);
+            shadowGrad.addColorStop(0, "rgba(0,0,0,0.50)");
+            shadowGrad.addColorStop(1, "rgba(0,0,0,0)");
+            ctx.fillStyle = shadowGrad;
+            ctx.fillRect(book.cx - book.bookW / 2 - 3, shelfY, book.bookW + 6, 18);
+            ctx.restore();
+          }
+
+          // 5. Side panels (bookends)
+          drawSidePanel(shelfLeft, backTop, shelfW, bookH + plankH + 8, padX, "left");
+          drawSidePanel(shelfLeft, backTop, shelfW, bookH + plankH + 8, padX, "right");
+        }
+      }
+
+      function drawPlank(x, y, w, h) {
+        const grad = ctx.createLinearGradient(0, y, 0, y + h);
+        grad.addColorStop(0.0, "#b07240");
+        grad.addColorStop(0.3, "#c8844a");
+        grad.addColorStop(1.0, "#7a4c22");
+        ctx.fillStyle = grad;
+        ctx.fillRect(x, y, w, h);
+
+        // Highlight at top edge
+        ctx.fillStyle = "rgba(255,210,120,0.22)";
+        ctx.fillRect(x, y, w, 3);
+        // Shadow at bottom
+        ctx.fillStyle = "rgba(0,0,0,0.30)";
+        ctx.fillRect(x, y + h - 3, w, 3);
+        // Wood grain
+        ctx.strokeStyle = "rgba(0,0,0,0.09)";
+        ctx.lineWidth = 1;
+        for (let gx = x + 50; gx < x + w - 10; gx += 90) {
+          ctx.beginPath(); ctx.moveTo(gx, y + 2); ctx.lineTo(gx + 16, y + h - 2); ctx.stroke();
+        }
+      }
+
+      function drawSidePanel(shelfLeft, backTop, shelfW, totalH, padX, side) {
+        const sideW = padX * 0.52;
+        const sx = side === "left" ? shelfLeft - sideW : shelfLeft + shelfW;
+        const grad = ctx.createLinearGradient(sx, 0, sx + sideW, 0);
+        if (side === "left") {
+          grad.addColorStop(0, "#5c3518");
+          grad.addColorStop(1, "#3d2210");
+        } else {
+          grad.addColorStop(0, "#3d2210");
+          grad.addColorStop(1, "#2a1508");
+        }
+        ctx.fillStyle = grad;
+        ctx.fillRect(sx, backTop, sideW, totalH);
+        // Highlight edge
+        const edgeX = side === "left" ? sx : sx + sideW - 2;
+        ctx.fillStyle = side === "left" ? "rgba(255,200,100,0.12)" : "rgba(0,0,0,0.25)";
+        ctx.fillRect(edgeX, backTop, 2, totalH);
+      }
+
+      function drawBookShape(book) {
+        const { cx, shelfY, bookW, bookH, protrude, color, active, pushing } = book;
+        const bx = cx - bookW / 2;
+        // Book shifts downward by protrude amount
+        const by = shelfY - bookH + protrude;
+
+        // Wobble effect when near falling
+        let shearX = 0;
+        if (active && !pushing && protrude > book.maxPop * 0.55) {
+          const urgency = (protrude - book.maxPop * 0.55) / (book.maxPop * 0.45);
+          shearX = Math.sin(state.t * 0.38) * urgency * 3.5;
+        }
+
+        ctx.save();
+        if (shearX !== 0) {
+          // Slight rotation/shear to indicate urgency
+          ctx.transform(1, shearX * 0.015, 0, 1, -shearX * 0.015 * (by + bookH * 0.5), 0);
+        }
+
+        // Drop shadow when protruding
+        if (protrude > 4) {
+          ctx.fillStyle = "rgba(0,0,0,0.22)";
+          ctx.fillRect(bx + 4, by + 4, bookW, bookH);
+        }
+
+        // Book body
+        ctx.fillStyle = color;
+        ctx.fillRect(bx, by, bookW, bookH);
+
+        // Left spine highlight
+        ctx.fillStyle = "rgba(255,255,255,0.22)";
+        ctx.fillRect(bx, by, 4, bookH);
+
+        // Top edge highlight
+        ctx.fillStyle = "rgba(255,255,255,0.16)";
+        ctx.fillRect(bx, by, bookW, 3);
+
+        // Right side pages
+        ctx.fillStyle = "#f0e8d2";
+        ctx.fillRect(bx + bookW - 5, by + 3, 5, bookH - 6);
+        // Page lines
+        ctx.fillStyle = "rgba(160,140,100,0.5)";
+        for (let py = by + 6; py < by + bookH - 6; py += 4) {
+          ctx.fillRect(bx + bookW - 4, py, 3, 1);
+        }
+
+        // Spine decoration band
+        const bandY = by + bookH * 0.32;
+        const bandH = bookH * 0.14;
+        ctx.fillStyle = "rgba(255,255,255,0.18)";
+        ctx.fillRect(bx + 3, bandY, bookW * 0.72, bandH);
+
+        // Bottom edge shadow
+        ctx.fillStyle = "rgba(0,0,0,0.18)";
+        ctx.fillRect(bx, by + bookH - 4, bookW, 4);
+
+        // Urgency outline when about to fall
+        if (active && !pushing && protrude > book.maxPop * 0.45) {
+          const urgency = (protrude - book.maxPop * 0.45) / (book.maxPop * 0.55);
+          ctx.strokeStyle = `rgba(255,70,50,${urgency * 0.75})`;
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(bx - 1.5, by - 1.5, bookW + 3, bookH + 3);
+        }
+
+        ctx.restore();
+      }
+
+      function drawEffects() {
+        const fs = Math.round(Math.max(13, state.w * 0.040));
+        ctx.font = `bold ${fs}px sans-serif`;
+        ctx.textAlign = "center";
+        for (const e of state.effects) {
+          ctx.globalAlpha = e.life / 40;
+          ctx.fillStyle = e.color;
+          ctx.fillText(e.text, e.x, e.y);
+        }
+        ctx.globalAlpha = 1;
+        ctx.textAlign = "left";
+      }
+
+      function drawStageClear() {
+        const prog = Math.min(1, (110 - state.stageClearTimer) / 15);
+        ctx.fillStyle = `rgba(0,0,0,${0.62 * prog})`;
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.globalAlpha = prog;
+        ctx.fillStyle = "#f7b84b";
+        const fs = Math.round(Math.max(22, state.w * 0.082));
+        ctx.font = `bold ${fs}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText("Stage " + state.clearedNum + " Clear!", state.w / 2, state.h * 0.47);
+        ctx.globalAlpha = 1;
+        ctx.textAlign = "left";
+      }
+
+      function drawGameOver() {
+        ctx.fillStyle = "rgba(0,0,0,0.74)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f05d5e";
+        ctx.font = `bold ${Math.round(state.w * 0.10)}px sans-serif`;
+        ctx.fillText("Game Over", state.w / 2, state.h * 0.42);
+        ctx.fillStyle = "#ccaa88";
+        ctx.font = `${Math.round(state.w * 0.050)}px sans-serif`;
+        ctx.fillText("Score: " + state.score, state.w / 2, state.h * 0.55);
+        ctx.textAlign = "left";
+      }
+
+      function drawWin() {
+        ctx.fillStyle = "rgba(0,0,0,0.74)";
+        ctx.fillRect(0, 0, state.w, state.h);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f7b84b";
+        ctx.font = `bold ${Math.round(state.w * 0.088)}px sans-serif`;
+        ctx.fillText("All Clear!", state.w / 2, state.h * 0.40);
+        ctx.fillStyle = "#73d676";
+        ctx.font = `bold ${Math.round(state.w * 0.058)}px sans-serif`;
+        ctx.fillText("Score: " + state.score, state.w / 2, state.h * 0.54);
+        ctx.textAlign = "left";
+      }
+
+      // ── Input ────────────────────────────────────────────────────
+
+      function getCanvasPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = state.w / rect.width;
+        const scaleY = state.h / rect.height;
+        if (e.touches) {
+          return {
+            x: (e.touches[0].clientX - rect.left) * scaleX,
+            y: (e.touches[0].clientY - rect.top)  * scaleY,
+          };
+        }
+        return {
+          x: (e.clientX - rect.left) * scaleX,
+          y: (e.clientY - rect.top)  * scaleY,
+        };
+      }
+
+      canvas.addEventListener("click", e => {
+        const p = getCanvasPos(e);
+        pushAt(p.x, p.y);
+      });
+      canvas.addEventListener("touchstart", e => {
+        e.preventDefault();
+        const p = getCanvasPos(e);
+        pushAt(p.x, p.y);
+      }, { passive: false });
+
+      new ResizeObserver(resize).observe(canvas);
+      resize();
+      loop();
+    })();
+    </script>
+  </body>
+</html>
