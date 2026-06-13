@@ -37,6 +37,31 @@
         <li>Avoid getting surrounded</li>
         <li>Mobile: touch controls supported</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Robot Arena drops you into a confined space with an ever-growing horde of mechanical enemies. Your character attacks automatically — survival depends entirely on movement. It's a pure spatial puzzle: where do you go when every direction is closing in?</p>
+
+      <h2>Why We Built It</h2>
+      <p>We wanted to explore the "auto-attack survival" genre in its simplest form. Removing the attack input lets players think entirely in terms of space and positioning. The robot theme gives the enemies a mechanical, predictable feel that rewards learning their movement patterns. Every death feels like a mistake you understand, which keeps the run-again pull strong.</p>
+
+      <h2>How It Works</h2>
+      <p>Enemies use simple homing logic — each frame they calculate the direction toward the player and move along it. The arena has no walls the player can pass through, so positioning choices have real consequences. Spawn rate increases over time using a frame counter, and enemy speed scales with elapsed time. Auto-attack fires at the nearest enemy within a fixed radius every few frames.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Never stop moving. Standing still for even a second allows enemies to completely surround you.</li>
+        <li>Use corners sparingly — they can funnel enemies in front of you for efficient auto-attack, but they cut off your escape routes.</li>
+        <li>Move toward thin clusters, not through dense ones. Punching through a crowd costs more HP than circling around the edge.</li>
+        <li>Early in the round, orbit the outer edge. As enemy count grows, start using diagonal cuts across the arena to shake pursuers.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Arena hazards</strong> — static obstacles or moving walls that block both enemies and the player.</li>
+        <li><strong>Enemy types</strong> — fast scouts, slow tanks, and explosive bots that behave differently from the standard homing robots.</li>
+        <li><strong>Ability pickups</strong> — temporary speed bursts or area-clear attacks that drop randomly in the arena.</li>
+        <li><strong>Endless wave counter</strong> — showing which wave you're on so players have a concrete milestone to chase.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

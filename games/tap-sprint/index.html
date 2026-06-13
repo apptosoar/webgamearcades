@@ -535,6 +535,31 @@
         <li>Finish 1st to clear the stage and face more opponents next round</li>
         <li>Mobile: tap anywhere on the screen or use the TAP! button</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Tap Sprint is a racing game with one input: tap as fast as you can. Your runner accelerates with each tap and decelerates when you stop — the challenge is maintaining a rhythm that keeps your speed near the maximum without burning out your tapping hand. Ten stages, each adding one more opponent to the race.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Physical input speed is one of the most honest competitive metrics in a browser game — there's no strategy to learn, no pattern to memorize, just the raw speed of your fingers versus the clock. We added the speed-decay mechanic (your runner slows down between taps) because it makes rhythm matter. A steady 8-tap-per-second rhythm beats a burst of 15 followed by a pause. The opponent count scaling across stages means even experienced players face a real challenge at Stage 10.</p>
+
+      <h2>How It Works</h2>
+      <p>Each tap adds a fixed velocity boost to the player's runner, capped at a maximum speed. Every game frame, the runner's speed decreases by a decay constant. AI runners maintain a pseudo-random speed within a stage-defined range, with a small sinusoidal variation to avoid perfectly constant movement. The race distance is fixed — the first runner to cover it is ranked first. Finishing first advances the stage; any other rank restarts the current stage.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Alternate two fingers in rapid succession rather than using one finger repeatedly. Two-finger alternation is significantly faster and more sustainable.</li>
+        <li>Don't tap at your maximum speed from the start. Find a pace just below your ceiling so you can maintain it for the full race length.</li>
+        <li>Watch the progress bar at the top rather than the runners. Knowing your relative position at the midpoint tells you whether to push harder or conserve pace.</li>
+        <li>On mobile, keep the phone still and move only your fingers — device movement reduces input precision and wastes energy.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Tap-per-second display</strong> — a live readout of your current tapping rate so players can track their personal performance.</li>
+        <li><strong>Handicap system</strong> — an option to give the player a head start against later-stage AI for practice runs.</li>
+        <li><strong>Track hazards</strong> — occasional obstacles that require a jump input (a second key or tap zone) without breaking the core rhythm.</li>
+        <li><strong>Personal records</strong> — localStorage tracking of the fastest completion time for each stage.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

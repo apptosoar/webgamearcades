@@ -38,6 +38,31 @@
         <li>Avoid enemy shots and collisions</li>
         <li>Mobile: touch controls supported</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Space Shooter is a classic shoot-em-up (shmup) that captures the feel of 1980s arcade cabinets — waves of enemies, a lone hero ship, and a score that keeps climbing. The auto-fire mechanic strips away button mashing so you can focus entirely on movement and positioning.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We wanted a one-handed game that felt immediately satisfying on a phone screen. Auto-fire was the key design decision: instead of tapping to shoot and dodge at the same time, all your attention goes into weaving through enemy patterns. It makes the game accessible to newcomers while still rewarding skilled movement.</p>
+
+      <h2>How It Works</h2>
+      <p>The game runs on an HTML5 Canvas loop at 60 frames per second. Enemy robots spawn from the right edge at a fixed interval and fly toward the player. Your ship fires a projectile upward automatically every 10 frames. Collision detection uses bounding-box checks between the bullet rectangles and enemy hitboxes. Each wave that passes increases the spawn rate slightly, creating a natural difficulty ramp without any explicit level system.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Stay near the vertical center of the screen — it gives you room to dodge both up and down.</li>
+        <li>Move in small adjustments rather than large sweeps. Overcorrecting leads to collisions.</li>
+        <li>Enemies approach in a loose spread — threading through gaps is faster than running from them.</li>
+        <li>Watch the right edge, not the enemies directly in front of you. Anticipating spawns is more valuable than reacting to them.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Powerups</strong> — dropping speed boosts or spread-fire pickups from destroyed enemies.</li>
+        <li><strong>Enemy variety</strong> — enemies that dive toward the player, fire back, or move in formation patterns.</li>
+        <li><strong>Boss encounters</strong> — a large enemy with distinct attack phases every 50 kills.</li>
+        <li><strong>Local high score</strong> — storing the best score in localStorage so each session has a personal target to beat.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

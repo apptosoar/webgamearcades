@@ -332,6 +332,31 @@
         <li><strong>Perfect:</strong> ≤30ms off · <strong>Great:</strong> ≤80ms · <strong>Good:</strong> ≤200ms · <strong>Miss:</strong> further away</li>
         <li>Use the +/− buttons to adjust the target before starting</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Time Stop is a deceptively simple game about one thing: your internal sense of time. A timer counts up and you have to stop it at exactly the target number. No tricks, no enemies, no obstacles — just you and the clock. It's harder than it sounds, and the precision feedback (PERFECT / GREAT / GOOD / MISS) makes every attempt feel distinctly different from the last.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We were curious whether players could genuinely improve at time estimation through repetition — and the answer turns out to be yes. The millisecond accuracy display gives immediate, concrete feedback on each attempt, which creates a tight learning loop. Setting the target yourself before pressing Start adds a layer of intention: you commit to a number, then try to fulfill it.</p>
+
+      <h2>How It Works</h2>
+      <p>The timer increments using the browser's requestAnimationFrame timestamp, measured in milliseconds. When Stop is pressed, the elapsed time is compared against the target value. The accuracy threshold for each rating — PERFECT (≤30ms), GREAT (≤80ms), GOOD (≤200ms) — was tuned through playtesting to feel achievable but demanding. Five rounds are measured per session and a final summary shows your overall accuracy.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Don't watch the timer number while it's running — look at it only briefly at the start, then shift to counting internally. Watching the numbers creates visual lag in your reaction.</li>
+        <li>On the first round, try to undershoot slightly. You can calibrate in later rounds based on how early or late your result was.</li>
+        <li>Tap with the same finger in the same position each time. Grip and input method affect your personal reaction time consistency.</li>
+        <li>Use the +/− buttons to target a round number (like 3.00 or 5.00) — round targets are easier for your brain to "hear" internally.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Personal best tracking</strong> — localStorage storage of your average accuracy over multiple sessions.</li>
+        <li><strong>Moving target</strong> — a version where the target changes each round so you can't build muscle memory for a single number.</li>
+        <li><strong>Two-player mode</strong> — both players set a target and whoever is closer wins the round.</li>
+        <li><strong>Calibration tool</strong> — a pre-game measurement of your personal reaction time used to adjust thresholds fairly.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

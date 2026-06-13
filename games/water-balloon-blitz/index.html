@@ -521,6 +521,31 @@
         <li><strong>Splash:</strong> tap the Splash button to pop all nearby balloons</li>
         <li>Reach the goal count before time runs out to advance</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Water Balloon Blitz is a rapid-fire tap game about instant decisions: pop the water balloon or leave it. The catch is the bomb balloons mixed in — tap one by mistake and you lose HP. As stages progress, balloons appear faster and the ratio of bombs increases, forcing you to read each target in a fraction of a second.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We wanted a game that felt festive and light while still demanding sharp attention. Water balloons have a universally cheerful connotation, which makes the risk-reward tension feel playful rather than stressful. The Splash ability was added after playtesting showed that players needed a way to recover from tight situations — it converts a moment of panic into a tactical decision.</p>
+
+      <h2>How It Works</h2>
+      <p>Balloons are spawned with a random trajectory and a type flag — either water or bomb, weighted by the current stage configuration. Each balloon moves along its trajectory and disappears when it exits the canvas. A click/tap hit check fires against each balloon's circular radius on input. Water balloons increment the hit counter toward the stage goal; bomb balloons deduct HP on contact. The Splash ability triggers an area-of-effect pop around the cursor's current position.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Look at the color and shape before tapping — bomb balloons have a distinct appearance. Tapping fast without checking is the main cause of HP loss.</li>
+        <li>Use Splash when three or more water balloons are clustered together. Single-balloon situations aren't worth the cooldown.</li>
+        <li>Allow some water balloons to escape rather than risking a bomb hit when they're tightly grouped.</li>
+        <li>In later stages, focus on the center of the screen where density is highest and let balloons near the edges drift past.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Special balloons</strong> — golden balloons worth three hits, chain balloons that pop adjacent water balloons when hit.</li>
+        <li><strong>Wind mechanics</strong> — balloons pushed by a directional wind that changes each stage, requiring path prediction.</li>
+        <li><strong>Lives display</strong> — animated heart icons that break visually when HP is lost, making damage more emotionally impactful.</li>
+        <li><strong>Stage themes</strong> — different visual backdrops and balloon color palettes per stage to maintain visual freshness.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

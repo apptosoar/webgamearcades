@@ -506,6 +506,31 @@
         <li>Clear the path so the marble can exit through the gate</li>
         <li>Mobile: touch drag to move blocks</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Marble Gate is a sliding-block puzzle where a marble is trapped behind a grid of interlocking blocks. Slide the blocks out of the way to open a clear path to the exit gate at the bottom. The challenge is that blocks can only move along their own axis — horizontal blocks slide left and right, vertical ones move up and down — which creates surprising constraints even in small grids.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Sliding-block puzzles (like Rush Hour) are satisfying because every move has consequences that propagate through the entire grid. Moving one block to open a path often closes another. We added the marble as the escape object because it makes the goal visually clear — you can always see what you're trying to free and where it needs to go. The move limit discourages random shuffling and rewards spatial reasoning.</p>
+
+      <h2>How It Works</h2>
+      <p>The grid contains blocks of varying lengths placed either horizontally or vertically. Each block's movement is constrained to a single axis. A click-and-drag on a block calculates how far it can move in the dragged direction before hitting another block or the grid boundary. The marble occupies a fixed vertical column and will fall through it once the path is clear. A win is triggered when the marble exits through the bottom gate.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Identify the marble's column first, then trace every block that crosses it. Those are the only blocks that matter for opening the direct path.</li>
+        <li>Work from the marble downward. The block immediately below the marble needs to move first; solving that tells you what else needs to shift.</li>
+        <li>Blocks that block other blocks are secondary obstacles — clear the primary path first, then deal with the secondary constraints.</li>
+        <li>Count your moves before committing to a sequence. If you've already used most of your budget and the path isn't clear, restart and try a different approach.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Multiple marbles</strong> — two or three marbles that must all reach separate exit gates simultaneously.</li>
+        <li><strong>Diagonal blocks</strong> — blocks that can slide diagonally, dramatically increasing the solution space.</li>
+        <li><strong>Color-coded locks</strong> — blocks that can only be moved after a specific other block is placed correctly.</li>
+        <li><strong>Move replay</strong> — an animation of the optimal solution after completion so players can compare their approach.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

@@ -37,6 +37,31 @@
         <li>Survive longer for a higher score</li>
         <li>Mobile: touch controls supported</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Meteor Dodge puts you in the cockpit of a lone spaceship under a relentless meteor shower. The sky fills with falling rocks and your only option is to move. It's a survival game about reading the incoming patterns and finding the calm spaces between the chaos.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Falling-object dodge games work naturally in a vertical screen orientation, which is how most people hold their phones. The spaceship theme makes horizontal movement feel physically motivated — you're steering, not just sliding. Meteors of varying sizes give the eye something to track with different urgency: large meteors demand immediate attention while small ones can be weaved through.</p>
+
+      <h2>How It Works</h2>
+      <p>Meteors spawn at random X positions along the top of the canvas and fall at a consistent downward velocity. Spawn rate and fall speed increase on a timer. The player ship moves horizontally using WASD, arrow keys, or touch drag. Collision detection checks for overlap between the ship's bounding circle and each meteor's circular hitbox. A near-miss intentionally leaves a small gap between visuals and the hitbox, so play that feels close still feels survivable.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Keep your eyes at the top of the screen, not on your ship. Responding to a meteor when it's already near you gives you half the reaction time.</li>
+        <li>Move to areas of low meteor density rather than dodging individual rocks — treat the screen as zones, not individual threats.</li>
+        <li>Stay near the horizontal center when meteor density is low; it keeps both sides of the screen equally reachable.</li>
+        <li>When a wave looks truly unavoidable, pick the side with the fewest meteors and commit with a full-speed dash rather than a hesitant drift.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Meteor types</strong> — explosive meteors that detonate in an area, spinning irregularly shaped rocks with different hitboxes, and slow giant ones that demand early decisions.</li>
+        <li><strong>Shield charge</strong> — a briefly invincible dash that recharges on a timer, adding a resource management layer.</li>
+        <li><strong>Star map background</strong> — parallax star layers that give a sense of speed and travel distance.</li>
+        <li><strong>Proximity scoring</strong> — bonus points for surviving near-misses, rewarding precision movement over pure avoidance.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

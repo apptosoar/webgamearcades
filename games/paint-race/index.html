@@ -560,6 +560,31 @@
         <li><strong>Boost:</strong> tap the Boost button for a brief speed surge</li>
         <li>Clear all 10 stages to complete the game</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Paint Race is a territorial control game where you paint the canvas blue while an AI opponent paints it red. Whoever covers the target percentage first wins the stage. It's part strategy, part speed, and part psychology — do you race to expand your own territory, or do you cut off the CPU's path?</p>
+
+      <h2>Why We Built It</h2>
+      <p>Territory games create natural tension because every square you paint is one the opponent can't have, and vice versa. The drag-to-paint input on a touchscreen felt immediately satisfying — it's literally painting with your finger. The CPU opponent's path algorithm is simple enough that a player who thinks even one move ahead can outmaneuver it, which makes winning feel earned rather than random.</p>
+
+      <h2>How It Works</h2>
+      <p>The canvas is divided into a pixel grid. When the player drags, all pixels along the pointer path are filled with the player's color. The CPU uses a pathfinding heuristic to move toward unpainted areas, leaving a trail of red behind it. After each frame, the total filled pixels are counted per color and converted to a percentage. The Boost ability temporarily doubles the player's paint radius for a few seconds on a cooldown timer.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Cover new territory first. Overlapping the CPU's existing red paint is slower than expanding into blank space.</li>
+        <li>The CPU tends to move in straight lines. Cut across its projected path to intercept and box it into a smaller area.</li>
+        <li>Use the Boost when entering a large open area — the expanded radius covers ground much faster during the critical early race.</li>
+        <li>In later stages with higher target percentages, diagonal strokes cover more area per stroke length than horizontal or vertical ones.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Two-player mode</strong> — both players paint on the same canvas from opposite sides on the same device.</li>
+        <li><strong>Canvas shapes</strong> — maps with walls, islands, or corridors that change the strategic options available to each player.</li>
+        <li><strong>Smarter CPU</strong> — an opponent that uses proper minimax territory evaluation instead of greedy pathfinding.</li>
+        <li><strong>Eraser powerup</strong> — a temporary ability to erase opponent color, adding a new tactical option.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

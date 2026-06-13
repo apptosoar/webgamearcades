@@ -38,6 +38,31 @@
         <li>Score increases with distance</li>
         <li>Mobile: single tap to jump</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Ninja Dash is an endless runner built around a single, satisfying mechanic: jumping over obstacles at exactly the right moment. The ninja sprints automatically while you focus entirely on timing. It's a game you can pick up in ten seconds and spend twenty minutes trying to master.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Endless runners are one of the most naturally mobile-friendly formats — one input, instant feedback, replayable by nature. We chose arrows as the hazard because they give a clear visual cue for timing: you can see them coming from a distance, which makes the "almost made it" moments feel fair rather than cheap. The ninja theme adds personality without complicating the loop.</p>
+
+      <h2>How It Works</h2>
+      <p>The runner uses a parallax background to simulate movement while the ninja stays fixed horizontally. Arrow hazards spawn from the right and scroll left at a speed that gradually increases. Each jump follows a parabolic arc calculated in the game loop — pressing jump again in midair has no effect, keeping the mechanic honest. HP deducts on collision, and the score increments passively every frame the ninja survives.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Jump when the arrow is about one body-length away — jumping too early leads to landing right on the next one.</li>
+        <li>Resist the urge to jump preemptively. Let the arrow get close, then commit.</li>
+        <li>After a hit, use the brief invincibility window to reset your breathing and refocus.</li>
+        <li>As speed increases, shorten your mental reaction window — start treating it as a rhythm game rather than a reflex game.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Double jump</strong> — an aerial second jump that lets you recover from misreads.</li>
+        <li><strong>Obstacle variety</strong> — low-crawl gaps, overhead hazards, or moving platforms mixed in with the arrows.</li>
+        <li><strong>Speed milestones</strong> — visible stage breaks every 500 points with a brief flash and a ramp up in difficulty.</li>
+        <li><strong>Skin unlocks</strong> — different ninja or runner characters unlocked by reaching score thresholds.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

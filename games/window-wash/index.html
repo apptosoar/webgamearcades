@@ -1271,6 +1271,31 @@
         <li>10 levels total</li>
         <li>Mobile: touch-controlled</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Window Wash is a drag-to-clean game that turns a mundane chore into a satisfying puzzle. Each window has a different pattern of grime, and you need to scrub enough of it away before the timer runs out. The tension isn't combat or reaction — it's coverage efficiency. Can you find the fastest path across the window?</p>
+
+      <h2>Why We Built It</h2>
+      <p>Cleaning games have a distinct psychological appeal: visible, immediate progress. Every stroke of the squeegee reveals a clean surface beneath the grime, and that reveal feels rewarding in a way that abstract score increases don't. We wanted a game that felt relaxing in early stages and pressured in later ones — the timer creates urgency without changing the core mechanic at all.</p>
+
+      <h2>How It Works</h2>
+      <p>The window surface is represented as a pixel grid initialized with a grime texture. As the player drags, pixels within the squeegee's radius are marked as clean. A running percentage counts cleaned pixels against total dirty pixels. When the cleanliness threshold is reached before the timer expires, the level is complete. Later levels have larger windows, denser grime patterns, and shorter time limits. Bird droppings and rain streaks are additional grime types with harder-to-clean edges.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Sweep in horizontal rows from top to bottom — this systematic path covers the most area per second and avoids re-cleaning already-clean spots.</li>
+        <li>Don't start in a corner. Begin near the center and work outward so you end near the edges where the final cleaning percentage is easiest to top off.</li>
+        <li>Bird droppings require multiple passes. Identify them early and give them extra attention rather than leaving them for the last second.</li>
+        <li>Move the squeegee at a moderate speed — moving too fast leaves gaps between strokes while too slow wastes time on already-clean surface.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>New stain types</strong> — sticky mud that requires a hold rather than a drag, or paint that can only be cleaned with a specific tool.</li>
+        <li><strong>Bonus time collectibles</strong> — hidden stars under the grime that add seconds to the clock when revealed.</li>
+        <li><strong>Window themes</strong> — skyscraper, submarine porthole, spacecraft windshield — each with a unique background and grime pattern.</li>
+        <li><strong>Efficiency rating</strong> — a post-level grade based on how many redundant strokes you made, encouraging optimal coverage paths.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

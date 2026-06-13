@@ -37,6 +37,31 @@
         <li>Use gaps in the laser patterns to survive</li>
         <li>Mobile: touch controls supported</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Laser Escape is a spatial puzzle disguised as an action game. The lasers don't shoot — they sweep, shift, and close in. Surviving means reading the pattern in advance and positioning yourself in the gap before it closes. One wrong move and a beam finds you.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We wanted a dodge game with a different feel from simple projectile avoidance. Laser walls force you to think about area rather than point-based collision — you can't thread a needle through a wall, you have to find and reach the right gap ahead of time. The sci-fi laser aesthetic fits naturally and makes the danger feel visually clear even at high speeds.</p>
+
+      <h2>How It Works</h2>
+      <p>Laser walls are generated as horizontal or vertical line segments that sweep across the canvas at a fixed velocity. Each wall has a single gap — a break in the line — positioned at a random location. The gap width shrinks slightly as score increases. The player character uses standard WASD/arrow movement clamped to the canvas bounds. Collision is detected when the player's hitbox overlaps any filled portion of an active laser segment.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Identify the gap in an incoming wall before it reaches you — then move to that row or column rather than waiting until the last moment.</li>
+        <li>Stay near the center of the screen when possible; it maximizes your range of motion in any direction.</li>
+        <li>Never move parallel to an incoming wall — you'll end up racing it instead of crossing through the gap.</li>
+        <li>In late game, treat two incoming walls as a unit and find the position that satisfies both gaps simultaneously.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Diagonal lasers</strong> — beams at 45° angles that require movement along both axes to avoid.</li>
+        <li><strong>Rotating laser arms</strong> — beams that pivot from a fixed point, requiring circular movement to stay clear.</li>
+        <li><strong>Pulse lasers</strong> — beams that flash on and off in a rhythm, rewarding timing rather than just positioning.</li>
+        <li><strong>Color-coded danger</strong> — visual cues that show which walls are about to accelerate.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

@@ -378,6 +378,31 @@
         <li>Links are only valid with a path of two turns or fewer</li>
         <li><strong>Shuffle:</strong> tap the Shuffle button if you're stuck</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Tile Link is a Mahjong-solitaire style matching game with a geometric twist. A grid of 96 tiles, each carrying a unique shape-and-colour combination, waits to be cleared. Matches aren't just about finding pairs — the path between them has to be drawable with at most two turns. That single constraint transforms a straightforward matching game into a spatial puzzle about board state.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Classic Mahjong solitaire is relaxing but can sometimes feel arbitrary — you pick pairs that are accessible, not pairs that require strategic thinking. The two-turn path rule changes that. Some pairs are visually obvious but geometrically blocked, while others look distant but connect cleanly. Adding the Shuffle button as a limited reset gives players a safety valve without making the game trivial.</p>
+
+      <h2>How It Works</h2>
+      <p>The 96 tiles consist of 24 unique types (6 shapes × 4 colours), each appearing exactly 4 times — meaning 2 matchable pairs per type. The path finder checks three connection types: straight (0 turns), L-shape (1 turn), and Z-shape (2 turns), including virtual rows and columns outside the grid boundary. If no valid path exists between two tiles of the same type, the match is rejected. A shuffle routine rearranges all remaining tiles while guaranteeing at least one valid move exists after shuffling.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Start from the edges. Edge and corner tiles have fewer neighbors blocking their paths, so they're easier to match early and open up the interior.</li>
+        <li>Look for tiles that share a clear horizontal or vertical line. Those 0-turn matches are the fastest to process and should be taken whenever available.</li>
+        <li>Before shuffling, scan for matches you might have missed. Shuffle removes all progress on the current layout, so exhaust it first.</li>
+        <li>When stuck, select a tile you can't match yet — seeing its highlight helps your eye find where the matching partner is hiding.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Timer mode</strong> — a countdown clock that adds urgency and produces a time-based score.</li>
+        <li><strong>Hint system</strong> — a button that highlights one valid pair at the cost of a score penalty.</li>
+        <li><strong>Larger grids</strong> — a 10×14 or 12×16 variant for players who want a longer challenge.</li>
+        <li><strong>Theme packs</strong> — tile skins using food icons, animals, or playing card suits instead of geometric shapes.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

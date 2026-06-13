@@ -38,6 +38,31 @@
         <li>Don't let enemies reach the castle</li>
         <li>Mobile: touch-friendly controls</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Castle Defender is a tower defense game reduced to its most essential element: aim. Your turret fires automatically at whatever it's pointing at. The challenge is deciding where to point — enemies come in waves and they don't wait for you to finish the last one.</p>
+
+      <h2>Why We Built It</h2>
+      <p>Traditional tower defense games can be slow and menu-heavy. We wanted a version where every second of gameplay involves an active decision. Auto-fire with manual aiming means you're always choosing a target, always moving the cursor — there's no idle time. The castle HP pool gives you a buffer so mistakes are recoverable, keeping new players engaged long enough to learn the enemy patterns.</p>
+
+      <h2>How It Works</h2>
+      <p>The turret tracks the mouse cursor position (or touch position on mobile) and calculates a firing angle toward it. Bullets are fired at a fixed rate along that angle. Enemies spawn from off-screen and move toward the castle at the center-bottom. Each enemy that reaches the castle removes one HP. The difficulty comes from spawn rate increasing over time, which eventually means more enemies than the turret can handle on one side — forcing rotation between clusters.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Aim at the leading enemies in each wave — the ones closest to the castle deal damage first if ignored.</li>
+        <li>Sweep slowly through enemy clusters rather than picking off stragglers one at a time; your auto-fire will handle the cluster if you point at its center.</li>
+        <li>When two groups approach from opposite sides, pivot to whichever group is denser. One enemy reaching the castle is better than five doing so.</li>
+        <li>Resist the urge to chase fast enemies. Slow, armored-looking ones near the castle are the bigger threat.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Upgrade system</strong> — spending accumulated points on faster fire rate, wider spread, or a second turret.</li>
+        <li><strong>Enemy types</strong> — flying enemies that bypass ground defenses, armored units that require multiple hits, and siege engines with large HP.</li>
+        <li><strong>Castle repair</strong> — a rare pickup that restores one HP if you can click it before it disappears.</li>
+        <li><strong>Night waves</strong> — reduced visibility stages where only enemies within a spotlight radius are visible.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

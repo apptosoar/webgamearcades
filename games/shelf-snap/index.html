@@ -504,5 +504,47 @@
       loop();
     })();
     </script>
+    <section class="game-info">
+      <a href="../../" class="back-link">← Webgame Arcades</a>
+      <h1>Shelf Snap</h1>
+      <p>Books are sliding off the shelves one by one — tap each protruding book to push it back before it falls to the floor. Every book that drops costs you one HP. As stages advance, books slide out faster and more pop out simultaneously, splitting your attention across two shelves at once.</p>
+      <p>You start with 5 HP and must push a set number of books back per stage to advance. Stage 10 is a frantic blur of color as five books can protrude at once.</p>
+
+      <h2>How to Play</h2>
+      <ul>
+        <li><strong>Push back:</strong> Click or tap a protruding book to snap it back into place</li>
+        <li>Books begin to wobble as they near the point of no return — that's your last warning</li>
+        <li>Reach the push goal for each stage to advance</li>
+        <li>You have 5 HP — losing them all ends the game</li>
+        <li>Mobile: fully touch-controlled</li>
+      </ul>
+
+      <h2>About This Game</h2>
+      <p>Shelf Snap is a reflex management game set in a chaotic library. The visual design — wooden shelves, colorful book spines, paper page edges — gives it a warmth that contrasts with the escalating panic of later stages. The core tension is attention splitting: when multiple books protrude at once, which one are you ignoring?</p>
+
+      <h2>Why We Built It</h2>
+      <p>We wanted a game where the urgency was visible rather than abstract. A book sliding off a shelf has a natural, physical danger — you can see it getting worse with each frame. The wobble animation as books near their fall point acts as a warning signal without needing a separate UI element. The library setting was chosen because it's universally familiar and creates an immediate emotional investment in keeping things tidy.</p>
+
+      <h2>How It Works</h2>
+      <p>Each book has a protrusion value that increases every frame by the current stage's pop speed. When protrusion reaches the maximum threshold, the book falls and HP is deducted. Tapping a book sets it to "pushing" state, which rapidly returns its protrusion to zero at 4.5× the pop speed. Up to five books can be active simultaneously in the final stage. A spawn timer controls how often a new random idle book becomes active, shortening with each stage.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Watch both shelves at all times, not just the one you last tapped. Books on the second shelf tend to be forgotten while you handle the first.</li>
+        <li>Prioritize the book furthest in its protrusion cycle — the one closest to falling needs attention first, even if another was first to start moving.</li>
+        <li>Look for the wobble animation. Once a book starts wobbling, it has only a second or two before it falls.</li>
+        <li>On mobile, position one thumb near each shelf so you can respond to both rows without repositioning your hands.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Item variety</strong> — vases, picture frames, and potted plants mixed in with books, each with different fall speeds and push feedback.</li>
+        <li><strong>Gravity modes</strong> — a slow-motion round for recovery and a speed round where everything moves at double pace.</li>
+        <li><strong>Shelf damage</strong> — books that fall damaging the shelf visually, with a fully broken shelf triggering a game-over condition.</li>
+        <li><strong>Tidy bonus</strong> — extra points for pushing a book back before it reaches 30% protrusion, rewarding proactive tapping over reactive saving.</li>
+      </ul>
+
+      <a href="../../" class="more-games-link">Browse All Games</a>
+    </section>
   </body>
 </html>

@@ -38,6 +38,31 @@
         <li>Distance increases your score</li>
         <li>Mobile: single tap to jump</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Bomb Runner takes the jump-timing core of an endless runner and replaces abstract obstacles with something tactile: ticking bombs on the ground. Each bomb has visible visual weight, which makes the "clear it by a hair" moments feel dramatic. The further you run, the more bombs appear and the less time you have to read each one.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We liked how a single obstacle type — the bomb — could communicate danger without needing complex art or animation. The fuse coil and round shape are universally readable, so there's no learning curve on what to avoid. The hazard type also let us vary the challenge by changing spacing and spawn rate rather than inventing new obstacle categories, which keeps the code and design simple.</p>
+
+      <h2>How It Works</h2>
+      <p>The ninja character moves at a constant horizontal speed while the world scrolls left. Bombs are placed ahead using a spawn interval that decreases over time. Each bomb occupies a fixed ground position and the player must jump over it. The jump arc is fixed — height and duration are the same every time — so the game is purely about identifying the correct moment to press jump relative to the bomb's current screen position. A miss-timed jump results in a collision and HP deduction.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Watch the bomb's position on the ground rather than the character's feet — the ground contact point is what actually determines a collision.</li>
+        <li>Jump earlier than feels natural in the first few runs. The arc takes time to peak, and landing before the bomb passes is safer than clearing it on the descent.</li>
+        <li>Resist double-tapping — mid-air inputs do nothing and can cause you to misjudge the remaining arc time.</li>
+        <li>After surviving for a while, shift to treating it as a rhythm game: the bombs develop a pattern, and you can anticipate them rather than react.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Dual-lane bombs</strong> — bombs on an elevated platform that require a lower path rather than a jump.</li>
+        <li><strong>Countdown fuses</strong> — bombs that detonate at a fixed time after spawning, requiring you to clear them quickly regardless of position.</li>
+        <li><strong>Speed burst collectible</strong> — a pickup that temporarily accelerates the runner for a score multiplier.</li>
+        <li><strong>Distance milestones</strong> — a visible marker every 500 meters that shows your personal best for comparison.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>

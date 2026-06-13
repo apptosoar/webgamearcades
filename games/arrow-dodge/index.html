@@ -37,6 +37,31 @@
         <li>Survive longer to score higher</li>
         <li>Mobile: touch controls supported</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Arrow Dodge is a pure reaction test. Hundreds of arrows fly at you from every direction, and your only tool is movement. There's no weapon, no ability, no special mechanic — just you, your reflexes, and an increasing density of incoming projectiles.</p>
+
+      <h2>Why We Built It</h2>
+      <p>We were curious how long a player could survive in a space that's purely hostile. Arrows were chosen because they have a clear direction and travel path — unlike explosions or area hazards, you can read an arrow's trajectory and make a decision. The density ramp is intentional: early stages feel manageable enough to build confidence before the real pressure starts.</p>
+
+      <h2>How It Works</h2>
+      <p>Arrows spawn from all four edges of the canvas at random intervals, each with a fixed velocity directed roughly toward the player's current position at spawn time. Spawn rate increases every 30 seconds. Each arrow has a rectangular hitbox slightly smaller than its visual size, giving players a small margin that rewards reading the screen rather than pixel-perfect inputs. Three HP means mistakes are allowed early but costly late.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Move continuously in slow circles — staying still makes you a stationary target for the next wave of arrows that already have your position locked in.</li>
+        <li>Look at the entire screen, not just the center. Arrows from the edges are the ones that tend to catch players off guard.</li>
+        <li>Avoid the corners — they limit your escape angles to just two directions.</li>
+        <li>When the density gets overwhelming, pick one clear direction and commit to moving through it rather than trying to stop and weave.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Arrow patterns</strong> — synchronized volleys, spiral formations, or radial bursts to add pattern-reading on top of reaction.</li>
+        <li><strong>Shield ability</strong> — a brief cooldown ability that blocks arrows from one direction.</li>
+        <li><strong>Survival milestones</strong> — time-based checkpoints that show how far you've made it in the current run.</li>
+        <li><strong>Difficulty modes</strong> — a slower starting speed for beginners and a compressed ramp for veterans.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>
