@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main pages -->
   <url>
     <loc>https://webgamearcades.com/</loc>
     <changefreq>weekly</changefreq>
@@ -8,23 +10,20 @@
   <url>
     <loc>https://webgamearcades.com/about.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://webgamearcades.com/contact.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://webgamearcades.com/privacy.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.5</priority>
   </url>
-  <url>
-    <loc>https://webgamearcades.com/games/zombie-survival/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
+  <!-- Game pages -->
   <url>
     <loc>https://webgamearcades.com/games/space-shooter/</loc>
     <changefreq>monthly</changefreq>
@@ -71,7 +70,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://webgamearcades.com/games/time-stop/</loc>
+    <loc>https://webgamearcades.com/games/zombie-survival/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -81,7 +80,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://webgamearcades.com/games/window-wash/</loc>
+    <loc>https://webgamearcades.com/games/time-stop/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -96,17 +95,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://webgamearcades.com/games/water-balloon-blitz/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/window-wash/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://webgamearcades.com/games/maze-escape/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://webgamearcades.com/games/tile-link/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://webgamearcades.com/games/water-balloon-blitz/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -120,4 +124,25 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://webgamearcades.com/games/tap-sprint/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/pendulum-hit/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/shelf-snap/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/otter-pop/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
