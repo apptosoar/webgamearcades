@@ -13,6 +13,7 @@
     <meta property="og:url" content="https://webgamearcades.com/games/sample-clicker/" />
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../action-style.css" />
     <style>
       * {
         box-sizing: border-box;
@@ -272,6 +273,31 @@
         <li>Press Restart to reset the score</li>
         <li>Fully touch-friendly on mobile</li>
       </ul>
+      <h2>About This Game</h2>
+      <p>Sample Clicker is the purest form of a clicker game: one button, one score, infinite clicks. Every tenth click triggers a Bonus burst — a shower of colourful particles that explodes from your tap point. There's no end state, no goal to reach, just the satisfying loop of click, score, repeat.</p>
+
+      <h2>Why We Built It</h2>
+      <p>This game started as a template demonstrating how to load an external HTML game file into the Webgame Arcades framework. It evolved into a proper standalone clicker because the particle burst effect was too satisfying to leave as a placeholder. The multilingual support (15 languages auto-detected from browser settings) was added to show how locale-aware browser games can work without a backend.</p>
+
+      <h2>How It Works</h2>
+      <p>Each click increments a counter and checks whether it's a multiple of 10 to trigger the Bonus label. The particle burst creates 18 individual DOM elements per click, each assigned a random angle, distance, color, shape, and spin via CSS custom properties. They animate outward using a CSS keyframe and remove themselves from the DOM when the animation ends. The locale detection reads <code>navigator.languages</code> and maps the first matching prefix to one of 15 supported language codes.</p>
+
+      <h2>Tips &amp; Strategy</h2>
+      <ul>
+        <li>Click in a steady rhythm rather than bursting — you'll hit higher counts with less fatigue.</li>
+        <li>Try to land clicks exactly on the button edge to trigger particles from different origins and see the full burst pattern.</li>
+        <li>Use the Restart button to reset and try to beat your previous session's score.</li>
+        <li>On mobile, use a light single-finger tap — the button is large enough that precision isn't needed, so speed is the only variable.</li>
+      </ul>
+
+      <h2>Ideas for Improvement</h2>
+      <ul>
+        <li><strong>Click-per-second display</strong> — a live readout showing your current tapping rate over the last second.</li>
+        <li><strong>Milestone rewards</strong> — visual changes to the button or background at 100, 500, and 1000 clicks.</li>
+        <li><strong>Auto-clicker upgrade</strong> — spend accumulated score to unlock an idle click rate that ticks even when you're not pressing.</li>
+        <li><strong>High score storage</strong> — localStorage persistence that shows your all-time best score across sessions.</li>
+      </ul>
+
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
   </body>
