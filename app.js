@@ -23,6 +23,7 @@
     all: "전체",
     launch: "실행",
     list: "목록",
+    gameInfo: "게임 설명",
     gameNotFound: "게임을 찾을 수 없습니다.",
     score: "점수",
     restart: "다시 시작",
@@ -129,6 +130,7 @@
     all: "All",
     launch: "Launch",
     list: "List",
+    gameInfo: "About this game",
     gameNotFound: "Game not found.",
     score: "Score",
     restart: "Restart",
@@ -1688,7 +1690,359 @@ const puzzleExamples = [
   { title: "Sudoku", type: "Number puzzle", icon: "9", description: "Fill the grid so each row and column follows the rule." },
 ];
 
+const gameInfoContent = {
+  "neon-dodge": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li><strong>방향키</strong>로 청록색 블록을 상하좌우로 이동합니다</li>
+      <li>모바일에서는 화면을 스와이프하거나 방향 패드를 사용하세요</li>
+      <li>붉은 블록을 피하세요 — 닿으면 즉시 게임 오버입니다</li>
+      <li>살아있는 매 프레임마다 점수가 올라갑니다</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>Neon Dodge는 두 가지 요소로만 이루어진 순수 반응 게임입니다. 청록색 플레이어 블록을 자유롭게 이동하고, 위에서 무작위 위치와 속도로 떨어지는 붉은 블록을 피해야 합니다. 레벨 시스템도, 파워업도, 두 번째 기회도 없습니다 — 한 번 닿으면 바로 끝입니다.</p>
+    <h2>제작 배경</h2>
+    <p>Neon Dodge는 웹게임 아케이드의 iframe 임베딩 시스템을 테스트하기 위한 가장 단순한 게임으로 시작됐습니다. 입력, 렌더링, 점수 계산이 임베드된 프레임 안에서 모두 정상 작동하는지 검증하기 위해 만들었습니다. 그런데 실제로 해보니 중독성이 생겨 그냥 뒀습니다. 청록 플레이어와 붉은 위협이 대비되는 네온 스타일은 블록이 적어도 위험감을 즉각적으로 전달하고, 프레임마다 올라가는 점수는 매 달리기의 진행감을 정확하게 보여줍니다.</p>
+    <h2>작동 원리</h2>
+    <p>플레이어 위치는 무대 영역의 (x, y) 백분율로 저장되며, 가로 3~92%, 세로 5~90%로 제한됩니다. 새 붉은 블록은 650밀리초마다 무작위 위치에 1.4~3.4픽셀/프레임 속도로 생성됩니다. 매 프레임 모든 활성 블록의 경계 사각형을 플레이어와 비교하여 두 축 모두 겹치면 게임이 종료됩니다. 점수는 플레이어가 살아있는 매 애니메이션 프레임마다 1씩 올라가므로 60fps 환경에서는 초당 60점이 쌓입니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>화면 중앙에 위치하세요 — 어느 방향으로든 최대 거리를 확보할 수 있습니다. 구석은 함정입니다.</li>
+      <li>가장 가까운 블록만 보지 말고 위쪽 전체를 주시하세요. 멀리서 생성된 블록이 시야 밖에서 경로로 들어올 수 있습니다.</li>
+      <li>멈추지 말고 부드럽게 움직이세요. 블록이 내려오는 걸 지켜보다가 멈추면 피할 수 없는 무리가 형성됩니다.</li>
+      <li>모바일에서 스와이프 컨트롤은 손가락을 올린 위치 기준으로 이동합니다 — 화면 중앙에서 시작하지 않아도 됩니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>속도 곡선</strong> — 점수가 오를수록 블록 생성 속도와 낙하 속도가 점진적으로 증가하는 난이도 시스템.</li>
+      <li><strong>잔상 효과</strong> — 플레이어 뒤에 사라지는 청록색 잔상을 남겨 빠른 회피 동작을 시각적으로 표현.</li>
+      <li><strong>아슬아슬 보너스</strong> — 붉은 블록이 닿지 않고 아슬아슬하게 지나칠 때 추가 점수 지급.</li>
+      <li><strong>최고 점수 저장</strong> — localStorage에 세션 최고 점수를 저장해 매 도전마다 목표를 제시.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li><strong>Arrow keys</strong> move the teal block in four directions</li>
+      <li>On mobile, swipe on the stage or use the on-screen d-pad</li>
+      <li>Avoid every red block — touching one ends the game instantly</li>
+      <li>Your score increases every frame you stay alive, so a single extra second matters</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Neon Dodge is a pure reflex game stripped to two elements: you and everything trying to end you. The teal player block moves freely around the stage; red blocks spawn from the top at random horizontal positions with random speeds and fall until they leave the screen or hit you. There is no level system, no power-ups, no second chances — one touch is game over.</p>
+    <h2>Why We Built It</h2>
+    <p>Neon Dodge started as a stress test for the Webgame Arcades iframe embedding system — we needed the simplest possible interactive game to verify that input, rendering, and scoring all worked inside an embedded frame. It turned out to be genuinely hard to put down. The neon visual style (glowing teal player, glowing red threats on a near-black background) makes the danger feel immediate even at low block counts, and the score counter ticking up every frame gives a precise, satisfying measure of improvement across runs.</p>
+    <h2>How It Works</h2>
+    <p>The player's position is stored as (x, y) percentages of the stage area, clamped to 3%–92% horizontally and 5%–90% vertically so the block can't be pushed fully off-screen. A new red block spawns every 650 milliseconds at a random horizontal position with a fall speed between 1.4 and 3.4 pixels per frame. Each frame, every active block's bounding rectangle is compared against the player's — an overlap on both axes ends the game. The score counter increments by 1 each animation frame the player is alive, meaning a 60 fps display awards 60 points per second of survival.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Stay near the center — from there you have maximum distance to escape in any direction. Corners are traps.</li>
+      <li>Watch the full top edge, not just the nearest block. A block spawning far away while you're focused elsewhere can drift unseen into your path.</li>
+      <li>Move in smooth arcs rather than sharp stops. Pausing to watch blocks gives them time to form unavoidable clusters.</li>
+      <li>On mobile, swipe controls track movement relative to where your finger started, so you don't need to begin from the screen center.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>Speed curve</strong> — gradually increasing spawn rate and fall speed as score climbs, making early game approachable and late game demanding.</li>
+      <li><strong>Motion trail</strong> — a fading cyan trail behind the player to make quick dodges more visually satisfying.</li>
+      <li><strong>Near-miss bonus</strong> — award extra points when a red block passes within a narrow margin without hitting, rewarding aggressive close-call play.</li>
+      <li><strong>Persistent high score</strong> — localStorage storage for the session best, shown on the game-over screen to give each run a concrete target.</li>
+    </ul>
+  ` },
+  "memory-grid": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li><strong>시작</strong> 버튼을 눌러 라운드를 시작합니다 — 타일이 순서대로 깜빡입니다</li>
+      <li>순서가 끝나면 같은 순서로 타일을 다시 탭하세요</li>
+      <li>성공하면 다음 라운드에서 타일이 하나 더 추가됩니다</li>
+      <li>하나라도 틀리면 라운드 1부터 다시 시작 — 최대한 긴 순서를 기억해 보세요</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>Memory Grid는 3×3 숫자 타일 격자에서 펼쳐지는 순서 기억 게임입니다. 매 라운드 점점 길어지는 타일 순서가 하나씩 깜빡이고, 그 순서를 정확하게 다시 탭해야 합니다. 맞추면 순서가 하나 늘고, 틀리면 라운드 1로 돌아갑니다. 끝이 없는 게임 — 한계는 당신의 작업 기억입니다.</p>
+    <h2>제작 배경</h2>
+    <p>순서 기억 게임은 1970년대 Simon 장난감 이후 검증된 형식입니다. Memory Grid는 아케이드의 액션 게임과 근본적으로 다른 인지 능력을 테스트합니다. 반응 속도가 아닌, 순서가 계속 늘어나는 동안 머릿속에 순서 목록을 유지하는 능력이죠. 3×3 격자를 선택한 이유는 9개 위치가 공간 배치를 의미 있게 만들면서도 압도적이지 않을 정도이기 때문입니다. 숫자 타일은 각 위치에 언어적 닻을 제공해 순서를 내적으로 리허설하기 쉽게 해줍니다.</p>
+    <h2>작동 원리</h2>
+    <p>매 라운드 시작 시 0~8 사이의 무작위 인덱스가 내부 순서 배열에 추가됩니다. 배열의 모든 타일이 순서대로 깜빡이며, 각 타일은 이전 타일보다 520밀리초 후에 켜집니다. 타일을 탭하면 즉시 강조 표시되어 입력을 확인합니다. 게임은 각 탭을 순서 배열의 현재 위치와 비교하여 불일치 시 즉시 실패 알림이 나옵니다. 완전히 정확한 입력 후에는 600ms 후 다음 라운드가 자동으로 시작됩니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>깜빡이는 동안 숫자를 속으로 말하세요 — "둘, 일곱, 넷"처럼 내적으로 되뇌면 시각 외에 언어 채널도 활용할 수 있습니다.</li>
+      <li>4라운드부터는 2~3개씩 묶어서 기억하세요 — "둘-일곱, 넷-하나"가 네 숫자를 개별로 기억하는 것보다 쉽습니다.</li>
+      <li>마지막 타일이 깜빡인 후 잠깐 멈추세요 — 기억이 안정되면 첫 탭에서 충동적인 실수를 줄일 수 있습니다.</li>
+      <li>같은 길이에서 계속 실패한다면 짧은 라운드를 다시 해서 자신감을 쌓으세요. 능력의 한계보다 불안감이 더 많은 실수를 만듭니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>더 큰 격자</strong> — 3×3이 너무 쉬운 플레이어를 위한 4×4 또는 5×5 모드.</li>
+      <li><strong>색상 모드</strong> — 위치 대신 색상이 깜빡이는 모드로 공간 기억과 색상 기억을 별도로 테스트.</li>
+      <li><strong>속도 도전</strong> — 라운드마다 깜빡임 간격이 짧아져 순서 길이에 더해 시간 압박까지 추가되는 모드.</li>
+      <li><strong>개인 최고 기록</strong> — localStorage에 최고 라운드를 저장해 장기적인 목표를 제공.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li>Press <strong>Start</strong> to begin a round — watch the tiles flash in sequence</li>
+      <li>After the sequence ends, repeat it by tapping the tiles in the same order</li>
+      <li>Each successful round adds one more tile to the sequence</li>
+      <li>One wrong tap resets back to round 1 — aim for the longest sequence you can hold</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Memory Grid is a Simon-style sequential memory game on a 3×3 grid of numbered tiles. Each round, a growing sequence of tiles lights up one at a time — you watch, then repeat the order exactly by tapping. Get it right and the sequence grows by one; get it wrong and you start from round 1. The game has no fixed end — the ceiling is your working memory.</p>
+    <h2>Why We Built It</h2>
+    <p>Sequential memory games have been a proven format since the Simon handheld toy of the 1970s. Memory Grid tests a fundamentally different cognitive skill from the action games in the arcade: not reflexes, but the ability to hold an ordered list in mind while it keeps growing. The 3×3 grid was chosen because nine positions are enough to make spatial arrangement meaningful without becoming overwhelming. Numbered tiles give your brain a verbal anchor to pair with each position, letting you rehearse the sequence internally while watching it play back.</p>
+    <h2>How It Works</h2>
+    <p>At the start of each round, a random index between 0 and 8 is appended to the internal sequence array. All tiles in the array are then flashed in order, each starting 520 milliseconds after the previous, pacing the sequence at roughly two tiles per second. Tapping a tile immediately highlights it to confirm the input. The game checks each tap against the current position in the sequence array — a mismatch triggers the failure alert immediately. A fully correct run increments the round counter and starts the next round automatically after a 600ms pause.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Verbalize the numbers silently as they flash — saying "two, seven, four" internally gives your memory an extra verbal channel alongside the visual one.</li>
+      <li>From round 4 onward, try grouping the sequence into chunks of 2–3: "two-seven, four-one" is easier to hold than four separate items.</li>
+      <li>After the last tile flashes, pause a beat before tapping — letting your memory settle reduces impulsive errors at the start of each recall.</li>
+      <li>If you keep failing at the same length, replay shorter rounds to build confidence. Anxiety at the edge of your capacity causes more mistakes than actual memory limits.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>Larger grid</strong> — a 4×4 or 5×5 mode for players who find the 3×3 too easy, with more positions to track across your spatial memory.</li>
+      <li><strong>Colour mode</strong> — tiles that flash different colours instead of positions, testing colour-sequence memory as a separate skill from spatial memory.</li>
+      <li><strong>Speed challenge</strong> — a mode where the flash interval shortens with each round, adding time pressure on top of sequence length pressure.</li>
+      <li><strong>Personal best tracker</strong> — localStorage persistence showing your highest round across sessions so the game has a long-term record to beat.</li>
+    </ul>
+  ` },
+  "lane-rush": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li><strong>왼쪽/오른쪽 방향키</strong>로 세 차선 사이를 이동합니다</li>
+      <li>모바일에서는 무대 왼쪽 또는 오른쪽을 탭하거나 가로로 스와이프하세요</li>
+      <li>위에서 떨어지는 보라색 장애물 — 같은 차선에 있을 때 닿으면 달리기가 끝납니다</li>
+      <li>살아있는 매 프레임마다 점수가 올라갑니다 — 결승선은 없습니다</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>Lane Rush는 세 차선 도로에서 펼쳐지는 미니멀 무한 달리기 게임입니다. 화면 하단의 빛나는 노란색 자동차를 조종하고, 위에서 무작위 차선으로 보라색 장애물이 떨어집니다. 내릴 수 있는 결정은 단 하나 — 어느 차선에 있을 것인가. 한 번 충돌하면 체력 바도 없이 바로 끝납니다.</p>
+    <h2>제작 배경</h2>
+    <p>3차선 달리기는 가장 직관적인 게임 형식 중 하나입니다. 왼쪽 또는 오른쪽 입력 하나가 즉각적이고 명확한 결과를 만들어냅니다. Lane Rush는 그 형식을 가장 간결한 형태로 탐구하기 위해 만들었습니다 — 수집할 코인도, 속도 부스터도, 거리 배율도 없습니다. 어느 차선에 있을지, 그 결정을 제때 내렸는지만 남습니다. 네온 비주얼 디자인(빛나는 차, 차선 구분선, 어두운 도로 그라디언트)은 여러 장애물이 동시에 움직일 때도 빠른 판독을 가능하게 합니다.</p>
+    <h2>작동 원리</h2>
+    <p>세 차선은 무대 너비의 약 16%, 49%, 82% 지점에 위치합니다. 플레이어 차는 입력마다 즉시 해당 위치로 이동합니다. 장애물은 780밀리초마다 무작위 차선에 생성되어 프레임당 4픽셀씩 낙하합니다. 장애물이 플레이어와 같은 차선에 있고 상단이 y=330을 지났으며 하단이 y=430을 아직 지나지 않은 경우 충돌로 판정됩니다 — 자동차 높이와 맞는 100픽셀 위험 구간입니다. 점수는 차가 살아있는 매 애니메이션 프레임마다 1씩 증가합니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>장애물 사이에는 중앙 차선에 있으세요. 중앙에서는 한 번의 이동으로 양쪽 끝에 도달할 수 있어 반응 시간이 최대가 됩니다.</li>
+      <li>새 장애물이 상단에 나타나는 순간 차선을 파악하세요 — 절반쯤 내려오면 이미 결정 창이 닫히고 있습니다.</li>
+      <li>두 장애물이 동시에 다른 차선에 있다면, 어느 쪽이 먼저 오는지 파악하고 세 번째 안전한 차선에서 둘 다 지나갈 때까지 기다리세요.</li>
+      <li>모바일에서는 확실하게 탭하세요 — 차선 변경은 즉각적이라 애매한 스와이프보다 명확한 탭이 낫습니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>속도 증가</strong> — 점수가 오를수록 장애물 낙하 속도가 증가해 초반은 쉽고 1만 점 이상은 진짜 도전이 되는 시스템.</li>
+      <li><strong>코인 수집</strong> — 차선에 나타나는 선택적 코인으로 순수 회피 대신 의도적인 이동도 보상.</li>
+      <li><strong>5차선 모드</strong> — 점수 임계값 달성 시 해금되는 넓은 도로로 더 빠른 판단과 복잡한 다중 장애물 대응 요구.</li>
+      <li><strong>마일스톤 비주얼</strong> — 1,000 / 5,000 / 10,000점 달성 시 배경 색상 변화로 진행감을 표시.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li><strong>Left / Right arrow keys</strong> switch your car between the three lanes</li>
+      <li>On mobile, tap the left or right half of the stage, or swipe horizontally</li>
+      <li>Purple obstacles fall from the top — being in the same lane when one reaches you ends the run</li>
+      <li>Score increases every frame you survive; there is no finish line</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Lane Rush is a minimal endless runner on a three-lane road. You control a glowing yellow car at the bottom; purple obstacles fall from the top in randomly chosen lanes. The only decision you ever make is which lane to occupy — left, center, or right. Survive each wave and your score climbs. One collision ends the run with no health bar and no second chances.</p>
+    <h2>Why We Built It</h2>
+    <p>Three-lane runners are one of the most universally readable game formats: a single left or right input produces an immediately clear result with no ambiguity about what happened. We built Lane Rush to explore that format in its most stripped-back form — no coins to collect, no speed boosts, no distance multipliers. Just the decision of which lane to be in and whether you committed to it in time. The neon visual design (glowing car, lane-divider lines, dark road gradient) keeps the obstacle reading fast even when multiple blocks are in motion simultaneously.</p>
+    <h2>How It Works</h2>
+    <p>The three lanes are positioned at roughly 16%, 49%, and 82% of the stage width. The player car snaps between these positions instantly on each input. Obstacles spawn in a randomly selected lane every 780 milliseconds and fall at 4 pixels per frame. A collision is registered when an obstacle is in the same lane as the car and its top edge has passed y=330 while its bottom edge hasn't yet cleared y=430 — a 100-pixel danger window aligned with the car's visual height. The score counter increments by 1 each animation frame while the car is alive.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Default to the center lane between spawns. From center, a single move reaches either edge, giving you the maximum reaction window for any incoming obstacle.</li>
+      <li>Read each new obstacle's lane the moment it appears at the top — by the time it's halfway down, the decision window is already closing.</li>
+      <li>When two obstacles are active in different lanes, identify which arrives first and stay in the safe third lane until both have passed.</li>
+      <li>On mobile, tap decisively — the lane change is instant, so a firm tap beats a hesitant swipe that might land somewhere ambiguous.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>Speed ramp</strong> — obstacle fall speed increasing as score climbs so early play is forgiving and the 10,000-point mark becomes a genuine challenge.</li>
+      <li><strong>Coin pickups</strong> — optional collectibles appearing in lanes that reward deliberate movement rather than pure avoidance.</li>
+      <li><strong>Five-lane mode</strong> — a wider road unlocked at a score threshold, demanding faster reads and more complex multi-obstacle sequencing.</li>
+      <li><strong>Milestone visuals</strong> — background colour shifts at score thresholds (1,000 / 5,000 / 10,000) to mark progress without interrupting play.</li>
+    </ul>
+  ` },
+  "block-stacker": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li><strong>왼쪽/오른쪽 방향키</strong>로 블록 이동, <strong>아래 방향키</strong>로 한 칸 내리기</li>
+      <li><strong>위 방향키</strong> 또는 보드 탭으로 회전, <strong>스페이스바</strong> 또는 D 버튼으로 즉시 낙하</li>
+      <li>가로 10칸을 모두 채우면 그 줄이 지워지고 100점을 얻습니다</li>
+      <li>새 블록이 격자 상단에 생성되지 못하면 게임 오버입니다</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>Block Stacker는 10칸 너비, 24칸 높이 격자에서 즐기는 본격 낙하 블록 퍼즐입니다. 9가지 블록 종류가 위에서 떨어집니다 — 클래식 7종(I, J, L, O, S, T, Z)에 더하여 십자형 X와 ㄷ자형 C까지. 가로 한 줄을 완성하면 지워지고, 낙하 간격은 줄을 지울수록 점점 짧아집니다.</p>
+    <h2>제작 배경</h2>
+    <p>낙하 블록 형식은 1984년부터 퍼즐의 기준이었습니다. 지금도 통하는 이유는 모든 배치 결정이 누적되기 때문입니다 — 지금 블록을 어디에 놓느냐가 다음 다섯 블록에서 무엇을 할 수 있는지를 결정합니다. 간소화된 데모가 아닌 제대로 된 구현을 만들고 싶었습니다 — 벽 킥, 다양한 블록 종류, 즉시 낙하 포함. 추가된 두 블록(X, C)은 표준 7종의 회전 어휘를 확장하고 가끔은 클래식 세트만으로는 필요 없는 공간 사고를 요구합니다.</p>
+    <h2>작동 원리</h2>
+    <p>각 블록은 피벗 기준 (x, y) 오프셋 배열로 정의됩니다. 회전은 (x, y) → (3−y, x) 변환을 적용하고 벽 킥 위치(0, −1, +1, −2, +2)를 차례로 시도해 충돌하지 않는 위치를 찾습니다. 보드는 색상 문자열의 10×24 배열이며, 비어있지 않은 항목이 있는 칸이 점유됩니다. 잠금 후 가득 찬 줄을 필터링하고 높이를 유지하기 위해 빈 줄을 앞에 추가합니다. 2줄을 지울 때마다 낙하 간격이 55ms 단축되며 최소 180ms입니다. 점수는 줄당 100점입니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>평평하게 쌓으세요. 아래에 틈이 있는 높은 기둥은 나중에 채우기가 거의 불가능합니다 — 전체 너비에 걸쳐 2~3칸 이내로 고른 표면을 유지하면 미래 선택지가 최대화됩니다.</li>
+      <li>즉시 낙하를 적극 활용하세요. 속도가 빨라질수록 천천히 내리면 시간을 낭비하고 다음 블록을 읽고 계획할 시간이 줄어듭니다.</li>
+      <li>I 블록을 위한 탈출구로 한 열을 비워두세요. 4칸 높이 수직 틈 하나로 한 번에 4줄을 지울 수 있습니다.</li>
+      <li>블록이 생성되는 순간 목적지를 정하세요 — 절반쯤 내려온 후에 반응하는 것은 낙하 간격이 300ms 아래로 떨어지면 너무 늦습니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>다음 블록 미리보기</strong> — 다음에 올 블록을 표시해 두 수 앞을 계획할 수 있는 화면.</li>
+      <li><strong>홀드 슬롯</strong> — 블록 하나를 저장했다가 나중에 꺼낼 수 있는 공간으로 블록 순서를 의도적으로 조절.</li>
+      <li><strong>콤보 점수</strong> — 연속으로 줄을 지울 때마다 점수 배율이 증가해 꾸준한 클린 플레이를 보상.</li>
+      <li><strong>고스트 블록</strong> — 즉시 낙하 시 블록이 착지할 위치를 반투명하게 표시해 빠른 속도에서도 배치 불확실성 제거.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li><strong>Left / Right arrows</strong> shift the falling piece sideways; <strong>Down arrow</strong> soft-drops it one row</li>
+      <li><strong>Up arrow</strong> or tap the board to rotate; <strong>Space</strong> or the D button hard-drops the piece instantly to the bottom</li>
+      <li>Fill a complete row of 10 cells to clear it and score 100 points</li>
+      <li>The game ends when a new piece cannot spawn at the top of the grid</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Block Stacker is a full-featured falling-block puzzle on a 10-wide, 24-tall grid. Nine piece types fall from the top — the seven classic tetrominoes (I, J, L, O, S, T, Z) plus two bonus shapes: a plus-shaped X and a C-shaped corner piece. Complete any horizontal row to clear it and score. The drop interval starts at 650ms and decreases every two lines cleared, pushing the pace steadily higher as your stack grows.</p>
+    <h2>Why We Built It</h2>
+    <p>The falling-block format has been the benchmark puzzle mechanic since 1984, and the reason it endures is that every placement decision compounds: where you put one piece now determines what you can do with the next five. We wanted a proper implementation — wall kicks, a varied piece set, hard drop — rather than a simplified demo. The two extra piece types (X and C) expand the rotation vocabulary beyond the standard seven and occasionally demand spatial reasoning that the classic set doesn't require.</p>
+    <h2>How It Works</h2>
+    <p>Each piece is defined as an array of (x, y) offsets from a pivot. Rotation applies the transform (x, y) → (3−y, x) to each offset, then tests wall-kick positions (0, −1, +1, −2, +2) until a valid placement is found. The board is a 10×24 array of color strings; a cell is occupied if its entry is non-empty. After each lock, the code filters out full rows, prepends empty rows to maintain height, and recalculates the drop timer: every two lines cleared reduces the interval by 55ms, down to a floor of 180ms. Score is 100 points per cleared line.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Build flat. Tall columns with gaps beneath them are nearly impossible to fill later — a surface within 2–3 rows of even across the full width gives you the most future flexibility.</li>
+      <li>Use hard drop aggressively. Soft-dropping wastes time at higher speeds and delays your ability to read and plan the next piece.</li>
+      <li>Keep one narrow column open as an escape route for I-pieces. A single four-tall vertical gap can absorb a straight piece and clear four rows at once.</li>
+      <li>Plan the moment each piece spawns — decide its destination before it starts falling. Reacting after it's halfway down is too slow once the drop speed climbs past 300ms.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>Next-piece preview</strong> — a display showing the upcoming piece so players can plan two moves ahead rather than reacting to each spawn.</li>
+      <li><strong>Hold slot</strong> — a reservoir to store one piece and swap it in later, enabling deliberate sequencing of the piece queue.</li>
+      <li><strong>Combo scoring</strong> — multiplying point value when consecutive drops each clear at least one line, rewarding sustained clean play.</li>
+      <li><strong>Ghost piece</strong> — a translucent shadow showing where the current piece lands on hard drop, eliminating placement ambiguity at high speeds.</li>
+    </ul>
+  ` },
+  "puzzle-trap-scout": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li><strong>클릭 / 탭</strong>으로 닫힌 칸을 엽니다</li>
+      <li><strong>우클릭</strong> 또는 <strong>길게 누르기</strong>(500ms)로 의심 칸에 ⚑ 깃발을 꽂거나 제거합니다</li>
+      <li>숫자는 주변 8개 칸 중 함정이 몇 개인지를 나타냅니다 — 이것으로 안전한 칸을 추론하세요</li>
+      <li>함정이 아닌 모든 칸을 열면 승리, 함정을 열면 즉시 게임 오버입니다</li>
+      <li>시작 전 쉬움(8×8 / 10개), 보통(10×10 / 20개), 어려움(12×10 / 30개) 중 선택하세요</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>Trap Scout는 지뢰찾기 전통의 논리 추론 격자 퍼즐입니다. 숨겨진 함정이 격자 곳곳에 배치되어 있고, 함정이 아닌 각 칸에는 인접한 8개 칸 중 함정이 몇 개인지 숫자가 표시됩니다(인접 함정이 없으면 빈 칸). 함정을 건드리지 않고 모든 안전한 칸을 열어야 합니다. 첫 클릭 안전 보장으로 첫 번째 탭에서는 절대 함정이 없습니다.</p>
+    <h2>제작 배경</h2>
+    <p>지뢰찾기는 화면에 보이는 정보만으로 모든 결정이 논리적으로 맞거나 틀리거나 추측일 수 있는 몇 안 되는 퍼즐 장르입니다. 거의 항상 유효한 추론이 존재하고, 그렇지 않을 때는 게임이 솔직하게 동전 던지기임을 알려줍니다. 생각 없이 클릭을 유도하는 시간 압박도, 도전을 없애는 힌트 시스템도 없이 그 추론의 순수함을 보존하고 싶었습니다. 세 가지 난이도는 5분짜리 가벼운 풀이부터 더 긴 분석 세션까지 지원합니다.</p>
+    <h2>작동 원리</h2>
+    <p>함정은 첫 번째 클릭 칸을 제외한 모든 칸을 Fisher-Yates 셔플로 무작위 정렬한 뒤 처음 T개 위치를 함정으로 설정합니다. 각 함정이 아닌 칸의 숫자는 주변 8개 이웃 칸 중 함정의 수를 계산합니다. 빈 칸(인접 함정 0개)을 열면 연결된 모든 빈 칸과 그 경계의 숫자 칸이 자동으로 펼쳐집니다. 첫 번째 열기 시 타이머가 시작되고 승리 또는 패배 시 정지합니다. 깃발이 꽂힌 칸은 깃발을 제거하기 전까지 열 수 없습니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>모서리나 가장자리 칸부터 시작하세요 — 이웃이 적어 초기 숫자가 더 높은 정보 밀도를 제공합니다.</li>
+      <li>칸의 숫자가 남아있는 닫힌(깃발 없는) 이웃 수와 같으면, 그 이웃들이 모두 함정입니다 — 즉시 깃발을 꽂으세요.</li>
+      <li>칸의 숫자가 현재 깃발 수와 같으면, 나머지 닫힌 이웃들은 모두 안전합니다 — 주저 없이 여세요.</li>
+      <li>막혔을 때는 연쇄 추론을 찾으세요. 인접한 두 숫자 칸이 단독으로는 결론이 안 나도 함께 보면 공유 이웃을 제한할 수 있습니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>추측 없는 모드</strong> — 모든 난이도에서 강제 추측 없이 논리만으로 완전히 풀 수 있는 보드를 생성하는 모드.</li>
+      <li><strong>커스텀 격자</strong> — 너비, 높이, 함정 수를 슬라이더로 설정해 숙련 플레이어가 원하는 난이도를 직접 설계.</li>
+      <li><strong>물음표 상태</strong> — 세 번째 칸 상태(⚑ → ? → 닫힘)로 깃발 없이 불확실한 칸을 표시.</li>
+      <li><strong>난이도별 최고 기록</strong> — localStorage에 난이도별 최단 풀이 시간을 저장해 빠른 풀이에 도전하는 목표 제공.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li><strong>Click / Tap</strong> a closed cell to reveal it</li>
+      <li><strong>Right-click</strong> or <strong>long-press</strong> (500 ms) to place or remove a ⚑ flag on a suspected trap</li>
+      <li>Numbers show how many of a cell's eight neighbours are traps — use these to deduce safe cells</li>
+      <li>Reveal all non-trap cells to win; opening a trap immediately ends the game</li>
+      <li>Choose Easy (8×8 / 10 traps), Medium (10×10 / 20), or Hard (12×10 / 30) before each round</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Trap Scout is a logic-deduction grid puzzle in the minesweeper tradition. Hidden traps are scattered across a rectangular board; every non-trap cell either displays a number counting how many of its eight adjacent cells contain traps, or is blank (meaning no adjacent traps). Your objective is to open every safe cell without triggering a trap. A first-click safety guarantee ensures mines are placed only after your opening move, so you can never lose on the very first tap.</p>
+    <h2>Why We Built It</h2>
+    <p>Minesweeper is one of the few casual puzzle genres where every decision is either provably correct or provably a guess based purely on visible information — there's almost always a valid deduction available, and when there isn't, the game honestly forces a coin-flip. We built Trap Scout to preserve that deductive purity: no time pressure that rewards clicking without thinking, no hint system that removes the challenge, and three difficulty tiers that scale both board size and trap density to suit a five-minute casual solve or a longer analytical session.</p>
+    <h2>How It Works</h2>
+    <p>Traps are placed using a Fisher-Yates shuffle of all cell indices excluding the first-clicked cell, then selecting the first T positions as traps. Each non-trap cell's number is calculated by counting how many of its eight neighbours hold traps. Revealing a blank cell (zero adjacent traps) triggers a flood-fill that automatically exposes all connected blank cells and their immediate numbered borders — the standard minesweeper behaviour that eliminates tedious one-by-one clearing of large open areas. The elapsed timer starts on first reveal and freezes on win or loss. Flagged cells block reveal until the flag is removed.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Open a corner or edge cell first — fewer neighbours means earlier numbers give you denser information to work from.</li>
+      <li>When a cell's number equals the count of its remaining closed (unflagged) neighbours, every one of those neighbours is a trap — flag them all immediately.</li>
+      <li>When a cell's number equals its current flag count, all remaining closed neighbours are safe — open them without hesitation.</li>
+      <li>When stuck, look for chained deductions: two adjacent numbered cells can together constrain their shared neighbours even when neither cell is conclusive alone.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>No-guess mode</strong> — a board generator that guarantees full solvability by logic alone, eliminating all forced guesses at every difficulty level.</li>
+      <li><strong>Custom grid builder</strong> — sliders to set any width, height, and trap count so experienced solvers can design their own difficulty.</li>
+      <li><strong>Question mark state</strong> — a third cell state (⚑ → ? → closed) for marking uncertain cells without committing fully to a flag.</li>
+      <li><strong>Per-difficulty time records</strong> — localStorage persistence of best solve times per difficulty, adding a speed-run target for solvers optimising beyond completion.</li>
+    </ul>
+  ` },
+  "puzzle-sudoku": { ko: `
+    <h2>조작 방법</h2>
+    <ul>
+      <li>보드 위 버튼에서 격자 크기를 선택합니다 — 4×4, 5×5, 6×6, 8×8, 10×10</li>
+      <li>빈 칸을 <strong>탭 / 클릭</strong>하면 1부터 N까지 숫자가 순환합니다</li>
+      <li>청록색 칸은 고정된 단서이며 변경할 수 없습니다</li>
+      <li>보드가 가득 찼을 때 충돌 칸이 빨간색으로 표시됩니다 — 모두 수정하면 승리입니다</li>
+      <li>모든 행과 열에 충돌이 없으면 보드가 초록색으로 바뀝니다</li>
+    </ul>
+    <h2>게임 소개</h2>
+    <p>스도쿠는 5가지 격자 크기(4×4, 5×5, 6×6, 8×8, 10×10)로 즐기는 라틴 방진 제약 퍼즐입니다. 약 절반의 칸이 단서로 미리 채워져 있고, 나머지를 채워 모든 행과 열에 각 숫자가 정확히 한 번씩 나오도록 해야 합니다. 크기마다 같은 규칙 — 숫자 범위와 추론 깊이만 달라집니다. 보드가 가득 찼을 때 충돌을 빨간색으로 표시해 승리 선언 전에 오류를 찾고 수정할 수 있습니다.</p>
+    <h2>제작 배경</h2>
+    <p>일반 9×9 스도쿠는 다른 플랫폼에 이미 많이 있습니다. 이 구현을 포함한 이유는 다중 크기 형식이 하나의 인터페이스 안에서 의미 있게 다른 퍼즐 경험을 제공하기 때문입니다. 4×4는 1분 안에 풀리는 워밍업, 10×10은 15분 이상 걸릴 수 있는 집중적인 세션입니다. 5가지 크기를 한 게임에서 선택할 수 있어 원하는 만큼의 도전을 고를 수 있습니다. 생성 알고리즘으로 매번 새로운 보드가 만들어지고, 48% 사전 채우기 비율이 너무 희박하지 않게 유지합니다.</p>
+    <h2>작동 원리</h2>
+    <p>각 보드는 N개 숫자의 셔플 목록을 만들고 각 칸의 값을 <code>numbers[(rowOffset[r] + columnOffset[c]) % N]</code>으로 계산합니다. rowOffset과 columnOffset은 독립적으로 셔플된 0..N−1 배열입니다. 이것으로 한 번의 통과에 유효한 라틴 방진이 생성됩니다. 약 48%의 칸이 무작위로 제거되어 편집 가능한 빈 칸이 되고, 나머지는 청록색 고정 단서가 됩니다. 충돌 감지는 각 채워진 칸을 같은 행과 열의 모든 칸과 비교합니다. 초록색 승리 상태는 모든 칸이 채워지고 충돌 검사가 통과될 때만 표시됩니다.</p>
+    <h2>팁 &amp; 전략</h2>
+    <ul>
+      <li>4×4나 5×5 격자부터 시작하세요 — 논리는 더 큰 크기와 동일하지만 주의를 분산할 칸이 적습니다.</li>
+      <li>단서 중 딱 한 번만 나오는 숫자가 있는 행과 열을 찾으세요 — 그 행/열의 나머지 칸은 그 숫자를 반복할 수 없어 선택지가 빠르게 좁혀집니다.</li>
+      <li>"강제 칸"을 찾으세요: N−1칸이 이미 채워진 행이나 열은 빈 칸에 들어갈 숫자가 하나뿐입니다.</li>
+      <li>8×8, 10×10 같은 큰 격자에서는 행별로 풀기보다 숫자 하나씩 전체 보드에서 찾는 방식이 더 쉽습니다.</li>
+    </ul>
+    <h2>개선 아이디어</h2>
+    <ul>
+      <li><strong>실시간 충돌 표시</strong> — 보드가 다 채워질 때까지 기다리지 않고 매 입력마다 즉시 충돌을 표시해 즉각적인 피드백 제공.</li>
+      <li><strong>되돌리기 버튼</strong> — 마지막 N번의 이동을 단계별로 취소해 추론을 시도하다가 실수해도 처음부터 다시 시작하지 않아도 되는 기능.</li>
+      <li><strong>힌트 시스템</strong> — 막혔을 때 논리적으로 확실한 칸 하나를 알려주는 버튼으로 전체 답을 주지 않고 도움을 제공.</li>
+      <li><strong>3×3 박스 제약 9×9</strong> — 행과 열 외에 3×3 서브 격자에도 각 숫자가 하나씩 들어가야 하는 클래식 형식으로 세 번째 제약 차원 추가.</li>
+    </ul>
+  `, en: `
+    <h2>How to Play</h2>
+    <ul>
+      <li>Select a grid size — 4×4, 5×5, 6×6, 8×8, or 10×10 — from the buttons above the board</li>
+      <li><strong>Tap / Click</strong> an empty cell to cycle it through the available numbers (1 to N)</li>
+      <li>Teal cells are fixed clues and cannot be changed</li>
+      <li>When the board is fully filled, conflicts highlight in red — correct all of them to win</li>
+      <li>The board turns green when every row and column is complete without any conflict</li>
+    </ul>
+    <h2>About This Game</h2>
+    <p>Sudoku is a Latin-square constraint puzzle available in five grid sizes: 4×4, 5×5, 6×6, 8×8, and 10×10. Roughly half the cells are pre-filled as fixed clues; you complete the rest so that every row and every column contains each number exactly once. The same core rule applies at every size — only the number range and the depth of constraint reasoning change. Conflicts turn red on a fully-filled board so you can find and fix errors before declaring a solution.</p>
+    <h2>Why We Built It</h2>
+    <p>Standard 9×9 Sudoku is well-covered on other platforms. We included this implementation because the multi-size format creates meaningfully different puzzle experiences within a single interface. A 4×4 puzzle solves in under a minute and makes a good warm-up; a 10×10 puzzle produces a demanding session that can take fifteen or more minutes. Offering five sizes lets players choose how much engagement they want without switching games. The generation algorithm ensures every new board is unique, and the 48% pre-fill rate keeps puzzles solvable without being too sparse to start from.</p>
+    <h2>How It Works</h2>
+    <p>Each board is generated by taking a shuffled list of N numbers and computing each cell's value as <code>numbers[(rowOffset[r] + columnOffset[c]) % N]</code>, where rowOffset and columnOffset are independently shuffled arrays of 0..N−1. This produces a valid Latin square — no repeated values in any row or column — in a single pass. Approximately 48% of cells are then randomly removed and shown as editable blanks; the rest become fixed teal clues. Conflict detection checks each filled cell against every other cell in its row and column; any cell sharing a value with another in its line is flagged red. The green win state fires only when all cells are filled and the conflict check returns clean.</p>
+    <h2>Tips &amp; Strategy</h2>
+    <ul>
+      <li>Start with the 4×4 or 5×5 grid to learn the constraint patterns — the logic is identical to larger sizes but with fewer cells competing for attention.</li>
+      <li>Scan each row and column for a number appearing only once among the pre-fills — the remaining cells in that line must not repeat it, quickly narrowing options.</li>
+      <li>Look for "forced" cells: rows or columns where N−1 cells are already filled, leaving only one valid value for the blank.</li>
+      <li>On larger grids (8×8, 10×10), work one number at a time across the entire board rather than solving row by row — it's easier to see where a specific value must go when you're focused on it alone.</li>
+    </ul>
+    <h2>Ideas for Improvement</h2>
+    <ul>
+      <li><strong>Real-time conflict highlighting</strong> — flagging conflicting cells immediately on each entry rather than waiting for a full board, giving instant feedback on every tap.</li>
+      <li><strong>Undo button</strong> — stepping back through the last N moves so players can safely test a deduction without restarting the whole puzzle.</li>
+      <li><strong>Hint system</strong> — a button that reveals one provably correct cell when a player is genuinely stuck, without giving away the full solution.</li>
+      <li><strong>9×9 with box constraints</strong> — the classic format with the additional 3×3 sub-grid rule, adding a third constraint dimension that dramatically increases puzzle depth.</li>
+    </ul>
+  ` },
+};
+
 const supportedLocales = Object.keys(translations);
+const preferredLocales = ["en", "ko", "ja", "zh", "zh-TW", "es", "pt", "de", "fr", "id"];
+const geoLocaleKey = "geo_locale";
+const localeSourceKey = "locale_source";
 let currentLocale = detectLocale();
 let copy = translations[currentLocale];
 const app = document.querySelector("#app");
@@ -1698,12 +2052,136 @@ const state = {
   selectedGenre: "all",
 };
 
+const fallbackGameInfoCopy = {
+  en: {
+    about: "About this game",
+    howToPlay: "How to play",
+    goal: "Goal",
+    tips: "Tips",
+    play: "Play game",
+    genreLine: genre => `This is a ${genre} game designed for quick browser play.`,
+    goalText: "Use the rules shown in the game screen, react to the challenge, and try to improve your result each run.",
+    action: ["Focus on timing and movement.", "Avoid hazards before they reach your character.", "Restart quickly and learn the pattern of each attempt."],
+    puzzle: ["Read the board state before acting.", "Look for forced moves and repeated patterns.", "Take your time; accuracy matters more than speed."],
+    racing: ["Keep your rhythm steady.", "React early instead of waiting until the last moment.", "Small timing improvements make each run better."],
+  },
+  ko: {
+    about: "게임 소개",
+    howToPlay: "플레이 방법",
+    goal: "목표",
+    tips: "팁",
+    play: "게임 플레이하기",
+    genreLine: genre => `이 게임은 브라우저에서 바로 즐길 수 있는 ${genre} 게임입니다.`,
+    goalText: "게임 화면에 표시되는 규칙을 확인하고, 매번 더 좋은 기록을 목표로 플레이하세요.",
+    action: ["타이밍과 이동에 집중하세요.", "위험 요소가 캐릭터에 닿기 전에 피하세요.", "빠르게 다시 시작하며 패턴을 익히세요."],
+    puzzle: ["움직이기 전에 보드 상태를 먼저 읽으세요.", "확정적으로 가능한 수와 반복 패턴을 찾으세요.", "속도보다 정확도가 중요합니다."],
+    racing: ["일정한 리듬을 유지하세요.", "마지막 순간까지 기다리지 말고 일찍 반응하세요.", "작은 타이밍 차이가 기록을 바꿉니다."],
+  },
+  ja: {
+    about: "ゲーム紹介",
+    howToPlay: "遊び方",
+    goal: "目標",
+    tips: "ヒント",
+    play: "ゲームをプレイ",
+    genreLine: genre => `このゲームはブラウザですぐに遊べる${genre}ゲームです。`,
+    goalText: "ゲーム画面のルールを確認し、毎回より良い結果を目指しましょう。",
+    action: ["タイミングと移動に集中しましょう。", "危険がキャラクターに当たる前に避けましょう。", "すぐに再挑戦してパターンを覚えましょう。"],
+    puzzle: ["操作する前に盤面をよく確認しましょう。", "確定できる手と繰り返しのパターンを探しましょう。", "速さより正確さが大切です。"],
+    racing: ["一定のリズムを保ちましょう。", "最後の瞬間まで待たず早めに反応しましょう。", "小さなタイミングの改善が記録につながります。"],
+  },
+  zh: {
+    about: "游戏介绍",
+    howToPlay: "玩法",
+    goal: "目标",
+    tips: "提示",
+    play: "开始游戏",
+    genreLine: genre => `这是一款可在浏览器中直接游玩的${genre}游戏。`,
+    goalText: "查看游戏画面中的规则，每次挑战都争取获得更好的结果。",
+    action: ["专注于时机和移动。", "在危险碰到角色之前避开它。", "快速重开并熟悉每次挑战的规律。"],
+    puzzle: ["行动前先观察棋盘状态。", "寻找确定的步骤和重复模式。", "准确比速度更重要。"],
+    racing: ["保持稳定节奏。", "不要等到最后一刻才反应。", "细微的时机改进会带来更好的成绩。"],
+  },
+  "zh-TW": {
+    about: "遊戲介紹",
+    howToPlay: "玩法",
+    goal: "目標",
+    tips: "提示",
+    play: "開始遊戲",
+    genreLine: genre => `這是一款可在瀏覽器中直接遊玩的${genre}遊戲。`,
+    goalText: "查看遊戲畫面中的規則，每次挑戰都爭取更好的結果。",
+    action: ["專注於時機和移動。", "在危險碰到角色前避開它。", "快速重開並熟悉每次挑戰的規律。"],
+    puzzle: ["行動前先觀察棋盤狀態。", "尋找確定的步驟和重複模式。", "準確比速度更重要。"],
+    racing: ["保持穩定節奏。", "不要等到最後一刻才反應。", "細微的時機改善會帶來更好的成績。"],
+  },
+  es: {
+    about: "Sobre este juego",
+    howToPlay: "Cómo jugar",
+    goal: "Objetivo",
+    tips: "Consejos",
+    play: "Jugar",
+    genreLine: genre => `Este es un juego de ${genre} diseñado para jugar rápido en el navegador.`,
+    goalText: "Consulta las reglas en la pantalla del juego e intenta mejorar tu resultado en cada partida.",
+    action: ["Concéntrate en el tiempo y el movimiento.", "Evita los peligros antes de que alcancen a tu personaje.", "Reinicia rápido y aprende el patrón de cada intento."],
+    puzzle: ["Observa el tablero antes de actuar.", "Busca movimientos seguros y patrones repetidos.", "La precisión importa más que la velocidad."],
+    racing: ["Mantén un ritmo estable.", "Reacciona pronto en lugar de esperar al último momento.", "Pequeñas mejoras de tiempo pueden cambiar tu marca."],
+  },
+  pt: {
+    about: "Sobre este jogo",
+    howToPlay: "Como jogar",
+    goal: "Objetivo",
+    tips: "Dicas",
+    play: "Jogar",
+    genreLine: genre => `Este é um jogo de ${genre} feito para jogar rapidamente no navegador.`,
+    goalText: "Confira as regras na tela do jogo e tente melhorar seu resultado a cada partida.",
+    action: ["Concentre-se no tempo e no movimento.", "Evite os perigos antes que alcancem seu personagem.", "Reinicie rápido e aprenda o padrão de cada tentativa."],
+    puzzle: ["Observe o tabuleiro antes de agir.", "Procure jogadas seguras e padrões repetidos.", "Precisão importa mais do que velocidade."],
+    racing: ["Mantenha um ritmo constante.", "Reaja cedo em vez de esperar o último momento.", "Pequenas melhorias de tempo fazem diferença."],
+  },
+  de: {
+    about: "Über dieses Spiel",
+    howToPlay: "Spielanleitung",
+    goal: "Ziel",
+    tips: "Tipps",
+    play: "Spiel starten",
+    genreLine: genre => `Dies ist ein ${genre}-Spiel für schnelle Runden direkt im Browser.`,
+    goalText: "Lies die Regeln im Spielbildschirm und versuche, dein Ergebnis in jeder Runde zu verbessern.",
+    action: ["Achte auf Timing und Bewegung.", "Weiche Gefahren aus, bevor sie deine Figur treffen.", "Starte schnell neu und lerne die Muster jedes Versuchs."],
+    puzzle: ["Prüfe das Spielfeld, bevor du handelst.", "Suche nach sicheren Zügen und wiederkehrenden Mustern.", "Genauigkeit ist wichtiger als Geschwindigkeit."],
+    racing: ["Halte einen stabilen Rhythmus.", "Reagiere früh statt im letzten Moment.", "Kleine Timing-Verbesserungen bringen bessere Ergebnisse."],
+  },
+  fr: {
+    about: "À propos de ce jeu",
+    howToPlay: "Comment jouer",
+    goal: "Objectif",
+    tips: "Conseils",
+    play: "Jouer",
+    genreLine: genre => `C'est un jeu de ${genre} conçu pour être joué rapidement dans le navigateur.`,
+    goalText: "Consulte les règles affichées dans le jeu et essaie d'améliorer ton résultat à chaque partie.",
+    action: ["Concentre-toi sur le timing et le mouvement.", "Évite les dangers avant qu'ils touchent ton personnage.", "Relance vite et apprends le rythme de chaque tentative."],
+    puzzle: ["Observe le plateau avant d'agir.", "Cherche les coups sûrs et les motifs répétés.", "La précision compte plus que la vitesse."],
+    racing: ["Garde un rythme régulier.", "Réagis tôt au lieu d'attendre le dernier moment.", "De petites améliorations de timing changent le résultat."],
+  },
+  id: {
+    about: "Tentang game ini",
+    howToPlay: "Cara bermain",
+    goal: "Tujuan",
+    tips: "Tips",
+    play: "Mainkan",
+    genreLine: genre => `Ini adalah game ${genre} yang bisa langsung dimainkan di browser.`,
+    goalText: "Lihat aturan di layar game dan coba tingkatkan hasilmu di setiap permainan.",
+    action: ["Fokus pada timing dan gerakan.", "Hindari bahaya sebelum mengenai karakter.", "Mulai ulang dengan cepat dan pelajari polanya."],
+    puzzle: ["Amati papan sebelum bertindak.", "Cari langkah yang pasti dan pola berulang.", "Ketepatan lebih penting daripada kecepatan."],
+    racing: ["Jaga ritme tetap stabil.", "Bereaksi lebih awal, jangan menunggu saat terakhir.", "Perbaikan timing kecil bisa meningkatkan skor."],
+  },
+};
+
 applyStaticText();
 window.addEventListener("hashchange", render);
 app.addEventListener("click", handleAppClick);
 
 render();
 initCookieBanner();
+initGeoLocale();
 
 // 쿠키 배너 다국어 텍스트 (주요 언어만 — 나머지는 영어 폴백)
 const COOKIE_I18N = {
@@ -1751,22 +2229,96 @@ function detectLocale() {
   const urlLocale = normalizeLocale(params.get("lang") || params.get("locale"));
   if (urlLocale) {
     localStorage.setItem("locale", urlLocale);
+    localStorage.setItem(localeSourceKey, "url");
     return urlLocale;
   }
-  // 2순위: localStorage 저장값 (수동 선택 기억)
+  // 2순위: localStorage 저장값 (수동 선택 또는 이전 자동 국가 감지 기억)
   const saved = normalizeLocale(localStorage.getItem("locale"));
   if (saved) return saved;
-  // 3순위: 첫 접속 환경의 브라우저 언어/지역
+  // 3순위: 이전 국가 감지값
+  const geoSaved = normalizeLocale(localStorage.getItem(geoLocaleKey));
+  if (geoSaved) return geoSaved;
+  // 4순위: 첫 접속 환경의 브라우저 언어/지역
   const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
   for (const language of languages) {
     const locale = normalizeLocale(language);
     if (locale) {
-      localStorage.setItem("locale", locale);
       return locale;
     }
   }
-  localStorage.setItem("locale", "en");
   return "en";
+}
+
+async function initGeoLocale() {
+  const params = new URLSearchParams(location.search);
+  if (normalizeLocale(params.get("lang") || params.get("locale"))) return;
+  if (localStorage.getItem("locale")) return;
+  if (localStorage.getItem(localeSourceKey) === "manual") return;
+
+  const locale = await detectGeoLocale();
+  if (!locale || locale === currentLocale) {
+    if (locale) localStorage.setItem(geoLocaleKey, locale);
+    return;
+  }
+
+  localStorage.setItem(geoLocaleKey, locale);
+  currentLocale = locale;
+  copy = translations[currentLocale];
+  applyStaticText();
+  render();
+
+  const banner = document.getElementById("cookie-banner");
+  if (banner) {
+    banner.remove();
+    initCookieBanner();
+  }
+}
+
+async function detectGeoLocale() {
+  const endpoints = [
+    {
+      url: "https://ipapi.co/json/",
+      parse: data => data?.country_code,
+    },
+    {
+      url: "https://get.geojs.io/v1/ip/country.json",
+      parse: data => data?.country,
+    },
+  ];
+
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint.url, { cache: "no-store" });
+      if (!response.ok) continue;
+      const country = String(endpoint.parse(await response.json()) || "").toUpperCase();
+      const locale = localeFromCountry(country);
+      if (locale) return locale;
+    } catch (_) {}
+  }
+  return "";
+}
+
+function localeFromCountry(country) {
+  const countryLocales = {
+    // English-first markets
+    US: "en", GB: "en", IE: "en", CA: "en", AU: "en", NZ: "en", SG: "en",
+    // Korean, Japanese, Chinese
+    KR: "ko", JP: "ja", CN: "zh", TW: "zh-TW", HK: "zh-TW", MO: "zh-TW",
+    // Spanish-speaking markets
+    ES: "es", MX: "es", AR: "es", CO: "es", CL: "es", PE: "es", VE: "es",
+    EC: "es", GT: "es", CU: "es", BO: "es", DO: "es", HN: "es", PY: "es",
+    SV: "es", NI: "es", CR: "es", PA: "es", UY: "es", PR: "es",
+    // Portuguese-speaking markets
+    BR: "pt", PT: "pt",
+    // German-speaking markets
+    DE: "de", AT: "de",
+    // French-speaking markets
+    FR: "fr", BE: "fr", LU: "fr", MC: "fr",
+    // Indonesian
+    ID: "id",
+  };
+
+  return normalizeLocale(countryLocales[country]) || "";
 }
 
 function normalizeLocale(value) {
@@ -1800,10 +2352,12 @@ function buildLangSelector() {
   // 현재 언어 이름 표시
   label.textContent = translations[currentLocale].localeName;
 
-  // 언어 목록 — localeName 기준 알파벳 정렬
-  const sorted = Object.keys(translations).sort((a, b) =>
-    translations[a].localeName.localeCompare(translations[b].localeName)
-  );
+  // 추천 언어를 먼저 보여주고, 나머지는 localeName 기준으로 정렬합니다.
+  const preferred = preferredLocales.filter(locale => translations[locale]);
+  const rest = Object.keys(translations)
+    .filter(locale => !preferred.includes(locale))
+    .sort((a, b) => translations[a].localeName.localeCompare(translations[b].localeName));
+  const sorted = [...preferred, ...rest];
   dropdown.innerHTML = sorted.map(locale =>
     `<button class="lang-option${locale === currentLocale ? " active" : ""}" data-locale="${locale}">` +
     `${translations[locale].localeName}</button>`
@@ -1848,6 +2402,8 @@ function buildLangSelector() {
 function changeLocale(locale) {
   if (!translations[locale]) return;
   localStorage.setItem("locale", locale);
+  localStorage.setItem(localeSourceKey, "manual");
+  localStorage.removeItem(geoLocaleKey);
   currentLocale = locale;
   copy = translations[currentLocale];
 
@@ -1886,6 +2442,11 @@ function render() {
 
   if (route === "play") {
     renderPlayer(id);
+    return;
+  }
+
+  if (route === "info") {
+    renderGameInfoPage(id);
     return;
   }
 
@@ -2276,6 +2837,179 @@ function drawIconShape(ctx, id, c, S) {
       break;
     }
 
+    case "tap-sprint":
+      // Speed lines
+      ctx.strokeStyle = "rgba(255,255,255,0.35)";
+      ctx.lineWidth = S*0.04;
+      [-0.16, -0.04, 0.08].forEach(dy => {
+        ctx.beginPath(); ctx.moveTo(c - S*0.4, c + dy*S); ctx.lineTo(c - S*0.14, c + dy*S); ctx.stroke();
+      });
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      // Runner head
+      ctx.beginPath(); ctx.arc(c + S*0.08, c - S*0.26, S*0.09, 0, Math.PI*2); ctx.fill();
+      // Body
+      ctx.lineWidth = S*0.07;
+      ctx.beginPath(); ctx.moveTo(c + S*0.08, c - S*0.17); ctx.lineTo(c + S*0.08, c + S*0.05); ctx.stroke();
+      // Arms
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath(); ctx.moveTo(c + S*0.08, c - S*0.07); ctx.lineTo(c - S*0.1, c + S*0.04); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(c + S*0.08, c - S*0.07); ctx.lineTo(c + S*0.26, c - S*0.01); ctx.stroke();
+      // Legs mid-stride
+      ctx.lineWidth = S*0.065;
+      ctx.beginPath(); ctx.moveTo(c + S*0.08, c + S*0.05); ctx.lineTo(c - S*0.08, c + S*0.3); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(c + S*0.08, c + S*0.05); ctx.lineTo(c + S*0.28, c + S*0.25); ctx.stroke();
+      break;
+
+    case "pendulum-hit":
+      // Swing arc (ghosted)
+      ctx.globalAlpha = 0.28;
+      ctx.lineWidth = S*0.04;
+      ctx.beginPath(); ctx.arc(c, c - S*0.3, S*0.4, Math.PI*0.22, Math.PI*0.78); ctx.stroke();
+      ctx.globalAlpha = 1;
+      // Pivot
+      ctx.beginPath(); ctx.arc(c, c - S*0.3, S*0.055, 0, Math.PI*2); ctx.fill();
+      // Rod swung to right
+      ctx.lineWidth = S*0.045;
+      ctx.beginPath(); ctx.moveTo(c, c - S*0.3); ctx.lineTo(c + S*0.24, c + S*0.06); ctx.stroke();
+      // Bob
+      ctx.beginPath(); ctx.arc(c + S*0.24, c + S*0.06, S*0.11, 0, Math.PI*2); ctx.fill();
+      // Target zone
+      ctx.fillStyle = "rgba(0,0,0,0.3)";
+      ctx.fillRect(c - S*0.34, c + S*0.16, S*0.15, S*0.09);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fillRect(c - S*0.3, c + S*0.18, S*0.06, S*0.05);
+      break;
+
+    case "window-wash":
+      // Window frame
+      ctx.lineWidth = S*0.055;
+      ctx.strokeRect(c - S*0.27, c - S*0.27, S*0.54, S*0.54);
+      // Window cross dividers
+      ctx.lineWidth = S*0.035;
+      ctx.strokeStyle = "rgba(255,255,255,0.45)";
+      ctx.beginPath(); ctx.moveTo(c, c - S*0.27); ctx.lineTo(c, c + S*0.27); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(c - S*0.27, c); ctx.lineTo(c + S*0.27, c); ctx.stroke();
+      // Clean sweep area (top half lighter)
+      ctx.fillStyle = "rgba(255,255,255,0.15)";
+      ctx.fillRect(c - S*0.25, c - S*0.25, S*0.5, S*0.23);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      // Squeegee bar
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      ctx.lineWidth = S*0.075;
+      ctx.beginPath(); ctx.moveTo(c - S*0.3, c - S*0.02); ctx.lineTo(c + S*0.3, c - S*0.02); ctx.stroke();
+      // Squeegee handle
+      ctx.lineWidth = S*0.045;
+      ctx.beginPath(); ctx.moveTo(c + S*0.22, c - S*0.02); ctx.lineTo(c + S*0.22, c + S*0.22); ctx.stroke();
+      break;
+
+    case "maze-escape":
+      // Outer border
+      ctx.lineWidth = S*0.06;
+      ctx.strokeRect(c - S*0.3, c - S*0.3, S*0.6, S*0.6);
+      // Inner walls
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath();
+      // Horizontal walls
+      ctx.moveTo(c - S*0.3, c - S*0.1); ctx.lineTo(c + S*0.12, c - S*0.1);
+      ctx.moveTo(c - S*0.12, c + S*0.1); ctx.lineTo(c + S*0.3, c + S*0.1);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.12, c - S*0.3); ctx.lineTo(c - S*0.12, c + S*0.1);
+      ctx.moveTo(c + S*0.12, c - S*0.1); ctx.lineTo(c + S*0.12, c + S*0.3);
+      ctx.stroke();
+      // Path dot (player)
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath(); ctx.arc(c - S*0.19, c + S*0.19, S*0.07, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+      // Exit arrow
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath();
+      ctx.moveTo(c + S*0.3, c + S*0.19); ctx.lineTo(c + S*0.44, c + S*0.19);
+      ctx.moveTo(c + S*0.36, c + S*0.11); ctx.lineTo(c + S*0.44, c + S*0.19); ctx.lineTo(c + S*0.36, c + S*0.27);
+      ctx.stroke();
+      break;
+
+    case "otter-pop":
+      // Ground line
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath(); ctx.moveTo(c - S*0.36, c + S*0.14); ctx.lineTo(c + S*0.36, c + S*0.14); ctx.stroke();
+      // Three holes
+      ctx.globalAlpha = 0.35;
+      [-0.22, 0, 0.22].forEach(dx => {
+        ctx.beginPath(); ctx.ellipse(c + dx*S, c + S*0.14, S*0.1, S*0.045, 0, 0, Math.PI*2); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      // Otter head popping from middle hole
+      ctx.beginPath(); ctx.arc(c, c - S*0.04, S*0.16, 0, Math.PI*2); ctx.fill();
+      // Ears
+      ctx.beginPath(); ctx.arc(c - S*0.13, c - S*0.16, S*0.055, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c + S*0.13, c - S*0.16, S*0.055, 0, Math.PI*2); ctx.fill();
+      // Eyes (dark)
+      ctx.fillStyle = "rgba(0,0,0,0.4)";
+      ctx.beginPath(); ctx.arc(c - S*0.06, c - S*0.06, S*0.038, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c + S*0.06, c - S*0.06, S*0.038, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      // Motion lines (popping up — small + sparks)
+      ctx.strokeStyle = "rgba(255,255,255,0.48)";
+      ctx.lineWidth = S*0.035;
+      [[-0.28, -0.26], [0.28, -0.26]].forEach(([dx, dy]) => {
+        ctx.beginPath(); ctx.moveTo(c + dx*S, c + dy*S); ctx.lineTo(c + dx*S, c + (dy - 0.1)*S); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(c + (dx - 0.05)*S, c + (dy - 0.05)*S); ctx.lineTo(c + (dx + 0.05)*S, c + (dy - 0.05)*S); ctx.stroke();
+      });
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      break;
+
+    case "shelf-snap": {
+      // Shelf plank
+      ctx.lineWidth = S*0.06;
+      ctx.beginPath(); ctx.moveTo(c - S*0.33, c + S*0.1); ctx.lineTo(c + S*0.33, c + S*0.1); ctx.stroke();
+      // Shelf supports
+      ctx.lineWidth = S*0.04;
+      ctx.strokeStyle = "rgba(255,255,255,0.4)";
+      ctx.beginPath();
+      ctx.moveTo(c - S*0.3, c + S*0.1); ctx.lineTo(c - S*0.3, c + S*0.28);
+      ctx.moveTo(c + S*0.3, c + S*0.1); ctx.lineTo(c + S*0.3, c + S*0.28);
+      ctx.stroke();
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      // Books standing on shelf
+      const bw2 = S*0.1, bh2 = S*0.32;
+      [-0.22, -0.1, 0.02].forEach(dx => {
+        ctx.fillRect(c + dx*S, c + S*0.1 - bh2, bw2 - S*0.015, bh2);
+      });
+      // One book sliding out right (protruding past edge)
+      ctx.globalAlpha = 0.8;
+      ctx.fillRect(c + S*0.18, c + S*0.1 - bh2 + S*0.1, bw2, bh2 - S*0.1);
+      ctx.globalAlpha = 1;
+      // Arrow showing book sliding out
+      ctx.strokeStyle = "rgba(255,255,255,0.5)";
+      ctx.lineWidth = S*0.04;
+      ctx.beginPath();
+      ctx.moveTo(c + S*0.2, c - S*0.2); ctx.lineTo(c + S*0.34, c - S*0.2);
+      ctx.moveTo(c + S*0.26, c - S*0.27); ctx.lineTo(c + S*0.34, c - S*0.2); ctx.lineTo(c + S*0.26, c - S*0.13);
+      ctx.stroke();
+      ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
+
+    case "sample-clicker":
+      // Large clickable button circle
+      ctx.lineWidth = S*0.055;
+      ctx.beginPath(); ctx.arc(c - S*0.05, c + S*0.04, S*0.22, 0, Math.PI*2); ctx.stroke();
+      // Cursor pointer
+      ctx.lineWidth = S*0.048;
+      ctx.beginPath();
+      ctx.moveTo(c + S*0.2, c - S*0.28);
+      ctx.lineTo(c + S*0.2, c + S*0.02);
+      ctx.lineTo(c + S*0.29, c - S*0.08);
+      ctx.lineTo(c + S*0.36, c + S*0.08);
+      ctx.stroke();
+      // Click ripple
+      ctx.globalAlpha = 0.3;
+      ctx.lineWidth = S*0.032;
+      ctx.beginPath(); ctx.arc(c - S*0.05, c + S*0.04, S*0.32, 0, Math.PI*2); ctx.stroke();
+      ctx.globalAlpha = 1;
+      break;
+
     default: {
       const pts = 5, outerR = S*0.28, innerR = S*0.12;
       ctx.beginPath();
@@ -2343,16 +3077,151 @@ function renderPlayer(gameId) {
           <h2>${game.title}</h2>
         </div>
         <div class="hero-actions">
+          <a class="ghost-button" href="#info/${escapeAttribute(game.id)}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            ${copy.gameInfo || 'About'}
+          </a>
           <a class="ghost-button" href="#home">${copy.home}</a>
         </div>
       </div>
       <div class="iframe-frame">
         ${gameFrame(game)}
       </div>
-      ${gameGuide(game)}
     </section>
   `;
   focusPlayerFrame(game);
+}
+
+async function renderGameInfoPage(gameId) {
+  const game = getGames().find(g => g.id === gameId);
+  if (!game) {
+    app.innerHTML = `<section class="section"><div class="empty-state">${copy.gameNotFound}</div></section>`;
+    return;
+  }
+
+  const backHref = `#play/${escapeAttribute(game.id)}`;
+  const genre = getGenre(game.genre);
+
+  // Skeleton while loading
+  app.innerHTML = `
+    <section class="section lp-shelf lp-shelf--browse" style="max-width:760px;margin:0 auto">
+      <div class="game-info-page-nav">
+        <a class="ghost-button" href="${backHref}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          ${copy.home === "홈" ? "게임으로" : "Back to game"}
+        </a>
+        <a class="ghost-button" href="#home">${copy.home}</a>
+      </div>
+      <div id="gameInfoContent">
+        <div class="eyebrow" style="margin-bottom:6px">${genre.name}</div>
+        <h2 style="margin:0 0 20px">${game.title}</h2>
+        <p style="color:var(--muted)">${game.description}</p>
+      </div>
+    </section>
+  `;
+
+  // Check pre-generated i18n translations first (covers all non-en/non-ko locales)
+  const i18nHtml = window.gameInfoTranslations?.[game.id]?.[currentLocale];
+  if (i18nHtml) {
+    const content = document.getElementById("gameInfoContent");
+    if (content) {
+      content.innerHTML = `
+        <div class="eyebrow" style="margin-bottom:6px">${genre.name}</div>
+        <h2 style="margin:0 0 20px">${game.title}</h2>
+        ${i18nHtml}
+        <a class="ghost-button" href="${backHref}" style="margin-top:32px;display:inline-flex">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          ${copy.launch || "Play game"}
+        </a>
+      `;
+    }
+  // If the game has a standalone HTML file, fetch and extract the .game-info section
+  } else if (game.url) {
+    try {
+      const res = await fetch(game.url);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      // Prefer locale-specific sections. For untranslated non-English locales,
+      // use the localized fallback instead of showing an English-only article.
+      const section = doc.querySelector(`.game-info[lang="${currentLocale}"]`) ||
+        (["en", "ko"].includes(currentLocale) ? doc.querySelector(".game-info") : null);
+      if (section) {
+        // Remove back/more-games links that point to the standalone page
+        section.querySelectorAll(".back-link, .more-games-link").forEach(el => el.remove());
+        // Remove the h1 (we already show title above)
+        const h1 = section.querySelector("h1");
+        if (h1) h1.remove();
+        const content = document.getElementById("gameInfoContent");
+        if (content) {
+          content.innerHTML = `
+            <div class="eyebrow" style="margin-bottom:6px">${genre.name}</div>
+            <h2 style="margin:0 0 20px">${game.title}</h2>
+            ${section.innerHTML}
+            <a class="ghost-button" href="${backHref}" style="margin-top:32px;display:inline-flex">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+              ${copy.home === "홈" ? "게임 플레이하기" : "Play game"}
+            </a>
+          `;
+        }
+      } else {
+        renderFallbackGameInfo(game, genre, backHref);
+      }
+    } catch (_) {
+      renderFallbackGameInfo(game, genre, backHref);
+    }
+  } else if (gameInfoContent[game.id]) {
+    const infoHtml = gameInfoContent[game.id][currentLocale] ||
+      (["en", "ko"].includes(currentLocale) ? gameInfoContent[game.id].en : "");
+    const content = document.getElementById("gameInfoContent");
+    if (content && infoHtml) {
+      content.innerHTML = `
+        <div class="eyebrow" style="margin-bottom:6px">${genre.name}</div>
+        <h2 style="margin:0 0 20px">${game.title}</h2>
+        ${infoHtml}
+        <a class="ghost-button" href="${backHref}" style="margin-top:32px;display:inline-flex">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          ${copy.home === "홈" ? "게임 플레이하기" : "Play game"}
+        </a>
+      `;
+    } else {
+      renderFallbackGameInfo(game, genre, backHref);
+    }
+  } else {
+    renderFallbackGameInfo(game, genre, backHref);
+  }
+}
+
+function renderFallbackGameInfo(game, genre, backHref) {
+  const content = document.getElementById("gameInfoContent");
+  if (!content) return;
+
+  const t = fallbackGameInfoCopy[currentLocale] || fallbackGameInfoCopy.en;
+  const tips = t[game.genre] || t.action;
+  const description = game.description || translations.en.gameDescriptions[game.id] || "";
+
+  content.innerHTML = `
+    <div class="eyebrow" style="margin-bottom:6px">${escapeHtml(genre.name)}</div>
+    <h2 style="margin:0 0 20px">${escapeHtml(game.title)}</h2>
+    <h2>${t.about}</h2>
+    <p>${escapeHtml(description)}</p>
+    <p>${escapeHtml(t.genreLine(genre.name))}</p>
+    <h2>${t.goal}</h2>
+    <p>${escapeHtml(t.goalText)}</p>
+    <h2>${t.howToPlay}</h2>
+    <ul>
+      ${tips.map(tip => `<li>${escapeHtml(tip)}</li>`).join("")}
+    </ul>
+    <h2>${t.tips}</h2>
+    <ul>
+      <li>${escapeHtml(description)}</li>
+      <li>${escapeHtml(tips[0])}</li>
+      <li>${escapeHtml(tips[tips.length - 1])}</li>
+    </ul>
+    <a class="ghost-button" href="${backHref}" style="margin-top:32px;display:inline-flex">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      ${escapeHtml(t.play)}
+    </a>
+  `;
 }
 
 function renderPrivacy() {
@@ -3030,6 +3899,10 @@ function localizeEmbeddedGame(frame, game) {
     doc.documentElement.lang = currentLocale;
     doc.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
     doc.title = game.title;
+    // Hide the info section so it doesn't show when scrolling inside the iframe
+    const style = doc.createElement("style");
+    style.textContent = ".game-info{display:none!important}";
+    doc.head.appendChild(style);
     const labelMap = [
       ["#scoreLabel", copy.score],
       ["#restart", copy.restart],
@@ -3176,16 +4049,6 @@ function gameCard(game) {
   `;
 }
 
-function gameGuide(game) {
-  return `
-    <div class="game-guide">
-      <h3>${game.title}</h3>
-      <p>${game.description}</p>
-      <p>${copy.howToPlayText}</p>
-    </div>
-  `;
-}
-
 function siteFooter() {
   const fc = currentLocale === "ko" ? copy : translations.en;
   return `
@@ -3266,6 +4129,13 @@ function escapeAttribute(value) {
   return value
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
 }
