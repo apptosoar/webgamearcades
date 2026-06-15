@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Memory Grid — Webgame Arcades</title>
+<link rel="stylesheet" href="../game-shell.css">
+<script src="../game-shell.js"></script>
+</head>
+<body class="game-memory-grid">
+<div class="wrap">
+  <div class="hud">
+    <span class="pill">Memory Grid</span>
+    <span>Round <b id="round">1</b></span>
+  </div>
+  <div class="stage center">
+    <div id="grid" style="display:grid;grid-template-columns:repeat(3,90px);gap:10px"></div>
+  </div>
+  <button id="start">Start</button>
+</div>
+<script>
+  const grid = document.querySelector("#grid");
+  const roundEl = document.querySelector("#round");
+  const startBtn = document.querySelector("#start");
+  const failText = "Failed! Starting again from round 1.";
+  let round = 1, seq = [], input = [];
+  for (let i = 0; i < 9; i++) {
+    const b = document.createElement("button");
+    b.textContent = i + 1;
+    b.style.width = "90px";
+    b.style.height = "90px";
+    b.onclick = () => pick(i, b);
+    grid.appendChild(b);
+  }
+  startBtn.onclick = next;
+  function flash(i) {
+    const b = grid.children[i];
+    b.style.background = "#2bd1c4";
+    setTimeout(() => b.style.background = "#f7b84b", 360);
+  }
+  function next() {
+    input = [];
+    seq.push(Math.floor(Math.random() * 9));
+    roundEl.textContent = round;
+    seq.forEach((n, i) => setTimeout(() => flash(n), i * 520));
+  }
+  function pick(i, b) {
+    input.push(i);
+    flash(i);
+    const at = input.length - 1;
+    if (seq[at] !== i) {
+      alert(failText);
+      round = 1;
+      seq = [];
+      roundEl.textContent = round;
+      return;
+    }
+    if (input.length === seq.length) {
+      round++;
+      setTimeout(next, 600);
+    }
+  }
+</script>
+</body>
+</html>

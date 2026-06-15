@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lane Rush — Webgame Arcades</title>
+<link rel="stylesheet" href="../game-shell.css">
+<script src="../game-shell.js"></script>
+</head>
+<body class="game-lane-rush">
+<div class="wrap">
+  <div class="hud">
+    <span class="pill">Lane Rush</span>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <div class="stage" id="stage">
+    <div id="car"></div>
+  </div>
+  <button onclick="location.reload()">Restart</button>
+</div>
+<script>
+  const stage = document.querySelector("#stage");
+  const car = document.querySelector("#car");
+  const scoreEl = document.querySelector("#score");
+  const crashText = "Crash", scoreLabel = "Score";
+  let lane = 1, score = 0, alive = true, obs = [];
+  car.style.cssText = "position:absolute;bottom:20px;left:calc(50% - 24px);width:48px;height:70px;border-radius:8px;background:#f7b84b;box-shadow:0 0 22px #f7b84b";
+  function move(key) {
+    if (key === "ArrowLeft") lane = Math.max(0, lane - 1);
+    if (key === "ArrowRight") lane = Math.min(2, lane + 1);
+  }
+  addEventListener("keydown", e => move(e.key));
+  installTouchControls({ move, tap: e => {
+    const r = stage.getBoundingClientRect();
+    move(e.clientX - r.left < r.width / 2 ? "ArrowLeft" : "ArrowRight");
+  }});
+  function laneLeft(n) { return (16 + n * 33) + "%" }
+  function spawn() {
+    const o = document.createElement("i");
+    const l = Math.floor(Math.random() * 3);
+    o.style.cssText = "position:absolute;top:-80px;left:" + laneLeft(l) + ";width:48px;height:70px;border-radius:8px;background:#a98bff";
+    stage.appendChild(o);
+    obs.push({ el: o, lane: l, y: -80 });
+  }
+  setInterval(() => alive && spawn(), 780);
+  function loop() {
+    if (!alive) return;
+    score++;
+    scoreEl.textContent = score;
+    car.style.left = "calc(" + laneLeft(lane) + " - 0px)";
+    obs.forEach(o => {
+      o.y += 4;
+      o.el.style.top = o.y + "px";
+      if (o.lane === lane && o.y > 330 && o.y < 430) {
+        alive = false;
+        stage.classList.add("center");
+        stage.innerHTML = "<h2>" + crashText + "<br>" + scoreLabel + " " + score + "</h2>";
+      }
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>

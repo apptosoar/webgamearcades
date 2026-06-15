@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neon Dodge — Webgame Arcades</title>
+<link rel="stylesheet" href="../game-shell.css">
+<script src="../game-shell.js"></script>
+</head>
+<body class="game-neon-dodge">
+<div class="wrap">
+  <div class="hud">
+    <span class="pill">Neon Dodge</span>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <div class="stage" id="stage">
+    <div id="player"></div>
+  </div>
+  <button id="restart">Restart</button>
+</div>
+<script>
+  const stage = document.querySelector("#stage");
+  const player = document.querySelector("#player");
+  const scoreEl = document.querySelector("#score");
+  const gameOver = "Game Over", scoreLabel = "Score";
+  let x = 50, y = 50, score = 0, alive = true, blocks = [];
+  player.style.cssText = "position:absolute;width:34px;height:34px;border-radius:8px;background:#2bd1c4;left:50%;top:50%;box-shadow:0 0 24px #2bd1c4";
+  function clampPlayer() { x = Math.max(3, Math.min(92, x)); y = Math.max(5, Math.min(90, y)); }
+  function move(key) {
+    if (key === "ArrowLeft") x -= 5;
+    if (key === "ArrowRight") x += 5;
+    if (key === "ArrowUp") y -= 5;
+    if (key === "ArrowDown") y += 5;
+    clampPlayer();
+  }
+  addEventListener("keydown", e => move(e.key));
+  stage.addEventListener("pointerdown", trackTouch);
+  stage.addEventListener("pointermove", trackTouch);
+  function trackTouch(e) {
+    const r = stage.getBoundingClientRect();
+    x = ((e.clientX - r.left) / r.width) * 100;
+    y = ((e.clientY - r.top) / r.height) * 100;
+    clampPlayer();
+  }
+  installTouchControls({ move });
+  document.querySelector("#restart").onclick = () => location.reload();
+  function spawn() {
+    const b = document.createElement("i");
+    b.style.cssText = "position:absolute;width:28px;height:28px;border-radius:6px;background:#f05d5e;left:" + Math.random() * 92 + "%;top:-30px;box-shadow:0 0 18px #f05d5e";
+    stage.appendChild(b);
+    blocks.push({ el: b, top: -8, speed: 1.4 + Math.random() * 2 });
+  }
+  setInterval(() => alive && spawn(), 650);
+  function loop() {
+    if (!alive) return;
+    score++;
+    scoreEl.textContent = score;
+    player.style.left = x + "%";
+    player.style.top = y + "%";
+    const pr = player.getBoundingClientRect();
+    blocks.forEach(b => {
+      b.top += b.speed;
+      b.el.style.top = b.top + "%";
+      const r = b.el.getBoundingClientRect();
+      if (!(pr.right < r.left || pr.left > r.right || pr.bottom < r.top || pr.top > r.bottom)) {
+        alive = false;
+        stage.classList.add("center");
+        stage.innerHTML = "<h2>" + gameOver + "<br>" + scoreLabel + " " + score + "</h2>";
+      }
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+</body>
+</html>

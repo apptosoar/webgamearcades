@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Block Stacker — Webgame Arcades</title>
+<link rel="stylesheet" href="../game-shell.css">
+<script src="../game-shell.js"></script>
+<style>
+  html, body { overflow: hidden; height: 100dvh; min-height: 0 }
+  .wrap { height: 100dvh; gap: 8px }
+  .stage { overflow: hidden; padding: 6px !important }
+  .stage.center { align-items: stretch }
+  .stage.center > div { position: relative; width: 100%; height: 100%; display: grid; place-items: center }
+  .stage.center p:first-child { display: none }
+  .stage.center #status { position: absolute; top: 0; left: 0; right: 0; margin: 0; min-height: 0 !important; pointer-events: none }
+  .touch-controls { display: none !important }
+  #board { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(24, 1fr); gap: 2px; aspect-ratio: 10/24; align-self: center; justify-self: center }
+
+  .blk-ctrl { display: none; align-items: center; justify-content: space-between; gap: 10px; padding: 0 4px }
+  .blk-pad { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 52px); gap: 6px }
+  .blk-pad .rot { grid-column: 2; grid-row: 1 }
+  .blk-pad .lft { grid-column: 1; grid-row: 2 }
+  .blk-pad .dn  { grid-column: 2; grid-row: 2 }
+  .blk-pad .rgt { grid-column: 3; grid-row: 2 }
+  .blk-pad button { width: 52px; height: 52px; padding: 0; font-size: 1.25rem }
+  .blk-drop { width: 72px; height: 110px; padding: 0; font-size: 1.5rem; background: #2bd1c4; color: #0b0c0f; align-self: stretch }
+  @media (pointer: coarse) {
+    .blk-ctrl { display: flex }
+    .wrap { grid-template-rows: auto 1fr auto auto }
+  }
+</style>
+</head>
+<body class="game-block-stacker">
+<div class="wrap">
+  <div class="hud">
+    <span class="pill">Block Stacker</span>
+    <span>Block puzzle — Score <b id="blockScore">0</b></span>
+  </div>
+  <div class="stage center">
+    <div>
+      <p style="margin:0 0 12px;color:#b8bec9">Stack falling blocks and clear full lines.</p>
+      <div id="board"></div>
+      <p id="status" style="min-height:24px;color:#2bd1c4;font-weight:800"></p>
+    </div>
+  </div>
+  <div class="blk-ctrl">
+    <div class="blk-pad">
+      <button type="button" class="rot">↺</button>
+      <button type="button" class="lft">←</button>
+      <button type="button" class="dn">↓</button>
+      <button type="button" class="rgt">→</button>
+    </div>
+    <button type="button" class="blk-drop">▼▼</button>
+  </div>
+  <button onclick="location.reload()">Restart</button>
+</div>
+<script>
+  const board = document.querySelector("#board");
+  const status = document.querySelector("#status");
+  const scoreEl = document.querySelector("#blockScore");
+  const over = "Game Over";
+  const w = 10, h = 24;
+  const colors = { I:"#2bd1c4",J:"#4f8cff",L:"#f7b84b",O:"#ffd95a",S:"#73d676",T:"#a98bff",Z:"#f05d5e",X:"#ffffff",C:"#ff8f3d" };
+  const shapes = { I:[[0,1],[1,1],[2,1],[3,1]],J:[[0,0],[0,1],[1,1],[2,1]],L:[[2,0],[0,1],[1,1],[2,1]],O:[[1,0],[2,0],[1,1],[2,1]],S:[[1,0],[2,0],[0,1],[1,1]],T:[[1,0],[0,1],[1,1],[2,1]],Z:[[0,0],[1,0],[1,1],[2,1]],X:[[1,0],[0,1],[1,1],[2,1],[1,2]],C:[[0,0],[1,0],[0,1],[0,2],[1,2]] };
+  let grid = Array.from({ length: h }, () => Array(w).fill(""));
+  let piece = null, score = 0, lines = 0, dropMs = 650, done = false, settling = false, timer = null, flash = [];
+  function spawn() {
+    const keys = Object.keys(shapes), type = keys[Math.floor(Math.random() * keys.length)];
+    piece = { type, cells: shapes[type].map(p => [p[0], p[1]]), x: 3, y: -1 };
+    if (collides(piece, 0, 0, piece.cells)) { done = true; status.textContent = over; clearInterval(timer); }
+  }
+  function collides(p, dx, dy, cells) {
+    return cells.some(([cx, cy]) => { const x = p.x + cx + dx, y = p.y + cy + dy; return x < 0 || x >= w || y >= h || (y >= 0 && grid[y][x]); });
+  }
+  function shift(dx, dy) {
+    if (done || settling) return false;
+    if (!collides(piece, dx, dy, piece.cells)) { piece.x += dx; piece.y += dy; draw(); return true; }
+    return false;
+  }
+  function rotate() {
+    if (done || settling || piece.type === "O") return;
+    const next = piece.cells.map(([x, y]) => [3 - y, x]);
+    for (const kick of [0, -1, 1, -2, 2]) {
+      if (!collides(piece, kick, 0, next)) { piece.x += kick; piece.cells = next; draw(); return; }
+    }
+  }
+  function lock() {
+    if (settling) return;
+    settling = true; flash = [];
+    piece.cells.forEach(([cx, cy]) => { const x = piece.x + cx, y = piece.y + cy; if (y >= 0) { grid[y][x] = piece.type; flash.push(y * w + x); } });
+    draw();
+    setTimeout(() => { clearLines(); spawn(); settling = false; draw(); }, 110);
+  }
+  function clearLines() {
+    let kept = grid.filter(row => row.some(v => !v));
+    let cleared = h - kept.length;
+    while (kept.length < h) kept.unshift(Array(w).fill(""));
+    grid = kept;
+    if (cleared) { score += cleared * 100; lines += cleared; scoreEl.textContent = score; resetTimer(); }
+    flash = [];
+  }
+  function resetTimer() { dropMs = Math.max(180, 650 - Math.floor(lines / 2) * 55); clearInterval(timer); timer = setInterval(softDrop, dropMs); }
+  function softDrop() { if (!shift(0, 1)) lock(); }
+  function hardDrop() { if (done) return; while (shift(0, 1)) {} lock(); }
+  function move(key) {
+    if (key === "ArrowLeft") shift(-1, 0);
+    if (key === "ArrowRight") shift(1, 0);
+    if (key === "ArrowDown") softDrop();
+    if (key === "ArrowUp") rotate();
+    if (key === " ") hardDrop();
+  }
+  addEventListener("keydown", e => { if (["ArrowLeft","ArrowRight","ArrowDown","ArrowUp"," "].includes(e.key)) { e.preventDefault(); move(e.key); } });
+  board.addEventListener("click", rotate);
+
+  // Touch controls: hold to repeat for move buttons
+  function holdBtn(el, fn, ms = 110) {
+    let t;
+    el.addEventListener("pointerdown", e => { e.preventDefault(); fn(); t = setInterval(fn, ms); });
+    const stop = () => clearInterval(t);
+    el.addEventListener("pointerup", stop);
+    el.addEventListener("pointercancel", stop);
+    el.addEventListener("pointerleave", stop);
+  }
+  const ctrl = document.querySelector(".blk-ctrl");
+  holdBtn(ctrl.querySelector(".lft"), () => shift(-1, 0));
+  holdBtn(ctrl.querySelector(".rgt"), () => shift(1, 0));
+  holdBtn(ctrl.querySelector(".dn"), softDrop, 150);
+  ctrl.querySelector(".rot").addEventListener("pointerdown", e => { e.preventDefault(); rotate(); });
+  ctrl.querySelector(".blk-drop").addEventListener("pointerdown", e => { e.preventDefault(); hardDrop(); });
+
+  let layoutTimer = null;
+  function fitBoard() {
+    const box = board.parentElement.getBoundingClientRect(), gap = 2, pad = 14;
+    const tile = Math.max(10, Math.floor(Math.min((box.width - pad - gap * (w - 1)) / w, (box.height - pad - gap * (h - 1)) / h)));
+    board.style.width = (tile * w + gap * (w - 1)) + "px";
+    board.style.height = (tile * h + gap * (h - 1)) + "px";
+  }
+  function draw() {
+    board.innerHTML = "";
+    const view = grid.map(row => row.slice());
+    if (piece) piece.cells.forEach(([cx, cy]) => { const x = piece.x + cx, y = piece.y + cy; if (y >= 0 && y < h && x >= 0 && x < w) view[y][x] = piece.type; });
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const c = view[y][x], lit = flash.includes(y * w + x);
+      const cell = document.createElement("i");
+      cell.style.cssText = "display:block;width:100%;height:100%;border-radius:4px;background:" + (lit ? "#ffffff" : c ? colors[c] : "rgba(255,255,255,.08)") + ";box-shadow:" + (lit ? "0 0 18px #fff" : c ? "inset 0 0 0 1px rgba(255,255,255,.2)" : "none");
+      board.appendChild(cell);
+    }
+  }
+  function layout() { fitBoard(); draw(); }
+  addEventListener("resize", () => { clearTimeout(layoutTimer); layoutTimer = setTimeout(layout, 120); });
+  spawn(); layout(); resetTimer();
+</script>
+</body>
+</html>

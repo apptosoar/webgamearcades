@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trap Scout — Webgame Arcades</title>
+<link rel="stylesheet" href="../game-shell.css">
+<script src="../game-shell.js"></script>
+<style>
+  #diffs { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px }
+  #diffs button { min-width: 56px; height: 36px; padding: 0 10px; font-size: .82rem }
+  #info { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: .85rem; color: #b8bec9 }
+  #board { display: grid; gap: 3px; justify-content: center; margin: 0 auto }
+  .cell { display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; cursor: pointer; background: rgba(255,255,255,.12); border: none; color: #f4f2ea; padding: 0 }
+  .cell.open { background: rgba(255,255,255,.05); cursor: default }
+  .cell.flag { background: rgba(247,184,75,.2); color: #f7b84b }
+  .cell.hit { background: #f05d5e !important; color: #fff }
+  .cell.trap { background: rgba(240,93,94,.18) !important; color: #f05d5e }
+  .cell[data-n="1"] { color: #4f8cff }
+  .cell[data-n="2"] { color: #73d676 }
+  .cell[data-n="3"] { color: #f05d5e }
+  .cell[data-n="4"] { color: #a98bff }
+  .cell[data-n="5"] { color: #ff8f3d }
+  .cell[data-n="6"] { color: #2bd1c4 }
+  .cell[data-n="7"] { color: #f4f2ea }
+  .cell[data-n="8"] { color: #b8bec9 }
+</style>
+</head>
+<body class="game-trap-scout">
+<div class="wrap">
+  <div class="hud">
+    <span class="pill">Trap Scout</span>
+    <span>Logic puzzle — Right-click / long-press = ⚑</span>
+  </div>
+  <div class="stage center">
+    <div>
+      <p style="margin:0 0 12px;color:#b8bec9">Open all safe zones using number hints. Right-click or long-press to flag traps.</p>
+      <div id="diffs"></div>
+      <div id="info"><span id="fc"></span><span id="ck">0:00</span></div>
+      <div id="board"></div>
+      <p id="status" style="min-height:24px;color:#2bd1c4;font-weight:800"></p>
+    </div>
+  </div>
+  <button onclick="location.reload()">Restart</button>
+</div>
+<script>
+  const board = document.querySelector("#board");
+  const diffs = document.querySelector("#diffs");
+  const fcEl = document.querySelector("#fc");
+  const ckEl = document.querySelector("#ck");
+  const WIN = "Success!", LOSE = "Game Over";
+  const CFGS = [{ l: "Easy", c: 8, r: 8, t: 10 }, { l: "Med", c: 10, r: 10, t: 20 }, { l: "Hard", c: 12, r: 10, t: 30 }];
+  let C, R, T, cells, rev, flg, done, fresh, sec, tid, px = 30, hitIdx = -1, ci = 0;
+  function setStatus(t) { const el = document.querySelector("#status"); if (el) el.textContent = t; }
+  CFGS.forEach((cfg, i) => {
+    const b = document.createElement("button"); b.textContent = cfg.l;
+    b.addEventListener("click", () => newGame(i));
+    diffs.appendChild(b);
+  });
+  function newGame(i) {
+    const cfg = CFGS[ci = i]; C = cfg.c; R = cfg.r; T = cfg.t;
+    cells = Array(C * R).fill(0); rev = Array(C * R).fill(false); flg = Array(C * R).fill(false);
+    done = false; fresh = true; hitIdx = -1; sec = 0; clearInterval(tid); ckEl.textContent = "0:00"; setStatus("");
+    [...diffs.children].forEach((b, j) => { b.style.background = j === i ? "#2bd1c4" : "#f7b84b"; b.style.color = j === i ? "#0b0c0f" : "#1b1205"; });
+    fit();
+  }
+  function placeMines(safe) {
+    const p = Array.from({ length: C * R }, (_, i) => i).filter(i => i !== safe);
+    for (let i = 0; i < T; i++) { const j = i + Math.floor(Math.random() * (p.length - i)); [p[i], p[j]] = [p[j], p[i]]; }
+    const ms = new Set(p.slice(0, T));
+    cells = Array.from({ length: C * R }, (_, i) => ms.has(i) ? -1 : 0);
+    for (let i = 0; i < cells.length; i++) { if (cells[i] === -1) continue; cells[i] = nb(i).filter(n => cells[n] === -1).length; }
+  }
+  function nb(i) {
+    const r = Math.floor(i / C), c = i % C, o = [];
+    for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+      if (!dr && !dc) continue;
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < R && nc >= 0 && nc < C) o.push(nr * C + nc);
+    }
+    return o;
+  }
+  function reveal(i) {
+    if (done || rev[i] || flg[i]) return;
+    if (fresh) {
+      fresh = false; placeMines(i);
+      tid = setInterval(() => { sec++; const m = Math.floor(sec / 60), s = sec % 60; ckEl.textContent = m + ":" + (s < 10 ? "0" + s : s); }, 1000);
+    }
+    if (cells[i] === -1) {
+      hitIdx = i; done = true; clearInterval(tid);
+      cells.forEach((_, j) => { if (cells[j] === -1) rev[j] = true; }); rev[i] = true; draw(); setStatus(LOSE); return;
+    }
+    flood(i); draw();
+    if (rev.filter((v, j) => v && cells[j] !== -1).length === cells.filter(v => v !== -1).length) { done = true; clearInterval(tid); setStatus(WIN); }
+  }
+  function flood(i) { if (rev[i] || flg[i] || cells[i] === -1) return; rev[i] = true; if (cells[i] === 0) nb(i).forEach(flood); }
+  function tog(i) { if (done || rev[i]) return; flg[i] = !flg[i]; fcount(); draw(); }
+  function fcount() { fcEl.textContent = "⚑ " + (T - flg.filter(Boolean).length); }
+  function fit() {
+    const stg = board.closest ? board.closest(".stage") : board.parentElement;
+    const w = Math.min(stg ? stg.clientWidth : 300, 440);
+    px = Math.max(22, Math.min(42, Math.floor((w - 24 - 3 * (C - 1)) / C)));
+    board.style.gridTemplateColumns = "repeat(" + C + "," + px + "px)";
+    fcount(); draw();
+  }
+  function draw() {
+    board.innerHTML = "";
+    const fs = Math.max(9, Math.floor(px * 0.5));
+    for (let i = 0; i < C * R; i++) {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.style.cssText = "width:" + px + "px;height:" + px + "px;font-size:" + fs + "px";
+      el.className = "cell";
+      if (rev[i]) {
+        el.classList.add("open");
+        if (cells[i] === -1) { el.classList.add(i === hitIdx ? "hit" : "trap"); el.textContent = "✕"; }
+        else if (cells[i] > 0) { el.textContent = cells[i]; el.dataset.n = cells[i]; }
+      } else if (flg[i]) { el.classList.add("flag"); el.textContent = "⚑"; }
+      el.addEventListener("contextmenu", e => { e.preventDefault(); tog(i); });
+      let pt, lp = false;
+      el.addEventListener("pointerdown", () => { lp = false; pt = setTimeout(() => { lp = true; tog(i); draw(); }, 500); });
+      el.addEventListener("pointerup", () => clearTimeout(pt));
+      el.addEventListener("pointercancel", () => clearTimeout(pt));
+      el.addEventListener("click", () => { if (!lp) reveal(i); });
+      board.appendChild(el);
+    }
+  }
+  window.addEventListener("resize", () => fit());
+  newGame(0);
+</script>
+</body>
+</html>

@@ -1654,7 +1654,7 @@ const genreMeta = [
 ];
 
 const gameMeta = [
-  { id: "neon-dodge", genre: "action", title: "Neon Dodge", icon: "ND", accent: "#f05d5e", makeSrcdoc: makeDodgeGame },
+  { id: "neon-dodge", genre: "action", title: "Neon Dodge", icon: "ND", accent: "#f05d5e", url: "./games/neon-dodge/index.html" },
   { id: "zombie-survival", genre: "action", title: "Zombie Survival", icon: "ZS", accent: "#73d676", url: "./games/zombie-survival/index.html" },
   { id: "space-shooter", genre: "action", title: "Space Shooter", icon: "SS", accent: "#2bd1c4", url: "./games/space-shooter/index.html" },
   { id: "ninja-dash", genre: "action", title: "Ninja Dash", icon: "ND", accent: "#f7b84b", url: "./games/ninja-dash/index.html" },
@@ -1673,14 +1673,17 @@ const gameMeta = [
   { id: "maze-escape", genre: "puzzle", title: "Maze Escape", icon: "ME", accent: "#f7b84b", url: "./games/maze-escape/index.html" },
   { id: "crate-shift", genre: "puzzle", title: "Crate Shift", icon: "CS", accent: "#f7b84b", url: "./games/crate-shift/index.html" },
   { id: "marble-gate", genre: "puzzle", title: "Marble Gate", icon: "MG", accent: "#4dd8f0", url: "./games/marble-gate/index.html" },
-  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", makeSrcdoc: makeMemoryGame },
+  { id: "memory-grid", genre: "puzzle", title: "Memory Grid", icon: "MG", accent: "#2bd1c4", url: "./games/memory-grid/index.html" },
   { id: "tile-link", genre: "puzzle", title: "Tile Link", icon: "TL", accent: "#2bd1c4", url: "./games/tile-link/index.html" },
-  { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", makeSrcdoc: makeLaneGame },
+  { id: "lane-rush", genre: "racing", title: "Lane Rush", icon: "LR", accent: "#f7b84b", url: "./games/lane-rush/index.html" },
   { id: "paint-race", genre: "racing", title: "Paint Race", icon: "PR", accent: "#2bd1ff", url: "./games/paint-race/index.html" },
   { id: "tap-sprint", genre: "racing", title: "Tap Sprint", icon: "SP", accent: "#2bd1c4", url: "./games/tap-sprint/index.html" },
   { id: "pendulum-hit", genre: "action", title: "Pendulum Hit", icon: "PH", accent: "#f7b84b", url: "./games/pendulum-hit/index.html" },
   { id: "otter-pop", genre: "action", title: "Otter Pop", icon: "OP", accent: "#4dd8f0", url: "./games/otter-pop/index.html" },
   { id: "shelf-snap", genre: "action", title: "Shelf Snap", icon: "SN", accent: "#c4850a", url: "./games/shelf-snap/index.html" },
+  { id: "block-stacker", genre: "puzzle", title: "Block Stacker", icon: "BS", accent: "#2bd1c4", url: "./games/block-stacker/index.html" },
+  { id: "puzzle-trap-scout", genre: "puzzle", title: "Trap Scout", icon: "TR", accent: "#f05d5e", url: "./games/trap-scout/index.html" },
+  { id: "puzzle-sudoku", genre: "puzzle", title: "Sudoku", icon: "9", accent: "#a98bff", url: "./games/sudoku/index.html" },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
 ];
 
@@ -2423,6 +2426,7 @@ function changeLocale(locale) {
 }
 
 function render() {
+  window.scrollTo(0, 0);
   const [route, id] = location.hash.replace("#", "").split("/");
 
   if (!route || route === "home") {
@@ -2465,8 +2469,13 @@ function render() {
     return;
   }
 
-  if (["contact", "about"].includes(route)) {
-    renderInfoPage(route);
+  if (route === "about") {
+    renderAbout();
+    return;
+  }
+
+  if (route === "contact") {
+    renderContact();
     return;
   }
 
@@ -2483,9 +2492,12 @@ function renderHome() {
         <div class="lp-dots"></div>
       </div>
       <div class="lp-hero">
-        <div class="lp-kicker">Browser Mini Games</div>
-        <h1 class="lp-wordmark">${brandName}</h1>
-        <p class="lp-tagline">${copy.heroText.replace("<br>", " ")}</p>
+        <img class="lp-hero-img" src="./assets/hero-game-portal.png" alt="" role="presentation" width="1920" height="1080" loading="eager" fetchpriority="high" />
+        <div class="lp-hero-text">
+          <div class="lp-kicker">Browser Mini Games</div>
+          <h1 class="lp-wordmark">${brandName}</h1>
+          <p class="lp-tagline">${copy.heroText.replace("<br>", " ")}</p>
+        </div>
       </div>
       <div class="lp-shelf">
         <p class="lp-shelf-label">${copy.allGames}</p>
@@ -3247,6 +3259,113 @@ function renderPrivacy() {
     </div>
     ${siteFooter()}
   `;
+}
+
+function renderContact() {
+  const isKo = currentLocale === "ko";
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <a class="lp-genre-tab" href="#home" style="display:inline-block;margin-bottom:32px">${copy.home}</a>
+        <div class="lp-policy">
+          <h1>${copy.contactTitle}</h1>
+          <p>${copy.contactIntro}</p>
+          <p>${copy.contactEmail}</p>
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+}
+
+function renderAbout() {
+  const isKo = currentLocale === "ko";
+  app.innerHTML = `
+    <div class="app-home">
+      <div class="lp-bg" aria-hidden="true">
+        <div class="lp-blob lp-b1"></div>
+        <div class="lp-blob lp-b2"></div>
+        <div class="lp-blob lp-b3"></div>
+        <div class="lp-dots"></div>
+      </div>
+      <div class="lp-shelf lp-shelf--browse">
+        <a class="lp-genre-tab" href="#home" style="display:inline-block;margin-bottom:32px">${copy.home}</a>
+        <div class="lp-policy">
+          ${isKo ? aboutKo() : aboutEn()}
+        </div>
+      </div>
+    </div>
+    ${siteFooter()}
+  `;
+}
+
+function aboutKo() {
+  return `
+<h1>Webgame Arcades 소개</h1>
+<p>Webgame Arcades는 설치 없이 브라우저에서 바로 즐길 수 있는 무료 미니게임 모음입니다. 링크 하나면 바로 시작할 수 있습니다.</p>
+<p>이 사이트의 목표는 단순합니다. 게임은 쉽게 시작할 수 있어야 한다는 것입니다. 매번 긴 시간을 투자할 필요는 없습니다. 잠깐 쉬는 시간, 이동 중, 또는 하루를 마무리할 때 가볍게 즐길 수 있는 게임이 필요할 때 Webgame Arcades가 딱 맞습니다.</p>
+
+<h3>왜 만들었나요</h3>
+<p>현대 브라우저는 앱 스토어나 설치 없이도 충분히 매끄럽고 재미있는 게임을 실행할 수 있습니다. Webgame Arcades는 그 가능성을 보여주기 위해 만들어졌습니다. URL 하나로 게임을 시작할 수 있는 곳, 그게 이 사이트입니다.</p>
+<p>모든 게임은 성능과 접근성을 고려해 처음부터 직접 제작했습니다. 빠르게 로딩되고, 키보드와 터치 입력을 모두 지원하며, 처음 해보는 사람도 바로 이해할 수 있도록 설계했습니다.</p>
+
+<h3>완전 무료, 조건 없음</h3>
+<p>Webgame Arcades의 모든 게임은 완전히 무료입니다. 구독, 유료 해금, 에너지 게이지, 프리미엄 재화 같은 것은 없습니다. 중간에 결제 화면이 뜨거나 계정을 만들어야 계속 플레이할 수 있는 상황은 없습니다.</p>
+<p>사이트는 광고 수익으로 운영됩니다. 광고는 게임 조작 영역과 확실히 분리해서 배치하기 때문에 플레이 중 방해가 되지 않습니다.</p>
+
+<h3>다양한 장르</h3>
+<p>어떤 기분이든 맞는 게임이 있습니다.</p>
+<ul>
+  <li><strong>액션 게임</strong> — 아레나 생존, 슈팅, 러너, 반응 속도 테스트</li>
+  <li><strong>퍼즐 게임</strong> — 소코반식 상자 밀기, 미로 탈출, 타일 매칭, 스도쿠, 논리 퍼즐</li>
+  <li><strong>캐주얼 게임</strong> — 클리커, 탭 레이싱, 페인트 대결, 개성 있는 시뮬레이터</li>
+  <li><strong>타이밍 게임</strong> — 진자 맞추기, 스프린트 탭, 반응 속도 도전</li>
+</ul>
+<p>새로운 게임이 꾸준히 추가됩니다.</p>
+
+<h3>어디서든 플레이</h3>
+<p>Webgame Arcades는 완전 반응형입니다. 키보드가 있는 데스크톱, 트랙패드가 있는 노트북, 엄지손가락만 있는 스마트폰 어디서든 기기에 맞게 조작 방식이 전환됩니다. 터치 컨트롤은 처음부터 기본으로 지원합니다.</p>
+<p>지역 제한이나 플랫폼 제한도 없습니다. 브라우저로 웹페이지를 열 수 있다면 게임도 실행됩니다.</p>
+
+<h3>개인정보 및 투명성</h3>
+<p>사이트 운영과 광고 제공에 필요한 최소한의 정보만 처리합니다. 광고 외의 목적으로 개인 데이터를 제3자에게 판매하지 않습니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>을 확인해 주세요.</p>`;
+}
+
+function aboutEn() {
+  return `
+<h1>About Webgame Arcades</h1>
+<p>Webgame Arcades is a free collection of browser-based mini games that run instantly — no download, no install, no account required. Just open a game and play.</p>
+<p>The idea behind this site is simple: games should be easy to get into. Not every gaming session needs to be an hour-long commitment. Sometimes you just want something fun for a few minutes — waiting for a meeting, taking a break, or winding down for the day. That is exactly what Webgame Arcades is built for.</p>
+
+<h3>Why we built this</h3>
+<p>Modern browsers are powerful enough to run smooth, engaging games with nothing more than a URL — no app store, no launcher, no installation wizard. Webgame Arcades was created to make that a reality: a place where clicking a link is all it takes to start playing.</p>
+<p>Every game is written from scratch with performance and accessibility in mind. They load fast, respond to both keyboard and touch input, and are designed to be immediately understandable even if you have never played before.</p>
+
+<h3>Always free, no strings attached</h3>
+<p>Every game on Webgame Arcades is completely free to play. There are no subscriptions, no paid unlocks, no energy meters, and no premium currencies. You will never hit a paywall mid-game or be asked to create an account just to keep playing.</p>
+<p>The site is supported by advertising. Ads are kept clearly separated from game controls and play areas so they never interfere with your experience.</p>
+
+<h3>Something for everyone</h3>
+<p>The library spans a wide range of styles so there is always something that fits the mood.</p>
+<ul>
+  <li><strong>Action games</strong> — arena survival, shooters, runners, and reflex challenges</li>
+  <li><strong>Puzzle games</strong> — Sokoban-style crate pushing, maze navigation, tile matching, Sudoku, and logic challenges</li>
+  <li><strong>Casual games</strong> — clickers, tapping races, painting contests, and oddball simulators</li>
+  <li><strong>Timing games</strong> — pendulum challenges, sprint tappers, and reaction tests</li>
+</ul>
+<p>New games are added regularly.</p>
+
+<h3>Play anywhere</h3>
+<p>Webgame Arcades is fully responsive. Whether you are on a desktop, laptop, or phone, the games adapt to your device. Touch controls are built in from the start — not bolted on as an afterthought. There are no region locks or platform restrictions either.</p>
+
+<h3>Privacy and transparency</h3>
+<p>We collect only the minimum information needed to operate the site and serve ads. We do not sell personal data to third parties. See our <a href="#privacy">Privacy Policy</a> for full details.</p>`;
 }
 
 function renderFaq() {
@@ -4098,23 +4217,7 @@ function getGenre(id) {
 }
 
 function getGames() {
-  const visiblePuzzleExamples = new Set(["block-stacker", "Trap Scout", "Sudoku"]);
-  const catalog = [
-    ...gameMeta,
-    ...puzzleExamples
-      .filter((game) => visiblePuzzleExamples.has(game.id || game.title))
-      .map((game) => ({
-        id: game.id || puzzleExampleId(game.title),
-        genre: "puzzle",
-        title: game.title,
-        icon: game.icon,
-        accent: "#2bd1c4",
-        description: game.description,
-        makeSrcdoc: () => makePuzzleExampleGame(game),
-      })),
-  ];
-
-  return catalog.map((game) => ({
+  return gameMeta.map((game) => ({
     ...game,
     description: copy.gameDescriptions[game.id] || translations.en.gameDescriptions[game.id] || game.description,
     srcdoc: game.makeSrcdoc ? game.makeSrcdoc() : undefined,
