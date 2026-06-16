@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Webgame Arcades — Webgame Arcades Blog</title>
+    <meta name="description" content="Why we built a site full of free, install-free browser games — and what's coming next for the platform and the community." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/welcome-to-webgame-arcades/" />
+    <meta property="og:title" content="Welcome to Webgame Arcades" />
+    <meta property="og:description" content="Why we built a site full of free, install-free browser games — and what's coming next for the platform and the community." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/welcome-to-webgame-arcades/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Welcome to Webgame Arcades",
+      "datePublished": "2026-05-20",
+      "url": "https://webgamearcades.com/blog/welcome-to-webgame-arcades/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #0b0c0f;
+        color: #f4f2ea;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.75;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 18px;
+        min-height: 68px;
+        padding: 12px clamp(16px, 4vw, 44px);
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        background: rgba(16, 17, 20, 0.84);
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        color: #f4f2ea;
+        text-decoration: none;
+        font-weight: 800;
+      }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        place-items: center;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7b84b, #f05d5e);
+        color: #15110a;
+        box-shadow: 0 8px 20px rgba(247, 184, 75, 0.22);
+      }
+      .nav { display: flex; gap: 4px; }
+      .nav a {
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: transform 160ms ease, color 150ms ease;
+      }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) {
+        .nav { display: none; }
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 28px;
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta {
+        margin: 0 0 12px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #f7b84b;
+      }
+      h1 {
+        margin: 0 0 24px;
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: #f4f2ea;
+      }
+      h2 {
+        margin: 40px 0 12px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #f7b84b;
+      }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta {
+        display: inline-block;
+        margin-top: 36px;
+        padding: 12px 24px;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.07);
+        color: #f4f2ea;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background 0.15s;
+      }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px clamp(16px, 4vw, 44px) 36px;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        color: #b8bec9;
+        font-size: 0.88rem;
+      }
+      .site-footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .site-footer-brand span {
+        color: #f4f2ea;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+      }
+      .site-footer nav a {
+        color: #b8bec9;
+        text-decoration: none;
+        padding: 4px 14px;
+        transition: color 150ms ease;
+      }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Announcement · May 20, 2026</p>
+      <h1>Welcome to Webgame Arcades</h1>
+      <p>Webgame Arcades started from a simple frustration: most "free" games online aren't actually free to get into. They want an app install, an account, a wall of permissions, or a few minutes of loading before you can press a single button. We wanted something different — a site where clicking a link is the entire onboarding process.</p>
+      <p>Every game here runs directly in the browser. No download, no install, no sign-up. Open a tab, pick a game, and you're playing within a couple of seconds.</p>
+
+      <h2>Why browser games</h2>
+      <p>Modern browsers are powerful enough to run smooth, responsive games with nothing more than HTML, CSS, and JavaScript. That meant we could build an entire arcade without asking anyone to trust an unfamiliar app with permissions on their phone or computer. It also meant the games had to be lightweight and fast by design — there's no splash screen to hide behind, so they need to feel good the instant they load.</p>
+      <p>We also wanted the site to work the same way everywhere. Whether you're on a desktop with a keyboard, a laptop with a trackpad, or a phone with only your thumbs, every game adapts. Keyboard and touch controls are built in from day one, not bolted on later.</p>
+
+      <h2>What's on the site today</h2>
+      <p>The library currently spans three broad styles of play:</p>
+      <ul>
+        <li><strong>Action</strong> — arena survival, dodging, and reflex challenges that reward quick reactions</li>
+        <li><strong>Puzzle</strong> — crate pushing, maze navigation, tile matching, and logic games that reward careful thinking</li>
+        <li><strong>Racing</strong> — lane-based and timing-driven games that reward rhythm over raw speed</li>
+      </ul>
+      <p>New games are added regularly, and we write every one from scratch with performance and accessibility in mind.</p>
+
+      <h2>What's next</h2>
+      <p>This blog is where we'll post release notes for new games, tips for getting better scores, and the occasional behind-the-scenes note about how a game was built. We're also building out a community space so players can share feedback and suggest what they'd like to see next. Thanks for stopping by — we hope you find something worth a few minutes of your day.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+  </body>
+</html>

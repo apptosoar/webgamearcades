@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog — Webgame Arcades</title>
+    <meta name="description" content="News, updates, and behind-the-scenes notes from the Webgame Arcades team — new game releases, design notes, and site updates." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog.html" />
+    <meta property="og:title" content="Blog — Webgame Arcades" />
+    <meta property="og:description" content="News, updates, and behind-the-scenes notes from the Webgame Arcades team." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://webgamearcades.com/blog.html" />
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #0b0c0f;
+        color: #f4f2ea;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.75;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 18px;
+        min-height: 68px;
+        padding: 12px clamp(16px, 4vw, 44px);
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        background: rgba(16, 17, 20, 0.84);
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        color: #f4f2ea;
+        text-decoration: none;
+        font-weight: 800;
+      }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        place-items: center;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7b84b, #f05d5e);
+        color: #15110a;
+        box-shadow: 0 8px 20px rgba(247, 184, 75, 0.22);
+      }
+      .nav {
+        display: flex;
+        gap: 4px;
+      }
+      .nav a {
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: transform 160ms ease, color 150ms ease;
+      }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) {
+        .nav { display: none; }
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
+      h1 {
+        margin: 0 0 24px;
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: #f4f2ea;
+      }
+      h2 {
+        margin: 40px 0 12px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #f7b84b;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #b8bec9;
+      }
+      .post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 32px;
+      }
+      .post-card {
+        display: flex;
+        gap: 20px;
+        padding: 18px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+        text-decoration: none;
+        transition: background 0.15s, transform 0.15s;
+      }
+      .post-card:hover {
+        background: rgba(255,255,255,0.07);
+        transform: translateY(-1px);
+      }
+      .post-thumb {
+        flex-shrink: 0;
+        width: 140px;
+        height: 96px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: #1b1205;
+      }
+      .post-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .post-meta {
+        margin: 0 0 6px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6a7080;
+      }
+      .post-title {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+        text-transform: none;
+        letter-spacing: normal;
+        color: #f4f2ea;
+      }
+      .post-summary {
+        margin: 0;
+        color: #b8bec9;
+        font-size: 0.92rem;
+      }
+      @media (max-width: 560px) {
+        .post-card {
+          flex-direction: column;
+        }
+        .post-thumb {
+          width: 100%;
+          height: 120px;
+        }
+      }
+      .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 32px;
+      }
+      .pagination a,
+      .pagination .current {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 38px;
+        padding: 0 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.14);
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      .pagination a:hover { background: rgba(255,255,255,0.07); color: #f4f2ea; }
+      .pagination .current {
+        background: #f7b84b;
+        color: #1b1205;
+        border-color: transparent;
+        font-weight: 700;
+      }
+      a.cta {
+        display: inline-block;
+        margin-top: 36px;
+        padding: 12px 24px;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.07);
+        color: #f4f2ea;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background 0.15s;
+      }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px clamp(16px, 4vw, 44px) 36px;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        color: #b8bec9;
+        font-size: 0.88rem;
+      }
+      .site-footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .site-footer-brand span {
+        color: #f4f2ea;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+      }
+      .site-footer nav a {
+        color: #b8bec9;
+        text-decoration: none;
+        padding: 4px 14px;
+        transition: color 150ms ease;
+      }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Blog</h1>
+      <p>News, updates, and behind-the-scenes notes from the Webgame Arcades team — new game releases, design notes, and site updates.</p>
+
+      <div class="post-list" id="postList"></div>
+      <nav class="pagination" id="pagination" aria-label="Blog pagination"></nav>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <script src="/blog-posts.js"></script>
+    <script>
+      const PAGE_SIZE = 6;
+      const params = new URLSearchParams(location.search);
+      let page = parseInt(params.get("page"), 10);
+      if (!Number.isInteger(page) || page < 1) page = 1;
+
+      const posts = [...BLOG_POSTS].sort((a, b) => new Date(b.date) - new Date(a.date));
+      const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+      if (page > totalPages) page = totalPages;
+
+      const start = (page - 1) * PAGE_SIZE;
+      const pagePosts = posts.slice(start, start + PAGE_SIZE);
+
+      document.getElementById("postList").innerHTML = pagePosts
+        .map(
+          (post) => `
+        <a class="post-card" href="/blog/${post.slug}/">
+          <div class="post-thumb" style="background:${post.thumbGradient};">${post.thumbLabel}</div>
+          <div class="post-body">
+            <p class="post-meta">${post.category} · ${post.dateLabel}</p>
+            <h2 class="post-title">${post.title}</h2>
+            <p class="post-summary">${post.summary}</p>
+          </div>
+        </a>`
+        )
+        .join("");
+
+      if (totalPages > 1) {
+        let html = "";
+        if (page > 1) html += `<a href="/blog.html?page=${page - 1}">‹ Prev</a>`;
+        for (let i = 1; i <= totalPages; i++) {
+          html += i === page
+            ? `<span class="current">${i}</span>`
+            : `<a href="/blog.html?page=${i}">${i}</a>`;
+        }
+        if (page < totalPages) html += `<a href="/blog.html?page=${page + 1}">Next ›</a>`;
+        document.getElementById("pagination").innerHTML = html;
+      }
+    </script>
+  </body>
+</html>

@@ -3,6 +3,8 @@
     localeName: "한국어",
     navGenres: "장르",
     navGames: "게임",
+    navBlog: "블로그",
+    navCommunity: "커뮤니티",
     navPrivacy: "개인정보처리방침",
     navContact: "문의",
     brandHome: "Webgame Arcades 홈",
@@ -110,6 +112,8 @@
     localeName: "English",
     navGenres: "Genres",
     navGames: "Games",
+    navBlog: "Blog",
+    navCommunity: "Community",
     navPrivacy: "Privacy",
     navContact: "Contact",
     brandHome: "Webgame Arcades home",
@@ -2343,6 +2347,8 @@ function applyStaticText() {
   document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
   document.querySelector("#navGames").textContent = copy.navGames;
+  document.querySelector("#navBlog").textContent = copy.navBlog;
+  document.querySelector("#navCommunity").textContent = copy.navCommunity;
   buildLangSelector();
 }
 

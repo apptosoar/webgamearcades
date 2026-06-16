@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6 New Games Added to the Arcade — Webgame Arcades Blog</title>
+    <meta name="description" content="We just shipped six new browser games, from reflex testers to puzzle challenges. Here's a quick look at what's new and how to play each one." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/6-new-games-added-to-the-arcade/" />
+    <meta property="og:title" content="6 New Games Added to the Arcade" />
+    <meta property="og:description" content="We just shipped six new browser games, from reflex testers to puzzle challenges. Here's a quick look at what's new and how to play each one." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/6-new-games-added-to-the-arcade/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "6 New Games Added to the Arcade",
+      "datePublished": "2026-06-10",
+      "url": "https://webgamearcades.com/blog/6-new-games-added-to-the-arcade/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #0b0c0f;
+        color: #f4f2ea;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.75;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 18px;
+        min-height: 68px;
+        padding: 12px clamp(16px, 4vw, 44px);
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        background: rgba(16, 17, 20, 0.84);
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        color: #f4f2ea;
+        text-decoration: none;
+        font-weight: 800;
+      }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        place-items: center;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #f7b84b, #f05d5e);
+        color: #15110a;
+        box-shadow: 0 8px 20px rgba(247, 184, 75, 0.22);
+      }
+      .nav { display: flex; gap: 4px; }
+      .nav a {
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: transform 160ms ease, color 150ms ease;
+      }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) {
+        .nav { display: none; }
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 56px 24px 80px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 28px;
+        color: #b8bec9;
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta {
+        margin: 0 0 12px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #f7b84b;
+      }
+      h1 {
+        margin: 0 0 24px;
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        color: #f4f2ea;
+      }
+      h2 {
+        margin: 40px 0 12px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #f7b84b;
+      }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      .game-entry {
+        margin-bottom: 24px;
+        padding: 18px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+      }
+      .game-entry h3 { margin: 0 0 6px; color: #f4f2ea; font-size: 1.05rem; }
+      .game-entry p { margin: 0 0 12px; }
+      .game-entry a {
+        color: #2bd1c4;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .game-entry a:hover { text-decoration: underline; }
+      a.cta {
+        display: inline-block;
+        margin-top: 36px;
+        padding: 12px 24px;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.07);
+        color: #f4f2ea;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background 0.15s;
+      }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 24px clamp(16px, 4vw, 44px) 36px;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        color: #b8bec9;
+        font-size: 0.88rem;
+      }
+      .site-footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .site-footer-brand span {
+        color: #f4f2ea;
+        font-weight: 800;
+        font-size: 0.95rem;
+      }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
+      }
+      .site-footer nav a {
+        color: #b8bec9;
+        text-decoration: none;
+        padding: 4px 14px;
+        transition: color 150ms ease;
+      }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Release · June 10, 2026</p>
+      <h1>6 New Games Added to the Arcade</h1>
+      <p>We just shipped six new games, ranging from quick reflex tests to slower-paced logic puzzles. They're all live now and free to play, no install required. Here's a rundown of what's new.</p>
+
+      <div class="game-entry">
+        <h3>Neon Dodge</h3>
+        <p>Use the arrow keys to dodge incoming red blocks and survive as long as possible. Simple to learn, hard to master once the pace picks up.</p>
+        <a href="/games/neon-dodge/">Play Neon Dodge →</a>
+      </div>
+
+      <div class="game-entry">
+        <h3>Memory Grid</h3>
+        <p>Watch the tiles light up in sequence, then tap them back in the same order. Each round adds one more step to remember.</p>
+        <a href="/games/memory-grid/">Play Memory Grid →</a>
+      </div>
+
+      <div class="game-entry">
+        <h3>Lane Rush</h3>
+        <p>Switch lanes to dodge oncoming obstacles and rack up points the longer you survive. A racing-style reflex test at heart.</p>
+        <a href="/games/lane-rush/">Play Lane Rush →</a>
+      </div>
+
+      <div class="game-entry">
+        <h3>Block Stacker</h3>
+        <p>Stack falling blocks, clear full lines, and keep the stack from reaching the top. A classic puzzle loop, rebuilt for the browser.</p>
+        <a href="/games/block-stacker/">Play Block Stacker →</a>
+      </div>
+
+      <div class="game-entry">
+        <h3>Trap Scout</h3>
+        <p>Use number hints to figure out where the traps are hiding, then clear every safe tile without setting one off.</p>
+        <a href="/games/trap-scout/">Play Trap Scout →</a>
+      </div>
+
+      <div class="game-entry">
+        <h3>Sudoku</h3>
+        <p>Fill in the blanks so every row, column, and box checks out. A no-frills version of the puzzle classic.</p>
+        <a href="/games/sudoku/">Play Sudoku →</a>
+      </div>
+
+      <h2>More on the way</h2>
+      <p>This is part of a steady push to keep the library growing across action, puzzle, and racing styles. If there's a genre or mechanic you'd like to see next, let us know through the <a href="/contact.html" style="color:#2bd1c4;text-decoration:none;">Contact page</a>.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+  </body>
+</html>
