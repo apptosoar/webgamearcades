@@ -22,6 +22,33 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://webgamearcades.com/blog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/community.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Blog posts -->
+  <url>
+    <loc>https://webgamearcades.com/blog/keyboard-vs-touch-getting-the-best-score/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/blog/6-new-games-added-to-the-arcade/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/blog/welcome-to-webgame-arcades/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
   <!-- Game pages -->
   <url>
@@ -141,6 +168,36 @@
   </url>
   <url>
     <loc>https://webgamearcades.com/games/otter-pop/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/block-stacker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/lane-rush/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/memory-grid/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/neon-dodge/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/sudoku/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://webgamearcades.com/games/trap-scout/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

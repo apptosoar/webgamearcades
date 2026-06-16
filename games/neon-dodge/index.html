@@ -4,8 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Neon Dodge — Webgame Arcades</title>
+<meta name="description" content="Move freely to dodge a barrage of falling neon blocks. Free reflex arcade game — play instantly in your browser, no download needed.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webgamearcades.com/games/neon-dodge/">
+<meta property="og:title" content="Neon Dodge — Webgame Arcades">
+<meta property="og:description" content="Move freely to dodge a barrage of falling neon blocks. Free reflex arcade game — play instantly in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://webgamearcades.com/games/neon-dodge/">
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png">
 <link rel="stylesheet" href="../game-shell.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
+<style>
+  .game-info {
+    width: min(780px, 100%);
+    margin: 0 auto;
+    padding: 36px 18px 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    color: #b8bec9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .game-info .back-link:hover { color: #f4f2ea; }
+  .game-info h1 {
+    margin: 0 0 14px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: #f4f2ea;
+  }
+  .game-info p {
+    margin: 0 0 12px;
+    color: #b8bec9;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .game-info h2 {
+    margin: 28px 0 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f7b84b;
+  }
+  .game-info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #b8bec9;
+    line-height: 2;
+  }
+  .game-info hr {
+    margin: 28px 0 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .more-games-link {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f4f2ea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
+</style>
 </head>
 <body class="game-neon-dodge">
 <div class="wrap">
@@ -72,5 +142,80 @@
   }
   loop();
 </script>
+<section class="game-info">
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <h1>Neon Dodge</h1>
+  <p>Red neon blocks rain down from every part of the screen, and unlike most dodge games, you're not locked to a lane or a grid — you can move to any point on the field. Stay alive as long as you can; your score climbs the whole time.</p>
+  <p>On a keyboard, nudge your way around with the arrow keys. On a touchscreen, just tap or drag to wherever you want your square to be.</p>
+  <hr class="section-divider">
+  <h2>How to Play</h2>
+  <ul>
+    <li><strong>Move:</strong> Arrow keys (all four directions)</li>
+    <li>Mobile: tap or drag anywhere on the stage to move there directly</li>
+    <li>Avoid every falling red block</li>
+    <li>Survive longer to score higher</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>About This Game</h2>
+  <p>Neon Dodge is a free-roaming dodge game. Instead of switching between fixed lanes, your square can sit anywhere on the play field, and red blocks fall continuously from random positions above. The longer you avoid every block, the higher your score climbs — there's no separate objective beyond staying alive.</p>
+  <hr class="section-divider">
+  <h2>Why We Built It</h2>
+  <p>Most dodge games restrict you to a handful of lanes, which turns the challenge into picking the right lane at the right time. We wanted something closer to a bullet-hell feel, where your exact position on the screen matters and every inch of open space is a real option. That also meant touch controls needed to work differently — instead of tapping a direction, you can drag your square straight to where it needs to be, which feels more direct on a phone or tablet than arrow-key style movement.</p>
+  <hr class="section-divider">
+  <h2>How It Works</h2>
+  <p>A new block spawns roughly every 650 milliseconds at a random horizontal position along the top of the screen, falling at a randomized speed each time (faster blocks keep you from settling into a single safe rhythm). Collision is checked every frame using a simple bounding-box overlap between your square and each block. Keyboard input nudges your position by a fixed step in any direction; touch and mouse input instead map your pointer's exact screen position directly to your square's coordinates, which is why dragging tends to feel more precise than tapping a direction repeatedly.</p>
+  <hr class="section-divider">
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>On keyboard, make small constant adjustments rather than holding a direction into a corner — corners limit how many ways you can escape the next block.</li>
+    <li>On touch, take advantage of direct positioning — drag instead of tapping repeatedly, since dragging keeps your square moving smoothly with your finger.</li>
+    <li>Watch the top edge of the screen for new spawns instead of fixating on your own square; you'll see incoming blocks earlier.</li>
+    <li>Staying near the center of the field generally gives you more directions to dodge toward than hugging an edge.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Brief shield power-up</strong> — an occasional pickup that absorbs one hit.</li>
+    <li><strong>Spawn telegraphing</strong> — a short warning flash at the top edge before a block actually appears.</li>
+    <li><strong>Density waves</strong> — alternating calm and intense stretches instead of constant random spawning.</li>
+    <li><strong>Difficulty selection</strong> — adjustable starting spawn rate for newer or more experienced players.</li>
+  </ul>
+  <a href="../../" class="more-games-link">Browse All Games</a>
+</section>
+<section class="game-info" lang="ko">
+  <hr class="section-divider">
+  <h2>조작 방법</h2>
+  <ul>
+    <li><strong>이동:</strong> 방향키 (상하좌우 모두 사용)</li>
+    <li>모바일: 화면을 탭하거나 드래그하면 그 위치로 바로 이동합니다</li>
+    <li>떨어지는 붉은 블록을 모두 피하세요</li>
+    <li>오래 살아남을수록 점수가 높아집니다</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>게임 소개</h2>
+  <p>네온 닷지는 자유롭게 움직이는 회피 게임입니다. 정해진 차선을 바꾸는 대신, 캐릭터는 플레이 화면 어디든 위치할 수 있고, 붉은 블록이 위쪽 무작위 위치에서 계속 떨어집니다. 모든 블록을 오래 피할수록 점수가 올라갈 뿐, 생존 외에 별도의 목표는 없습니다.</p>
+  <hr class="section-divider">
+  <h2>제작 배경</h2>
+  <p>대부분의 회피 게임은 몇 개의 차선으로 움직임을 제한해서, 도전 과제가 결국 적절한 시점에 적절한 차선을 고르는 문제로 귀결됩니다. 저희는 화면 위의 정확한 위치가 의미를 가지고, 빈 공간 어디든 실제로 선택할 수 있는 탄막 게임에 더 가까운 느낌을 만들고 싶었습니다. 그래서 터치 조작도 다르게 동작해야 했습니다. 방향을 탭하는 대신, 캐릭터를 원하는 위치로 직접 드래그할 수 있게 했고, 이는 방향키식 이동보다 휴대폰이나 태블릿에서 훨씬 직관적으로 느껴집니다.</p>
+  <hr class="section-divider">
+  <h2>작동 원리</h2>
+  <p>새 블록은 약 650밀리초마다 화면 상단의 무작위 가로 위치에서 생성되며, 매번 다른 무작위 속도로 떨어집니다(블록 속도가 다양해서 하나의 안전한 리듬에 안주할 수 없습니다). 충돌은 매 프레임마다 캐릭터와 각 블록 사이의 단순한 사각 영역 겹침으로 판정됩니다. 키보드 입력은 정해진 거리만큼 방향을 이동시키지만, 터치와 마우스 입력은 포인터의 정확한 화면 위치를 캐릭터 좌표에 직접 매핑합니다. 그래서 방향을 반복해서 탭하는 것보다 드래그하는 것이 훨씬 정밀하게 느껴집니다.</p>
+  <hr class="section-divider">
+  <h2>팁 &amp; 전략</h2>
+  <ul>
+    <li>키보드에서는 한 방향을 길게 눌러 구석으로 가기보다, 작은 조정을 계속하세요. 구석에서는 다음 블록을 피할 방향이 줄어듭니다.</li>
+    <li>터치에서는 직접 위치 지정을 활용하세요. 반복해서 탭하기보다 드래그하면 손가락 움직임과 함께 캐릭터가 더 부드럽게 이동합니다.</li>
+    <li>자신의 캐릭터만 보지 말고 화면 상단을 주시하세요. 새로 생성되는 블록을 더 일찍 발견할 수 있습니다.</li>
+    <li>화면 가장자리보다 중앙 근처에 머무르면 대개 피할 수 있는 방향이 더 많습니다.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>개선 아이디어</h2>
+  <ul>
+    <li><strong>짧은 보호막 아이템</strong> — 한 번의 충돌을 막아주는 가끔 등장하는 아이템.</li>
+    <li><strong>스폰 예고</strong> — 블록이 실제로 나타나기 전에 화면 상단에 짧게 보여주는 경고 표시.</li>
+    <li><strong>밀도 웨이브</strong> — 무작위 생성 대신 잔잔한 구간과 격렬한 구간을 번갈아 배치.</li>
+    <li><strong>난이도 선택</strong> — 초보자와 숙련자를 위한 시작 스폰 속도 조절 옵션.</li>
+  </ul>
+</section>
 </body>
 </html>

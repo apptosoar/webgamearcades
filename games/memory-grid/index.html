@@ -4,8 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Memory Grid — Webgame Arcades</title>
+<meta name="description" content="Watch the tile sequence light up, then repeat it back. A classic memory challenge that adds one more step every round. Play free instantly in your browser.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webgamearcades.com/games/memory-grid/">
+<meta property="og:title" content="Memory Grid — Webgame Arcades">
+<meta property="og:description" content="Watch the tile sequence light up, then repeat it back. A classic memory challenge that adds one more step every round.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://webgamearcades.com/games/memory-grid/">
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png">
 <link rel="stylesheet" href="../game-shell.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
+<style>
+  .game-info {
+    width: min(780px, 100%);
+    margin: 0 auto;
+    padding: 36px 18px 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    color: #b8bec9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .game-info .back-link:hover { color: #f4f2ea; }
+  .game-info h1 {
+    margin: 0 0 14px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: #f4f2ea;
+  }
+  .game-info p {
+    margin: 0 0 12px;
+    color: #b8bec9;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .game-info h2 {
+    margin: 28px 0 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f7b84b;
+  }
+  .game-info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #b8bec9;
+    line-height: 2;
+  }
+  .game-info hr {
+    margin: 28px 0 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .more-games-link {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f4f2ea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
+</style>
 </head>
 <body class="game-memory-grid">
 <div class="wrap">
@@ -61,5 +131,80 @@
     }
   }
 </script>
+<section class="game-info">
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <h1>Memory Grid</h1>
+  <p>Nine tiles, one growing sequence. Watch the order they flash, then click them back in exactly the same order. Every round you clear adds one more step to remember.</p>
+  <p>There's no clock and no penalty for taking your time — the only thing standing between you and a higher round is how much of the sequence you can hold in your head.</p>
+  <hr class="section-divider">
+  <h2>How to Play</h2>
+  <ul>
+    <li>Press <strong>Start</strong> to begin the first round</li>
+    <li>Watch the tiles flash in sequence</li>
+    <li>Click or tap the tiles back in the same order</li>
+    <li>Each successful round adds one more step</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>About This Game</h2>
+  <p>Memory Grid is a classic "Simon says" style memory game played on a 3x3 grid of numbered tiles. Round one shows you a single flash; every round after that appends one more tile to the sequence before replaying the whole thing from the start. Get the full sequence right and you move on. Click the wrong tile anywhere along the way and you're back to round one.</p>
+  <hr class="section-divider">
+  <h2>Why We Built It</h2>
+  <p>We wanted a game that tests memory on its own, without mixing in a reaction-time or speed element. Most "fast-paced" games reward quick hands; this one rewards a quiet mind. There's no timer pushing you to rush your input, so the only variable that matters is how many steps you can actually hold onto — which makes it a surprisingly good measure of how distracted (or focused) you are in the moment.</p>
+  <hr class="section-divider">
+  <h2>How It Works</h2>
+  <p>Each round, a new tile index from 0–8 is appended to an internal sequence array. The full sequence is replayed by flashing each tile teal for about 360 milliseconds, with roughly 520 milliseconds between flashes. As you click tiles, your input is checked one step at a time against the recorded sequence — a mismatch at any position ends the run immediately and resets the sequence to empty. Complete the whole sequence correctly and the round counter increases, then the next (longer) sequence plays after a short pause.</p>
+  <hr class="section-divider">
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>Group the grid mentally into rows or corners instead of tracking nine separate, unrelated positions.</li>
+    <li>Say the position out loud (or silently in your head) as each tile flashes — verbal coding helps most people retain longer sequences.</li>
+    <li>There's no time limit on your input, so pause and think before each click rather than clicking on instinct.</li>
+    <li>If you keep failing around the same round number, try replaying the sequence in your head once more before you start clicking.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Audio tones</strong> — a distinct musical note per tile, since sound is often easier to recall than position alone.</li>
+    <li><strong>Difficulty modes</strong> — faster flashes or a larger grid for players who outgrow the default pace.</li>
+    <li><strong>Best round tracking</strong> — saving your personal best round across sessions.</li>
+    <li><strong>Partial retry</strong> — an easier mode that only resets a few steps instead of all the way back to round one.</li>
+  </ul>
+  <a href="../../" class="more-games-link">Browse All Games</a>
+</section>
+<section class="game-info" lang="ko">
+  <hr class="section-divider">
+  <h2>조작 방법</h2>
+  <ul>
+    <li><strong>시작:</strong> Start 버튼을 눌러 첫 라운드를 시작합니다</li>
+    <li>타일이 순서대로 켜지는 것을 지켜보세요</li>
+    <li>같은 순서로 타일을 클릭/터치하세요</li>
+    <li>라운드를 성공할 때마다 단계가 하나씩 늘어납니다</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>게임 소개</h2>
+  <p>메모리 그리드는 3x3 숫자 타일 위에서 진행되는 클래식한 "사이먼 게임" 스타일의 기억력 게임입니다. 1라운드는 한 번의 깜빡임만 보여주고, 이후 라운드마다 처음부터 전체 시퀀스를 다시 재생하면서 타일을 하나씩 더합니다. 전체 시퀀스를 맞히면 다음 라운드로 넘어가고, 중간에 틀린 타일을 누르면 1라운드부터 다시 시작합니다.</p>
+  <hr class="section-divider">
+  <h2>제작 배경</h2>
+  <p>반응 속도나 스피드 요소를 섞지 않고 순수하게 기억력만 시험하는 게임을 만들고 싶었습니다. 대부분의 "빠른" 게임은 빠른 손을 보상하지만, 이 게임은 차분한 머리를 보상합니다. 입력을 서두르게 하는 타이머가 없기 때문에 중요한 변수는 오직 몇 단계까지 기억할 수 있는가뿐이며, 이는 지금 이 순간 얼마나 집중하고 있는지를 의외로 잘 보여주는 척도가 됩니다.</p>
+  <hr class="section-divider">
+  <h2>작동 원리</h2>
+  <p>매 라운드마다 0~8 사이의 새로운 타일 번호가 내부 시퀀스 배열에 추가됩니다. 전체 시퀀스는 각 타일을 약 360밀리초 동안 청록색으로 깜빡이고, 깜빡임 사이에 약 520밀리초의 간격을 두며 재생됩니다. 타일을 클릭하면 입력값이 기록된 시퀀스와 한 단계씩 비교되며, 어느 위치에서든 일치하지 않으면 즉시 게임이 끝나고 시퀀스가 초기화됩니다. 전체 시퀀스를 정확히 맞히면 라운드 수가 올라가고, 짧은 대기 후 한 단계 더 길어진 다음 시퀀스가 재생됩니다.</p>
+  <hr class="section-divider">
+  <h2>팁 &amp; 전략</h2>
+  <ul>
+    <li>9개의 서로 무관한 위치를 따로 외우기보다, 행이나 모서리 단위로 그룹지어 기억하세요.</li>
+    <li>타일이 깜빡일 때마다 위치를 소리 내어(또는 마음속으로) 말해보세요. 언어로 코딩하면 더 긴 시퀀스를 기억하는 데 도움이 됩니다.</li>
+    <li>입력에는 시간 제한이 없으니, 본능적으로 클릭하기보다 클릭하기 전에 잠시 멈춰 생각하세요.</li>
+    <li>같은 라운드에서 계속 실패한다면, 클릭을 시작하기 전에 머릿속으로 시퀀스를 한 번 더 재생해보세요.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>개선 아이디어</h2>
+  <ul>
+    <li><strong>오디오 음</strong> — 타일마다 고유한 음을 추가합니다. 소리는 위치만으로 기억하는 것보다 더 쉽게 떠올릴 수 있는 경우가 많습니다.</li>
+    <li><strong>난이도 모드</strong> — 기본 속도보다 빠른 깜빡임이나 더 큰 그리드를 원하는 플레이어를 위한 옵션.</li>
+    <li><strong>최고 라운드 기록</strong> — 세션 간에 개인 최고 라운드를 저장합니다.</li>
+    <li><strong>부분 재시도</strong> — 처음부터 전부 다시가 아니라 몇 단계만 되돌리는 쉬운 모드.</li>
+  </ul>
+</section>
 </body>
 </html>

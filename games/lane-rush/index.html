@@ -4,8 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lane Rush — Webgame Arcades</title>
+<meta name="description" content="Switch lanes to dodge incoming obstacles and survive as long as possible in this fast 3-lane reflex racer. Play free instantly — no download or install needed.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webgamearcades.com/games/lane-rush/">
+<meta property="og:title" content="Lane Rush — Webgame Arcades">
+<meta property="og:description" content="Switch lanes to dodge incoming obstacles and survive as long as possible in this fast 3-lane reflex racer.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://webgamearcades.com/games/lane-rush/">
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png">
 <link rel="stylesheet" href="../game-shell.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
+<style>
+  .game-info {
+    width: min(780px, 100%);
+    margin: 0 auto;
+    padding: 36px 18px 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    color: #b8bec9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .game-info .back-link:hover { color: #f4f2ea; }
+  .game-info h1 {
+    margin: 0 0 14px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: #f4f2ea;
+  }
+  .game-info p {
+    margin: 0 0 12px;
+    color: #b8bec9;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .game-info h2 {
+    margin: 28px 0 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f7b84b;
+  }
+  .game-info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #b8bec9;
+    line-height: 2;
+  }
+  .game-info hr {
+    margin: 28px 0 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .more-games-link {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f4f2ea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
+</style>
 </head>
 <body class="game-lane-rush">
 <div class="wrap">
@@ -61,5 +131,80 @@
   }
   loop();
 </script>
+<section class="game-info">
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <h1>Lane Rush</h1>
+  <p>Three lanes, one car, and a constant stream of obstacles falling toward you. Switch lanes at the right moment to stay alive — every second you survive adds to your score.</p>
+  <p>There's no acceleration, no power-ups, and no extra mechanics to learn. It's a pure test of reading the lane ahead and committing to a move before it's too late.</p>
+  <hr class="section-divider">
+  <h2>How to Play</h2>
+  <ul>
+    <li><strong>Switch lanes:</strong> Left / Right Arrow keys</li>
+    <li>Mobile: tap the left or right half of the screen</li>
+    <li>Avoid every obstacle in your lane</li>
+    <li>Survive longer to score higher</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>About This Game</h2>
+  <p>Lane Rush is a minimal 3-lane dodging game. Obstacles fall continuously from the top of the screen in one of three lanes, and your only job is to be in a different lane when they reach you. Your score climbs automatically for every moment you stay alive, so there's no separate scoring system to think about — just survive.</p>
+  <hr class="section-divider">
+  <h2>Why We Built It</h2>
+  <p>We wanted to strip a lane-switching reflex game down to its simplest possible form — no speed-up curve, no items, no second mechanic competing for your attention. Just three lanes and a decision to make every time something approaches. It turns out that simplicity makes the timing of each lane switch matter a lot more, since there's nothing else to distract you from it.</p>
+  <hr class="section-divider">
+  <h2>How It Works</h2>
+  <p>A new obstacle spawns in a randomly chosen lane roughly every 0.78 seconds and falls down the screen at a constant speed. Your car sits near the bottom of the play field, and a collision is checked whenever an obstacle in your current lane passes through a fixed vertical zone close to your car. Your score increases by one for every animation frame you're still alive, so longer survival directly becomes a higher number — there's no separate point system layered on top.</p>
+  <hr class="section-divider">
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>Pick a lane and commit — switching back and forth without a clear reason is the most common way to accidentally drive into something.</li>
+    <li>Watch the obstacles as they spawn at the top of the screen rather than waiting until they're right in front of your car.</li>
+    <li>The middle lane gives you an escape route in both directions, which makes it a safer default position than either edge.</li>
+    <li>On mobile, keep a finger ready over each half of the screen so you're not reaching across to switch lanes at the last second.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Speed ramp</strong> — gradually increasing obstacle speed the longer a run goes, for an extra layer of difficulty.</li>
+    <li><strong>Near-miss bonus</strong> — extra points for switching lanes at the last possible moment.</li>
+    <li><strong>Lane-specific hazards</strong> — obstacles that behave differently depending on which lane they spawn in.</li>
+    <li><strong>Visual car and obstacle variety</strong> — different sprites instead of flat colored blocks.</li>
+  </ul>
+  <a href="../../" class="more-games-link">Browse All Games</a>
+</section>
+<section class="game-info" lang="ko">
+  <hr class="section-divider">
+  <h2>조작 방법</h2>
+  <ul>
+    <li><strong>차선 변경:</strong> 좌우 방향키</li>
+    <li>모바일: 화면 좌우 절반을 터치</li>
+    <li>차선에 있는 장애물을 모두 피하세요</li>
+    <li>오래 살아남을수록 점수가 높아집니다</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>게임 소개</h2>
+  <p>레인 러시는 단순한 3차선 회피 게임입니다. 장애물이 세 차선 중 하나에서 계속 떨어지고, 당신이 해야 할 일은 그 장애물이 도착할 때 다른 차선에 있는 것뿐입니다. 살아있는 동안 점수가 자동으로 올라가므로 따로 신경 쓸 점수 체계 없이 그저 살아남으면 됩니다.</p>
+  <hr class="section-divider">
+  <h2>제작 배경</h2>
+  <p>차선 변경형 반응 게임을 가능한 한 단순한 형태로 만들고 싶었습니다. 속도 상승 곡선도, 아이템도, 주의를 분산시키는 두 번째 메커니즘도 없습니다. 그저 세 개의 차선과, 무언가가 다가올 때마다 내려야 하는 결정뿐입니다. 단순할수록 차선을 바꾸는 타이밍 하나하나가 훨씬 더 중요해진다는 것을 알게 됐습니다. 다른 것에 신경 쓸 일이 없기 때문입니다.</p>
+  <hr class="section-divider">
+  <h2>작동 원리</h2>
+  <p>새 장애물은 약 0.78초마다 무작위로 선택된 차선에서 생성되어 일정한 속도로 화면 아래로 떨어집니다. 자동차는 플레이 화면 하단 근처에 있고, 현재 차선에 있는 장애물이 자동차 바로 앞의 고정된 영역을 지날 때 충돌이 판정됩니다. 점수는 살아있는 모든 애니메이션 프레임마다 1씩 올라가므로, 오래 살아남는 것 자체가 곧 높은 점수로 직결됩니다. 별도의 점수 시스템은 없습니다.</p>
+  <hr class="section-divider">
+  <h2>팁 &amp; 전략</h2>
+  <ul>
+    <li>차선을 정했다면 그대로 유지하세요. 명확한 이유 없이 좌우로 계속 바꾸는 것이 장애물에 부딪히는 가장 흔한 원인입니다.</li>
+    <li>장애물이 화면 위쪽에서 생성될 때부터 지켜보세요. 자동차 바로 앞에 올 때까지 기다리지 마세요.</li>
+    <li>가운데 차선은 양쪽으로 도망갈 길이 있어 가장자리 차선보다 더 안전한 기본 위치입니다.</li>
+    <li>모바일에서는 마지막 순간에 화면을 가로질러 손을 옮기지 않도록, 양쪽 절반에 손가락을 미리 준비해두세요.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>개선 아이디어</h2>
+  <ul>
+    <li><strong>속도 상승</strong> — 플레이가 길어질수록 장애물 속도가 점점 빨라지는 난이도 요소.</li>
+    <li><strong>아슬아슬 보너스</strong> — 마지막 순간에 차선을 바꾸면 추가 점수를 주는 시스템.</li>
+    <li><strong>차선별 특수 장애물</strong> — 생성된 차선에 따라 다르게 동작하는 장애물.</li>
+    <li><strong>자동차·장애물 비주얼 다양화</strong> — 단색 블록 대신 다양한 스프라이트 적용.</li>
+  </ul>
+</section>
 </body>
 </html>

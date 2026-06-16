@@ -4,7 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trap Scout — Webgame Arcades</title>
+<meta name="description" content="A Minesweeper-style logic puzzle — use number hints to find every trap and clear the board across three difficulty levels. Play free instantly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webgamearcades.com/games/trap-scout/">
+<meta property="og:title" content="Trap Scout — Webgame Arcades">
+<meta property="og:description" content="A Minesweeper-style logic puzzle — use number hints to find every trap and clear the board across three difficulty levels.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://webgamearcades.com/games/trap-scout/">
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png">
 <link rel="stylesheet" href="../game-shell.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
 <style>
   #diffs { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px }
@@ -24,6 +33,65 @@
   .cell[data-n="6"] { color: #2bd1c4 }
   .cell[data-n="7"] { color: #f4f2ea }
   .cell[data-n="8"] { color: #b8bec9 }
+  .game-info {
+    width: min(780px, 100%);
+    margin: 0 auto;
+    padding: 36px 18px 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    color: #b8bec9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .game-info .back-link:hover { color: #f4f2ea; }
+  .game-info h1 {
+    margin: 0 0 14px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: #f4f2ea;
+  }
+  .game-info p {
+    margin: 0 0 12px;
+    color: #b8bec9;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .game-info h2 {
+    margin: 28px 0 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f7b84b;
+  }
+  .game-info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #b8bec9;
+    line-height: 2;
+  }
+  .game-info hr {
+    margin: 28px 0 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .more-games-link {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f4f2ea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
 </style>
 </head>
 <body class="game-trap-scout">
@@ -128,5 +196,80 @@
   window.addEventListener("resize", () => fit());
   newGame(0);
 </script>
+<section class="game-info">
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <h1>Trap Scout</h1>
+  <p>Every cell either hides a trap or shows a number telling you how many traps are in the 8 cells around it. Use those numbers to work out which cells are safe to open and which ones to flag and leave alone.</p>
+  <p>Three difficulty levels are available, from a quick 8x8 warm-up to a genuinely tense 12x10 board with 30 traps hidden across it.</p>
+  <hr class="section-divider">
+  <h2>How to Play</h2>
+  <ul>
+    <li><strong>Reveal a cell:</strong> Left-click or tap</li>
+    <li><strong>Flag a suspected trap:</strong> Right-click, or long-press for about half a second</li>
+    <li>Choose Easy, Med, or Hard before you start</li>
+    <li>Reveal every safe cell without opening a trap to win</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>About This Game</h2>
+  <p>Trap Scout is a classic Minesweeper-style logic puzzle. The board is full of hidden traps; every other cell shows a number from 0 to 8 indicating how many traps are touching it. Flag the cells you're confident hide traps so you don't open them by mistake, and reveal everything else. Open an actual trap and the run ends immediately, with every other trap on the board revealed in red.</p>
+  <hr class="section-divider">
+  <h2>Why We Built It</h2>
+  <p>Minesweeper is one of the purest deduction puzzles ever made, but a bad first click can end a run before it even starts, which always felt like an unnecessary source of frustration rather than real difficulty. We wanted to keep everything else about the format untouched — the same number-reading logic, the same flagging and flood-fill reveal — while removing that one source of pure luck. The three difficulty presets exist so newer players can build pattern-reading skill on an 8x8 board before testing it against a denser 12x10 one.</p>
+  <hr class="section-divider">
+  <h2>How It Works</h2>
+  <p>Traps aren't placed until after your very first reveal, and the cell you click is always excluded, so the opening move can never end the game. Each non-trap cell's number is calculated by counting how many of its up-to-8 neighbors are traps. Revealing a cell with a count of zero automatically floods open all of its connected zero-count neighbors, clearing large open areas in one click. The timer starts counting up the moment your first reveal happens. You win the instant every non-trap cell is open; opening a trap ends the run and reveals the full trap layout so you can see what you missed.</p>
+  <hr class="section-divider">
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>Start on Easy to get comfortable reading numbers before moving up — the deduction logic is identical at every difficulty, only the board size and trap density change.</li>
+    <li>If a numbered cell's count exactly matches its number of remaining unopened neighbors, every one of those neighbors is guaranteed to be a trap — flag them all immediately.</li>
+    <li>Conversely, if a numbered cell already has enough flagged neighbors to satisfy its count, every other unopened neighbor is guaranteed safe to reveal.</li>
+    <li>Work outward from the edges of already-opened areas rather than clicking in unexplored open space, since edges give you the most number clues to work with.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Chord-click</strong> — clicking a satisfied number to instantly reveal all of its remaining safe neighbors at once.</li>
+    <li><strong>Over-flag warning</strong> — a visual cue if you've flagged more cells in an area than its numbers allow.</li>
+    <li><strong>Daily seeded board</strong> — the same layout for everyone each day, for comparing times and results.</li>
+    <li><strong>Custom board setup</strong> — adjustable width, height, and trap count beyond the three fixed presets.</li>
+  </ul>
+  <a href="../../" class="more-games-link">Browse All Games</a>
+</section>
+<section class="game-info" lang="ko">
+  <hr class="section-divider">
+  <h2>조작 방법</h2>
+  <ul>
+    <li><strong>칸 열기:</strong> 좌클릭 또는 탭</li>
+    <li><strong>함정 의심 칸 표시:</strong> 우클릭 또는 약 0.5초 길게 누르기</li>
+    <li>시작 전에 Easy / Med / Hard 난이도를 선택하세요</li>
+    <li>함정을 열지 않고 안전한 칸을 모두 열면 승리합니다</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>게임 소개</h2>
+  <p>트랩 스카우트는 클래식한 지뢰찾기 스타일의 논리 퍼즐입니다. 보드 곳곳에 함정이 숨어 있고, 나머지 칸에는 인접한 8칸 중 함정이 몇 개 있는지를 나타내는 0~8 사이의 숫자가 표시됩니다. 함정이라고 확신하는 칸은 깃발로 표시해 실수로 열지 않도록 하고, 나머지는 모두 열어야 합니다. 실제 함정을 열면 즉시 게임이 끝나며, 보드 위의 다른 모든 함정이 빨간색으로 공개됩니다.</p>
+  <hr class="section-divider">
+  <h2>제작 배경</h2>
+  <p>지뢰찾기는 가장 순수한 추론 퍼즐 중 하나지만, 첫 클릭이 잘못되면 시작도 하기 전에 게임이 끝나버릴 수 있다는 점이 항상 진짜 난이도가 아니라 불필요한 좌절감처럼 느껴졌습니다. 숫자를 읽는 추론 로직, 깃발 표시, 빈 칸 자동 확장 같은 원래의 방식은 그대로 두면서, 순전히 운에 의한 그 한 가지 요소만 없애고 싶었습니다. 세 가지 난이도 설정을 둔 이유는, 더 빽빽한 12x10 보드에 도전하기 전에 8x8 보드에서 먼저 패턴 읽는 감각을 키울 수 있게 하기 위해서입니다.</p>
+  <hr class="section-divider">
+  <h2>작동 원리</h2>
+  <p>함정은 첫 번째로 칸을 여는 순간에야 배치되며, 클릭한 칸은 항상 제외되므로 시작하자마자 게임이 끝나는 일은 없습니다. 함정이 아닌 각 칸의 숫자는 인접한 최대 8개 칸 중 함정이 몇 개인지를 세어 계산됩니다. 숫자가 0인 칸을 열면 연결된 0칸들이 자동으로 한 번에 펼쳐져 넓은 영역을 한 번의 클릭으로 정리할 수 있습니다. 타이머는 첫 번째로 칸을 여는 순간부터 올라갑니다. 함정이 아닌 모든 칸을 열면 즉시 승리하고, 함정을 열면 게임이 끝나며 놓친 부분을 확인할 수 있도록 전체 함정 배치가 공개됩니다.</p>
+  <hr class="section-divider">
+  <h2>팁 &amp; 전략</h2>
+  <ul>
+    <li>먼저 Easy로 숫자 읽는 감각을 익히세요. 추론 로직 자체는 모든 난이도에서 동일하고, 보드 크기와 함정 밀도만 달라집니다.</li>
+    <li>어떤 숫자 칸의 값이 남아있는 미개봉 인접 칸 수와 정확히 같다면, 그 인접 칸들은 모두 함정이 확실하므로 즉시 깃발을 표시하세요.</li>
+    <li>반대로, 어떤 숫자 칸이 이미 자신의 값만큼 깃발이 표시된 인접 칸을 가지고 있다면, 나머지 미개봉 인접 칸은 모두 안전하게 열 수 있습니다.</li>
+    <li>아무것도 없는 빈 공간을 무작정 클릭하기보다, 이미 열린 영역의 가장자리부터 바깥쪽으로 작업하세요. 가장자리에 가장 많은 숫자 힌트가 있습니다.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>개선 아이디어</h2>
+  <ul>
+    <li><strong>코드 클릭</strong> — 조건이 충족된 숫자를 클릭하면 남은 안전한 인접 칸을 한 번에 모두 여는 기능.</li>
+    <li><strong>과다 깃발 경고</strong> — 한 영역에 숫자가 허용하는 것보다 많은 깃발을 표시했을 때 보여주는 시각적 경고.</li>
+    <li><strong>일일 고정 보드</strong> — 매일 모두에게 동일한 배치를 제공해 시간과 결과를 비교할 수 있게 합니다.</li>
+    <li><strong>커스텀 보드 설정</strong> — 세 가지 고정 난이도 외에 가로, 세로, 함정 수를 직접 조정하는 기능.</li>
+  </ul>
+</section>
 </body>
 </html>

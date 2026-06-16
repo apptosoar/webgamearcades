@@ -4,8 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sudoku — Webgame Arcades</title>
+<meta name="description" content="A number-grid logic puzzle — fill every row and column so each number appears exactly once. Choose your grid size, 4x4 up to 10x10. Play free instantly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://webgamearcades.com/games/sudoku/">
+<meta property="og:title" content="Sudoku — Webgame Arcades">
+<meta property="og:description" content="A number-grid logic puzzle — fill every row and column so each number appears exactly once. Choose your grid size, 4x4 up to 10x10.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://webgamearcades.com/games/sudoku/">
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png">
 <link rel="stylesheet" href="../game-shell.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
+<style>
+  .game-info {
+    width: min(780px, 100%);
+    margin: 0 auto;
+    padding: 36px 18px 64px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 28px;
+    color: #b8bec9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+  .game-info .back-link:hover { color: #f4f2ea; }
+  .game-info h1 {
+    margin: 0 0 14px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: #f4f2ea;
+  }
+  .game-info p {
+    margin: 0 0 12px;
+    color: #b8bec9;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .game-info h2 {
+    margin: 28px 0 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #f7b84b;
+  }
+  .game-info ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #b8bec9;
+    line-height: 2;
+  }
+  .game-info hr {
+    margin: 28px 0 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .game-info .more-games-link {
+    display: inline-block;
+    margin-top: 36px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #f4f2ea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
+</style>
 </head>
 <body class="game-sudoku">
 <div class="wrap">
@@ -102,5 +172,80 @@
   start(4);
   window.addEventListener("resize", () => { if (cells.length) drawBoard(); });
 </script>
+<section class="game-info">
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <h1>Sudoku</h1>
+  <p>Pick a grid size, then fill in the blanks so every row and every column contains each number exactly once. Pre-filled clues are locked; clicking an open cell cycles it through the possible numbers.</p>
+  <p>It plays like classic Sudoku, but without the 3x3 box rule — which means it works cleanly at sizes that don't divide neatly into sub-boxes, from a quick 4x4 warm-up up to a full 10x10 challenge.</p>
+  <hr class="section-divider">
+  <h2>How to Play</h2>
+  <ul>
+    <li>Choose a grid size: 4x4, 5x5, 6x6, 8x8, or 10x10</li>
+    <li>Click any open cell to cycle through numbers 1 through the grid size</li>
+    <li>Fill every row and column with each number exactly once</li>
+    <li>Cells turn red if they conflict with another cell in the same row or column</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>About This Game</h2>
+  <p>This is a Latin-square number puzzle rather than a traditional 9x9 Sudoku. There are no 3x3 boxes to satisfy — just the rule that every row and every column must contain each number from 1 to the grid size exactly once. Some cells start filled in as fixed clues; the rest are yours to complete. Get every row and column right with no conflicts, and the puzzle is solved.</p>
+  <hr class="section-divider">
+  <h2>Why We Built It</h2>
+  <p>Classic Sudoku's 3x3 box rule only works cleanly on a 9x9 grid, since 9 is a perfect square. We wanted players to be able to choose their own grid size — including ones like 5x5, 8x8, or 10x10 that don't split evenly into sub-boxes — so we kept the row-and-column rule and dropped the box constraint entirely. The result is a puzzle that scales smoothly from a two-minute warm-up to a genuinely demanding 10x10 grid, without ever feeling like a different game.</p>
+  <hr class="section-divider">
+  <h2>How It Works</h2>
+  <p>Each puzzle is generated from two independently shuffled orderings of rows and columns, combined with modular arithmetic to produce a guaranteed-valid Latin square — every row and column is mathematically guaranteed to contain each number exactly once before any cells are even hidden. About 48% of cells are then kept visible as fixed clues, and the rest start blank. Clicking an open cell increments its value by one (wrapping back to blank after the grid size), and any cell that currently shares its value with another cell in the same row or column is highlighted in red so you can spot conflicts immediately.</p>
+  <hr class="section-divider">
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>Start with 4x4 or 5x5 to get a feel for the click-to-cycle input before attempting larger grids.</li>
+    <li>Work one row or column at a time, figuring out which numbers are still missing rather than guessing randomly across the whole board.</li>
+    <li>A red conflict isn't a dead end — keep clicking through that cell's values until the conflict clears, then move on.</li>
+    <li>On larger grids, scan for rows or columns that are already mostly filled in — they usually have the fewest valid options left.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Pencil marks</strong> — a way to jot down candidate numbers in a cell instead of committing right away.</li>
+    <li><strong>Undo button</strong> — step back from a click instead of cycling all the way around.</li>
+    <li><strong>Timer and best times</strong> — per grid size, so you can track improvement.</li>
+    <li><strong>Single-cell hint</strong> — reveal one correct number when you're stuck.</li>
+  </ul>
+  <a href="../../" class="more-games-link">Browse All Games</a>
+</section>
+<section class="game-info" lang="ko">
+  <hr class="section-divider">
+  <h2>조작 방법</h2>
+  <ul>
+    <li>그리드 크기 선택: 4x4, 5x5, 6x6, 8x8, 10x10</li>
+    <li>빈 칸을 클릭하면 1부터 그리드 크기까지 숫자가 순서대로 바뀝니다</li>
+    <li>모든 행과 열에 각 숫자가 한 번씩만 들어가도록 채우세요</li>
+    <li>같은 행이나 열에 충돌하는 칸은 빨간색으로 표시됩니다</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>게임 소개</h2>
+  <p>이 게임은 전통적인 9x9 스도쿠가 아니라 라틴 방진(Latin square) 숫자 퍼즐입니다. 3x3 박스 규칙은 없으며, 모든 행과 열에 1부터 그리드 크기까지의 숫자가 각각 한 번씩만 들어가야 한다는 규칙만 있습니다. 일부 칸은 처음부터 고정된 힌트로 채워져 있고, 나머지는 직접 채워야 합니다. 모든 행과 열을 충돌 없이 완성하면 퍼즐이 풀립니다.</p>
+  <hr class="section-divider">
+  <h2>제작 배경</h2>
+  <p>클래식 스도쿠의 3x3 박스 규칙은 9가 완전제곱수이기 때문에 9x9 그리드에서만 깔끔하게 적용됩니다. 저희는 플레이어가 직접 그리드 크기를 고를 수 있게 하고 싶었습니다. 5x5, 8x8, 10x10처럼 작은 박스로 균등하게 나뉘지 않는 크기도 포함해서요. 그래서 행·열 규칙만 남기고 박스 제약은 완전히 없앴습니다. 그 결과 2분짜리 가벼운 워밍업부터 진짜 도전적인 10x10 그리드까지, 전혀 다른 게임처럼 느껴지지 않으면서도 부드럽게 확장되는 퍼즐이 만들어졌습니다.</p>
+  <hr class="section-divider">
+  <h2>작동 원리</h2>
+  <p>각 퍼즐은 행과 열을 각각 독립적으로 무작위 셔플한 순서를 모듈러 연산과 결합해 생성됩니다. 이렇게 하면 칸을 가리기도 전에 모든 행과 열에 각 숫자가 정확히 한 번씩 들어가는 유효한 라틴 방진이 수학적으로 보장됩니다. 이후 약 48%의 칸이 고정 힌트로 보이게 남겨지고, 나머지는 빈 칸으로 시작합니다. 빈 칸을 클릭하면 값이 1씩 증가하며(그리드 크기를 넘으면 다시 빈 칸으로 돌아갑니다), 같은 행이나 열에서 다른 칸과 값이 겹치는 칸은 즉시 빨간색으로 강조되어 충돌을 바로 확인할 수 있습니다.</p>
+  <hr class="section-divider">
+  <h2>팁 &amp; 전략</h2>
+  <ul>
+    <li>큰 그리드를 시도하기 전에 4x4나 5x5로 클릭 순환 방식에 먼저 익숙해지세요.</li>
+    <li>전체 보드를 무작위로 추측하기보다, 한 번에 한 행이나 열씩 어떤 숫자가 빠졌는지 파악하며 채우세요.</li>
+    <li>빨간 충돌이 막다른 길은 아닙니다. 그 칸을 계속 클릭해 충돌이 사라질 때까지 값을 돌려보고 다음으로 넘어가세요.</li>
+    <li>큰 그리드에서는 이미 거의 채워진 행이나 열을 먼저 찾아보세요. 보통 남은 선택지가 가장 적습니다.</li>
+  </ul>
+  <hr class="section-divider">
+  <h2>개선 아이디어</h2>
+  <ul>
+    <li><strong>메모 기능</strong> — 바로 확정하지 않고 칸에 후보 숫자를 적어둘 수 있는 기능.</li>
+    <li><strong>실행 취소</strong> — 클릭을 한 바퀴 다 돌리는 대신 한 단계 되돌리는 기능.</li>
+    <li><strong>타이머와 최고 기록</strong> — 그리드 크기별로 기록을 추적합니다.</li>
+    <li><strong>한 칸 힌트</strong> — 막혔을 때 정답 숫자 하나를 보여주는 기능.</li>
+  </ul>
+</section>
 </body>
 </html>
