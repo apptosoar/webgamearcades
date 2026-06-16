@@ -371,6 +371,7 @@
       <h1>Tile Link</h1>
       <p>A board of 96 tiles is laid out in front of you — each tile has a unique shape and colour combination. Click two matching tiles to remove them from the board. Clear all tiles to win.</p>
       <p>Tiles can only be linked if the path between them has no more than two turns. If no moves are left, use Shuffle to rearrange the board.</p>
+      <hr class="section-divider">
       <h2>How to Play</h2>
       <ul>
         <li><strong>Select:</strong> Click the first tile, then click a matching tile to remove both</li>
@@ -378,15 +379,19 @@
         <li>Links are only valid with a path of two turns or fewer</li>
         <li><strong>Shuffle:</strong> tap the Shuffle button if you're stuck</li>
       </ul>
+      <hr class="section-divider">
       <h2>About This Game</h2>
       <p>Tile Link is a Mahjong-solitaire style matching game with a geometric twist. A grid of 96 tiles, each carrying a unique shape-and-colour combination, waits to be cleared. Matches aren't just about finding pairs — the path between them has to be drawable with at most two turns. That single constraint transforms a straightforward matching game into a spatial puzzle about board state.</p>
 
+      <hr class="section-divider">
       <h2>Why We Built It</h2>
       <p>Classic Mahjong solitaire is relaxing but can sometimes feel arbitrary — you pick pairs that are accessible, not pairs that require strategic thinking. The two-turn path rule changes that. Some pairs are visually obvious but geometrically blocked, while others look distant but connect cleanly. Adding the Shuffle button as a limited reset gives players a safety valve without making the game trivial.</p>
 
+      <hr class="section-divider">
       <h2>How It Works</h2>
       <p>The 96 tiles consist of 24 unique types (6 shapes × 4 colours), each appearing exactly 4 times — meaning 2 matchable pairs per type. The path finder checks three connection types: straight (0 turns), L-shape (1 turn), and Z-shape (2 turns), including virtual rows and columns outside the grid boundary. If no valid path exists between two tiles of the same type, the match is rejected. A shuffle routine rearranges all remaining tiles while guaranteeing at least one valid move exists after shuffling.</p>
 
+      <hr class="section-divider">
       <h2>Tips &amp; Strategy</h2>
       <ul>
         <li>Start from the edges. Edge and corner tiles have fewer neighbors blocking their paths, so they're easier to match early and open up the interior.</li>
@@ -395,6 +400,7 @@
         <li>When stuck, select a tile you can't match yet — seeing its highlight helps your eye find where the matching partner is hiding.</li>
       </ul>
 
+      <hr class="section-divider">
       <h2>Ideas for Improvement</h2>
       <ul>
         <li><strong>Timer mode</strong> — a countdown clock that adds urgency and produces a time-based score.</li>
@@ -406,6 +412,7 @@
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
     <section class="game-info" lang="ko">
+      <hr class="section-divider">
       <h2>조작 방법</h2>
       <ul>
         <li><strong>선택:</strong> 첫 번째 타일을 클릭한 다음 일치하는 타일을 클릭해 두 개를 제거</li>
@@ -413,15 +420,19 @@
         <li>경로는 두 번 이하의 꺾임만 허용됩니다</li>
         <li><strong>셔플:</strong> 막혔을 때 셔플 버튼을 탭하세요</li>
       </ul>
+      <hr class="section-divider">
       <h2>게임 소개</h2>
       <p>타일 링크는 기하학적 변형이 가해진 마작 솔리테어 스타일의 매칭 게임입니다. 고유한 모양-색상 조합을 가진 96개의 타일 격자가 제거를 기다립니다. 매칭은 쌍을 찾는 것만이 아닙니다. 두 타일 사이의 경로가 최대 두 번의 꺾임으로 그릴 수 있어야 합니다. 이 단 하나의 제약이 단순한 매칭 게임을 보드 상태에 관한 공간적 퍼즐로 변환합니다.</p>
 
+      <hr class="section-divider">
       <h2>제작 배경</h2>
       <p>클래식 마작 솔리테어는 편안하지만 때로는 임의적으로 느껴질 수 있습니다. 전략적 사고가 필요한 쌍이 아닌 접근 가능한 쌍을 고릅니다. 두 번 꺾임 경로 규칙이 이를 바꿉니다. 일부 쌍은 시각적으로 명확하지만 기하학적으로 막혀 있고, 다른 쌍은 멀리 보이지만 깔끔하게 연결됩니다. 셔플 버튼을 제한된 리셋으로 추가한 것은 게임을 단순하게 만들지 않으면서 플레이어에게 안전 밸브를 제공합니다.</p>
 
+      <hr class="section-divider">
       <h2>작동 원리</h2>
       <p>96개의 타일은 6가지 모양 × 4가지 색상 = 24가지 고유 유형으로 구성되며, 각 유형이 4번씩 나타납니다. 두 타일 간의 유효한 링크는 직선(0번 꺾임), L자(1번 꺾임), Z자 또는 S자(2번 꺾임)이며, 보드 가장자리 밖의 가상 경계를 거치는 경로도 포함됩니다. 유효한 이동이 없으면 셔플이 타일을 재배열하되 유효한 이동이 보장됩니다.</p>
 
+      <hr class="section-divider">
       <h2>팁 &amp; 전략</h2>
       <ul>
         <li>가장자리부터 시작하세요. 가장자리와 코너 타일은 경로를 막는 이웃이 적어 일찍 매칭하기 쉽고 내부를 열어줍니다.</li>
@@ -430,6 +441,7 @@
         <li>막혔을 때는 아직 매칭할 수 없는 타일을 선택해보세요. 강조 표시를 보면 눈이 일치하는 파트너가 어디 숨어 있는지 찾는 데 도움이 됩니다.</li>
       </ul>
 
+      <hr class="section-divider">
       <h2>개선 아이디어</h2>
       <ul>
         <li><strong>타이머 모드</strong> — 긴박감을 더하고 시간 기반 점수를 생성하는 카운트다운 시계.</li>

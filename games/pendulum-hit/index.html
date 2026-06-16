@@ -510,6 +510,7 @@
       <h1>Pendulum Hit</h1>
       <p>Watch the pendulum swing back and forth and tap at the exact moment the bob passes through the target zone. The gold inner zone scores a PERFECT — the green outer zone scores GOOD. Miss the zone and it counts as a miss.</p>
       <p>Clear 10 stages by landing enough hits per stage. The pendulum speeds up and the target zone shrinks with each stage, demanding sharper timing to advance.</p>
+      <hr class="section-divider">
       <h2>How to Play</h2>
       <ul>
         <li><strong>Hit:</strong> Tap, click, or press Space / Enter when the bob is inside the target zone</li>
@@ -518,15 +519,19 @@
         <li>Each stage has 8 swings — hit the required number to advance</li>
         <li>Mobile: tap anywhere on screen or use the HIT! button</li>
       </ul>
+      <hr class="section-divider">
       <h2>About This Game</h2>
       <p>Pendulum Hit is a timing game built around one of physics' most elegant motions: simple harmonic oscillation. The pendulum swings at a mathematically precise speed and you have to press at the exact moment the bob passes through the target zone. PERFECT hits land in the narrow gold center; GOOD hits land anywhere in the wider green arc. Miss the zone entirely and it counts against you.</p>
 
+      <hr class="section-divider">
       <h2>Why We Built It</h2>
       <p>Rhythm games typically give players auditory cues to help with timing. We wanted to build a timing game that was purely visual — your internal sense of the pendulum's rhythm is the only guide. The physics-accurate swing arc (using cosine motion) means the pendulum slows near the endpoints and accelerates through the center, which is the opposite of what players initially expect. That counterintuitive speed profile is what makes it interesting.</p>
 
+      <hr class="section-divider">
       <h2>How It Works</h2>
       <p>The pendulum angle is computed each frame as <code>angle = −MAX_ANGLE × cos(t × speed)</code>, where speed increases with each stage. The target zone is defined as a fraction of MAX_ANGLE — when the absolute angle is less than this fraction, the bob is "in zone". A hit is registered only once per swing window; pressing again during the same swing has no effect. A streak bonus rewards consecutive successful hits, making perfect runs significantly more valuable than average ones.</p>
 
+      <hr class="section-divider">
       <h2>Tips &amp; Strategy</h2>
       <ul>
         <li>Don't watch the bob itself — watch the zone. Train yourself to react to when the zone lights up, not to where the bob is.</li>
@@ -535,6 +540,7 @@
         <li>Build a streak early when the window is wide. Later stages have smaller zones, so your streak bonus carried from early stages helps significantly.</li>
       </ul>
 
+      <hr class="section-divider">
       <h2>Ideas for Improvement</h2>
       <ul>
         <li><strong>Double pendulums</strong> — two pendulums with offset phases that must both be in zone simultaneously for a bonus hit.</li>
@@ -546,6 +552,7 @@
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
     <section class="game-info" lang="ko">
+      <hr class="section-divider">
       <h2>조작 방법</h2>
       <ul>
         <li><strong>히트:</strong> 추가 목표 구역 안에 있을 때 탭, 클릭 또는 스페이스/엔터</li>
@@ -554,15 +561,19 @@
         <li>각 스테이지는 8번의 스윙 — 필요한 수를 맞춰야 진행</li>
         <li>모바일: 화면 어디든 탭하거나 HIT! 버튼 사용</li>
       </ul>
+      <hr class="section-divider">
       <h2>게임 소개</h2>
       <p>펜듈럼 히트는 물리학에서 가장 우아한 운동 중 하나인 단순 조화 진동을 중심으로 만들어진 타이밍 게임입니다. 추가 수학적으로 정확한 속도로 스윙하고 추가 목표 구역을 통과하는 정확한 순간에 눌러야 합니다. PERFECT 히트는 좁은 금색 중앙에, GOOD 히트는 더 넓은 초록색 호 안에 떨어집니다. 구역을 완전히 놓치면 미스로 기록됩니다.</p>
 
+      <hr class="section-divider">
       <h2>제작 배경</h2>
       <p>리듬 게임은 보통 타이밍에 도움이 되는 청각적 단서를 제공합니다. 저희는 순수하게 시각적인 타이밍 게임을 만들고 싶었습니다. 진자 리듬에 대한 내부 감각만이 유일한 가이드입니다. 물리학적으로 정확한 스윙 호(`angle = −MAX_ANGLE × cos(t × speed)` 코사인 운동 사용)는 끝점 근처에서 추가 느려지고 중앙을 통과할 때 가속됩니다. 플레이어가 처음에 예상하는 것과 반대입니다. 이 직관에 반하는 속도 프로파일이 흥미롭게 만드는 요소입니다.</p>
 
+      <hr class="section-divider">
       <h2>작동 원리</h2>
       <p>진자의 각도는 `angle = −MAX_ANGLE × cos(t × speed)` 공식으로 계산됩니다. 여기서 t는 경과 시간이고 speed는 스테이지에 따라 증가합니다. 목표 구역은 중앙 주위의 각도 범위로 정의됩니다. PERFECT 범위는 GOOD 범위보다 좁습니다. 플레이어가 히트 입력을 누를 때, 추의 현재 각도가 PERFECT, GOOD 또는 MISS 구역 중 어느 구역 안에 있는지 확인됩니다.</p>
 
+      <hr class="section-divider">
       <h2>팁 &amp; 전략</h2>
       <ul>
         <li>추 자체를 보지 말고 구역을 보세요. 추가 어디 있는지가 아니라 구역에 불이 켜질 때 반응하도록 훈련하세요.</li>
@@ -571,6 +582,7 @@
         <li>창이 넓은 초반에 연속을 쌓으세요. 후반 스테이지는 구역이 더 작아져, 초반 스테이지에서 가져온 연속 보너스가 크게 도움이 됩니다.</li>
       </ul>
 
+      <hr class="section-divider">
       <h2>개선 아이디어</h2>
       <ul>
         <li><strong>이중 진자</strong> — 위상이 어긋난 두 개의 진자로, 보너스 히트를 위해 동시에 두 추가 구역 안에 있어야 함.</li>
