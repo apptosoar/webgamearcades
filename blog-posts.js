@@ -11,6 +11,7 @@ const BLOG_POSTS = [
     summary: "Neon Dodge was supposed to be a quick prototype. Three days later I was still tuning collision detection — and realizing why starting small is never a concession.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #1f4f4c)",
+    thumb: "/assets/thumbs/neon-dodge.png",
   },
   {
     slug: "zombie-survival-arena-design",
@@ -21,6 +22,7 @@ const BLOG_POSTS = [
     summary: "Building an arena where zombies chase you from all sides taught me that the real challenge isn't the enemies — it's the space between them.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #73d676, #1a4a1c)",
+    thumb: "/assets/thumbs/zombie-survival.png",
   },
   {
     slug: "keyboard-vs-touch-getting-the-best-score",
@@ -41,6 +43,7 @@ const BLOG_POSTS = [
     summary: "Removing the fire button from a shoot-em-up sounds wrong. But auto-fire shifted all the skill into movement — and that turned out to be the better game.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #a98bff, #3a2a7a)",
+    thumb: "/assets/thumbs/space-shooter.png",
   },
   {
     slug: "building-ninja-dash",
@@ -51,6 +54,7 @@ const BLOG_POSTS = [
     summary: "Every endless runner faces the same question: how do you keep the loop interesting past the first 30 seconds? Here's how I tried to solve it.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f4f2ea, #3a3a4a)",
+    thumb: "/assets/thumbs/ninja-dash.png",
   },
   {
     slug: "building-robot-arena",
@@ -61,6 +65,7 @@ const BLOG_POSTS = [
     summary: "Getting multiple bots to chase the player without clustering into a useless blob took more iteration than I expected. Here's what finally worked.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #4b4f9c)",
+    thumb: "/assets/thumbs/robot-arena.png",
   },
   {
     slug: "building-arrow-dodge",
@@ -71,6 +76,7 @@ const BLOG_POSTS = [
     summary: "I wanted to build something that measured pure reaction time with no strategy layer. Stripping a game down to just one skill is harder than it sounds.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #8a4a00)",
+    thumb: "/assets/thumbs/arrow-dodge.png",
   },
   {
     slug: "building-monster-punch",
@@ -81,6 +87,7 @@ const BLOG_POSTS = [
     summary: "Whack-a-mole is one of those games everyone knows but nobody has bothered to get right in a browser. Here's what I changed and why.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #6a1a1b)",
+    thumb: "/assets/thumbs/monster-punch.png",
   },
   {
     slug: "6-new-games-added-to-the-arcade",
@@ -101,6 +108,7 @@ const BLOG_POSTS = [
     summary: "Most games reward survival. Car Smash rewards total obliteration. Designing a game where the only goal is to destroy something completely changed how I thought about progression.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #f7b84b)",
+    thumb: "/assets/thumbs/car-smash.png",
   },
   {
     slug: "building-laser-escape",
@@ -111,6 +119,7 @@ const BLOG_POSTS = [
     summary: "Moving laser walls sound simple. But getting the timing, gaps, and hitboxes to feel fair without feeling easy took far longer than building the rest of the game.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #2a0a0a)",
+    thumb: "/assets/thumbs/laser-escape.png",
   },
   {
     slug: "building-castle-defender",
@@ -121,6 +130,7 @@ const BLOG_POSTS = [
     summary: "Tower defense games usually drown you in menus and resource management. I wanted to strip it down to just aiming and shooting. Here's what that process looked like.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #4a3000)",
+    thumb: "/assets/thumbs/castle-defender.png",
   },
   {
     slug: "building-bomb-runner",
@@ -131,6 +141,7 @@ const BLOG_POSTS = [
     summary: "Endless runners live or die by their obstacle rhythm. I spent more time on the spacing algorithm than on anything else in this game.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #f7b84b)",
+    thumb: "/assets/thumbs/bomb-runner.png",
   },
   {
     slug: "building-meteor-dodge",
@@ -141,6 +152,7 @@ const BLOG_POSTS = [
     summary: "Dodge-the-falling-things is one of the oldest game loops. Making it feel fresh required rethinking almost every variable: size, speed, density, and momentum.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #a98bff, #1a0a3a)",
+    thumb: "/assets/thumbs/meteor-dodge.png",
   },
   {
     slug: "building-pop-blitz",
@@ -151,6 +163,7 @@ const BLOG_POSTS = [
     summary: "Most tapping games count down from a single timer. Pop Blitz gives every shape its own clock. That one change made the game feel completely different.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #f7b84b)",
+    thumb: "/assets/thumbs/pop-blitz.png",
   },
   {
     slug: "building-water-balloon-blitz",
@@ -161,6 +174,7 @@ const BLOG_POSTS = [
     summary: "The game was fine before I added the bomb balloon penalty. Then I added it and suddenly every tap became a real decision. That's when it got interesting.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #1a4faa)",
+    thumb: "/assets/thumbs/water-balloon-blitz.png",
   },
   {
     slug: "building-time-stop",
@@ -171,6 +185,7 @@ const BLOG_POSTS = [
     summary: "Press a button to stop the timer at exactly the right moment. That's the whole game. Making something this minimal feel satisfying was harder than any complex mechanic I've built.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #a98bff, #2bd1c4)",
+    thumb: "/assets/thumbs/time-stop.png",
   },
   {
     slug: "building-memory-grid",
@@ -181,6 +196,7 @@ const BLOG_POSTS = [
     summary: "I thought a memory game would be one of the simpler builds. The display timing, grid size, and recall model turned it into one of the most carefully tuned games on the site.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #a98bff, #4b1a8a)",
+    thumb: "/assets/thumbs/memory-grid.png",
   },
   {
     slug: "building-lane-rush",
@@ -191,6 +207,7 @@ const BLOG_POSTS = [
     summary: "Two lanes is too binary. Four lanes creates dead zones. Three lanes keeps every switch meaningful. Getting there took more failed versions than I expected.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #2bd1c4)",
+    thumb: "/assets/thumbs/lane-rush.png",
   },
   {
     slug: "building-paint-race",
@@ -201,6 +218,7 @@ const BLOG_POSTS = [
     summary: "The first version of Paint Race was just painting a canvas. It was fine. Adding an AI opponent with intentional imperfection turned it into a game.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #f05d5e)",
+    thumb: "/assets/thumbs/paint-race.png",
   },
   {
     slug: "building-tap-sprint",
@@ -211,6 +229,7 @@ const BLOG_POSTS = [
     summary: "Tap as fast as you can to run faster than your opponents. Translating physical effort into game speed without frustrating the player took a lot of iteration.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #73d676, #1a6a1c)",
+    thumb: "/assets/thumbs/tap-sprint.png",
   },
   {
     slug: "building-pendulum-hit",
@@ -221,6 +240,7 @@ const BLOG_POSTS = [
     summary: "The whole game is one tap at the right time. Everything else — the arc, the timing window, the 10-stage difficulty curve — exists to make that moment feel earned.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #a98bff)",
+    thumb: "/assets/thumbs/pendulum-hit.png",
   },
   {
     slug: "building-block-stacker",
@@ -231,6 +251,7 @@ const BLOG_POSTS = [
     summary: "Everyone knows Tetris. Building your own version from scratch reveals just how much invisible craft went into the original — especially the rotation system.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #a98bff)",
+    thumb: "/assets/thumbs/block-stacker.png",
   },
   {
     slug: "building-tile-link",
@@ -241,6 +262,7 @@ const BLOG_POSTS = [
     summary: "Connecting two matching tiles sounds trivial. Implementing the two-bend path sweep algorithm correctly, and generating solvable boards, was anything but.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #a98bff)",
+    thumb: "/assets/thumbs/tile-link.png",
   },
   {
     slug: "building-crate-shift",
@@ -251,6 +273,7 @@ const BLOG_POSTS = [
     summary: "Sokoban is 40 years old and still one of the trickiest puzzles to implement correctly. Collision edge cases and deadlock detection kept me busy for days.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #73d676)",
+    thumb: "/assets/thumbs/crate-shift.png",
   },
   {
     slug: "building-marble-gate",
@@ -261,6 +284,7 @@ const BLOG_POSTS = [
     summary: "Sliding block puzzles can feel arbitrary and frustrating. Getting Marble Gate to feel logical — where every solution is discoverable — meant designing backwards from the answer.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #73d676)",
+    thumb: "/assets/thumbs/marble-gate.png",
   },
   {
     slug: "building-maze-escape",
@@ -271,6 +295,7 @@ const BLOG_POSTS = [
     summary: "Every run of Maze Escape generates a new maze. Getting the generation algorithm right — and making every maze actually fun to navigate — took more thinking than I expected.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #73d676, #2bd1c4)",
+    thumb: "/assets/thumbs/maze-escape.png",
   },
   {
     slug: "building-shelf-snap",
@@ -281,6 +306,7 @@ const BLOG_POSTS = [
     summary: "Books sliding off a shelf sounds absurd. But the frantic energy of watching things escape your control — and snapping them back just in time — turned out to be genuinely satisfying.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f7b84b, #a98bff)",
+    thumb: "/assets/thumbs/shelf-snap.png",
   },
   {
     slug: "building-otter-pop",
@@ -291,6 +317,7 @@ const BLOG_POSTS = [
     summary: "The mechanic was already working before I added the otters. The moment I gave the targets a personality with idle animations and reactions, it became a different game.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #73d676, #f7b84b)",
+    thumb: "/assets/thumbs/otter-pop.png",
   },
   {
     slug: "building-sudoku",
@@ -301,6 +328,7 @@ const BLOG_POSTS = [
     summary: "Setting a 200-line limit forced me to cut every non-essential feature. The constraint produced a cleaner puzzle experience than I would have shipped without it.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #a98bff, #2bd1c4)",
+    thumb: "/assets/thumbs/sudoku.png",
   },
   {
     slug: "building-trap-scout",
@@ -311,6 +339,7 @@ const BLOG_POSTS = [
     summary: "Classic Minesweeper has a first-click death problem and unavoidable 50/50 guesses. I tried to build a version where every loss is actually your fault.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #f05d5e, #73d676)",
+    thumb: "/assets/thumbs/trap-scout.png",
   },
   {
     slug: "building-window-wash",
@@ -321,6 +350,7 @@ const BLOG_POSTS = [
     summary: "I almost cut Window Wash from the list because the concept seemed too strange. The canvas-reveal mechanic turned out to be one of the most satisfying things I've built.",
     thumbLabel: "DEV",
     thumbGradient: "linear-gradient(135deg, #2bd1c4, #a98bff)",
+    thumb: "/assets/thumbs/window-wash.png",
   },
   {
     slug: "welcome-to-webgame-arcades",
