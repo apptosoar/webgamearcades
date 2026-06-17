@@ -20,26 +20,25 @@
     </style>
   
 <style>
-body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
-.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
 .site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
-.site-nav { display: flex; gap: 2px; }
-.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
-.site-nav a:hover { color: #f4f2ea; }
-@media (max-width: 600px) { .site-nav { display: none; } }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
+.game-actions { display: flex; align-items: center; gap: 6px; }
+.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
 .wrap { height: min(calc(100svh - 54px), 720px) !important; }
 </style>
 </head>
   <body>
 <header class="site-topbar">
   <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
-  <nav class="site-nav">
-    <a href="/">Games</a>
-    <a href="/blog.html">Blog</a>
-    <a href="/community.html">Community</a>
-    <a href="/about.html">About</a>
-  </nav>
+  <div class="game-actions">
+    <a href="#game-info">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      About
+    </a>
+    <a href="/">← All Games</a>
+  </div>
 </header>
     <main class="game">
       <div class="hud">
@@ -535,7 +534,7 @@ body { display: flex !important; flex-direction: column !important; align-items:
       loop();
     })();
     </script>
-    <section class="game-info">
+    <section class="game-info" id="game-info">
       <a href="../../" class="back-link">← Webgame Arcades</a>
       <h1>Otter Pop</h1>
       <p>Otters are popping up from their riverside burrows — tap each one before it dives back in! Miss too many and you'll lose HP. Get through all 10 stages as otters appear faster and stay up for shorter and shorter windows.</p>
