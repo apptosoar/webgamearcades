@@ -16,30 +16,9 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
 
-<style>
-.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:56px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
-.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;min-width:0}
-.site-brand-mark{display:grid;width:30px;height:30px;flex-shrink:0;place-items:center;border-radius:7px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 4px 12px rgba(247,184,75,0.2)}
-.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:380px){.site-brand-name{display:none}}
-.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.82rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
-.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
-.wrap{height:min(calc(100svh - 56px),720px)!important;flex-shrink:0}
-@media(max-width:520px){.game-actions .about-label{display:none}}
-</style>
+<script src="/site-chrome.js"></script>
 </head>
 <body class="game-sudoku">
-<header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
-  <div class="game-actions">
-    <a href="./about.html">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span class="about-label">About</span>
-    </a>
-    <a href="/">← Games</a>
-  </div>
-</header>
 <div class="wrap">
   <div class="hud">
     <span class="pill">Sudoku</span>
@@ -134,7 +113,6 @@
   start(4);
   window.addEventListener("resize", () => { if (cells.length) drawBoard(); });
 </script>
-
 
 </body>
 </html>

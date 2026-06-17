@@ -15,50 +15,23 @@
 <link rel="stylesheet" href="../game-shell.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
-<style>
-  #diffs { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px }
+<style>#diffs { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px }
   #diffs button { min-width: 56px; height: 36px; padding: 0 10px; font-size: .82rem }
   #info { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: .85rem; color: #b8bec9 }
   #board { display: grid; gap: 3px; justify-content: center; margin: 0 auto }
   .cell { display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800; cursor: pointer; background: rgba(255,255,255,.12); border: none; color: #f4f2ea; padding: 0 }
-  .cell.open { background: rgba(255,255,255,.05); cursor: default }
-  .cell.flag { background: rgba(247,184,75,.2); color: #f7b84b }
-  .cell.hit { background: #f05d5e !important; color: #fff }
-  .cell.trap { background: rgba(240,93,94,.18) !important; color: #f05d5e }
-  .cell[data-n="1"] { color: #4f8cff }
+          .cell[data-n="1"] { color: #4f8cff }
   .cell[data-n="2"] { color: #73d676 }
   .cell[data-n="3"] { color: #f05d5e }
   .cell[data-n="4"] { color: #a98bff }
   .cell[data-n="5"] { color: #ff8f3d }
   .cell[data-n="6"] { color: #2bd1c4 }
   .cell[data-n="7"] { color: #f4f2ea }
-  .cell[data-n="8"] { color: #b8bec9 }
-</style>
+  .cell[data-n="8"] { color: #b8bec9 }</style>
 
-<style>
-.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:56px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
-.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;min-width:0}
-.site-brand-mark{display:grid;width:30px;height:30px;flex-shrink:0;place-items:center;border-radius:7px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 4px 12px rgba(247,184,75,0.2)}
-.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:380px){.site-brand-name{display:none}}
-.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.82rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
-.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
-.wrap{height:min(calc(100svh - 56px),720px)!important;flex-shrink:0}
-@media(max-width:520px){.game-actions .about-label{display:none}}
-</style>
+<script src="/site-chrome.js"></script>
 </head>
 <body class="game-trap-scout">
-<header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
-  <div class="game-actions">
-    <a href="./about.html">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span class="about-label">About</span>
-    </a>
-    <a href="/">← Games</a>
-  </div>
-</header>
 <div class="wrap">
   <div class="hud">
     <span class="pill">Trap Scout</span>
@@ -160,7 +133,6 @@
   window.addEventListener("resize", () => fit());
   newGame(0);
 </script>
-
 
 </body>
 </html>
