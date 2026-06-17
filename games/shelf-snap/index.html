@@ -18,8 +18,29 @@
       canvas { cursor: pointer; background: #2c1a0e; }
       .hud { flex-wrap: wrap; gap: 6px 14px; }
     </style>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud">
         <strong>Shelf Snap</strong>
@@ -552,45 +573,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>밀기:</strong> 튀어나온 책을 클릭 또는 탭해 제자리로 돌려놓기</li>
-        <li>책이 떨어지기 직전에 흔들리기 시작합니다 — 마지막 경고입니다</li>
-        <li>각 스테이지의 밀기 목표를 달성해 진행하세요</li>
-        <li>HP 5칸 — 모두 잃으면 게임 오버</li>
-        <li>모바일: 완전 터치 조작</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>셀프 스냅은 혼란스러운 도서관을 배경으로 한 반사 관리 게임입니다. 나무 선반, 알록달록한 책 등, 종이 페이지 가장자리의 시각적 디자인은 후반 스테이지의 상승하는 공황과 대비되는 따뜻함을 줍니다. 핵심 긴장감은 주의 분산입니다. 여러 책이 동시에 튀어나올 때, 어떤 것을 무시하고 있습니까?</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>긴박감이 추상적이 아닌 눈에 보이는 게임을 원했습니다. 선반에서 미끄러지는 책은 자연스럽고 물리적인 위험이 있습니다. 매 프레임마다 나빠지는 것을 볼 수 있습니다. 책이 떨어지기 직전의 흔들림 애니메이션은 별도의 UI 요소 없이도 경고 신호 역할을 합니다. 도서관 배경은 누구에게나 친숙하고 정돈된 상태를 유지하는 데 즉각적인 감정적 투자를 만들기 때문에 선택되었습니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>각 책은 현재 스테이지의 팝 속도에 따라 매 프레임 증가하는 돌출 값을 가집니다. 돌출이 최대 임계값에 도달하면 책이 떨어지고 HP가 차감됩니다. 책을 탭하면 "밀기" 상태로 설정되어, 팝 속도의 4.5배 속도로 돌출을 빠르게 0으로 되돌립니다. 마지막 스테이지에서는 최대 5개의 책이 동시에 활성화될 수 있습니다. 스폰 타이머가 얼마나 자주 새 랜덤 유휴 책이 활성화되는지 제어하며, 각 스테이지마다 단축됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>마지막으로 탭한 선반만이 아닌 두 선반을 항상 주시하세요. 첫 번째 선반을 처리하는 동안 두 번째 선반의 책을 잊는 경향이 있습니다.</li>
-        <li>돌출 주기에서 가장 멀리 나온 책을 우선하세요. 떨어지기 가장 가까운 것이 먼저 주의가 필요합니다. 다른 책이 먼저 움직이기 시작했더라도 마찬가지입니다.</li>
-        <li>흔들림 애니메이션을 찾으세요. 책이 흔들리기 시작하면 떨어지기까지 1-2초밖에 없습니다.</li>
-        <li>모바일에서는 각 선반 근처에 엄지 하나씩 위치시켜 손을 재배치하지 않고 두 열 모두에 반응할 수 있도록 하세요.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>아이템 다양화</strong> — 책과 함께 각각 다른 낙하 속도와 밀기 피드백을 가진 꽃병, 액자, 화분 등.</li>
-        <li><strong>중력 모드</strong> — 회복을 위한 슬로우 모션 라운드와 모든 것이 두 배 속도로 움직이는 스피드 라운드.</li>
-        <li><strong>선반 손상</strong> — 떨어지는 책이 선반을 시각적으로 손상시키고, 완전히 부서진 선반이 게임 오버 조건을 트리거.</li>
-        <li><strong>깔끔 보너스</strong> — 돌출이 30%에 도달하기 전에 책을 밀어 넣으면 추가 점수를 주어 반응적 구하기보다 선제적 탭 보상.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

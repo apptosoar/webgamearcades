@@ -18,8 +18,29 @@
       .action { background: #f7b84b; color: #1b1205; font-weight: 900; font-size: 1.05rem; }
       canvas  { background: #0d0f12; touch-action: none; }
     </style>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud">
         <strong>Pendulum Hit</strong>
@@ -551,45 +572,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>히트:</strong> 추가 목표 구역 안에 있을 때 탭, 클릭 또는 스페이스/엔터</li>
-        <li>금색 중앙 구역 = PERFECT (+100), 초록색 외곽 구역 = GOOD (+50)</li>
-        <li>연속 히트는 연속 보너스를 줍니다</li>
-        <li>각 스테이지는 8번의 스윙 — 필요한 수를 맞춰야 진행</li>
-        <li>모바일: 화면 어디든 탭하거나 HIT! 버튼 사용</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>펜듈럼 히트는 물리학에서 가장 우아한 운동 중 하나인 단순 조화 진동을 중심으로 만들어진 타이밍 게임입니다. 추가 수학적으로 정확한 속도로 스윙하고 추가 목표 구역을 통과하는 정확한 순간에 눌러야 합니다. PERFECT 히트는 좁은 금색 중앙에, GOOD 히트는 더 넓은 초록색 호 안에 떨어집니다. 구역을 완전히 놓치면 미스로 기록됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>리듬 게임은 보통 타이밍에 도움이 되는 청각적 단서를 제공합니다. 저희는 순수하게 시각적인 타이밍 게임을 만들고 싶었습니다. 진자 리듬에 대한 내부 감각만이 유일한 가이드입니다. 물리학적으로 정확한 스윙 호(`angle = −MAX_ANGLE × cos(t × speed)` 코사인 운동 사용)는 끝점 근처에서 추가 느려지고 중앙을 통과할 때 가속됩니다. 플레이어가 처음에 예상하는 것과 반대입니다. 이 직관에 반하는 속도 프로파일이 흥미롭게 만드는 요소입니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>진자의 각도는 `angle = −MAX_ANGLE × cos(t × speed)` 공식으로 계산됩니다. 여기서 t는 경과 시간이고 speed는 스테이지에 따라 증가합니다. 목표 구역은 중앙 주위의 각도 범위로 정의됩니다. PERFECT 범위는 GOOD 범위보다 좁습니다. 플레이어가 히트 입력을 누를 때, 추의 현재 각도가 PERFECT, GOOD 또는 MISS 구역 중 어느 구역 안에 있는지 확인됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>추 자체를 보지 말고 구역을 보세요. 추가 어디 있는지가 아니라 구역에 불이 켜질 때 반응하도록 훈련하세요.</li>
-        <li>추는 호를 지나는 동안 중앙 근처에서 느려져, 보이는 것보다 더 많은 시간을 줍니다. 좁은 창처럼 느껴지는 것이 실제로는 가장자리가 암시하는 것보다 깁니다.</li>
-        <li>후반 스테이지에서는 정확한 타이밍보다 약간 일찍 누르도록 전념하세요. 뇌의 처리 지연은 "맞는 것 같다"가 실제로는 약간 늦다는 것을 의미합니다.</li>
-        <li>창이 넓은 초반에 연속을 쌓으세요. 후반 스테이지는 구역이 더 작아져, 초반 스테이지에서 가져온 연속 보너스가 크게 도움이 됩니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>이중 진자</strong> — 위상이 어긋난 두 개의 진자로, 보너스 히트를 위해 동시에 두 추가 구역 안에 있어야 함.</li>
-        <li><strong>리듬 모드</strong> — 진자와 동기화된 오디오 비트가 있는 변형으로, 음청각 또는 시각 타이밍 중 어떤 것이 각 플레이어에게 더 정확한지 테스트.</li>
-        <li><strong>정확도 그래프</strong> — 세션 동안 각 히트의 완벽한 중앙에서의 거리를 보여주는 게임 후 차트.</li>
-        <li><strong>보정 스테이지</strong> — 플레이어의 개인 반응 시간을 측정하고 그에 따라 PERFECT 임계값을 조정하는 0번 스테이지.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

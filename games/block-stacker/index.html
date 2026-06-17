@@ -98,8 +98,29 @@
   }
   .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
 </style>
+
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
 </head>
 <body class="game-block-stacker">
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
 <div class="wrap">
   <div class="hud">
     <span class="pill">Block Stacker</span>
@@ -260,41 +281,6 @@
   </ul>
   <a href="../../" class="more-games-link">Browse All Games</a>
 </section>
-<section class="game-info" lang="ko">
-  <hr class="section-divider">
-  <h2>조작 방법</h2>
-  <ul>
-    <li><strong>이동:</strong> 좌우 방향키</li>
-    <li><strong>소프트 드롭:</strong> 아래 방향키</li>
-    <li><strong>회전:</strong> 위 방향키 또는 보드 클릭/터치</li>
-    <li><strong>하드 드롭:</strong> 스페이스바</li>
-    <li>모바일: 화면 회전/이동/드롭 패드 지원</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>게임 소개</h2>
-  <p>블록 스태커는 클래식한 라인 클리어 스태킹 퍼즐입니다. 가로 10칸, 세로 24칸의 우물 위에서 블록이 떨어지고, 한 줄을 완전히 채우면 그 줄이 사라지고 점수를 얻습니다. 줄을 채우면 우물 아래쪽부터 비워지며, 쌓인 블록이 맨 위까지 도달하면 게임이 끝납니다.</p>
-  <hr class="section-divider">
-  <h2>제작 배경</h2>
-  <p>스태킹 퍼즐은 대부분의 플레이어가 손에 익은 장르라, 기본 조작은 완전히 익숙하게 두고 작은 변화를 더하고 싶었습니다. 표준 테트로미노 7종에 더해, 표준 세트에는 없는 십자 모양 블록과 S커브 블록 2종을 추가했습니다. I자나 T자 블록을 거의 무의식적으로 배치하던 숙련된 플레이어도 이 두 블록 앞에서는 다시 한번 멈춰서 모양을 확인하게 됩니다.</p>
-  <hr class="section-divider">
-  <h2>작동 원리</h2>
-  <p>우물은 가로 10칸, 세로 24칸입니다. 새 블록은 처음에는 약 650밀리초마다 맨 위에서 생성되어 자동으로 한 칸씩 떨어집니다. 좌우로 옮기거나, 회전(가장자리에서도 회전이 가능하도록 벽킥 보정 포함)하거나, 아래 방향키로 소프트 드롭하거나, 스페이스바로 바로 바닥까지 하드 드롭할 수 있습니다. 블록이 바닥에 닿으면 110밀리초의 짧은 지연 후 고정되며, 이때 흰색으로 잠깐 반짝여 칸이 확정되었음을 보여줍니다. 줄이 완성되면 즉시 사라지며 100점을 얻고, 2줄을 지울 때마다 낙하 속도가 빨라져 최소 180밀리초까지 빨라집니다.</p>
-  <hr class="section-divider">
-  <h2>팁 &amp; 전략</h2>
-  <ul>
-    <li>스택 표면을 가능한 한 평평하게 유지하세요. 표면이 들쑥날쑥하면 이후 블록을 빈틈없이 끼워 넣기가 훨씬 어려워집니다.</li>
-    <li>하드 드롭은 확실한 위치에만 사용하세요. 스페이스바를 누르면 즉시 고정되어 다시 조정할 기회가 없습니다.</li>
-    <li>보너스 블록 2종은 테트로미노와 회전 방식이 다르므로, 배치를 확정하기 전에 빈 공간에서 한 번 회전해보세요.</li>
-    <li>중앙보다 가장자리에서 줄을 지우는 것이 더 안전한 경우가 많습니다. 실수에서 회복할 여유 공간이 더 많이 남기 때문입니다.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>개선 아이디어</h2>
-  <ul>
-    <li><strong>다음 블록 미리보기</strong> — 다음에 나올 블록을 미리 보여줘 배치를 계획할 수 있게 합니다.</li>
-    <li><strong>홀드 슬롯</strong> — 블록 하나를 따로 보관해두고 나중에 사용할 수 있게 합니다.</li>
-    <li><strong>콤보 점수</strong> — 연속으로 줄을 지우면 추가 점수를 주는 보너스.</li>
-    <li><strong>마라톤 / 스프린트 모드</strong> — 무한 모드와 정해진 줄 수를 빨리 지우는 모드를 함께 제공합니다.</li>
-  </ul>
-</section>
+
 </body>
 </html>

@@ -14,8 +14,29 @@
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <link rel="stylesheet" href="../action-style.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
       <canvas id="game"></canvas>
@@ -70,44 +91,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>이동:</strong> WASD 또는 방향키</li>
-        <li>캐릭터가 주변 좀비를 자동으로 공격합니다</li>
-        <li>최대한 오래 살아남아 최고 점수를 경신하세요</li>
-        <li>모바일: 터치 조작 지원</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>좀비 서바이벌은 쉴 새 없이 몰려오는 좀비 떼를 피해 살아남는 탑다운 아레나 생존 게임입니다. 캐릭터가 스스로 싸우는 동안 플레이어는 영리하게 움직여 군중 속에서 살아남아야 합니다. 버티는 시간이 길어질수록 좀비는 더욱 밀집해져, 생존이 순간순간 공간 계산의 문제가 됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>'자동 전투 생존자' 포맷이 큰 인기를 끈 이유는 플레이어가 처리할 수 있는 한계를 없애주기 때문입니다. 기계적인 버튼 조작 정확도보다 능숙한 이동만으로 더 멀리 나아갈 수 있습니다. 저희는 브라우저에서 몇 분 안에 그 고조되는 긴장감을 경험할 수 있는 버전을 만들었습니다. 좀비는 이 포맷에 완벽히 어울립니다. 개별적으로는 느리지만 수가 많아지면 두렵고, 위협으로서 누구나 즉시 이해하기 때문입니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>좀비는 단순한 추적 행동을 사용합니다. 매 프레임마다 플레이어를 향한 방향을 계산하고 일정 속도로 전진합니다. 자동 공격은 몇 프레임마다 반경 내 가장 가까운 적을 찾아 명중 처리합니다. 스폰 간격은 점진적으로 줄어들어 화면 내 좀비 수가 계속 늘어납니다. 상한선이 없어 충분한 시간이 지나면 아레나가 완전히 메워지고, 특정 시점 이후에는 생존이 실질적으로 불가능해집니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>아레나 바깥쪽 가장자리를 따라 넓은 호를 그리며 이동하세요. 좀비 밀도가 높아지면 중앙은 위험 지대가 됩니다.</li>
-        <li>좀비들을 뒤에 끌고 다니다가 돌아오면 일렬로 모이게 되어 자동 공격이 효과적으로 처리할 수 있습니다.</li>
-        <li>싸우려고 멈추지 마세요. 자동 공격이 공세를 담당합니다. 당신의 유일한 책임은 포지셔닝입니다.</li>
-        <li>정면 군중이 아니라 측면을 주시하세요. 눈에 보이는 좀비는 문제가 아닙니다. 옆으로 감싸고 오는 좀비가 진짜 위협입니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>무기 다양화</strong> — 산탄 확산, 연쇄 번개, 광역 공격 등 시간이 지나면 해금되는 다양한 공격 패턴.</li>
-        <li><strong>안전 지대</strong> — 잠깐 좀비를 기절시키는 스포트라이트 구역으로 5초간 숨 돌릴 여유 제공.</li>
-        <li><strong>돌연변이 시스템</strong> — 30초마다 이동 속도 향상이나 공격 범위 확장 같은 두 가지 패시브 업그레이드 중 하나를 선택.</li>
-        <li><strong>생존 리더보드</strong> — localStorage에 저장된 타이머로 개인 최고 기록을 표시.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

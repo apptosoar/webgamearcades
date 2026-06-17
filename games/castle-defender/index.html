@@ -14,8 +14,29 @@
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <link rel="stylesheet" href="../action-style.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
       <canvas id="game"></canvas>
@@ -71,44 +92,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>조준:</strong> 마우스 포인터 또는 터치 드래그</li>
-        <li>포탑이 사거리 내 적을 자동으로 발사합니다</li>
-        <li>적이 성에 닿지 못하게 막으세요</li>
-        <li>모바일: 터치 친화적 조작</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>캐슬 디펜더는 타워 디펜스 장르를 가장 핵심적인 요소인 '조준'으로 압축한 게임입니다. 포탑은 가리키는 곳을 향해 자동으로 발사합니다. 도전 과제는 어디를 가리킬지 결정하는 것입니다. 적은 웨이브로 밀려오고 당신이 이전 웨이브를 처리하기를 기다리지 않습니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>전통적인 타워 디펜스 게임은 속도가 느리고 메뉴가 복잡할 수 있습니다. 저희는 매 초마다 능동적인 결정이 필요한 버전을 원했습니다. 수동 조준과 자동 발사의 조합은 항상 표적을 선택하고 커서를 움직이는 상태를 만들어, 대기 시간이 없습니다. 성 HP 풀이 버퍼를 제공하므로 실수를 만회할 수 있어, 신규 플레이어도 적 패턴을 배울 시간이 주어집니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>포탑은 마우스 커서 위치(모바일에서는 터치 위치)를 추적하고 그 방향으로 발사 각도를 계산합니다. 총알은 그 각도를 따라 고정 속도로 발사됩니다. 적은 화면 밖에서 스폰되어 화면 중하단의 성을 향해 이동합니다. 적이 성에 도달하면 HP가 1 차감됩니다. 시간이 지날수록 스폰 속도가 빨라져, 결국 포탑이 한 방향만으로는 처리하기 어려운 상황이 만들어지며 무리 사이를 전환해야 합니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>각 웨이브에서 앞선 적, 즉 성에 가장 가까운 적을 먼저 조준하세요. 무시하면 가장 먼저 피해를 입히는 것들입니다.</li>
-        <li>낙오자를 하나씩 처리하기보다 무리 중심에 조준하고 천천히 쓸어내세요. 자동 발사가 무리를 처리해줄 것입니다.</li>
-        <li>반대편에서 두 무리가 접근할 때는 더 밀집한 무리로 전환하세요. 적 하나가 성에 닿는 게 다섯 개가 닿는 것보다 낫습니다.</li>
-        <li>빠른 적을 쫓으려는 충동을 억제하세요. 성 근처의 느리고 갑옷을 두른 것처럼 보이는 적이 더 큰 위협입니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>업그레이드 시스템</strong> — 축적된 점수를 사용해 더 빠른 발사 속도, 더 넓은 산탄, 두 번째 포탑 구매.</li>
-        <li><strong>적 유형 다양화</strong> — 지상 방어를 우회하는 비행 적, 여러 번 타격해야 하는 갑옷 유닛, HP가 많은 공성 무기.</li>
-        <li><strong>성 수리</strong> — 사라지기 전에 클릭하면 HP 1을 회복하는 희귀 픽업 아이템.</li>
-        <li><strong>야간 웨이브</strong> — 스포트라이트 반경 내 적만 보이는 가시성이 줄어든 단계.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

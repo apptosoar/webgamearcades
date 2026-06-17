@@ -14,8 +14,29 @@
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <link rel="stylesheet" href="../action-style.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
       <canvas id="game"></canvas>
@@ -70,44 +91,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>이동:</strong> WASD 또는 방향키</li>
-        <li>모든 레이저 빔을 피하세요</li>
-        <li>레이저 패턴의 틈새를 이용해 살아남으세요</li>
-        <li>모바일: 터치 조작 지원</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>레이저 이스케이프는 액션 게임으로 위장한 공간 퍼즐입니다. 레이저는 총을 쏘지 않고 쓸어오고, 이동하고, 좁혀옵니다. 살아남으려면 패턴을 미리 읽고 틈새가 닫히기 전에 그 위치에 도달해야 합니다. 한 번의 잘못된 판단이 빔에 노출됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>저희는 단순한 발사체 회피와 다른 느낌의 닷지 게임을 원했습니다. 레이저 벽은 점이 아닌 영역에 대해 생각하게 만듭니다. 바늘구멍을 꿰뚫을 수 없고, 올바른 틈새를 찾아 미리 도달해야 합니다. SF 레이저 미학은 자연스럽게 어울리며, 고속에서도 위험이 시각적으로 명확합니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>레이저 벽은 캔버스를 가로질러 고정 속도로 이동하는 수평 또는 수직 선분으로 생성됩니다. 각 벽에는 랜덤 위치에 배치된 하나의 틈새, 즉 끊긴 부분이 있습니다. 틈새 너비는 점수가 높아질수록 조금씩 줄어듭니다. 플레이어 캐릭터는 표준 WASD/방향키 이동으로 캔버스 경계에 고정됩니다. 플레이어의 히트박스가 활성 레이저 선분의 채워진 부분과 겹칠 때 충돌이 감지됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>벽이 다가오기 전에 틈새 위치를 파악하세요. 그런 다음 마지막 순간을 기다리지 말고 그 행이나 열로 이동하세요.</li>
-        <li>가능하면 화면 중앙 근처에 위치하세요. 어느 방향으로든 이동 범위가 극대화됩니다.</li>
-        <li>다가오는 벽과 나란히 이동하지 마세요. 틈새를 뚫고 가는 대신 경주하는 상황이 됩니다.</li>
-        <li>후반에는 두 개의 들어오는 벽을 하나의 단위로 처리하여 두 틈새를 동시에 만족하는 위치를 찾으세요.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>대각선 레이저</strong> — 45° 각도의 빔으로 양 축 모두에서의 이동이 필요.</li>
-        <li><strong>회전 레이저 암</strong> — 고정된 지점에서 피벗하는 빔으로 안전을 유지하려면 원형 이동이 필요.</li>
-        <li><strong>펄스 레이저</strong> — 리듬에 맞춰 켜졌다 꺼지는 빔으로 포지셔닝뿐 아니라 타이밍도 보상.</li>
-        <li><strong>색상 코드 위험</strong> — 곧 가속될 벽을 시각적 단서로 미리 알려주는 색상 표시.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

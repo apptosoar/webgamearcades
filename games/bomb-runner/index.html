@@ -14,8 +14,29 @@
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <link rel="stylesheet" href="../action-style.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
       <canvas id="game"></canvas>
@@ -71,44 +92,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>점프:</strong> 탭, 클릭 또는 스페이스바</li>
-        <li>잘 타이밍 잡아 각 폭탄을 뛰어넘으세요</li>
-        <li>이동 거리가 점수로 쌓입니다</li>
-        <li>모바일: 탭 한 번으로 점프</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>봄 러너는 엔드리스 러너의 점프 타이밍 핵심에 촉각적인 것을 더했습니다. 바로 땅에 놓인 똑딱이는 폭탄입니다. 각 폭탄에는 눈에 보이는 시각적 무게감이 있어, '아슬아슬하게 넘겼다'는 순간이 드라마틱하게 느껴집니다. 달릴수록 폭탄이 더 많이 나타나고 각각을 읽을 시간이 줄어듭니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>단 하나의 장애물 유형인 폭탄이 복잡한 아트나 애니메이션 없이도 위험을 전달할 수 있다는 점이 마음에 들었습니다. 도화선과 둥근 모양은 누구나 알아볼 수 있어, 무엇을 피해야 하는지에 대한 학습 곡선이 없습니다. 이 위험 유형은 새로운 장애물 범주를 발명하는 대신 간격과 스폰 속도를 변경해 도전을 다양화할 수 있어, 코드와 디자인을 단순하게 유지합니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>닌자 캐릭터가 일정한 수평 속도로 이동하는 동안 세계가 왼쪽으로 스크롤됩니다. 폭탄은 시간이 지날수록 감소하는 스폰 간격을 사용해 앞에 배치됩니다. 각 폭탄은 고정된 지면 위치를 차지하며 플레이어는 그 위를 뛰어넘어야 합니다. 점프 호는 고정되어 있습니다. 높이와 지속 시간이 매번 동일하므로, 폭탄의 현재 화면 위치에 대한 점프 타이밍만이 관건입니다. 타이밍을 놓치면 충돌하여 HP가 차감됩니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>캐릭터의 발이 아닌 폭탄의 지면 위치를 주시하세요. 지면 접촉점이 실제 충돌을 결정합니다.</li>
-        <li>처음 몇 번은 자연스럽게 느껴지는 것보다 일찍 점프하세요. 호가 최고점에 도달하는 데 시간이 걸리고, 하강하기 전에 폭탄을 지나는 것이 더 안전합니다.</li>
-        <li>두 번 탭하는 것을 자제하세요. 공중 입력은 아무것도 하지 않으며 남은 호 시간에 대한 판단을 흐트러뜨릴 수 있습니다.</li>
-        <li>잠시 살아남은 후에는 리듬 게임처럼 접근하세요. 폭탄에 패턴이 생기면 반응하기보다 예측할 수 있습니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>이중 레인 폭탄</strong> — 뛰어오르는 대신 낮은 경로가 필요한 높은 플랫폼 위의 폭탄.</li>
-        <li><strong>카운트다운 도화선</strong> — 스폰 후 고정된 시간에 폭발하는 폭탄으로, 위치와 관계없이 빨리 처리 필요.</li>
-        <li><strong>스피드 부스트 아이템</strong> — 일시적으로 달리기를 가속하여 점수 배율을 얻는 픽업.</li>
-        <li><strong>거리 마일스톤</strong> — 500미터마다 표시되는 개인 최고 기록과 비교할 수 있는 마커.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

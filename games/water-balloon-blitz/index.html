@@ -21,8 +21,29 @@
       canvas { cursor: crosshair; background: #0d1720; }
       .action { min-width: 104px; background: #4dd8f0; color: #031118; }
     </style>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud">
         <strong>Water Balloon Blitz</strong>
@@ -554,43 +575,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>팝:</strong> 물풍선을 클릭 또는 탭</li>
-        <li><strong>스플래시:</strong> 스플래시 버튼을 탭해 주변 풍선을 한꺼번에 터트리세요</li>
-        <li>시간 내에 목표 수를 채워야 다음 스테이지로 진행합니다</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>워터 발룬 블리츠는 즉각적인 판단의 게임입니다. 물풍선을 터트릴까, 그냥 둘까. 함정은 섞여 있는 폭탄 풍선입니다. 실수로 탭하면 HP를 잃습니다. 스테이지가 진행될수록 풍선이 빠르게 나타나고 폭탄 비율이 증가하여, 1초도 안 되는 시간 안에 각 표적을 파악해야 합니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>저희는 날카로운 주의력을 요구하면서도 축제 분위기를 내는 가벼운 게임을 원했습니다. 물풍선은 누구나 좋아하는 이미지라 위험-보상 긴장감이 스트레스보다 유쾌하게 느껴집니다. 스플래시 능력은 플레이 테스트에서 타이트한 상황을 돌파할 방법이 필요하다는 게 드러난 후 추가되었습니다. 공황 순간을 전술적 결정으로 전환합니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>풍선은 무작위 궤적과 유형 플래그로 스폰됩니다. 현재 스테이지 설정에 따라 물풍선 또는 폭탄 풍선이 결정됩니다. 각 풍선은 궤적을 따라 이동하다가 캔버스를 벗어나면 사라집니다. 입력 시 각 풍선의 원형 반경에 대한 클릭/탭 적중 확인이 발생합니다. 물풍선은 단계 목표를 향한 적중 카운터를 증가시킵니다. 폭탄 풍선에 접촉하면 HP가 차감됩니다. 스플래시 능력은 커서 현재 위치 주변에 광역 팝을 트리거합니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>탭하기 전에 색상과 모양을 확인하세요. 폭탄 풍선은 뚜렷한 외관을 가집니다. 확인 없이 빠르게 탭하는 것이 HP 손실의 주요 원인입니다.</li>
-        <li>물풍선 세 개 이상이 모였을 때 스플래시를 사용하세요. 풍선 하나짜리 상황은 쿨다운을 쓸 가치가 없습니다.</li>
-        <li>폭탄 풍선과 가까이 뭉쳐 있을 때는 폭탄 피격 위험을 감수하기보다 물풍선 몇 개가 탈출하도록 두세요.</li>
-        <li>후반 스테이지에서는 밀도가 가장 높은 화면 중앙에 집중하고 가장자리 풍선은 흘려보내세요.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>특수 풍선</strong> — 3회 적중 가치를 지닌 황금 풍선, 적중 시 인접 물풍선을 연쇄 터트리는 체인 풍선.</li>
-        <li><strong>바람 역학</strong> — 스테이지마다 바뀌는 방향 바람에 밀리는 풍선으로 경로 예측 필요.</li>
-        <li><strong>생명력 표시</strong> — HP를 잃을 때 시각적으로 부서지는 애니메이션 하트 아이콘으로 피해를 더 감정적으로 표현.</li>
-        <li><strong>스테이지 테마</strong> — 시각적 신선함을 유지하기 위해 스테이지마다 다른 배경과 풍선 색상 팔레트.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>

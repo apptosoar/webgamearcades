@@ -14,8 +14,29 @@
     <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
     <link rel="stylesheet" href="../action-style.css" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
-  </head>
+  
+<style>
+body { display: flex !important; flex-direction: column !important; align-items: center !important; place-items: unset !important; }
+.site-topbar { position: sticky; top: 0; z-index: 10; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 10px clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.92); backdrop-filter: blur(18px); box-sizing: border-box; flex-shrink: 0; }
+.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.85rem; }
+.site-nav { display: flex; gap: 2px; }
+.site-nav a { padding: 7px 10px; border-radius: 7px; color: #b8bec9; text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.site-nav a:hover { color: #f4f2ea; }
+@media (max-width: 600px) { .site-nav { display: none; } }
+.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+</style>
+</head>
   <body>
+<header class="site-topbar">
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <nav class="site-nav">
+    <a href="/">Games</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/community.html">Community</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
     <main class="game">
       <div class="hud"><strong id="title"></strong><span>HP <b id="health">0</b></span><span>Score <b id="score">0</b></span></div>
       <canvas id="game"></canvas>
@@ -71,44 +92,6 @@
 
       <a href="../../" class="more-games-link">Browse All Games</a>
     </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>점프:</strong> 탭, 클릭 또는 스페이스바</li>
-        <li>날아오는 화살을 모두 피하세요</li>
-        <li>거리에 비례해 점수가 오릅니다</li>
-        <li>모바일: 탭 한 번으로 점프</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>닌자 대시는 단 하나의 만족스러운 메커니즘을 중심으로 만들어진 엔드리스 러너입니다. 바로 정확한 타이밍에 장애물을 뛰어넘는 것입니다. 닌자는 자동으로 달리고, 당신은 오직 타이밍에만 집중하면 됩니다. 10초면 규칙을 이해하고, 20분을 써도 마스터하기 어려운 게임입니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>엔드리스 러너는 모바일에 가장 잘 맞는 장르 중 하나입니다. 입력 하나, 즉각적인 피드백, 본질적으로 무한 반복이 가능합니다. 화살을 장애물로 선택한 건 시각적 타이밍 단서가 명확하기 때문입니다. 멀리서부터 날아오는 걸 볼 수 있어 "아깝게 놓쳤다"는 순간이 불공평하게 느껴지지 않습니다. 닌자 테마는 게임 루프를 복잡하게 만들지 않으면서도 개성을 더해줍니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>닌자가 수평으로 고정된 상태에서 시차(패럴랙스) 배경이 움직임을 표현합니다. 화살 장애물은 오른쪽에서 스폰되어 점점 빨라지는 속도로 왼쪽으로 이동합니다. 각 점프는 게임 루프에서 계산된 포물선 호를 따릅니다. 공중에서 다시 점프를 눌러도 반응하지 않아 메커니즘의 정직성을 유지합니다. HP는 충돌 시 차감되고, 점수는 닌자가 살아있는 매 프레임마다 수동적으로 증가합니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>화살이 한 몸 길이쯤 다가왔을 때 점프하세요. 너무 일찍 뛰면 착지 후 바로 다음 화살에 맞습니다.</li>
-        <li>미리 점프하려는 충동을 참으세요. 화살이 가까워질 때까지 기다렸다가 결단을 내리세요.</li>
-        <li>피격 후에는 잠깐의 무적 시간을 활용해 호흡을 고르고 집중력을 되찾으세요.</li>
-        <li>속도가 빨라지면 반응 게임보다 리듬 게임처럼 접근하세요. 정신적 반응 창을 줄이는 것이 핵심입니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>이중 점프</strong> — 공중에서 한 번 더 뛸 수 있어 잘못 읽은 타이밍을 만회 가능.</li>
-        <li><strong>장애물 다양화</strong> — 몸을 숙여야 하는 통로, 머리 위 장애물, 움직이는 발판 등 추가.</li>
-        <li><strong>속도 마일스톤</strong> — 500점마다 플래시 효과와 함께 난이도가 단계적으로 상승하는 구간 도입.</li>
-        <li><strong>스킨 해금</strong> — 점수 기준을 달성하면 다른 닌자나 캐릭터로 플레이 가능.</li>
-      </ul>
-    </section>
+    
   </body>
 </html>
