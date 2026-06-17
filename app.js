@@ -2451,7 +2451,12 @@ function render() {
   }
 
   if (route === "play") {
-    renderPlayer(id);
+    const game = getGames().find(g => g.id === id);
+    if (game?.url) {
+      window.location.replace(gamePageUrl(game));
+    } else {
+      renderPlayer(id);
+    }
     return;
   }
 
@@ -2517,8 +2522,12 @@ function renderHome() {
   initGameIcons();
 }
 
+function gamePageUrl(game) {
+  return game.url.replace(/^\./, "").replace(/\/index\.html$/, "/");
+}
+
 function gameAppIcon(game) {
-  return `<a class="app-icon" href="#play/${escapeAttribute(game.id)}">
+  return `<a class="app-icon" href="${gamePageUrl(game)}">
     <canvas width="120" height="120" data-id="${escapeAttribute(game.id)}" data-accent="${escapeAttribute(game.accent)}"></canvas>
     <span>${game.title}</span>
   </a>`;
@@ -3117,7 +3126,7 @@ async function renderGameInfoPage(gameId) {
     return;
   }
 
-  const backHref = `#play/${escapeAttribute(game.id)}`;
+  const backHref = gamePageUrl(game);
   const genre = getGenre(game.genre);
 
   // Skeleton while loading
@@ -4207,7 +4216,12 @@ function handleAppClick(event) {
 }
 
 function launchGame(gameId) {
-  location.hash = `#play/${gameId}`;
+  const game = getGames().find(g => g.id === gameId);
+  if (game?.url) {
+    window.location.href = gamePageUrl(game);
+  } else {
+    location.hash = `#play/${gameId}`;
+  }
 }
 
 function getGenres() {
