@@ -73,43 +73,7 @@
       <p class="post-meta">Dev Blog · June 15, 2026</p>
       <h1>Space Shooter: Why I Let the Ship Fire Itself</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ss-bg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#06090f"/>
-            <stop offset="100%" stop-color="#0d1120"/>
-          </linearGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#ss-bg)"/>
-        <!-- stars -->
-        <circle cx="40"  cy="18"  r="1.5" fill="white" opacity="0.7"/>
-        <circle cx="120" cy="55"  r="1"   fill="white" opacity="0.5"/>
-        <circle cx="200" cy="30"  r="1.5" fill="white" opacity="0.6"/>
-        <circle cx="310" cy="12"  r="1"   fill="white" opacity="0.5"/>
-        <circle cx="430" cy="44"  r="1.5" fill="white" opacity="0.7"/>
-        <circle cx="560" cy="22"  r="1"   fill="white" opacity="0.5"/>
-        <circle cx="650" cy="60"  r="1.5" fill="white" opacity="0.6"/>
-        <circle cx="700" cy="15"  r="1"   fill="white" opacity="0.5"/>
-        <circle cx="80"  cy="80"  r="1"   fill="white" opacity="0.4"/>
-        <circle cx="490" cy="80"  r="1"   fill="white" opacity="0.4"/>
-        <!-- player ship -->
-        <polygon points="360,155 340,188 380,188" fill="#2bd1c4"/>
-        <polygon points="360,158 350,182 370,182" fill="#0b8f88"/>
-        <!-- engine glow -->
-        <ellipse cx="360" cy="190" rx="10" ry="5" fill="#2bd1c4" opacity="0.5"/>
-        <!-- bullets going up -->
-        <rect x="357" y="110" width="6" height="20" rx="3" fill="#2bd1c4" opacity="0.9"/>
-        <rect x="357" y="75"  width="6" height="20" rx="3" fill="#2bd1c4" opacity="0.75"/>
-        <rect x="357" y="40"  width="6" height="20" rx="3" fill="#2bd1c4" opacity="0.5"/>
-        <!-- enemies -->
-        <polygon points="150,55 130,85 170,85" fill="#f05d5e" opacity="0.85" transform="rotate(180,150,70)"/>
-        <polygon points="300,40 280,70 320,70" fill="#a98bff" opacity="0.85" transform="rotate(180,300,55)"/>
-        <polygon points="480,60 460,90 500,90" fill="#f05d5e" opacity="0.8" transform="rotate(180,480,75)"/>
-        <polygon points="600,45 580,75 620,75" fill="#a98bff" opacity="0.75" transform="rotate(180,600,60)"/>
-        <!-- enemy bullets -->
-        <rect x="147" y="90"  width="5" height="16" rx="2" fill="#f05d5e" opacity="0.8"/>
-        <rect x="477" y="95"  width="5" height="16" rx="2" fill="#f05d5e" opacity="0.75"/>
-      </svg>
+      <img src="/assets/thumbs/space-shooter.png" alt="Space Shooter" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Every space shooter I grew up playing had the same core loop: move your ship, aim at enemies, hold the fire button. When I started building Space Shooter for the browser I added a fire button without thinking twice. It felt essential. But after a week of testing I deleted it entirely and let the ship fire automatically on a fixed interval. That decision changed the entire character of the game — and I think it was exactly right.</p>
 

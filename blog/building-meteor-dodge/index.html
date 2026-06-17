@@ -63,61 +63,7 @@
       <p class="post-meta">Dev Blog · June 6, 2026</p>
       <h1>Meteor Dodge: Making the Same Idea Feel Different</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="md-bg" x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0%" stop-color="#020408"/>
-            <stop offset="100%" stop-color="#060210"/>
-          </linearGradient>
-          <radialGradient id="md-star1" cx="30%" cy="20%" r="35%">
-            <stop offset="0%" stop-color="#a98bff" stop-opacity="0.07"/>
-            <stop offset="100%" stop-color="#020408" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="md-star2" cx="75%" cy="40%" r="30%">
-            <stop offset="0%" stop-color="#2bd1c4" stop-opacity="0.05"/>
-            <stop offset="100%" stop-color="#020408" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#md-bg)"/>
-        <rect width="720" height="200" fill="url(#md-star1)"/>
-        <rect width="720" height="200" fill="url(#md-star2)"/>
-        <!-- Stars -->
-        <circle cx="45" cy="18" r="1.2" fill="#f4f2ea" opacity="0.7"/>
-        <circle cx="130" cy="32" r="0.9" fill="#f4f2ea" opacity="0.5"/>
-        <circle cx="220" cy="12" r="1.4" fill="#f4f2ea" opacity="0.8"/>
-        <circle cx="310" cy="45" r="0.8" fill="#f4f2ea" opacity="0.4"/>
-        <circle cx="400" cy="22" r="1.1" fill="#f4f2ea" opacity="0.6"/>
-        <circle cx="510" cy="8" r="1.3" fill="#f4f2ea" opacity="0.7"/>
-        <circle cx="600" cy="38" r="0.9" fill="#f4f2ea" opacity="0.5"/>
-        <circle cx="680" cy="16" r="1.2" fill="#f4f2ea" opacity="0.6"/>
-        <circle cx="88" cy="55" r="0.8" fill="#f4f2ea" opacity="0.4"/>
-        <circle cx="450" cy="58" r="1" fill="#f4f2ea" opacity="0.5"/>
-        <!-- Spaceship (player) at bottom center -->
-        <polygon points="360,155 340,178 380,178" fill="#2bd1c4"/>
-        <polygon points="360,160 352,174 368,174" fill="#0d1525"/>
-        <!-- Engine glow -->
-        <ellipse cx="360" cy="180" rx="10" ry="5" fill="#f7b84b" opacity="0.7"/>
-        <ellipse cx="360" cy="182" rx="6" ry="3" fill="#fff" opacity="0.5"/>
-        <!-- Meteor 1 (large, coming down left) -->
-        <ellipse cx="200" cy="75" rx="26" ry="22" fill="#6b4c2a" transform="rotate(-20 200 75)"/>
-        <ellipse cx="192" cy="68" rx="10" ry="8" fill="#7d5832" transform="rotate(-20 192 68)"/>
-        <circle cx="214" cy="80" r="5" fill="#5a3d1e"/>
-        <!-- Meteor trail -->
-        <line x1="200" y1="52" x2="185" y2="10" stroke="#a98bff" stroke-width="2" opacity="0.3"/>
-        <line x1="210" y1="52" x2="198" y2="10" stroke="#a98bff" stroke-width="1" opacity="0.15"/>
-        <!-- Meteor 2 (smaller, right) -->
-        <ellipse cx="500" cy="55" rx="16" ry="14" fill="#5a3a18" transform="rotate(15 500 55)"/>
-        <ellipse cx="495" cy="50" rx="6" ry="5" fill="#6e4820" transform="rotate(15 495 50)"/>
-        <!-- Meteor trail 2 -->
-        <line x1="500" y1="38" x2="492" y2="5" stroke="#f05d5e" stroke-width="1.5" opacity="0.25"/>
-        <!-- Meteor 3 (tiny, passing left) -->
-        <ellipse cx="90" cy="100" rx="9" ry="8" fill="#4a2e10" transform="rotate(-10 90 100)"/>
-        <line x1="90" y1="90" x2="84" y2="65" stroke="#f7b84b" stroke-width="1" opacity="0.2"/>
-        <!-- Survival time display -->
-        <rect x="590" y="148" width="110" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <text x="645" y="163" font-size="10" fill="#2bd1c4" font-family="system-ui" font-weight="700" text-anchor="middle">SURVIVED</text>
-        <text x="645" y="181" font-size="18" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">1m 52s</text>
-      </svg>
+      <img src="/assets/thumbs/meteor-dodge.png" alt="Meteor Dodge" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Dodge-the-falling-rocks is one of the oldest game mechanics in existence. I know this. I built Meteor Dodge anyway, partly as a technical warmup and partly because I had a theory: the reason most dodge games feel samey is that they treat the player as passive. You move away from things. I wanted to see if I could make the player feel like an active presence in the space, not just a hitbox getting out of the way.</p>
 

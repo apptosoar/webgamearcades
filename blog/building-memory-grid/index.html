@@ -60,30 +60,7 @@
       <p class="post-meta">Dev Blog · June 2, 2026</p>
       <h1>Memory Grid: What Building a Memory Game Taught Me</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <rect width="720" height="200" fill="#0e1019"/>
-        <!-- 4x4 grid centered -->
-        <!-- Row 1 -->
-        <rect x="216" y="20" width="56" height="56" rx="8" fill="#2bd1c4" opacity="0.9"/>
-        <rect x="280" y="20" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <rect x="344" y="20" width="56" height="56" rx="8" fill="#a78bfa" opacity="0.85"/>
-        <rect x="408" y="20" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <!-- Row 2 -->
-        <rect x="216" y="84" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <rect x="280" y="84" width="56" height="56" rx="8" fill="#f7b84b" opacity="0.9"/>
-        <rect x="344" y="84" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <rect x="408" y="84" width="56" height="56" rx="8" fill="#2bd1c4" opacity="0.85"/>
-        <!-- Row 3 -->
-        <rect x="216" y="148" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <rect x="280" y="148" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <rect x="344" y="148" width="56" height="56" rx="8" fill="#f05d5e" opacity="0.85"/>
-        <rect x="408" y="148" width="56" height="56" rx="8" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <!-- Label -->
-        <text x="130" y="72" text-anchor="middle" fill="#b8bec9" font-size="11" font-family="system-ui" font-weight="600" letter-spacing="1">SHOW</text>
-        <text x="130" y="88" text-anchor="middle" fill="#f7b84b" font-size="11" font-family="system-ui" font-weight="600" letter-spacing="1">PHASE</text>
-        <text x="584" y="72" text-anchor="middle" fill="#b8bec9" font-size="11" font-family="system-ui" font-weight="600" letter-spacing="1">RECALL</text>
-        <text x="584" y="88" text-anchor="middle" fill="#2bd1c4" font-size="11" font-family="system-ui" font-weight="600" letter-spacing="1">PHASE</text>
-      </svg>
+      <img src="/assets/thumbs/memory-grid.png" alt="Memory Grid" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>I assumed Memory Grid would be the easiest game I'd build for this collection. Tiles light up, you remember them, you tap them back. How hard could it be? The answer turned out to be: surprisingly hard to get right. Every parameter I could adjust — display duration, grid size, number of tiles per round, recall time limit — interacted with the others in ways that weren't obvious until I watched people fail in specific ways. This post is about what those failures taught me.</p>
 

@@ -63,56 +63,7 @@
       <p class="post-meta">Dev Blog · June 8, 2026</p>
       <h1>Castle Defender: Building a One-Button Tower Defense</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="cd-bg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#0c1008"/>
-            <stop offset="100%" stop-color="#0e0c18"/>
-          </linearGradient>
-          <radialGradient id="cd-glow" cx="12%" cy="80%" r="40%">
-            <stop offset="0%" stop-color="#f7b84b" stop-opacity="0.2"/>
-            <stop offset="100%" stop-color="#0c1008" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#cd-bg)"/>
-        <rect width="720" height="200" fill="url(#cd-glow)"/>
-        <!-- Ground -->
-        <rect x="0" y="168" width="720" height="32" fill="#0a0e06" opacity="0.8"/>
-        <!-- Castle (left side) -->
-        <rect x="20" y="90" width="70" height="80" fill="#2a3020"/>
-        <!-- Castle battlements -->
-        <rect x="20" y="80" width="14" height="20" fill="#2a3020"/>
-        <rect x="42" y="80" width="14" height="20" fill="#2a3020"/>
-        <rect x="64" y="80" width="14" height="20" fill="#2a3020"/>
-        <!-- Castle gate -->
-        <rect x="42" y="130" width="26" height="40" rx="3" fill="#0c1008"/>
-        <!-- Tower cannon -->
-        <rect x="68" y="112" width="36" height="10" rx="4" fill="#f7b84b"/>
-        <!-- Cannonball trajectory -->
-        <circle cx="120" cy="115" r="5" fill="#f7b84b" opacity="0.9"/>
-        <circle cx="200" cy="108" r="4" fill="#f7b84b" opacity="0.65"/>
-        <circle cx="280" cy="100" r="3.5" fill="#f7b84b" opacity="0.45"/>
-        <!-- HP bar -->
-        <rect x="20" y="72" width="70" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
-        <rect x="20" y="72" width="50" height="6" rx="3" fill="#73d676"/>
-        <!-- Enemy 1 (grunt, far right) -->
-        <rect x="650" y="130" width="22" height="30" rx="4" fill="#f05d5e"/>
-        <circle cx="661" cy="124" r="12" fill="#f05d5e"/>
-        <rect x="655" y="118" width="12" height="4" fill="#c03030"/>
-        <!-- Enemy 2 (mid field) -->
-        <rect x="520" y="134" width="20" height="28" rx="4" fill="#a98bff"/>
-        <circle cx="530" cy="128" r="11" fill="#a98bff"/>
-        <!-- Enemy 3 (near, getting hit) -->
-        <rect x="360" y="136" width="20" height="28" rx="4" fill="#f05d5e" opacity="0.4"/>
-        <circle cx="370" cy="130" r="11" fill="#f05d5e" opacity="0.4"/>
-        <!-- Hit spark -->
-        <circle cx="370" cy="118" r="8" fill="#f7b84b" opacity="0.7"/>
-        <text x="364" y="122" font-size="10" fill="#fff" font-weight="800">!</text>
-        <!-- Wave indicator -->
-        <rect x="588" y="20" width="110" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <text x="643" y="35" font-size="10" fill="#f7b84b" font-family="system-ui" font-weight="700" text-anchor="middle">WAVE</text>
-        <text x="643" y="52" font-size="18" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">4 / 10</text>
-      </svg>
+      <img src="/assets/thumbs/castle-defender.png" alt="Castle Defender" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Tower defense games usually give you a lot to manage — multiple towers, upgrade trees, resource economies, unit types. Castle Defender strips all of that away. You have one cannon. You aim it and fire. That constraint sounds like a simplification but it created a completely different set of design problems, because now every interesting decision had to live in the aiming and firing itself.</p>
 

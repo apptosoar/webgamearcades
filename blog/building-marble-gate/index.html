@@ -38,55 +38,7 @@
       <p class="post-meta">Dev Blog · May 25, 2026</p>
       <h1>Marble Gate: Designing a Sliding Puzzle That Feels Fair</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <rect width="720" height="200" fill="#12141a"/>
-        <!-- Puzzle frame -->
-        <rect x="200" y="10" width="320" height="180" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
-        <!-- Marble entry at top -->
-        <circle cx="280" cy="10" r="8" fill="#2bd1c4" opacity="0.6"/>
-        <text x="280" y="2" text-anchor="middle" fill="#2bd1c4" font-size="9" font-family="system-ui">IN</text>
-        <!-- Exit at bottom -->
-        <rect x="340" y="180" width="40" height="10" rx="3" fill="rgba(115,214,118,0.4)" stroke="#73d676" stroke-width="1.5"/>
-        <text x="360" y="200" text-anchor="middle" fill="#73d676" font-size="9" font-family="system-ui">EXIT</text>
-        <!-- Sliding blocks (horizontal, in slots) -->
-        <!-- Slot row 1 -->
-        <rect x="200" y="45" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
-        <rect x="220" y="50" width="100" height="20" rx="4" fill="#f7b84b" opacity="0.85"/>
-        <line x1="216" y1="60" x2="220" y2="60" stroke="#f7b84b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.5"/>
-        <line x1="320" y1="60" x2="510" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-        <!-- Arrow on block -->
-        <line x1="248" y1="60" x2="290" y2="60" stroke="#15110a" stroke-width="2" stroke-linecap="round"/>
-        <polygon points="290,56 298,60 290,64" fill="#15110a"/>
-        <!-- Slot row 2 -->
-        <rect x="200" y="85" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
-        <rect x="340" y="90" width="120" height="20" rx="4" fill="#a98bff" opacity="0.85"/>
-        <line x1="200" y1="100" x2="340" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-        <line x1="460" y1="100" x2="516" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-        <!-- Arrow on block left -->
-        <line x1="418" y1="100" x2="376" y2="100" stroke="#f4f2ea" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        <polygon points="376,96 368,100 376,104" fill="#f4f2ea" opacity="0.7"/>
-        <!-- Slot row 3 -->
-        <rect x="200" y="125" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
-        <rect x="260" y="130" width="140" height="20" rx="4" fill="#f05d5e" opacity="0.85"/>
-        <line x1="200" y1="140" x2="260" y2="140" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-        <line x1="400" y1="140" x2="516" y2="140" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-        <!-- Marble path (dotted showing where it will go) -->
-        <line x1="280" y1="18" x2="280" y2="50" stroke="#2bd1c4" stroke-width="2" stroke-dasharray="4,3" opacity="0.7"/>
-        <!-- Gap in row 1 lets marble through at x=320 -->
-        <line x1="280" y1="70" x2="280" y2="90" stroke="#2bd1c4" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
-        <!-- marble indicator -->
-        <circle cx="280" cy="30" r="9" fill="#2bd1c4"/>
-        <circle cx="280" cy="27" r="3" fill="rgba(255,255,255,0.5)"/>
-        <!-- Labels -->
-        <text x="100" y="65" text-anchor="middle" fill="#f7b84b" font-size="10" font-family="system-ui" font-weight="600">SLIDE →</text>
-        <text x="100" y="105" text-anchor="middle" fill="#a98bff" font-size="10" font-family="system-ui" font-weight="600">← SLIDE</text>
-        <text x="100" y="145" text-anchor="middle" fill="#f05d5e" font-size="10" font-family="system-ui" font-weight="600">SLIDE →</text>
-        <!-- Score/moves panel -->
-        <rect x="560" y="60" width="120" height="80" rx="8" fill="rgba(43,209,196,0.06)" stroke="rgba(43,209,196,0.2)" stroke-width="1"/>
-        <text x="620" y="86" text-anchor="middle" fill="#b8bec9" font-size="10" font-family="system-ui">MOVES</text>
-        <text x="620" y="110" text-anchor="middle" fill="#2bd1c4" font-size="24" font-family="system-ui" font-weight="800">3</text>
-        <text x="620" y="128" text-anchor="middle" fill="#b8bec9" font-size="9" font-family="system-ui">of 6 used</text>
-      </svg>
+      <img src="/assets/thumbs/marble-gate.png" alt="Marble Gate" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Marble Gate came from a question I kept asking myself while watching my nephew play with a physical sliding block toy: why does this feel so satisfying when the solution clicks into place? I wanted to capture that tactile logic in a browser game — the clean, inevitable fall of a marble through a gap you've just opened. Getting the feel right turned out to require rethinking almost everything I assumed about puzzle design.</p>
 

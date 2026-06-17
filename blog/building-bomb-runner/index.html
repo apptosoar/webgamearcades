@@ -63,52 +63,7 @@
       <p class="post-meta">Dev Blog · June 7, 2026</p>
       <h1>Bomb Runner: Obstacles, Jump Timing, and the Rhythm Problem</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="br-bg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#0d0f14"/>
-            <stop offset="100%" stop-color="#100d08"/>
-          </linearGradient>
-          <radialGradient id="br-explosion" cx="72%" cy="80%" r="18%">
-            <stop offset="0%" stop-color="#f05d5e" stop-opacity="0.3"/>
-            <stop offset="100%" stop-color="#0d0f14" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#br-bg)"/>
-        <rect width="720" height="200" fill="url(#br-explosion)"/>
-        <!-- Ground -->
-        <rect x="0" y="158" width="720" height="42" fill="#0a0c0f"/>
-        <rect x="0" y="158" width="720" height="3" fill="rgba(255,255,255,0.07)"/>
-        <!-- Ground detail lines (running track) -->
-        <line x1="0" y1="168" x2="720" y2="168" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="40,20"/>
-        <!-- Player (mid-jump) -->
-        <circle cx="140" cy="112" r="14" fill="#2bd1c4"/>
-        <rect x="132" y="124" width="16" height="18" rx="4" fill="#2bd1c4"/>
-        <!-- Player legs (running pose) -->
-        <line x1="136" y1="140" x2="128" y2="155" stroke="#2bd1c4" stroke-width="4" stroke-linecap="round"/>
-        <line x1="148" y1="140" x2="156" y2="155" stroke="#2bd1c4" stroke-width="4" stroke-linecap="round"/>
-        <!-- Shadow below player (indicates jump height) -->
-        <ellipse cx="140" cy="160" rx="18" ry="4" fill="rgba(43,209,196,0.2)"/>
-        <!-- Bomb 1 (behind player, safe) -->
-        <circle cx="310" cy="145" r="18" fill="#1e1e26"/>
-        <circle cx="310" cy="145" r="18" fill="none" stroke="#f05d5e" stroke-width="2"/>
-        <text x="303" y="151" font-size="16">💣</text>
-        <!-- Fuse spark -->
-        <circle cx="322" cy="132" r="4" fill="#f7b84b" opacity="0.9"/>
-        <!-- Bomb 2 -->
-        <circle cx="490" cy="145" r="18" fill="#1e1e26"/>
-        <circle cx="490" cy="145" r="18" fill="none" stroke="#f05d5e" stroke-width="2"/>
-        <text x="483" y="151" font-size="16">💣</text>
-        <circle cx="502" cy="132" r="4" fill="#f7b84b" opacity="0.9"/>
-        <!-- Explosion (exploded bomb to right) -->
-        <circle cx="640" cy="148" r="22" fill="#f05d5e" opacity="0.25"/>
-        <circle cx="640" cy="148" r="14" fill="#f7b84b" opacity="0.35"/>
-        <text x="628" y="154" font-size="18" fill="#f05d5e" opacity="0.8">✸</text>
-        <!-- Distance tracker -->
-        <rect x="20" y="20" width="110" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <text x="75" y="34" font-size="10" fill="#f7b84b" font-family="system-ui" font-weight="700" text-anchor="middle">DISTANCE</text>
-        <text x="75" y="52" font-size="18" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">1,340m</text>
-      </svg>
+      <img src="/assets/thumbs/bomb-runner.png" alt="Bomb Runner" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Endless runners are the genre I thought I understood best before I tried to make one. The loop seems obvious: character runs, obstacles appear, player jumps. I had Bomb Runner playable in a few hours. Then I spent two weeks chasing a feeling I couldn't quite name — the game worked but it didn't sing. That gap between "functional" and "feels right" turned out to be almost entirely about rhythm, and rhythm is one of the hardest things to design consciously.</p>
 

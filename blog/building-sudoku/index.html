@@ -34,68 +34,7 @@
       <p class="post-meta">Dev Blog · May 21, 2026</p>
       <h1>Building Sudoku: A Classic Puzzle in 200 Lines</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <rect width="720" height="200" fill="#0d0f1a"/>
-        <defs>
-          <linearGradient id="sukg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#0d0f1a"/>
-            <stop offset="100%" stop-color="#13152a"/>
-          </linearGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#sukg)"/>
-        <!-- Sudoku grid - 9x9 at left, each cell ~18px -->
-        <g transform="translate(40, 20)">
-          <!-- Grid lines thin -->
-          <rect width="162" height="162" fill="none" stroke="#a98bff" stroke-width="0.5" opacity="0.3"/>
-          <!-- Thin lines -->
-          <line x1="18" y1="0" x2="18" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="36" y1="0" x2="36" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="54" y1="0" x2="54" y2="162" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
-          <line x1="72" y1="0" x2="72" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="90" y1="0" x2="90" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="108" y1="0" x2="108" y2="162" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
-          <line x1="126" y1="0" x2="126" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="144" y1="0" x2="144" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="18" x2="162" y2="18" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="36" x2="162" y2="36" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="54" x2="162" y2="54" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
-          <line x1="0" y1="72" x2="162" y2="72" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="90" x2="162" y2="90" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="108" x2="162" y2="108" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
-          <line x1="0" y1="126" x2="162" y2="126" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <line x1="0" y1="144" x2="162" y2="144" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
-          <!-- Some filled numbers (given clues) -->
-          <text x="27" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">5</text>
-          <text x="63" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">3</text>
-          <text x="117" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">7</text>
-          <text x="9" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">6</text>
-          <text x="81" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">1</text>
-          <text x="99" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">9</text>
-          <text x="117" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">5</text>
-          <!-- Highlighted active cell -->
-          <rect x="55" y="55" width="18" height="18" fill="#a98bff" opacity="0.22" rx="2"/>
-          <text x="63" y="68" text-anchor="middle" fill="#a98bff" font-size="13" font-weight="800">4</text>
-          <!-- User-entered number in different color -->
-          <text x="9" y="86" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">8</text>
-          <text x="45" y="104" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">6</text>
-          <text x="135" y="122" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">3</text>
-          <!-- Error cell highlight -->
-          <rect x="109" y="127" width="18" height="18" fill="#f05d5e" opacity="0.15" rx="2"/>
-          <text x="117" y="140" text-anchor="middle" fill="#f05d5e" font-size="11" opacity="0.8">2</text>
-        </g>
-        <!-- Title and details on right -->
-        <text x="480" y="80" text-anchor="middle" fill="#f4f2ea" font-family="system-ui,sans-serif" font-size="24" font-weight="800" opacity="0.95">SUDOKU</text>
-        <text x="480" y="102" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="10" letter-spacing="3" opacity="0.65">LOGIC · PUZZLE · CLASSIC</text>
-        <!-- Difficulty chips -->
-        <rect x="370" y="118" width="56" height="20" rx="10" fill="#73d676" opacity="0.18"/>
-        <text x="398" y="132" text-anchor="middle" fill="#73d676" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Easy</text>
-        <rect x="432" y="118" width="62" height="20" rx="10" fill="#f7b84b" opacity="0.18"/>
-        <text x="463" y="132" text-anchor="middle" fill="#f7b84b" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Medium</text>
-        <rect x="500" y="118" width="50" height="20" rx="10" fill="#f05d5e" opacity="0.18"/>
-        <text x="525" y="132" text-anchor="middle" fill="#f05d5e" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Hard</text>
-        <!-- Timer -->
-        <text x="480" y="162" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="12" opacity="0.7">12:34</text>
-      </svg>
+      <img src="/assets/thumbs/sudoku.png" alt="Sudoku" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Sudoku seemed like the "safe" project on my list. It is a well-understood puzzle with clear rules, a finite solution space, and no moving parts. I figured I would knock it out in a weekend. Three weeks later I had learned more about backtracking solvers, uniqueness proofs, and input state management than I expected. "Simple" and "solved problem" turned out to mean very different things when you are the one implementing it.</p>
 

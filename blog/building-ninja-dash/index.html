@@ -73,38 +73,7 @@
       <p class="post-meta">Dev Blog · June 14, 2026</p>
       <h1>Building Ninja Dash: The Problem With Endless Runners</h1>
 
-      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="nd2-bg" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#0e0c18"/>
-            <stop offset="100%" stop-color="#170f22"/>
-          </linearGradient>
-        </defs>
-        <rect width="720" height="200" fill="url(#nd2-bg)"/>
-        <!-- ground -->
-        <rect x="0" y="158" width="720" height="4" fill="#a98bff" opacity="0.4"/>
-        <!-- platforms / hazards -->
-        <rect x="180" y="120" width="60" height="38" rx="3" fill="#f05d5e" opacity="0.7"/>
-        <rect x="350" y="105" width="50" height="53" rx="3" fill="#f05d5e" opacity="0.65"/>
-        <rect x="520" y="125" width="55" height="33" rx="3" fill="#f05d5e" opacity="0.7"/>
-        <!-- spikes on hazards -->
-        <polygon points="190,120 198,104 206,120" fill="#f7b84b" opacity="0.85"/>
-        <polygon points="210,120 218,104 226,120" fill="#f7b84b" opacity="0.85"/>
-        <polygon points="355,105 363,89 371,105"  fill="#f7b84b" opacity="0.8"/>
-        <polygon points="375,105 383,89 391,105"  fill="#f7b84b" opacity="0.8"/>
-        <polygon points="525,125 533,109 541,125" fill="#f7b84b" opacity="0.85"/>
-        <polygon points="547,125 555,109 563,125" fill="#f7b84b" opacity="0.85"/>
-        <!-- ninja runner -->
-        <rect x="80" y="128" width="28" height="30" rx="4" fill="#a98bff"/>
-        <circle cx="94" cy="122" r="12" fill="#a98bff"/>
-        <!-- scarf/dash trail -->
-        <path d="M80,135 Q50,128 20,132" stroke="#f7b84b" stroke-width="3" fill="none" opacity="0.7"/>
-        <path d="M80,140 Q45,136 10,142" stroke="#f7b84b" stroke-width="2" fill="none" opacity="0.4"/>
-        <!-- speed lines -->
-        <line x1="0" y1="100" x2="60" y2="100" stroke="#a98bff" stroke-width="1.5" opacity="0.3"/>
-        <line x1="0" y1="112" x2="50" y2="112" stroke="#a98bff" stroke-width="1" opacity="0.2"/>
-        <line x1="0" y1="90"  x2="40" y2="90"  stroke="#a98bff" stroke-width="1" opacity="0.2"/>
-      </svg>
+      <img src="/assets/thumbs/ninja-dash.png" alt="Ninja Dash" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
 
       <p>Endless runners look deceptively straightforward on paper: character moves right, obstacles come from the right, jump to avoid them, see how long you last. I built my first version of Ninja Dash in an afternoon. It ran. It was also completely joyless, and I spent the next two weeks figuring out why — and what I needed to fix before it felt like a real game rather than a test harness.</p>
 
