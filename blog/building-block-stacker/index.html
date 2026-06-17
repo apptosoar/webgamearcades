@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Block Stacker: What I Learned Rebuilding a Classic — Webgame Arcades Blog</title>
+    <meta name="description" content="I thought rebuilding a Tetris-inspired block stacker would be straightforward. The rotation system, wall kicks, and line-clear timing taught me otherwise." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-block-stacker/" />
+    <meta property="og:title" content="Block Stacker: What I Learned Rebuilding a Classic" /><meta property="og:description" content="I thought rebuilding a Tetris-inspired block stacker would be straightforward. The rotation system, wall kicks, and line-clear timing taught me otherwise." /><meta property="og:type" content="article" /><meta property="og:url" content="https://webgamearcades.com/blog/building-block-stacker/" /><meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Block Stacker: What I Learned Rebuilding a Classic","datePublished":"2026-05-28","url":"https://webgamearcades.com/blog/building-block-stacker/","publisher":{"@type":"Organization","name":"Webgame Arcades"}}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      *{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+      .topbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px)}
+      .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}
+      .brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 8px 20px rgba(247,184,75,0.22)}
+      .nav{display:flex;gap:4px}.nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;transition:transform 160ms ease,color 150ms ease}.nav a:hover{color:#f4f2ea;transform:translateY(-1px)}.nav a.active{color:#f7b84b}
+      @media(max-width:900px){.nav{display:none}}
+      main{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+      .back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}
+      .post-meta{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      h1{margin:0 0 24px;font-size:clamp(1.8rem,5vw,2.4rem);color:#f4f2ea}
+      h2{margin:40px 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      p{margin:0 0 16px;color:#b8bec9}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}
+      a.cta{display:inline-block;margin-top:36px;padding:12px 24px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.07);color:#f4f2ea;text-decoration:none;font-size:.95rem;transition:background .15s}a.cta:hover{background:rgba(255,255,255,0.13)}
+      .site-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1440px;margin:0 auto;padding:24px clamp(16px,4vw,44px) 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}
+      .site-footer-brand{display:flex;flex-direction:column;gap:4px}.site-footer-brand span{color:#f4f2ea;font-weight:800;font-size:.95rem}.site-footer-brand p{margin:0}
+      .site-footer nav{display:flex;flex-wrap:wrap;align-items:center;gap:0}.site-footer nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color 150ms ease}.site-footer nav a:hover{color:#f4f2ea}.site-footer nav a+a{border-left:1px solid rgba(255,255,255,0.12)}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav"><a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 28, 2026</p>
+      <h1>Block Stacker: What I Learned Rebuilding a Classic</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#12141a"/>
+        <!-- Grid background -->
+        <line x1="260" y1="10" x2="260" y2="195" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="460" y1="10" x2="460" y2="195" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Stacked blocks grid -->
+        <!-- Row bottom -->
+        <rect x="262" y="166" width="36" height="26" rx="3" fill="#f7b84b" opacity="0.85"/>
+        <rect x="300" y="166" width="36" height="26" rx="3" fill="#2bd1c4" opacity="0.85"/>
+        <rect x="338" y="166" width="36" height="26" rx="3" fill="#f05d5e" opacity="0.85"/>
+        <rect x="376" y="166" width="36" height="26" rx="3" fill="#a98bff" opacity="0.85"/>
+        <rect x="414" y="166" width="36" height="26" rx="3" fill="#f7b84b" opacity="0.85"/>
+        <!-- Row 2 -->
+        <rect x="262" y="138" width="36" height="26" rx="3" fill="#73d676" opacity="0.8"/>
+        <rect x="300" y="138" width="36" height="26" rx="3" fill="#f7b84b" opacity="0.8"/>
+        <rect x="338" y="138" width="36" height="26" rx="3" fill="#2bd1c4" opacity="0.8"/>
+        <rect x="376" y="138" width="36" height="26" rx="3" fill="#f7b84b" opacity="0.8"/>
+        <rect x="414" y="138" width="36" height="26" rx="3" fill="#f05d5e" opacity="0.8"/>
+        <!-- Row 3 partial -->
+        <rect x="300" y="110" width="36" height="26" rx="3" fill="#a98bff" opacity="0.75"/>
+        <rect x="338" y="110" width="36" height="26" rx="3" fill="#73d676" opacity="0.75"/>
+        <rect x="376" y="110" width="36" height="26" rx="3" fill="#f7b84b" opacity="0.75"/>
+        <!-- Active L-piece falling -->
+        <rect x="376" y="54" width="36" height="26" rx="3" fill="#2bd1c4" opacity="0.95"/>
+        <rect x="376" y="82" width="36" height="26" rx="3" fill="#2bd1c4" opacity="0.95"/>
+        <rect x="414" y="82" width="36" height="26" rx="3" fill="#2bd1c4" opacity="0.95"/>
+        <!-- Ghost piece -->
+        <rect x="376" y="138" width="36" height="26" rx="3" fill="none" stroke="#2bd1c4" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.4"/>
+        <!-- Clear flash on row 2 -->
+        <rect x="262" y="138" width="190" height="26" rx="3" fill="#f4f2ea" opacity="0.08"/>
+        <!-- Score panel -->
+        <rect x="520" y="40" width="160" height="120" rx="8" fill="rgba(247,184,75,0.06)" stroke="rgba(247,184,75,0.2)" stroke-width="1"/>
+        <text x="600" y="66" text-anchor="middle" fill="#b8bec9" font-size="10" font-family="system-ui">SCORE</text>
+        <text x="600" y="90" text-anchor="middle" fill="#f7b84b" font-size="22" font-family="system-ui" font-weight="800">8,420</text>
+        <text x="600" y="118" text-anchor="middle" fill="#b8bec9" font-size="10" font-family="system-ui">LEVEL 4</text>
+        <text x="600" y="138" text-anchor="middle" fill="#73d676" font-size="10" font-family="system-ui">LINES: 12</text>
+        <!-- Next piece preview -->
+        <rect x="40" y="40" width="160" height="120" rx="8" fill="rgba(43,209,196,0.06)" stroke="rgba(43,209,196,0.2)" stroke-width="1"/>
+        <text x="120" y="65" text-anchor="middle" fill="#b8bec9" font-size="10" font-family="system-ui">NEXT</text>
+        <rect x="98" y="78" width="22" height="22" rx="2" fill="#a98bff" opacity="0.9"/>
+        <rect x="122" y="78" width="22" height="22" rx="2" fill="#a98bff" opacity="0.9"/>
+        <rect x="146" y="78" width="22" height="22" rx="2" fill="#a98bff" opacity="0.9"/>
+        <rect x="98" y="102" width="22" height="22" rx="2" fill="#a98bff" opacity="0.9"/>
+      </svg>
+
+      <p>I knew rebuilding a Tetris-inspired game would be familiar territory. I had a mental model of how it worked, I'd played it thousands of times, and I figured the implementation would go quickly. I was wrong about almost every assumption. Block Stacker took three times longer than expected and taught me that the games we know best are often the ones we understand the least.</p>
+
+      <h2>The Rotation System Is a Rabbit Hole</h2>
+      <p>Rotation seems simple: spin the piece 90 degrees around its center. In practice, naive center-rotation causes the piece to clip into walls or the floor and simply refuse to rotate, which feels terrible. The standard solution is wall kicks — when a rotation would result in collision, try a series of offset positions to find a valid landing spot. I implemented a basic kick table and it covered most cases. Then I found the S and Z pieces. Their rotational symmetry means they oscillate between two states, and my kick offsets caused them to creep horizontally across the board on repeated rotations. I spent an entire afternoon tracing a kick table I'd copied from a reference implementation before realizing I had the offset directions inverted. The lesson: don't copy data structures without understanding the coordinate system they were designed for. My grid grows downward; the reference grew upward. Every Y offset was flipped.</p>
+
+      <h2>Line Clears and the Feel of Reward</h2>
+      <p>Clearing a line is the core reward loop of the game, and I underinvested in it at first. My initial implementation: check for full rows, splice them from the array, shift everything down, update score. It worked instantly and felt like nothing. The rows just vanished. I added a 120ms flash animation where cleared rows turn white before disappearing — and the game suddenly had weight. The blocks above don't fall immediately; they pause for that same 120ms as if they're surprised too. The score ticker animates upward over 200ms. None of this changes the gameplay mechanics at all, but the difference in how satisfying a clear feels is enormous. Deferred gravity — the brief pause before blocks fall — is the single most impactful animation I added to the whole game.</p>
+
+      <h2>Balancing Speed Across Score Levels</h2>
+      <p>The fall speed curve is a design problem that looks mathematical but is really psychological. I plotted a clean exponential ramp from level 1 to level 15 and gave it to playtesters. Levels 1 through 5 felt too slow — people were bored before they built any spatial reasoning. Levels 12 and above felt physically impossible. The issue was that I optimized the curve for someone who was already good at the game. I rebuilt it with three distinct zones: a fast warm-up ramp through levels 1–4 that gets players engaged quickly, a gradual middle section from 5–10 where most play sessions live, and a steep final section from 11–15 that functions as a skill ceiling rather than a standard difficulty setting. Most players never see level 12. That's fine — it just needs to exist as a horizon to chase.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

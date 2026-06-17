@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maze Escape: The Joy and Pain of Procedural Generation — Webgame Arcades Blog</title>
+    <meta name="description" content="How I built Maze Escape — a procedurally generated browser maze game where levels grow larger and darker as you advance." /><meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-maze-escape/" />
+    <meta property="og:title" content="Maze Escape: The Joy and Pain of Procedural Generation" /><meta property="og:description" content="How I built Maze Escape — a procedurally generated browser maze game where levels grow larger and darker as you advance." /><meta property="og:type" content="article" /><meta property="og:url" content="https://webgamearcades.com/blog/building-maze-escape/" /><meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Maze Escape: The Joy and Pain of Procedural Generation","datePublished":"2026-05-24","url":"https://webgamearcades.com/blog/building-maze-escape/","publisher":{"@type":"Organization","name":"Webgame Arcades"}}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      *{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+      .topbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px)}
+      .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}.brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 8px 20px rgba(247,184,75,0.22)}
+      .nav{display:flex;gap:4px}.nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;transition:transform 160ms ease,color 150ms ease}.nav a:hover{color:#f4f2ea;transform:translateY(-1px)}.nav a.active{color:#f7b84b}@media(max-width:900px){.nav{display:none}}
+      main{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+      .back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}
+      .post-meta{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      h1{margin:0 0 24px;font-size:clamp(1.8rem,5vw,2.4rem);color:#f4f2ea}h2{margin:40px 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      p{margin:0 0 16px;color:#b8bec9}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}
+      a.cta{display:inline-block;margin-top:36px;padding:12px 24px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.07);color:#f4f2ea;text-decoration:none;font-size:.95rem;transition:background .15s}a.cta:hover{background:rgba(255,255,255,0.13)}
+      .site-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1440px;margin:0 auto;padding:24px clamp(16px,4vw,44px) 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}
+      .site-footer-brand{display:flex;flex-direction:column;gap:4px}.site-footer-brand span{color:#f4f2ea;font-weight:800;font-size:.95rem}.site-footer-brand p{margin:0}
+      .site-footer nav{display:flex;flex-wrap:wrap;align-items:center;gap:0}.site-footer nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color 150ms ease}.site-footer nav a:hover{color:#f4f2ea}.site-footer nav a+a{border-left:1px solid rgba(255,255,255,0.12)}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav"><a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 24, 2026</p>
+      <h1>Maze Escape: The Joy and Pain of Procedural Generation</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#0d1525"/>
+        <rect x="0" y="0" width="720" height="200" fill="url(#mg)"/>
+        <defs>
+          <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0d1525"/>
+            <stop offset="100%" stop-color="#111827"/>
+          </linearGradient>
+        </defs>
+        <!-- Maze grid lines -->
+        <g stroke="#2bd1c4" stroke-width="2" opacity="0.18">
+          <line x1="60" y1="30" x2="60" y2="170"/><line x1="100" y1="30" x2="100" y2="100"/><line x1="100" y1="130" x2="100" y2="170"/>
+          <line x1="140" y1="30" x2="140" y2="70"/><line x1="140" y1="100" x2="140" y2="170"/>
+          <line x1="180" y1="60" x2="180" y2="170"/><line x1="220" y1="30" x2="220" y2="130"/>
+          <line x1="260" y1="30" x2="260" y2="170"/><line x1="300" y1="30" x2="300" y2="90"/><line x1="300" y1="120" x2="300" y2="170"/>
+          <line x1="60" y1="30" x2="220" y2="30"/><line x1="60" y1="70" x2="140" y2="70"/>
+          <line x1="100" y1="100" x2="180" y2="100"/><line x1="60" y1="130" x2="100" y2="130"/>
+          <line x1="140" y1="130" x2="220" y2="130"/><line x1="60" y1="170" x2="300" y2="170"/>
+          <line x1="220" y1="60" x2="300" y2="60"/>
+        </g>
+        <!-- Bright path highlight -->
+        <polyline points="60,150 60,100 100,100 100,70 180,70 180,100 260,100 260,60 300,60 300,150" fill="none" stroke="#f7b84b" stroke-width="3" opacity="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Player dot -->
+        <circle cx="60" cy="150" r="7" fill="#f7b84b" opacity="0.9"/>
+        <!-- Exit glow -->
+        <circle cx="300" cy="150" r="12" fill="#2bd1c4" opacity="0.18"/>
+        <circle cx="300" cy="150" r="7" fill="#2bd1c4" opacity="0.85"/>
+        <!-- Darkness gradient overlay on right side -->
+        <rect x="340" y="0" width="380" height="200" fill="url(#dark-overlay)" rx="0"/>
+        <defs>
+          <linearGradient id="dark-overlay" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0d1525" stop-opacity="0"/>
+            <stop offset="60%" stop-color="#0d1525" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#050810" stop-opacity="0.92"/>
+          </linearGradient>
+        </defs>
+        <!-- Larger maze fragment on right, darker -->
+        <g stroke="#a98bff" stroke-width="2" opacity="0.22">
+          <line x1="400" y1="30" x2="400" y2="170"/><line x1="450" y1="30" x2="450" y2="80"/><line x1="450" y1="110" x2="450" y2="170"/>
+          <line x1="500" y1="30" x2="500" y2="170"/><line x1="550" y1="50" x2="550" y2="170"/>
+          <line x1="600" y1="30" x2="600" y2="130"/><line x1="650" y1="30" x2="650" y2="170"/>
+          <line x1="400" y1="30" x2="650" y2="30"/><line x1="400" y1="80" x2="500" y2="80"/>
+          <line x1="450" y1="110" x2="600" y2="110"/><line x1="400" y1="140" x2="450" y2="140"/>
+          <line x1="500" y1="140" x2="550" y2="140"/><line x1="600" y1="140" x2="650" y2="140"/>
+          <line x1="400" y1="170" x2="650" y2="170"/>
+        </g>
+        <!-- Title text -->
+        <text x="360" y="108" text-anchor="middle" fill="#f4f2ea" font-family="system-ui,sans-serif" font-size="22" font-weight="800" opacity="0.92">MAZE ESCAPE</text>
+        <text x="360" y="132" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="11" letter-spacing="3" opacity="0.7">PROCEDURAL · DARKNESS · ESCAPE</text>
+      </svg>
+
+      <p>Building Maze Escape taught me more about algorithms than any tutorial I have ever read. I started with a simple question: can a browser game feel genuinely different every single time you play it? The answer is yes — but getting there meant wrestling with recursive backtracking, viewport clipping, and a darkness mechanic that almost broke the whole project before it made it great.</p>
+
+      <h2>Choosing the Right Maze Algorithm</h2>
+      <p>I spent the first two days just picking an algorithm. I tried Prim's, Kruskal's, and recursive backtracking side by side. Prim's produced wide, open mazes that felt too easy — players could see the exit almost immediately. Kruskal's was visually interesting but unpredictable in a bad way; you'd sometimes get mazes with dozens of corridors that looped right back to the start. Recursive backtracking was the winner because it creates long, winding corridors that feel deliberate, like someone actually designed the maze by hand. The key insight I kept coming back to was that the algorithm's "feel" matters more than its mathematical properties. Players don't care whether your maze is a spanning tree. They care whether it's fun to navigate. Recursive backtracking produced mazes with satisfying dead-ends that tricked players just enough without making them feel cheated. That balance — challenge without frustration — became the north star for every decision after that.</p>
+
+      <h2>The Darkness Problem (and the Accidental Solution)</h2>
+      <p>The original design had fully lit mazes. Playtesters finished them in 30 seconds flat. I knew I needed to add difficulty, so I tried the obvious thing: make the maze bigger. But bigger mazes just took longer — they weren't actually harder. They were just tedious. Then I tried restricting the player's field of view, applying a radial dark overlay in CSS using a radial-gradient on a fixed overlay div. It was a hack, but it transformed the game immediately. Suddenly players were nervous. They'd hesitate at intersections. They'd double back because they weren't sure they'd already tried a corridor. The cognitive load of not knowing became the core mechanic. I refined it so the darkness radius shrinks as levels advance — by level eight you can barely see three cells ahead. I didn't plan that progression. I tuned it by playing the game obsessively for about four hours straight one evening, adjusting the radius constant in increments of five pixels until it felt exactly right.</p>
+
+      <h2>What I Learned About Procedural Level Design</h2>
+      <p>The biggest takeaway from Maze Escape is that procedural generation is only half the job. The other half is filtering. My first algorithm produced valid mazes, but they weren't always good mazes. Some had the exit near the entrance. Some had a single obvious "main corridor" that made the path trivially clear. I added a post-generation validation step that measures the shortest path length and rejects any maze where the exit is reachable in fewer than 40% of the total cell count. If a maze fails the check, I just generate a new one — it takes milliseconds. This simple filter eliminated about 30% of generated mazes, and the remaining 70% felt dramatically more consistent in quality. The lesson I took from this: generation and curation are separate problems. Solving generation does not automatically solve quality. You need both, and the curation logic is often where the real design work lives.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

@@ -2216,7 +2216,7 @@ function initCookieBanner() {
   banner.innerHTML = `
     <span>${msg}</span>
     <div class="cookie-actions">
-      <a href="#privacy" id="cookie-learn">${learnLabel}</a>
+      <a href="/privacy.html" id="cookie-learn">${learnLabel}</a>
       <button id="cookie-accept">${acceptLabel}</button>
     </div>`;
   document.body.appendChild(banner);
@@ -3340,7 +3340,7 @@ function aboutKo() {
 <p>지역 제한이나 플랫폼 제한도 없습니다. 브라우저로 웹페이지를 열 수 있다면 게임도 실행됩니다.</p>
 
 <h3>개인정보 및 투명성</h3>
-<p>사이트 운영과 광고 제공에 필요한 최소한의 정보만 처리합니다. 광고 외의 목적으로 개인 데이터를 제3자에게 판매하지 않습니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>을 확인해 주세요.</p>`;
+<p>사이트 운영과 광고 제공에 필요한 최소한의 정보만 처리합니다. 광고 외의 목적으로 개인 데이터를 제3자에게 판매하지 않습니다. 자세한 내용은 <a href="/privacy.html">개인정보처리방침</a>을 확인해 주세요.</p>`;
 }
 
 function aboutEn() {
@@ -3371,7 +3371,7 @@ function aboutEn() {
 <p>Webgame Arcades is fully responsive. Whether you are on a desktop, laptop, or phone, the games adapt to your device. Touch controls are built in from the start — not bolted on as an afterthought. There are no region locks or platform restrictions either.</p>
 
 <h3>Privacy and transparency</h3>
-<p>We collect only the minimum information needed to operate the site and serve ads. We do not sell personal data to third parties. See our <a href="#privacy">Privacy Policy</a> for full details.</p>`;
+<p>We collect only the minimum information needed to operate the site and serve ads. We do not sell personal data to third parties. See our <a href="/privacy.html">Privacy Policy</a> for full details.</p>`;
 }
 
 function renderFaq() {
@@ -3402,7 +3402,7 @@ function renderFaq() {
 function faqKo() {
   return `
 <h1>자주 묻는 질문</h1>
-<p class="lp-policy-meta">궁금한 점이 해결되지 않으면 <a href="#contact">문의하기</a>로 연락해 주세요.</p>
+<p class="lp-policy-meta">궁금한 점이 해결되지 않으면 <a href="/contact.html">문의하기</a>로 연락해 주세요.</p>
 
 <h3>게임 이용</h3>
 
@@ -3413,7 +3413,7 @@ function faqKo() {
   <li><strong>브라우저 캐시 삭제</strong>: Ctrl+Shift+Delete(Mac: Cmd+Shift+Delete)로 캐시를 지우고 다시 시도해 주세요.</li>
   <li><strong>최신 브라우저 사용</strong>: Chrome, Firefox, Safari, Edge 최신 버전을 사용하는 것을 권장합니다.</li>
   <li><strong>JavaScript 활성화 확인</strong>: 브라우저 설정에서 JavaScript가 활성화되어 있는지 확인해 주세요.</li>
-  <li>위 방법으로도 해결되지 않으면 <a href="#contact">문의하기</a>로 알려 주세요.</li>
+  <li>위 방법으로도 해결되지 않으면 <a href="/contact.html">문의하기</a>로 알려 주세요.</li>
 </ul>
 
 <h4>게임 진행 상황이 저장되나요?</h4>
@@ -3439,7 +3439,7 @@ function faqKo() {
 <p>광고 내용은 Google AdSense가 자동으로 결정하므로 운영자가 직접 제어하기 어렵습니다. 불쾌하거나 부적절한 광고를 발견하면 아래 방법으로 신고해 주세요.</p>
 <ul>
   <li>광고 우측 상단의 ⓘ 또는 X 버튼을 눌러 Google에 직접 신고</li>
-  <li><a href="#contact">문의하기</a>로 광고 정보를 알려주시면 확인 후 조치합니다.</li>
+  <li><a href="/contact.html">문의하기</a>로 광고 정보를 알려주시면 확인 후 조치합니다.</li>
 </ul>
 
 <h4>광고를 차단하고 싶어요.</h4>
@@ -3451,21 +3451,21 @@ function faqKo() {
 <p>네, 쿠키를 비활성화해도 게임 플레이에는 영향이 없습니다. 다만 맞춤 광고 대신 일반 광고가 표시될 수 있습니다.</p>
 
 <h4>개인정보는 어떻게 처리되나요?</h4>
-<p>사이트는 회원가입 없이 이용 가능하며 최소한의 정보만 처리합니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>을 확인해 주세요.</p>
+<p>사이트는 회원가입 없이 이용 가능하며 최소한의 정보만 처리합니다. 자세한 내용은 <a href="/privacy.html">개인정보처리방침</a>을 확인해 주세요.</p>
 
 <h3>기타</h3>
 
 <h4>게임을 추천하거나 버그를 신고하고 싶어요.</h4>
-<p><a href="#contact">문의하기</a> 페이지를 통해 게임 추천, 버그 신고, 개선 의견을 보내 주세요. 모든 의견을 소중히 검토합니다.</p>
+<p><a href="/contact.html">문의하기</a> 페이지를 통해 게임 추천, 버그 신고, 개선 의견을 보내 주세요. 모든 의견을 소중히 검토합니다.</p>
 
 <h4>게임 콘텐츠를 다른 곳에 사용하고 싶어요.</h4>
-<p>사이트의 게임·코드·디자인은 Webgame Arcades의 지식재산입니다. 상업적 이용이나 재배포를 원하시면 사전에 <a href="#contact">문의하기</a>를 통해 허가를 받아야 합니다.</p>`;
+<p>사이트의 게임·코드·디자인은 Webgame Arcades의 지식재산입니다. 상업적 이용이나 재배포를 원하시면 사전에 <a href="/contact.html">문의하기</a>를 통해 허가를 받아야 합니다.</p>`;
 }
 
 function faqEn() {
   return `
 <h1>Frequently Asked Questions</h1>
-<p class="lp-policy-meta">If you can't find the answer here, please <a href="#contact">contact us</a>.</p>
+<p class="lp-policy-meta">If you can't find the answer here, please <a href="/contact.html">contact us</a>.</p>
 
 <h3>Playing Games</h3>
 
@@ -3476,7 +3476,7 @@ function faqEn() {
   <li><strong>Clear your browser cache</strong>: Press Ctrl+Shift+Delete (Mac: Cmd+Shift+Delete) to clear cached data and try again.</li>
   <li><strong>Use a modern browser</strong>: We recommend the latest version of Chrome, Firefox, Safari, or Edge.</li>
   <li><strong>Check JavaScript is enabled</strong>: Make sure JavaScript is turned on in your browser settings.</li>
-  <li>If none of the above works, please <a href="#contact">contact us</a> and let us know.</li>
+  <li>If none of the above works, please <a href="/contact.html">contact us</a> and let us know.</li>
 </ul>
 
 <h4>Is my game progress saved?</h4>
@@ -3502,7 +3502,7 @@ function faqEn() {
 <p>Ad content is determined automatically by Google AdSense and is not directly controlled by us. If you see an inappropriate or offensive ad, you can:</p>
 <ul>
   <li>Click the ⓘ or X button in the corner of the ad to report it directly to Google.</li>
-  <li><a href="#contact">Contact us</a> with details of the ad and we will review and take action.</li>
+  <li><a href="/contact.html">Contact us</a> with details of the ad and we will review and take action.</li>
 </ul>
 
 <h4>Can I use an ad blocker?</h4>
@@ -3514,15 +3514,15 @@ function faqEn() {
 <p>Yes. Disabling cookies does not affect gameplay. You may see generic ads instead of personalised ones.</p>
 
 <h4>How is my personal information handled?</h4>
-<p>The site can be used without registering an account, and we collect only the minimum necessary information. For full details, please read our <a href="#privacy">Privacy Policy</a>.</p>
+<p>The site can be used without registering an account, and we collect only the minimum necessary information. For full details, please read our <a href="/privacy.html">Privacy Policy</a>.</p>
 
 <h3>Other</h3>
 
 <h4>I want to suggest a game or report a bug.</h4>
-<p>Please use the <a href="#contact">Contact</a> page to send game suggestions, bug reports, or feedback. We review all messages carefully.</p>
+<p>Please use the <a href="/contact.html">Contact</a> page to send game suggestions, bug reports, or feedback. We review all messages carefully.</p>
 
 <h4>I want to use game content elsewhere.</h4>
-<p>The games, code, and designs on this site are the intellectual property of Webgame Arcades. If you wish to use them commercially or redistribute them, you must obtain prior permission via the <a href="#contact">Contact</a> page.</p>`;
+<p>The games, code, and designs on this site are the intellectual property of Webgame Arcades. If you wish to use them commercially or redistribute them, you must obtain prior permission via the <a href="/contact.html">Contact</a> page.</p>`;
 }
 
 function renderTerms() {
@@ -4183,11 +4183,11 @@ function siteFooter() {
         <p>${fc.footerText}</p>
       </div>
       <nav aria-label="${fc.mainMenu}">
-        <a href="#about">${fc.aboutTitle}</a>
-        <a href="#privacy">${fc.privacyTitle}</a>
-        <a href="#terms">${fc.termsTitle}</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">${fc.contactTitle}</a>
+        <a href="/about.html">${fc.aboutTitle}</a>
+        <a href="/privacy.html">${fc.privacyTitle}</a>
+        <a href="/terms.html">${fc.termsTitle}</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">${fc.contactTitle}</a>
       </nav>
     </footer>
   `;

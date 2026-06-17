@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pop Blitz: Designing a Game Where the Clock Is the Enemy — Webgame Arcades Blog</title>
+    <meta name="description" content="How I built Pop Blitz — a fast reaction tapping game where shrinking timers on each shape become the real enemy, not the shapes themselves." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-pop-blitz/" />
+    <meta property="og:title" content="Pop Blitz: Designing a Game Where the Clock Is the Enemy" />
+    <meta property="og:description" content="How I built Pop Blitz — a fast reaction tapping game where shrinking timers on each shape become the real enemy, not the shapes themselves." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-pop-blitz/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Pop Blitz: Designing a Game Where the Clock Is the Enemy", "datePublished": "2026-06-05", "url": "https://webgamearcades.com/blog/building-pop-blitz/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 5, 2026</p>
+      <h1>Pop Blitz: Designing a Game Where the Clock Is the Enemy</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#12141a"/>
+        <circle cx="100" cy="100" r="48" fill="#f05d5e" opacity="0.85"/>
+        <circle cx="100" cy="100" r="48" fill="none" stroke="#f7b84b" stroke-width="4" stroke-dasharray="301" stroke-dashoffset="75" stroke-linecap="round"/>
+        <rect x="220" y="52" width="96" height="96" rx="14" fill="#2bd1c4" opacity="0.8"/>
+        <rect x="220" y="52" width="96" height="96" rx="14" fill="none" stroke="#f7b84b" stroke-width="4" stroke-dasharray="383" stroke-dashoffset="100" stroke-linecap="round"/>
+        <polygon points="440,52 494,148 386,148" fill="#a78bfa" opacity="0.8"/>
+        <polygon points="440,52 494,148 386,148" fill="none" stroke="#f7b84b" stroke-width="4" stroke-dasharray="320" stroke-dashoffset="200" stroke-linecap="round"/>
+        <circle cx="610" cy="100" r="48" fill="#f7b84b" opacity="0.75"/>
+        <circle cx="610" cy="100" r="48" fill="none" stroke="#f05d5e" stroke-width="5" stroke-dasharray="301" stroke-dashoffset="230"/>
+        <text x="100" y="106" text-anchor="middle" fill="#fff" font-size="14" font-family="system-ui" font-weight="700">3s</text>
+        <text x="268" y="106" text-anchor="middle" fill="#fff" font-size="14" font-family="system-ui" font-weight="700">1s</text>
+        <text x="440" y="110" text-anchor="middle" fill="#fff" font-size="14" font-family="system-ui" font-weight="700">2s</text>
+        <text x="610" y="106" text-anchor="middle" fill="#fff" font-size="14" font-family="system-ui" font-weight="700">0.5s</text>
+      </svg>
+
+      <p>I've always been drawn to games that punish hesitation. Pop Blitz started as a rough sketch — tap shapes before they vanish — and I kept thinking it would be trivial to build. It wasn't. The real challenge turned out to be making the timer visible on each individual shape in a way that felt urgent without being overwhelming. Getting that pressure loop right took me longer than the rest of the game combined, and it changed how I think about pacing in casual games entirely.</p>
+
+      <h2>The Idea Behind Per-Shape Timers</h2>
+      <p>Most tapping games use a single global countdown. You have thirty seconds, clear as many shapes as you can. I wanted something different — something where every object on screen is independently dying. The insight came from watching my nephew play mobile games. He was fine when there was one clock. The moment I imagined multiple clocks, all ticking at different rates, it felt genuinely chaotic in a good way. I implemented it as a shrinking arc drawn on top of each shape, almost like a loading spinner running in reverse. Early builds had the arcs too thin and players simply didn't notice them. Thickening the stroke to five pixels and adding a warning color change in the last second made the urgency land properly. The key was that the timer had to feel personal to each shape — not a global pressure but a local one, multiplied across the screen.</p>
+
+      <h2>Tuning the Spawn Rate Without Breaking Players</h2>
+      <p>The hardest design problem was spawn rate. Too slow and the game felt lazy; too fast and it became a chaotic mess that felt unfair rather than challenging. I ended up running about twenty informal playtests with people grabbing their phones. What I noticed was that players could comfortably track three to four shapes at once. At five they started making choices about what to sacrifice. At seven they gave up entirely and just tapped randomly. So I built a curve that starts at three simultaneous shapes and climbs toward six over the first ninety seconds, then holds there. The randomness in spawn timing also mattered — perfectly rhythmic spawns made the game feel robotic. Adding a jitter of plus or minus three hundred milliseconds to each spawn made it feel alive, like the shapes had their own personalities. That small change got more positive comments in testing than any visual tweak I made.</p>
+
+      <h2>What the Game Taught Me About Feedback</h2>
+      <p>Pop Blitz reinforced something I've read about but never felt so clearly during development: feedback latency kills fun. The original pop animation took about 180 milliseconds — a small explosion. Players felt like their tap wasn't registering even when it was. I cut the animation to 80 milliseconds and added a haptic pulse on mobile. The game instantly felt snappier without me changing any actual game logic. I also added a brief freeze frame — just 40 milliseconds where everything pauses at the moment a shape pops — borrowed from fighting games. It sounds absurd for such a small interaction, but it gives the tap weight. These micro-polish moments are the difference between a prototype and something people want to share. I'll carry that into every game I build from here.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

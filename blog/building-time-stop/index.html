@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Stop: The Simplest Idea That Took the Longest to Get Right — Webgame Arcades Blog</title>
+    <meta name="description" content="Building Time Stop — a precision timing game where you freeze a running clock at an exact target moment — and why the simplest games are the hardest to finish." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-time-stop/" />
+    <meta property="og:title" content="Time Stop: The Simplest Idea That Took the Longest to Get Right" />
+    <meta property="og:description" content="Building Time Stop — a precision timing game where you freeze a running clock at an exact target moment — and why the simplest games are the hardest to finish." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-time-stop/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Time Stop: The Simplest Idea That Took the Longest to Get Right", "datePublished": "2026-06-03", "url": "https://webgamearcades.com/blog/building-time-stop/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 3, 2026</p>
+      <h1>Time Stop: The Simplest Idea That Took the Longest to Get Right</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#0f1118"/>
+        <!-- Large clock face -->
+        <circle cx="360" cy="100" r="82" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+        <circle cx="360" cy="100" r="82" fill="none" stroke="#2bd1c4" stroke-width="4" stroke-dasharray="515" stroke-dashoffset="129" stroke-linecap="round"/>
+        <!-- Clock hands -->
+        <line x1="360" y1="100" x2="360" y2="34" stroke="#f4f2ea" stroke-width="4" stroke-linecap="round"/>
+        <line x1="360" y1="100" x2="418" y2="118" stroke="#f7b84b" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="360" cy="100" r="6" fill="#f4f2ea"/>
+        <!-- Target label -->
+        <rect x="480" y="62" width="110" height="36" rx="6" fill="rgba(247,184,75,0.15)" stroke="#f7b84b" stroke-width="1"/>
+        <text x="535" y="85" text-anchor="middle" fill="#f7b84b" font-size="13" font-family="system-ui" font-weight="700">TARGET: 3.750s</text>
+        <!-- Stopped label -->
+        <rect x="480" y="108" width="110" height="36" rx="6" fill="rgba(43,209,196,0.12)" stroke="#2bd1c4" stroke-width="1"/>
+        <text x="535" y="131" text-anchor="middle" fill="#2bd1c4" font-size="13" font-family="system-ui" font-weight="700">STOPPED: 3.748s</text>
+        <!-- Tick marks -->
+        <line x1="360" y1="22" x2="360" y2="32" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+        <line x1="442" y1="100" x2="432" y2="100" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+        <line x1="360" y1="178" x2="360" y2="168" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+        <line x1="278" y1="100" x2="288" y2="100" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+      </svg>
+
+      <p>Time Stop is one button and one idea: a timer runs, you set a target, you press STOP as close to that target as you can. I built it in an afternoon and spent the next two weeks trying to make it feel good. There's something uniquely difficult about designing a game this minimal — with no complexity to hide behind, every flaw in the feel of the mechanics is fully exposed. Here's what I learned from those two weeks.</p>
+
+      <h2>The Problem With Measuring Milliseconds in a Browser</h2>
+      <p>When I first built the prototype, I used JavaScript's <code>Date.now()</code> for timing and noticed the results felt inconsistent. Players would press the button at what looked like the right moment and land 80 or 100 milliseconds off — more than I expected. The issue was a combination of things: browser rendering jitter, the event loop not being perfectly deterministic, and the inherent latency between a physical button press and the code registering it. I switched to <code>performance.now()</code> which gives sub-millisecond resolution and is more stable across frames. I also started recording the timestamp at the very top of the keydown handler before any other logic ran. Those two changes cut the average error from player intention by roughly 30 milliseconds. That might sound small, but when your entire game is about precision down to single-digit milliseconds, 30 milliseconds is the difference between a great score and a frustrating one.</p>
+
+      <h2>Designing the Scoring Curve to Feel Fair</h2>
+      <p>My first scoring system was linear: the closer to the target, the more points. Zero difference was perfect. This worked logically but felt bad emotionally. Players landing 20 milliseconds off felt the same as players landing 80 milliseconds off — they both "missed." I redesigned the curve using a squared falloff, heavily weighted around a tight perfect window. Landing within 10 milliseconds gave full score. Landing within 50 milliseconds gave about 80% of full score. Outside 200 milliseconds was near zero. This made the jump from good to perfect feel satisfying and achievable, while still clearly distinguishing great attempts from mediocre ones. I also added visual tiers with names — "Perfect," "Great," "Good," "Off" — because labeling a performance helps players understand what they're aiming for. The label does more emotional work than the number alone.</p>
+
+      <h2>Making Stillness Interesting Across Multiple Rounds</h2>
+      <p>The trickiest part of Time Stop is that there's nothing to look at while you wait. You watch numbers tick up. That's the entire game. To create variety across rounds I started randomizing the target time between 2 and 8 seconds, which changes the psychological challenge significantly. A 2-second target is pure reflex — you barely have time to think. An 8-second target is a meditation exercise, almost like counting breath. Those two experiences feel completely different even though the mechanic is identical. I also added a round history strip showing your last five attempts as colored dots — green for good, red for off — because I found players would try harder when they could see a streak of greens forming. Giving players something to protect, even something as minimal as a visual streak, is a surprisingly powerful motivator in a game with no other progression system.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

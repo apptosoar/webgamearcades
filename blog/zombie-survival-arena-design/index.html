@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zombie Survival and What I Learned About Arena Design — Webgame Arcades Blog</title>
+    <meta name="description" content="Building Zombie Survival taught me that arena shape, enemy count, and spawn placement matter more than almost any other design decision." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/zombie-survival-arena-design/" />
+    <meta property="og:title" content="Zombie Survival and What I Learned About Arena Design" />
+    <meta property="og:description" content="Building Zombie Survival taught me that arena shape, enemy count, and spawn placement matter more than almost any other design decision." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/zombie-survival-arena-design/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Zombie Survival and What I Learned About Arena Design",
+      "datePublished": "2026-06-16",
+      "url": "https://webgamearcades.com/blog/zombie-survival-arena-design/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 16, 2026</p>
+      <h1>Zombie Survival and What I Learned About Arena Design</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="zs-glow" cx="50%" cy="60%" r="50%">
+            <stop offset="0%" stop-color="#1a2a12"/>
+            <stop offset="100%" stop-color="#080c07"/>
+          </radialGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#zs-glow)"/>
+        <!-- arena boundary -->
+        <rect x="30" y="20" width="660" height="160" rx="6" fill="none" stroke="#73d676" stroke-width="2" opacity="0.35"/>
+        <!-- zombies approaching from edges -->
+        <!-- left side zombies -->
+        <circle cx="55"  cy="100" r="12" fill="#73d676" opacity="0.8"/>
+        <rect   cx="55"  cy="100" x="49" y="112" width="12" height="18" rx="3" fill="#73d676" opacity="0.7"/>
+        <circle cx="55"  cy="60"  r="11" fill="#73d676" opacity="0.65"/>
+        <circle cx="55"  cy="145" r="11" fill="#73d676" opacity="0.7"/>
+        <!-- right side zombies -->
+        <circle cx="665" cy="100" r="12" fill="#73d676" opacity="0.8"/>
+        <circle cx="665" cy="55"  r="11" fill="#73d676" opacity="0.65"/>
+        <circle cx="665" cy="148" r="11" fill="#73d676" opacity="0.7"/>
+        <!-- top zombies -->
+        <circle cx="200" cy="35"  r="11" fill="#73d676" opacity="0.7"/>
+        <circle cx="360" cy="30"  r="11" fill="#73d676" opacity="0.75"/>
+        <circle cx="520" cy="35"  r="11" fill="#73d676" opacity="0.7"/>
+        <!-- bottom zombies -->
+        <circle cx="270" cy="168" r="11" fill="#73d676" opacity="0.65"/>
+        <circle cx="450" cy="165" r="11" fill="#73d676" opacity="0.7"/>
+        <!-- player in center -->
+        <circle cx="360" cy="100" r="16" fill="#f7b84b"/>
+        <circle cx="360" cy="100" r="10" fill="#f05d5e"/>
+        <!-- arrows pointing inward from zombies -->
+        <line x1="80"  y1="100" x2="330" y2="100" stroke="#73d676" stroke-width="1" opacity="0.2"/>
+        <line x1="640" y1="100" x2="390" y2="100" stroke="#73d676" stroke-width="1" opacity="0.2"/>
+        <line x1="360" y1="50"  x2="360" y2="78"  stroke="#73d676" stroke-width="1" opacity="0.2"/>
+        <line x1="360" y1="150" x2="360" y2="122" stroke="#73d676" stroke-width="1" opacity="0.2"/>
+      </svg>
+
+      <p>Zombie Survival is a game where enemies come at you from all directions and you just have to keep moving. That sounds simple enough to build, and in some ways it is — but I spent more time agonizing over the shape and size of the arena than I did over any other aspect of the game. A wrong-sized arena and the whole thing collapses. Here's what I tried and what actually stuck.</p>
+
+      <h2>The Arena Shape Problem</h2>
+      <p>My first arena was a 600x400 rectangle. It felt too easy to exploit: players would simply run laps around the perimeter, staying ahead of the zombie cluster because the corners gave them natural turning points. Zombies, following naive direct-chase AI, would bunch into a single herd that trailed behind at a fixed distance. After about thirty seconds you could just keep jogging and never die. I tried shrinking the arena — but small arenas with direct-chase AI became instant death sentences because there was nowhere to build a gap. The breakthrough came when I staggered the spawn edges. Instead of all zombies spawning simultaneously from the same edge, they now spawn in waves from randomized sides, which breaks the herd formation. The player can no longer predict where the next threat is coming from, and that unpredictability alone transformed the feel from "running loop" to genuine survival tension.</p>
+
+      <h2>How Many Zombies Is Too Many</h2>
+      <p>I iterated through starting counts of 4, 6, 8, and 10 before landing on 5. With 4 zombies, experienced players found enough space to breathe indefinitely once they understood the chase AI. With 8 at the start, newer players were overwhelmed before they had a chance to understand the movement system. 5 felt like the sweet spot: there was always at least one zombie blocking a clean escape route, but there was also always a gap to aim for. I also added a wave-escalation rule: every 20 seconds that the player survives, one more zombie enters the arena. This meant the difficulty scaled without punishing beginners in the first moments of play. Getting that initial count right made everything downstream feel more natural, and I wish I'd tested enemy counts earlier instead of treating it as a late-stage tuning problem.</p>
+
+      <h2>Why the Zombie Speed Needed to Stay Slightly Slower Than the Player</h2>
+      <p>This was the trickiest constraint to get right. My instinct was to make zombies and player move at the same speed, forcing the player to rely purely on path-finding skill. In practice, equal speeds meant that any zombie which got close enough to make contact would stay in contact indefinitely — the player could never actually escape. The game felt sticky and unfair. I tested zombies at 75%, 80%, and 85% of player speed. At 75%, skilled players could disengage too easily and the game lost tension. At 85%, there was enough pressure that every mistake cost you positioning, but you could still recover by making better decisions over the next few seconds. That 15% speed advantage is what creates the "oh I can get out of this if I'm clever" feeling that makes survival games satisfying rather than just punishing.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

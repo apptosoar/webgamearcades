@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building Sudoku: A Classic Puzzle in 200 Lines — Webgame Arcades Blog</title>
+    <meta name="description" content="How I implemented a complete browser Sudoku game with puzzle generation and validation in around 200 lines of JavaScript." /><meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-sudoku/" />
+    <meta property="og:title" content="Building Sudoku: A Classic Puzzle in 200 Lines" /><meta property="og:description" content="How I implemented a complete browser Sudoku game with puzzle generation and validation in around 200 lines of JavaScript." /><meta property="og:type" content="article" /><meta property="og:url" content="https://webgamearcades.com/blog/building-sudoku/" /><meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Building Sudoku: A Classic Puzzle in 200 Lines","datePublished":"2026-05-21","url":"https://webgamearcades.com/blog/building-sudoku/","publisher":{"@type":"Organization","name":"Webgame Arcades"}}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      *{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+      .topbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px)}
+      .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}.brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 8px 20px rgba(247,184,75,0.22)}
+      .nav{display:flex;gap:4px}.nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;transition:transform 160ms ease,color 150ms ease}.nav a:hover{color:#f4f2ea;transform:translateY(-1px)}.nav a.active{color:#f7b84b}@media(max-width:900px){.nav{display:none}}
+      main{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+      .back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}
+      .post-meta{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      h1{margin:0 0 24px;font-size:clamp(1.8rem,5vw,2.4rem);color:#f4f2ea}h2{margin:40px 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      p{margin:0 0 16px;color:#b8bec9}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}
+      a.cta{display:inline-block;margin-top:36px;padding:12px 24px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.07);color:#f4f2ea;text-decoration:none;font-size:.95rem;transition:background .15s}a.cta:hover{background:rgba(255,255,255,0.13)}
+      .site-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1440px;margin:0 auto;padding:24px clamp(16px,4vw,44px) 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}
+      .site-footer-brand{display:flex;flex-direction:column;gap:4px}.site-footer-brand span{color:#f4f2ea;font-weight:800;font-size:.95rem}.site-footer-brand p{margin:0}
+      .site-footer nav{display:flex;flex-wrap:wrap;align-items:center;gap:0}.site-footer nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color 150ms ease}.site-footer nav a:hover{color:#f4f2ea}.site-footer nav a+a{border-left:1px solid rgba(255,255,255,0.12)}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav"><a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 21, 2026</p>
+      <h1>Building Sudoku: A Classic Puzzle in 200 Lines</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#0d0f1a"/>
+        <defs>
+          <linearGradient id="sukg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0d0f1a"/>
+            <stop offset="100%" stop-color="#13152a"/>
+          </linearGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#sukg)"/>
+        <!-- Sudoku grid - 9x9 at left, each cell ~18px -->
+        <g transform="translate(40, 20)">
+          <!-- Grid lines thin -->
+          <rect width="162" height="162" fill="none" stroke="#a98bff" stroke-width="0.5" opacity="0.3"/>
+          <!-- Thin lines -->
+          <line x1="18" y1="0" x2="18" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="36" y1="0" x2="36" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="54" y1="0" x2="54" y2="162" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
+          <line x1="72" y1="0" x2="72" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="90" y1="0" x2="90" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="108" y1="0" x2="108" y2="162" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
+          <line x1="126" y1="0" x2="126" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="144" y1="0" x2="144" y2="162" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="18" x2="162" y2="18" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="36" x2="162" y2="36" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="54" x2="162" y2="54" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
+          <line x1="0" y1="72" x2="162" y2="72" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="90" x2="162" y2="90" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="108" x2="162" y2="108" stroke="#a98bff" stroke-width="2" opacity="0.5"/>
+          <line x1="0" y1="126" x2="162" y2="126" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="0" y1="144" x2="162" y2="144" stroke="#a98bff" stroke-width="0.5" opacity="0.2"/>
+          <!-- Some filled numbers (given clues) -->
+          <text x="27" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">5</text>
+          <text x="63" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">3</text>
+          <text x="117" y="14" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">7</text>
+          <text x="9" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">6</text>
+          <text x="81" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">1</text>
+          <text x="99" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">9</text>
+          <text x="117" y="32" text-anchor="middle" fill="#f4f2ea" font-size="11" font-weight="700" opacity="0.9">5</text>
+          <!-- Highlighted active cell -->
+          <rect x="55" y="55" width="18" height="18" fill="#a98bff" opacity="0.22" rx="2"/>
+          <text x="63" y="68" text-anchor="middle" fill="#a98bff" font-size="13" font-weight="800">4</text>
+          <!-- User-entered number in different color -->
+          <text x="9" y="86" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">8</text>
+          <text x="45" y="104" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">6</text>
+          <text x="135" y="122" text-anchor="middle" fill="#2bd1c4" font-size="11" opacity="0.9">3</text>
+          <!-- Error cell highlight -->
+          <rect x="109" y="127" width="18" height="18" fill="#f05d5e" opacity="0.15" rx="2"/>
+          <text x="117" y="140" text-anchor="middle" fill="#f05d5e" font-size="11" opacity="0.8">2</text>
+        </g>
+        <!-- Title and details on right -->
+        <text x="480" y="80" text-anchor="middle" fill="#f4f2ea" font-family="system-ui,sans-serif" font-size="24" font-weight="800" opacity="0.95">SUDOKU</text>
+        <text x="480" y="102" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="10" letter-spacing="3" opacity="0.65">LOGIC · PUZZLE · CLASSIC</text>
+        <!-- Difficulty chips -->
+        <rect x="370" y="118" width="56" height="20" rx="10" fill="#73d676" opacity="0.18"/>
+        <text x="398" y="132" text-anchor="middle" fill="#73d676" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Easy</text>
+        <rect x="432" y="118" width="62" height="20" rx="10" fill="#f7b84b" opacity="0.18"/>
+        <text x="463" y="132" text-anchor="middle" fill="#f7b84b" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Medium</text>
+        <rect x="500" y="118" width="50" height="20" rx="10" fill="#f05d5e" opacity="0.18"/>
+        <text x="525" y="132" text-anchor="middle" fill="#f05d5e" font-family="system-ui,sans-serif" font-size="10" font-weight="700">Hard</text>
+        <!-- Timer -->
+        <text x="480" y="162" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="12" opacity="0.7">12:34</text>
+      </svg>
+
+      <p>Sudoku seemed like the "safe" project on my list. It is a well-understood puzzle with clear rules, a finite solution space, and no moving parts. I figured I would knock it out in a weekend. Three weeks later I had learned more about backtracking solvers, uniqueness proofs, and input state management than I expected. "Simple" and "solved problem" turned out to mean very different things when you are the one implementing it.</p>
+
+      <h2>Generating Valid Puzzles Without a Database</h2>
+      <p>My first instinct was to ship with a hardcoded list of puzzles. That would have worked fine but felt wrong — I wanted the game to feel infinite. So I had to write a generator. A Sudoku generator is actually a solver running in reverse: you start with a solved grid and remove numbers. The solver part came together quickly using recursive backtracking with constraint propagation. The hard part was the removal step — you can not just randomly remove numbers and call the puzzle valid. Removing the wrong numbers creates puzzles with multiple solutions, which breaks the core Sudoku contract that there is exactly one correct answer. I implemented a uniqueness check that runs the solver after each removal and counts solutions, stopping at two — if it finds two, the removal is rejected and tried elsewhere. This keeps puzzles honest but is expensive at higher difficulty levels where many cells must be removed.</p>
+
+      <h2>The Input State Problem on Mobile</h2>
+      <p>Desktop Sudoku is straightforward: click a cell, press a number key, done. Mobile is a different problem. There is no keyboard. I needed a number picker UI, but where to put it — below the grid, overlaying the grid, or as a floating panel that follows the selected cell? I tried all three. Below the grid worked best for accessibility but made the interaction feel disconnected; you tap a cell, then look down to tap a number. The floating panel felt clever but got in its own way on smaller screens, covering adjacent cells the user might want to compare. I eventually landed on a fixed number bar below the grid, but with a highlight that shows which numbers are still available in the selected cell's row, column, and box. This made the number picker feel contextually smart rather than generic. Players could use it as a hint system without it ever being explicitly labelled as one.</p>
+
+      <h2>Keeping 200 Lines Honest</h2>
+      <p>The "200 lines" in the title is approximately true and intentional. I set myself the constraint early: if I could not explain the entire implementation in under 200 lines of annotated JavaScript, the design was too complex. This forced good decisions throughout. I used a flat 81-element array for the grid state rather than a nested array of arrays — simpler to index, simpler to copy for undo history. I wrote a single validate function that checks rows, columns, and boxes in one pass, called on every input event, rather than three separate validators. I skipped animation states entirely — cells just update. The constraint revealed what the game actually needed versus what I might have added if there had been no limit. Puzzle generation, validation, difficulty levels, mobile input, and a timer. Everything else was scope creep I was forced to cut. The game is better for it.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

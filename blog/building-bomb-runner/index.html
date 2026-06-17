@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bomb Runner: Obstacles, Jump Timing, and the Rhythm Problem — Webgame Arcades Blog</title>
+    <meta name="description" content="Dev notes on building Bomb Runner — an endless runner with bomb obstacles — and why jump timing rhythm was harder to design than the whole rest of the game." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-bomb-runner/" />
+    <meta property="og:title" content="Bomb Runner: Obstacles, Jump Timing, and the Rhythm Problem" />
+    <meta property="og:description" content="Dev notes on building Bomb Runner — an endless runner with bomb obstacles — and why jump timing rhythm was harder to design than the whole rest of the game." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-bomb-runner/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Bomb Runner: Obstacles, Jump Timing, and the Rhythm Problem", "datePublished": "2026-06-07", "url": "https://webgamearcades.com/blog/building-bomb-runner/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 7, 2026</p>
+      <h1>Bomb Runner: Obstacles, Jump Timing, and the Rhythm Problem</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="br-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0d0f14"/>
+            <stop offset="100%" stop-color="#100d08"/>
+          </linearGradient>
+          <radialGradient id="br-explosion" cx="72%" cy="80%" r="18%">
+            <stop offset="0%" stop-color="#f05d5e" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#0d0f14" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#br-bg)"/>
+        <rect width="720" height="200" fill="url(#br-explosion)"/>
+        <!-- Ground -->
+        <rect x="0" y="158" width="720" height="42" fill="#0a0c0f"/>
+        <rect x="0" y="158" width="720" height="3" fill="rgba(255,255,255,0.07)"/>
+        <!-- Ground detail lines (running track) -->
+        <line x1="0" y1="168" x2="720" y2="168" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="40,20"/>
+        <!-- Player (mid-jump) -->
+        <circle cx="140" cy="112" r="14" fill="#2bd1c4"/>
+        <rect x="132" y="124" width="16" height="18" rx="4" fill="#2bd1c4"/>
+        <!-- Player legs (running pose) -->
+        <line x1="136" y1="140" x2="128" y2="155" stroke="#2bd1c4" stroke-width="4" stroke-linecap="round"/>
+        <line x1="148" y1="140" x2="156" y2="155" stroke="#2bd1c4" stroke-width="4" stroke-linecap="round"/>
+        <!-- Shadow below player (indicates jump height) -->
+        <ellipse cx="140" cy="160" rx="18" ry="4" fill="rgba(43,209,196,0.2)"/>
+        <!-- Bomb 1 (behind player, safe) -->
+        <circle cx="310" cy="145" r="18" fill="#1e1e26"/>
+        <circle cx="310" cy="145" r="18" fill="none" stroke="#f05d5e" stroke-width="2"/>
+        <text x="303" y="151" font-size="16">💣</text>
+        <!-- Fuse spark -->
+        <circle cx="322" cy="132" r="4" fill="#f7b84b" opacity="0.9"/>
+        <!-- Bomb 2 -->
+        <circle cx="490" cy="145" r="18" fill="#1e1e26"/>
+        <circle cx="490" cy="145" r="18" fill="none" stroke="#f05d5e" stroke-width="2"/>
+        <text x="483" y="151" font-size="16">💣</text>
+        <circle cx="502" cy="132" r="4" fill="#f7b84b" opacity="0.9"/>
+        <!-- Explosion (exploded bomb to right) -->
+        <circle cx="640" cy="148" r="22" fill="#f05d5e" opacity="0.25"/>
+        <circle cx="640" cy="148" r="14" fill="#f7b84b" opacity="0.35"/>
+        <text x="628" y="154" font-size="18" fill="#f05d5e" opacity="0.8">✸</text>
+        <!-- Distance tracker -->
+        <rect x="20" y="20" width="110" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="75" y="34" font-size="10" fill="#f7b84b" font-family="system-ui" font-weight="700" text-anchor="middle">DISTANCE</text>
+        <text x="75" y="52" font-size="18" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">1,340m</text>
+      </svg>
+
+      <p>Endless runners are the genre I thought I understood best before I tried to make one. The loop seems obvious: character runs, obstacles appear, player jumps. I had Bomb Runner playable in a few hours. Then I spent two weeks chasing a feeling I couldn't quite name — the game worked but it didn't sing. That gap between "functional" and "feels right" turned out to be almost entirely about rhythm, and rhythm is one of the hardest things to design consciously.</p>
+
+      <h2>The Jump Arc: Why Physics Is Feel</h2>
+      <p>My initial jump used simple physics — constant gravity, fixed initial velocity. The jump arc was a parabola. Mathematically correct. Felt horrible. The problem with realistic jump physics is that the player feels heaviest at the peak — right when they want to feel most in control. I replaced the fixed gravity constant with a variable one: lower gravity on the way up, higher gravity on the way down. This creates a jump arc that lingers at the top before dropping decisively. It's the same trick every good platformer uses, and there's a reason it's in every good platformer. The character now feels light during the ascent and purposeful on the descent. It's not how physics works. It's how jumping should feel. I also added a 100ms "coyote time" window — you can jump slightly after running off the edge of a raised platform — which prevents the most frustrating class of deaths.</p>
+
+      <h2>Obstacle Spacing and the Rhythm Problem</h2>
+      <p>Here's the thing about bomb spacing that took me embarrassingly long to figure out: random intervals between obstacles don't feel random. They feel wrong. If bombs appear at truly random intervals, you'll sometimes get three bombs in quick succession with no time to react, and then a long gap where nothing happens. Both extremes feel bad. I implemented a spacing algorithm that constrains randomness to a window: minimum 1.2 seconds between bombs, maximum 3.4 seconds, with a bias toward 2-second spacing that creates a natural "heartbeat" rhythm. Past 500m, I compress the window slightly. The game speeds up, but the rhythm itself tightens rather than breaking down. Players describe it as getting "into flow," and I think that's exactly what's happening — the spacing enforces a tempo that their inputs sync up with.</p>
+
+      <h2>Making Distance Feel Meaningful</h2>
+      <p>Distance is the score, but raw distance numbers don't feel like milestones on their own. I added checkpoint banners every 500 meters — a brief visual flash with the distance labeled and a brief speed bump sound — which gives the game chapter breaks without actually stopping. I also started color-shifting the sky background as distance increases: from near-black at the start toward deep navy at 500m, toward dark purple past 1000m. It's subtle enough that players often don't notice consciously, but it makes the world feel like it's changing around you. When a player hits 1500m for the first time and the sky shifts toward midnight violet, it marks that achievement environmentally. No popup, no achievement badge — just the world confirming that they've gone somewhere new.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

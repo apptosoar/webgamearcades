@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trap Scout: Rebuilding Minesweeper Without the Frustration — Webgame Arcades Blog</title>
+    <meta name="description" content="How I built Trap Scout — a minesweeper-style browser game redesigned to eliminate unfair guessing and first-click deaths." /><meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-trap-scout/" />
+    <meta property="og:title" content="Trap Scout: Rebuilding Minesweeper Without the Frustration" /><meta property="og:description" content="How I built Trap Scout — a minesweeper-style browser game redesigned to eliminate unfair guessing and first-click deaths." /><meta property="og:type" content="article" /><meta property="og:url" content="https://webgamearcades.com/blog/building-trap-scout/" /><meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Trap Scout: Rebuilding Minesweeper Without the Frustration","datePublished":"2026-05-20","url":"https://webgamearcades.com/blog/building-trap-scout/","publisher":{"@type":"Organization","name":"Webgame Arcades"}}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      *{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+      .topbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px)}
+      .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}.brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 8px 20px rgba(247,184,75,0.22)}
+      .nav{display:flex;gap:4px}.nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;transition:transform 160ms ease,color 150ms ease}.nav a:hover{color:#f4f2ea;transform:translateY(-1px)}.nav a.active{color:#f7b84b}@media(max-width:900px){.nav{display:none}}
+      main{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+      .back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}
+      .post-meta{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      h1{margin:0 0 24px;font-size:clamp(1.8rem,5vw,2.4rem);color:#f4f2ea}h2{margin:40px 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      p{margin:0 0 16px;color:#b8bec9}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}
+      a.cta{display:inline-block;margin-top:36px;padding:12px 24px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.07);color:#f4f2ea;text-decoration:none;font-size:.95rem;transition:background .15s}a.cta:hover{background:rgba(255,255,255,0.13)}
+      .site-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1440px;margin:0 auto;padding:24px clamp(16px,4vw,44px) 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}
+      .site-footer-brand{display:flex;flex-direction:column;gap:4px}.site-footer-brand span{color:#f4f2ea;font-weight:800;font-size:.95rem}.site-footer-brand p{margin:0}
+      .site-footer nav{display:flex;flex-wrap:wrap;align-items:center;gap:0}.site-footer nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color 150ms ease}.site-footer nav a:hover{color:#f4f2ea}.site-footer nav a+a{border-left:1px solid rgba(255,255,255,0.12)}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav"><a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 20, 2026</p>
+      <h1>Trap Scout: Rebuilding Minesweeper Without the Frustration</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#0c1218"/>
+        <defs>
+          <linearGradient id="tsg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0c1218"/>
+            <stop offset="100%" stop-color="#111c24"/>
+          </linearGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#tsg)"/>
+        <!-- Minesweeper grid - left side -->
+        <g transform="translate(30, 20)">
+          <!-- 8x7 grid of cells, each 20px -->
+          <!-- Unrevealed cells -->
+          <rect x="0" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="20" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="40" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="60" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="80" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="100" y="0" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <!-- Revealed safe cells with numbers -->
+          <rect x="0" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="9" y="33" text-anchor="middle" fill="#73d676" font-size="11" font-weight="700">1</text>
+          <rect x="20" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="29" y="33" text-anchor="middle" fill="#2bd1c4" font-size="11" font-weight="700">2</text>
+          <rect x="40" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="49" y="33" text-anchor="middle" fill="#a98bff" font-size="11" font-weight="700">3</text>
+          <rect x="60" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="69" y="33" text-anchor="middle" fill="#73d676" font-size="11" font-weight="700">1</text>
+          <rect x="80" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <!-- empty -->
+          <rect x="100" y="20" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <!-- Row 3 -->
+          <rect x="0" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <rect x="20" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="29" y="53" text-anchor="middle" fill="#73d676" font-size="11" font-weight="700">1</text>
+          <rect x="40" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="49" y="53" text-anchor="middle" fill="#2bd1c4" font-size="11" font-weight="700">2</text>
+          <rect x="60" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="69" y="53" text-anchor="middle" fill="#73d676" font-size="11" font-weight="700">1</text>
+          <rect x="80" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <rect x="100" y="40" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <!-- Flagged cell -->
+          <rect x="0" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#f7b84b" stroke-width="1.5"/>
+          <text x="9" y="73" text-anchor="middle" fill="#f7b84b" font-size="12">⚑</text>
+          <!-- Trap revealed (game over style) -->
+          <rect x="120" y="60" width="19" height="19" rx="2" fill="#f05d5e" opacity="0.2"/>
+          <circle cx="129" cy="69" r="6" fill="#f05d5e" opacity="0.8"/>
+          <line x1="129" y1="63" x2="129" y2="60" stroke="#f05d5e" stroke-width="1.5"/>
+          <line x1="133" y1="64" x2="135" y2="62" stroke="#f05d5e" stroke-width="1.5"/>
+          <line x1="135" y1="69" x2="138" y2="69" stroke="#f05d5e" stroke-width="1.5"/>
+          <!-- Rows 4-7 more cells -->
+          <rect x="20" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="40" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="60" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="80" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="100" y="60" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <!-- Safe zone highlight -->
+          <rect x="0" y="80" width="19" height="19" rx="2" fill="#73d676" opacity="0.15" stroke="#73d676" stroke-width="1"/>
+          <rect x="20" y="80" width="19" height="19" rx="2" fill="#73d676" opacity="0.1" stroke="#73d676" stroke-width="0.5"/>
+          <rect x="40" y="80" width="19" height="19" rx="2" fill="#73d676" opacity="0.1" stroke="#73d676" stroke-width="0.5"/>
+          <text x="9" y="93" text-anchor="middle" fill="#73d676" font-size="9" font-weight="700">SAFE</text>
+          <rect x="60" y="80" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="80" y="80" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="100" y="80" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="120" y="80" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <!-- Row 6 -->
+          <rect x="0" y="100" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="20" y="100" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="40" y="100" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="60" y="100" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <rect x="80" y="100" width="19" height="19" rx="2" fill="#1e2a36" stroke="#2a3a4a" stroke-width="0.5"/>
+          <!-- Row 7 -->
+          <rect x="0" y="120" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <rect x="20" y="120" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="29" y="133" text-anchor="middle" fill="#2bd1c4" font-size="11" font-weight="700">2</text>
+          <rect x="40" y="120" width="19" height="19" rx="2" fill="#0d1820" stroke="#1a2a38" stroke-width="0.5"/>
+          <text x="49" y="133" text-anchor="middle" fill="#73d676" font-size="11" font-weight="700">1</text>
+        </g>
+        <!-- Title right -->
+        <text x="520" y="78" text-anchor="middle" fill="#f4f2ea" font-family="system-ui,sans-serif" font-size="22" font-weight="800" opacity="0.95">TRAP SCOUT</text>
+        <text x="520" y="100" text-anchor="middle" fill="#b8bec9" font-family="system-ui,sans-serif" font-size="10" letter-spacing="3" opacity="0.65">LOGIC · DEDUCTION · NO LUCK</text>
+        <!-- Safe zones remaining -->
+        <text x="520" y="135" text-anchor="middle" fill="#73d676" font-family="system-ui,sans-serif" font-size="12" font-weight="700" opacity="0.8">14 safe zones left</text>
+        <text x="520" y="155" text-anchor="middle" fill="#f7b84b" font-family="system-ui,sans-serif" font-size="12" font-weight="700" opacity="0.8">3 traps flagged</text>
+      </svg>
+
+      <p>I have played Minesweeper since I was eight years old on a family Windows 95 machine. I also remember the specific frustration of reaching the endgame with two unrevealed cells left, no information to distinguish them, and a 50/50 coin flip standing between victory and starting over. That feeling always stuck with me. Trap Scout was my attempt to keep everything I loved about Minesweeper and remove the parts that felt like the game was cheating.</p>
+
+      <h2>The Unfair Guess Problem</h2>
+      <p>Classic Minesweeper has two failure modes. The first is dying on the opening click — the mines are placed before you click, so the first cell is pure chance. The second is the forced 50/50 endgame scenario I described above. Both feel deeply unfair because they remove player agency entirely. I fixed both with the same approach: deferred mine placement. In Trap Scout, mines are not placed when the puzzle is generated. They are placed after your first click, positioned to guarantee that first cell is safe and surrounded by an opening cascade. For the endgame problem, I run a logic solver after every cell reveal. If the solver determines the remaining unrevealed cells cannot be resolved without guessing, I quietly adjust one mine position to restore solvability. The player never sees any of this — they just experience a game where every outcome was earned by the information available to them.</p>
+
+      <h2>Renaming the Language</h2>
+      <p>Minesweeper's vocabulary is all military metaphor: mines, flags, sweepers. I wanted Trap Scout to feel different in tone — less about war, more about cautious exploration. I renamed mines to traps, flags to markers, and the grid became a zone map. The win condition shifted from "survive" to "clear all safe zones." These are cosmetic changes — the mechanic is identical — but they shifted the psychological frame. Players told me the game felt less punishing even when the rules had not changed at all. Language shapes how people interpret failure. "You hit a mine" reads as sudden death. "A trap was triggered" reads as something that could have been avoided. That subtle difference in framing made players more willing to start over after a loss, which matters a lot for a puzzle game built on replayability.</p>
+
+      <h2>Teaching Logic Without a Tutorial</h2>
+      <p>The deepest design challenge in any Minesweeper variant is teaching new players to think in probabilities and constraints without overwhelming them. I did not want a tutorial screen. I wanted the first few grids to teach by doing. So I designed the opening puzzles to be tiny — five by five — with mine density low enough that large cascades almost always open on the first click. This gives players a visually satisfying reveal of most of the board immediately, leaving only a small logical problem to solve. The number hints become readable in context because there are only a few of them surrounded by open space. By the time players reach full-size grids, they have already internalized the core logic loop through play rather than instruction. That kind of implicit onboarding is harder to design than a tutorial, but players remember what they figure out for themselves far longer than what they are told.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

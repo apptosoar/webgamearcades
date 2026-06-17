@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meteor Dodge: Making the Same Idea Feel Different — Webgame Arcades Blog</title>
+    <meta name="description" content="Building Meteor Dodge — a spaceship-dodging browser game — and the design challenge of making a well-worn concept feel fresh and worth playing." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-meteor-dodge/" />
+    <meta property="og:title" content="Meteor Dodge: Making the Same Idea Feel Different" />
+    <meta property="og:description" content="Building Meteor Dodge — a spaceship-dodging browser game — and the design challenge of making a well-worn concept feel fresh and worth playing." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-meteor-dodge/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Meteor Dodge: Making the Same Idea Feel Different", "datePublished": "2026-06-06", "url": "https://webgamearcades.com/blog/building-meteor-dodge/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 6, 2026</p>
+      <h1>Meteor Dodge: Making the Same Idea Feel Different</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="md-bg" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0%" stop-color="#020408"/>
+            <stop offset="100%" stop-color="#060210"/>
+          </linearGradient>
+          <radialGradient id="md-star1" cx="30%" cy="20%" r="35%">
+            <stop offset="0%" stop-color="#a98bff" stop-opacity="0.07"/>
+            <stop offset="100%" stop-color="#020408" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="md-star2" cx="75%" cy="40%" r="30%">
+            <stop offset="0%" stop-color="#2bd1c4" stop-opacity="0.05"/>
+            <stop offset="100%" stop-color="#020408" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#md-bg)"/>
+        <rect width="720" height="200" fill="url(#md-star1)"/>
+        <rect width="720" height="200" fill="url(#md-star2)"/>
+        <!-- Stars -->
+        <circle cx="45" cy="18" r="1.2" fill="#f4f2ea" opacity="0.7"/>
+        <circle cx="130" cy="32" r="0.9" fill="#f4f2ea" opacity="0.5"/>
+        <circle cx="220" cy="12" r="1.4" fill="#f4f2ea" opacity="0.8"/>
+        <circle cx="310" cy="45" r="0.8" fill="#f4f2ea" opacity="0.4"/>
+        <circle cx="400" cy="22" r="1.1" fill="#f4f2ea" opacity="0.6"/>
+        <circle cx="510" cy="8" r="1.3" fill="#f4f2ea" opacity="0.7"/>
+        <circle cx="600" cy="38" r="0.9" fill="#f4f2ea" opacity="0.5"/>
+        <circle cx="680" cy="16" r="1.2" fill="#f4f2ea" opacity="0.6"/>
+        <circle cx="88" cy="55" r="0.8" fill="#f4f2ea" opacity="0.4"/>
+        <circle cx="450" cy="58" r="1" fill="#f4f2ea" opacity="0.5"/>
+        <!-- Spaceship (player) at bottom center -->
+        <polygon points="360,155 340,178 380,178" fill="#2bd1c4"/>
+        <polygon points="360,160 352,174 368,174" fill="#0d1525"/>
+        <!-- Engine glow -->
+        <ellipse cx="360" cy="180" rx="10" ry="5" fill="#f7b84b" opacity="0.7"/>
+        <ellipse cx="360" cy="182" rx="6" ry="3" fill="#fff" opacity="0.5"/>
+        <!-- Meteor 1 (large, coming down left) -->
+        <ellipse cx="200" cy="75" rx="26" ry="22" fill="#6b4c2a" transform="rotate(-20 200 75)"/>
+        <ellipse cx="192" cy="68" rx="10" ry="8" fill="#7d5832" transform="rotate(-20 192 68)"/>
+        <circle cx="214" cy="80" r="5" fill="#5a3d1e"/>
+        <!-- Meteor trail -->
+        <line x1="200" y1="52" x2="185" y2="10" stroke="#a98bff" stroke-width="2" opacity="0.3"/>
+        <line x1="210" y1="52" x2="198" y2="10" stroke="#a98bff" stroke-width="1" opacity="0.15"/>
+        <!-- Meteor 2 (smaller, right) -->
+        <ellipse cx="500" cy="55" rx="16" ry="14" fill="#5a3a18" transform="rotate(15 500 55)"/>
+        <ellipse cx="495" cy="50" rx="6" ry="5" fill="#6e4820" transform="rotate(15 495 50)"/>
+        <!-- Meteor trail 2 -->
+        <line x1="500" y1="38" x2="492" y2="5" stroke="#f05d5e" stroke-width="1.5" opacity="0.25"/>
+        <!-- Meteor 3 (tiny, passing left) -->
+        <ellipse cx="90" cy="100" rx="9" ry="8" fill="#4a2e10" transform="rotate(-10 90 100)"/>
+        <line x1="90" y1="90" x2="84" y2="65" stroke="#f7b84b" stroke-width="1" opacity="0.2"/>
+        <!-- Survival time display -->
+        <rect x="590" y="148" width="110" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="645" y="163" font-size="10" fill="#2bd1c4" font-family="system-ui" font-weight="700" text-anchor="middle">SURVIVED</text>
+        <text x="645" y="181" font-size="18" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">1m 52s</text>
+      </svg>
+
+      <p>Dodge-the-falling-rocks is one of the oldest game mechanics in existence. I know this. I built Meteor Dodge anyway, partly as a technical warmup and partly because I had a theory: the reason most dodge games feel samey is that they treat the player as passive. You move away from things. I wanted to see if I could make the player feel like an active presence in the space, not just a hitbox getting out of the way.</p>
+
+      <h2>Giving the Ship a Personality</h2>
+      <p>The first change I made that actually mattered was adding momentum to ship movement. In most dodge games the ship teleports to wherever the mouse is, pixel-perfect. It works but it feels like operating a cursor, not flying a ship. I added a velocity system — the ship accelerates toward the cursor position and decelerates smoothly when the cursor stops. The responsiveness is tuned so it never feels sluggish, but there's a tiny tail of inertia that makes the ship feel like it has mass. Players immediately started calling it "the ship" rather than "the thing." Subtle personification through physics. I also added a subtle tilt on horizontal movement — the ship banks slightly when moving left or right and levels out when stopped. One CSS transform, three lines of code, massive difference in how it reads as a flying vehicle versus a rectangle.</p>
+
+      <h2>Meteor Variety and Why Size Alone Isn't Enough</h2>
+      <p>My first build had meteors in three sizes: small, medium, large. That's it. The problem was that size was also speed — small meteors moved fast, large ones were slow — so the whole game reduced to "dodge fast things" vs "dodge slow things." It wasn't interesting. I broke the correlation between size and speed. Large meteors can now fall fast if the difficulty warrants it. Small meteors can drift slowly at a wide angle, cutting across the screen like a slow curve ball. I also added a "cluster" meteor type that splits into three smaller pieces when it crosses 60% of the screen height — visible foreshadowing in the first half, chaos in the second. Players now have to read trajectory, size, speed, and type simultaneously, which is actually a meaningful skill to develop over multiple sessions.</p>
+
+      <h2>Screen Shake, Streaks, and the Near-Miss</h2>
+      <p>The moment I'm proudest of in Meteor Dodge is the near-miss feedback. When a meteor passes within 20 pixels of the ship without hitting, the game registers it as a "near miss" — the screen flashes a very brief teal tint, the ship gets a momentary thrust-exhaust trail, and a small "+near" indicator fades in above the ship. Nothing changes mechanically. No bonus points, no power-ups. But acknowledging the near-miss transforms it from a neutral event into a moment of triumph. Players start to seek them out. They'll cut a dodge closer than necessary because threading between meteors feels more exciting than comfortable evasion. That one feature changed how people talk about the game — they started sharing moments, not just scores. Near-misses became the thing Meteor Dodge is actually about.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

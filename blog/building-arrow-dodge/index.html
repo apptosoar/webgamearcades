@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arrow Dodge: Building a Pure Reaction Speed Test — Webgame Arcades Blog</title>
+    <meta name="description" content="Arrow Dodge is designed around one thing: how fast can you react? Here's how I tuned timing, arrow patterns, and difficulty to make that question feel fair." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-arrow-dodge/" />
+    <meta property="og:title" content="Arrow Dodge: Building a Pure Reaction Speed Test" />
+    <meta property="og:description" content="Arrow Dodge is designed around one thing: how fast can you react? Here's how I tuned timing, arrow patterns, and difficulty to make that question feel fair." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-arrow-dodge/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Arrow Dodge: Building a Pure Reaction Speed Test",
+      "datePublished": "2026-06-12",
+      "url": "https://webgamearcades.com/blog/building-arrow-dodge/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 12, 2026</p>
+      <h1>Arrow Dodge: Building a Pure Reaction Speed Test</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ad-bg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0f0c08"/>
+            <stop offset="100%" stop-color="#190d06"/>
+          </linearGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#ad-bg)"/>
+        <!-- arrows from left side -->
+        <line x1="0"  y1="60"  x2="280" y2="60"  stroke="#f7b84b" stroke-width="3" opacity="0.9"/>
+        <polygon points="280,60 258,50 258,70" fill="#f7b84b" opacity="0.9"/>
+        <line x1="0"  y1="100" x2="200" y2="100" stroke="#f05d5e" stroke-width="3" opacity="0.85"/>
+        <polygon points="200,100 178,90 178,110" fill="#f05d5e" opacity="0.85"/>
+        <line x1="0"  y1="145" x2="240" y2="145" stroke="#f7b84b" stroke-width="3" opacity="0.8"/>
+        <polygon points="240,145 218,135 218,155" fill="#f7b84b" opacity="0.8"/>
+        <!-- arrows from right side -->
+        <line x1="720" y1="45"  x2="450" y2="45"  stroke="#f05d5e" stroke-width="3" opacity="0.85"/>
+        <polygon points="450,45 472,35 472,55" fill="#f05d5e" opacity="0.85"/>
+        <line x1="720" y1="120" x2="500" y2="120" stroke="#f7b84b" stroke-width="3" opacity="0.8"/>
+        <polygon points="500,120 522,110 522,130" fill="#f7b84b" opacity="0.8"/>
+        <line x1="720" y1="165" x2="480" y2="165" stroke="#f05d5e" stroke-width="3" opacity="0.75"/>
+        <polygon points="480,165 502,155 502,175" fill="#f05d5e" opacity="0.75"/>
+        <!-- player in gap -->
+        <rect x="340" y="85" width="40" height="40" rx="6" fill="#2bd1c4"/>
+        <rect x="351" y="78" width="18" height="10" rx="3" fill="#2bd1c4"/>
+        <!-- safe zone highlight -->
+        <rect x="325" y="70" width="70" height="70" rx="8" fill="none" stroke="#2bd1c4" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+        <!-- close call indicators -->
+        <circle cx="300" cy="100" r="8" fill="#f05d5e" opacity="0.3"/>
+        <circle cx="420" cy="45"  r="8" fill="#f05d5e" opacity="0.3"/>
+      </svg>
+
+      <p>Arrow Dodge has the shortest design brief of any game I've built: arrows fly in from the sides, you dodge them, you're being timed. There is nothing else. No enemies, no score multipliers, no power-ups, no lives. Just: can you get out of the way in time? Building a game that is only one mechanic sounds easy. Getting that mechanic to feel truly fair took longer than I expected, and the lessons came from places I didn't anticipate.</p>
+
+      <h2>The Warning Window Problem</h2>
+      <p>In early testing, arrows spawned at the screen edge and immediately began moving. At slow speeds this was fine. As I increased arrow velocity to create harder difficulty tiers, the game stopped being a reaction test and became pure luck: you couldn't perceive an arrow's spawn position fast enough to respond before it arrived. I needed a warning system. My first attempt was a colored indicator at the screen edge that flashed 300 milliseconds before the arrow launched. That felt good for single arrows. When two arrows came from opposite sides simultaneously, players reported feeling overwhelmed and unfairly caught. I increased the warning window to 450 milliseconds for multi-arrow events and added a subtle screen-edge highlight in the direction of the upcoming threat. The distinction between "single arrow" and "multi-arrow" warning times was a small asymmetry that most players never consciously noticed, but it made multi-arrow moments feel beatable rather than random.</p>
+
+      <h2>Arrow Speed Versus Hitbox Size</h2>
+      <p>Fast arrows feel satisfying to dodge — there's a visceral thrill to a near-miss. But the faster an arrow moves, the shorter the window during which its hitbox overlaps the player's hitbox. At very high speeds, a technically valid collision could happen and be visually imperceptible, causing what players describe as "invisible deaths." I addressed this in two ways. First, I shrank the player's collision hitbox to about 70% of the visible character sprite, giving more forgiveness on close calls while keeping the visual exciting. Second, I capped arrow speed at a value where the minimum on-screen hitbox overlap time was at least two frames at 60fps — roughly 33 milliseconds. Below that threshold, players couldn't register the hit as their fault, and the game felt broken. Above it, even a visually terrifying near-miss left a trace of "I could have moved in time," which is exactly the emotion you want driving the next attempt.</p>
+
+      <h2>Why Single-Button Makes It Better on Mobile</h2>
+      <p>Arrow Dodge originally used keyboard arrow keys — up and down to move, potentially left and right. I was building it for desktop. When I tested on a phone it was unplayable: two-thumb d-pad controls felt finicky and imprecise under time pressure. I rebuilt the control scheme around a single tap anywhere on screen: tap to toggle between two vertical positions — top half or bottom half. That's the entire input model. It forced me to redesign the arrow patterns so that a binary choice — top or bottom — was always a meaningful decision, never a "I'll stay in the middle" option. Restricting to two positions also made the game much more readable: players always knew exactly where they were and where the safe zone was. The mobile constraint made the desktop version better too, and I ended up shipping the binary-position model as the default for all platforms.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

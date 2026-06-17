@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marble Gate: Designing a Sliding Puzzle That Feels Fair — Webgame Arcades Blog</title>
+    <meta name="description" content="How I designed Marble Gate's sliding block mechanics, ensured every puzzle has a clear solution path, and made the marble's fall feel satisfying." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-marble-gate/" />
+    <meta property="og:title" content="Marble Gate: Designing a Sliding Puzzle That Feels Fair" /><meta property="og:description" content="How I designed Marble Gate's sliding block mechanics, ensured every puzzle has a clear solution path, and made the marble's fall feel satisfying." /><meta property="og:type" content="article" /><meta property="og:url" content="https://webgamearcades.com/blog/building-marble-gate/" /><meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Marble Gate: Designing a Sliding Puzzle That Feels Fair","datePublished":"2026-05-25","url":"https://webgamearcades.com/blog/building-marble-gate/","publisher":{"@type":"Organization","name":"Webgame Arcades"}}</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      *{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+      .topbar{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px)}
+      .brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}
+      .brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;box-shadow:0 8px 20px rgba(247,184,75,0.22)}
+      .nav{display:flex;gap:4px}.nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;transition:transform 160ms ease,color 150ms ease}.nav a:hover{color:#f4f2ea;transform:translateY(-1px)}.nav a.active{color:#f7b84b}
+      @media(max-width:900px){.nav{display:none}}
+      main{max-width:720px;margin:0 auto;padding:56px 24px 80px}
+      .back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}
+      .post-meta{margin:0 0 12px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      h1{margin:0 0 24px;font-size:clamp(1.8rem,5vw,2.4rem);color:#f4f2ea}
+      h2{margin:40px 0 12px;font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+      p{margin:0 0 16px;color:#b8bec9}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}
+      a.cta{display:inline-block;margin-top:36px;padding:12px 24px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.07);color:#f4f2ea;text-decoration:none;font-size:.95rem;transition:background .15s}a.cta:hover{background:rgba(255,255,255,0.13)}
+      .site-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1440px;margin:0 auto;padding:24px clamp(16px,4vw,44px) 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}
+      .site-footer-brand{display:flex;flex-direction:column;gap:4px}.site-footer-brand span{color:#f4f2ea;font-weight:800;font-size:.95rem}.site-footer-brand p{margin:0}
+      .site-footer nav{display:flex;flex-wrap:wrap;align-items:center;gap:0}.site-footer nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color 150ms ease}.site-footer nav a:hover{color:#f4f2ea}.site-footer nav a+a{border-left:1px solid rgba(255,255,255,0.12)}
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav"><a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 25, 2026</p>
+      <h1>Marble Gate: Designing a Sliding Puzzle That Feels Fair</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#12141a"/>
+        <!-- Puzzle frame -->
+        <rect x="200" y="10" width="320" height="180" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+        <!-- Marble entry at top -->
+        <circle cx="280" cy="10" r="8" fill="#2bd1c4" opacity="0.6"/>
+        <text x="280" y="2" text-anchor="middle" fill="#2bd1c4" font-size="9" font-family="system-ui">IN</text>
+        <!-- Exit at bottom -->
+        <rect x="340" y="180" width="40" height="10" rx="3" fill="rgba(115,214,118,0.4)" stroke="#73d676" stroke-width="1.5"/>
+        <text x="360" y="200" text-anchor="middle" fill="#73d676" font-size="9" font-family="system-ui">EXIT</text>
+        <!-- Sliding blocks (horizontal, in slots) -->
+        <!-- Slot row 1 -->
+        <rect x="200" y="45" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
+        <rect x="220" y="50" width="100" height="20" rx="4" fill="#f7b84b" opacity="0.85"/>
+        <line x1="216" y1="60" x2="220" y2="60" stroke="#f7b84b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.5"/>
+        <line x1="320" y1="60" x2="510" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Arrow on block -->
+        <line x1="248" y1="60" x2="290" y2="60" stroke="#15110a" stroke-width="2" stroke-linecap="round"/>
+        <polygon points="290,56 298,60 290,64" fill="#15110a"/>
+        <!-- Slot row 2 -->
+        <rect x="200" y="85" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
+        <rect x="340" y="90" width="120" height="20" rx="4" fill="#a98bff" opacity="0.85"/>
+        <line x1="200" y1="100" x2="340" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <line x1="460" y1="100" x2="516" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Arrow on block left -->
+        <line x1="418" y1="100" x2="376" y2="100" stroke="#f4f2ea" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <polygon points="376,96 368,100 376,104" fill="#f4f2ea" opacity="0.7"/>
+        <!-- Slot row 3 -->
+        <rect x="200" y="125" width="320" height="30" rx="0" fill="rgba(255,255,255,0.02)"/>
+        <rect x="260" y="130" width="140" height="20" rx="4" fill="#f05d5e" opacity="0.85"/>
+        <line x1="200" y1="140" x2="260" y2="140" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <line x1="400" y1="140" x2="516" y2="140" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Marble path (dotted showing where it will go) -->
+        <line x1="280" y1="18" x2="280" y2="50" stroke="#2bd1c4" stroke-width="2" stroke-dasharray="4,3" opacity="0.7"/>
+        <!-- Gap in row 1 lets marble through at x=320 -->
+        <line x1="280" y1="70" x2="280" y2="90" stroke="#2bd1c4" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
+        <!-- marble indicator -->
+        <circle cx="280" cy="30" r="9" fill="#2bd1c4"/>
+        <circle cx="280" cy="27" r="3" fill="rgba(255,255,255,0.5)"/>
+        <!-- Labels -->
+        <text x="100" y="65" text-anchor="middle" fill="#f7b84b" font-size="10" font-family="system-ui" font-weight="600">SLIDE →</text>
+        <text x="100" y="105" text-anchor="middle" fill="#a98bff" font-size="10" font-family="system-ui" font-weight="600">← SLIDE</text>
+        <text x="100" y="145" text-anchor="middle" fill="#f05d5e" font-size="10" font-family="system-ui" font-weight="600">SLIDE →</text>
+        <!-- Score/moves panel -->
+        <rect x="560" y="60" width="120" height="80" rx="8" fill="rgba(43,209,196,0.06)" stroke="rgba(43,209,196,0.2)" stroke-width="1"/>
+        <text x="620" y="86" text-anchor="middle" fill="#b8bec9" font-size="10" font-family="system-ui">MOVES</text>
+        <text x="620" y="110" text-anchor="middle" fill="#2bd1c4" font-size="24" font-family="system-ui" font-weight="800">3</text>
+        <text x="620" y="128" text-anchor="middle" fill="#b8bec9" font-size="9" font-family="system-ui">of 6 used</text>
+      </svg>
+
+      <p>Marble Gate came from a question I kept asking myself while watching my nephew play with a physical sliding block toy: why does this feel so satisfying when the solution clicks into place? I wanted to capture that tactile logic in a browser game — the clean, inevitable fall of a marble through a gap you've just opened. Getting the feel right turned out to require rethinking almost everything I assumed about puzzle design.</p>
+
+      <h2>The Sliding Mechanic and Its Constraints</h2>
+      <p>The core rule is that blocks slide horizontally within their row until they hit a wall or another block. Simple on paper, but the implementation needs to handle a chain of decisions: which direction does a block slide, what is its range of motion, and how does that range change as other blocks move? I represented each row as a 1D array of occupied positions, which made slide range calculation trivial — scan left or right until a collision. The harder design question was whether blocks should snap to a grid or slide freely. Free sliding felt more physical but made level design nearly impossible: the solution state depended on analog positions I couldn't reliably specify. Grid snapping felt rigid but made every puzzle state deterministic and fully editable. I chose grid snapping and spent effort on the animation — a smooth ease-out over 180ms between grid positions — to preserve the feeling of weight without sacrificing design control.</p>
+
+      <h2>Ensuring Every Puzzle Has Exactly One Insight</h2>
+      <p>Early Marble Gate levels had a problem I couldn't articulate at first: players would solve them but not feel clever. They'd shuffle blocks around until the marble fell, without ever having a moment of understanding. I realised I was designing puzzles with too many valid solution sequences. When multiple orderings work, there's no puzzle — it's just exploration with a reward at the end. I started designing backwards from the solution state: position the blocks so the marble falls cleanly, then obscure one critical move by placing a block in the way. The first move the player needs to make must be non-obvious but feel inevitable in hindsight. Each subsequent puzzle I built with this constraint has a clear "aha" moment that players describe unprompted. The marble falling stops feeling accidental and starts feeling earned.</p>
+
+      <h2>Making the Marble Fall Feel Like a Payoff</h2>
+      <p>The marble's descent through the board is the reward for solving the puzzle, and I underestimated how much that animation matters. My first version dropped the marble instantly — once the path was clear it teleported to the exit. Playtesters described winning as "anticlimactic." I added physics-based acceleration: the marble starts slow and accelerates through each cleared gap, with a subtle bounce on each horizontal block it passes over before falling through. The exit plays a short chime and a ripple effect. The whole sequence takes about 800ms. That 800ms is the point of the game. Everything before it is thinking; those 800ms are the feeling you're thinking toward. Tuning that animation sequence — the speed, the bounce height, the chime timing — took longer than any other part of the game, and it's the part that makes people want to immediately start the next level.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>

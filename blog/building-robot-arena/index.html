@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Robot Arena: Chasing Bots and Collision Headaches — Webgame Arcades Blog</title>
+    <meta name="description" content="Building Robot Arena exposed every weak spot in my collision code. Here's how I fixed bot AI, hitboxes, and the chaos of too many moving parts." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-robot-arena/" />
+    <meta property="og:title" content="Robot Arena: Chasing Bots and Collision Headaches" />
+    <meta property="og:description" content="Building Robot Arena exposed every weak spot in my collision code. Here's how I fixed bot AI, hitboxes, and the chaos of too many moving parts." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-robot-arena/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Robot Arena: Chasing Bots and Collision Headaches",
+      "datePublished": "2026-06-13",
+      "url": "https://webgamearcades.com/blog/building-robot-arena/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">G</span>
+        <span>Webgame Arcades</span>
+      </a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 13, 2026</p>
+      <h1>Robot Arena: Chasing Bots and Collision Headaches</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="ra-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0f1318"/>
+            <stop offset="100%" stop-color="#0b1020"/>
+          </linearGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#ra-bg)"/>
+        <!-- arena floor grid -->
+        <line x1="0"   y1="160" x2="720" y2="160" stroke="#2bd1c4" stroke-width="1" opacity="0.15"/>
+        <line x1="0"   y1="130" x2="720" y2="130" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <line x1="120" y1="130" x2="120" y2="200" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <line x1="240" y1="130" x2="240" y2="200" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <line x1="360" y1="130" x2="360" y2="200" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <line x1="480" y1="130" x2="480" y2="200" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <line x1="600" y1="130" x2="600" y2="200" stroke="#2bd1c4" stroke-width="0.5" opacity="0.08"/>
+        <!-- hostile bots -->
+        <!-- bot 1 left -->
+        <rect x="60"  y="108" width="32" height="32" rx="4" fill="#f05d5e" opacity="0.85"/>
+        <rect x="67"  y="102" width="18" height="10" rx="3" fill="#f05d5e" opacity="0.7"/>
+        <circle cx="70" cy="107" r="3" fill="#f7b84b"/>
+        <circle cx="84" cy="107" r="3" fill="#f7b84b"/>
+        <!-- bot 2 top -->
+        <rect x="280" y="35"  width="32" height="32" rx="4" fill="#f05d5e" opacity="0.8"/>
+        <rect x="287" y="29"  width="18" height="10" rx="3" fill="#f05d5e" opacity="0.65"/>
+        <circle cx="290" cy="34" r="3" fill="#f7b84b"/>
+        <circle cx="304" cy="34" r="3" fill="#f7b84b"/>
+        <!-- bot 3 right -->
+        <rect x="620" y="100" width="32" height="32" rx="4" fill="#f05d5e" opacity="0.85"/>
+        <rect x="627" y="94"  width="18" height="10" rx="3" fill="#f05d5e" opacity="0.7"/>
+        <circle cx="630" cy="99" r="3" fill="#f7b84b"/>
+        <circle cx="644" cy="99" r="3" fill="#f7b84b"/>
+        <!-- bot 4 bottom -->
+        <rect x="480" y="148" width="32" height="32" rx="4" fill="#f05d5e" opacity="0.75"/>
+        <rect x="487" y="142" width="18" height="10" rx="3" fill="#f05d5e" opacity="0.6"/>
+        <!-- player bot center -->
+        <rect x="336" y="108" width="48" height="48" rx="6" fill="#2bd1c4"/>
+        <rect x="346" y="100" width="28" height="14" rx="4" fill="#2bd1c4"/>
+        <circle cx="350" cy="107" r="5" fill="#0b0c0f"/>
+        <circle cx="366" cy="107" r="5" fill="#0b0c0f"/>
+        <circle cx="350" cy="107" r="2.5" fill="#f7b84b"/>
+        <circle cx="366" cy="107" r="2.5" fill="#f7b84b"/>
+        <!-- direction arrows from bots to player -->
+        <line x1="92" y1="124" x2="330" y2="132" stroke="#f05d5e" stroke-width="1" opacity="0.25"/>
+        <line x1="296" y1="67"  x2="352" y2="108" stroke="#f05d5e" stroke-width="1" opacity="0.25"/>
+        <line x1="620" y1="116" x2="390" y2="132" stroke="#f05d5e" stroke-width="1" opacity="0.25"/>
+      </svg>
+
+      <p>Robot Arena is structurally similar to Zombie Survival — survive in a confined space while enemies chase you — but the "robot" framing led me down very different implementation paths. It also exposed the weakest part of my game code: collision detection. I thought I understood how to handle AABB collisions until I had six rectangular bots all trying to occupy the same space at the same time, and everything broke spectacularly.</p>
+
+      <h2>When the Bots All Ended Up in the Same Spot</h2>
+      <p>The first version of the bot AI was naive: each bot moved directly toward the player by normalizing the vector between its position and the player's position, then adding a speed component each frame. This worked fine with one or two bots. With four or more, they converged into a single superbot — a tight cluster that moved as one entity and killed the player the instant it made contact. The problem was that bots ignored each other entirely. I added basic bot-to-bot separation: if two bots were within a certain radius of each other, they'd apply a repulsive force away from the mutual center. This caused bots to spread out organically and approach the player from genuinely different angles. It was a relatively small code change but it transformed the feel of a multi-bot encounter from "wall of death" to something that felt like you were being surrounded, which is exactly the right feeling for an arena game.</p>
+
+      <h2>The Collision Detection Rewrite</h2>
+      <p>My original collision system checked every entity against every other entity every frame — O(n²) with zero optimization. At four bots plus the player, that was twenty-five checks per frame, which was fine. When I added a wave mechanic that introduced up to ten bots at once, the check count jumped and the frame rate visibly stuttered on weaker hardware. The right fix was spatial partitioning — dividing the arena into a grid and only checking collisions between entities that shared a grid cell. I implemented a simple uniform grid with cells sized to the largest entity. It cut the average collision checks per frame from over a hundred to around fifteen, and the stutter disappeared. I should have built it that way from the start, but I genuinely didn't anticipate the entity count growing as much as it did. Now I always start with spatial partitioning even for small counts.</p>
+
+      <h2>Making the Bots Feel Like Robots, Not Zombies</h2>
+      <p>I wanted Robot Arena to feel mechanically distinct from Zombie Survival even though the core threat — enemies chasing the player — was the same. The main difference I landed on was movement style. Zombies move fluidly, continuously updating direction. Robots recalculate their heading every 400 milliseconds, then commit to that direction until the next recalculation. This creates a slightly jerky, mechanical gait that reads as robotic rather than organic. It also creates gameplay opportunities: a sharp direction change by the player between recalculations leaves the bot momentarily heading the wrong way, giving a skilled player a brief window to escape. That 400ms commitment window became the skill ceiling of the game — can you predict when a bot will recalculate and use that moment to slip past it? It's a small thing but it gives Robot Arena its own identity.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand">
+        <span>Webgame Arcades</span>
+        <p>A collection of web games that run directly in your browser</p>
+      </div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

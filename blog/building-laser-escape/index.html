@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laser Escape: The Surprisingly Hard Part Was the Lasers — Webgame Arcades Blog</title>
+    <meta name="description" content="Building Laser Escape — a browser survival game with moving laser walls. Why the hardest part wasn't the player, it was the lasers themselves." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-laser-escape/" />
+    <meta property="og:title" content="Laser Escape: The Surprisingly Hard Part Was the Lasers" />
+    <meta property="og:description" content="Building Laser Escape — a browser survival game with moving laser walls. Why the hardest part wasn't the player, it was the lasers themselves." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-laser-escape/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Laser Escape: The Surprisingly Hard Part Was the Lasers", "datePublished": "2026-06-09", "url": "https://webgamearcades.com/blog/building-laser-escape/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a>
+        <a class="active" href="/blog.html">Blog</a>
+        <a href="/community.html">Community</a>
+        <a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 9, 2026</p>
+      <h1>Laser Escape: The Surprisingly Hard Part Was the Lasers</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="le-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#050e18"/>
+            <stop offset="100%" stop-color="#0a0518"/>
+          </linearGradient>
+          <filter id="laser-glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+          <radialGradient id="le-center" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2bd1c4" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#050e18" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="720" height="200" fill="url(#le-bg)"/>
+        <rect width="720" height="200" fill="url(#le-center)"/>
+        <!-- Grid lines -->
+        <line x1="0" y1="66" x2="720" y2="66" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="133" x2="720" y2="133" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="240" y1="0" x2="240" y2="200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="480" y1="0" x2="480" y2="200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Horizontal laser wall 1 -->
+        <rect x="0" y="72" width="720" height="8" rx="2" fill="#f05d5e" opacity="0.9" filter="url(#laser-glow)"/>
+        <rect x="0" y="74" width="720" height="4" rx="1" fill="#fff" opacity="0.4"/>
+        <!-- Gap in laser wall (escape zone) -->
+        <rect x="310" y="72" width="100" height="8" rx="2" fill="#050e18"/>
+        <!-- Horizontal laser wall 2 -->
+        <rect x="0" y="126" width="720" height="8" rx="2" fill="#f05d5e" opacity="0.7" filter="url(#laser-glow)"/>
+        <rect x="0" y="128" width="720" height="4" rx="1" fill="#fff" opacity="0.3"/>
+        <!-- Gap in wall 2 -->
+        <rect x="80" y="126" width="100" height="8" rx="2" fill="#050e18"/>
+        <!-- Vertical laser -->
+        <rect x="550" y="0" width="8" height="200" rx="2" fill="#a98bff" opacity="0.85" filter="url(#laser-glow)"/>
+        <rect x="552" y="0" width="4" height="200" rx="1" fill="#fff" opacity="0.3"/>
+        <!-- Gap in vertical laser -->
+        <rect x="550" y="85" width="8" height="40" rx="2" fill="#050e18"/>
+        <!-- Player character (sneaking through gap) -->
+        <circle cx="360" cy="100" r="10" fill="#f7b84b"/>
+        <rect x="354" y="108" width="12" height="14" rx="3" fill="#f7b84b"/>
+        <!-- Glow around player -->
+        <circle cx="360" cy="100" r="16" fill="none" stroke="#f7b84b" stroke-width="1.5" opacity="0.4"/>
+        <!-- Survival timer -->
+        <rect x="30" y="20" width="80" height="36" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <text x="70" y="33" font-size="10" fill="#2bd1c4" font-family="system-ui" font-weight="700" text-anchor="middle">SURVIVED</text>
+        <text x="70" y="50" font-size="16" fill="#f4f2ea" font-family="system-ui" font-weight="800" text-anchor="middle">38s</text>
+      </svg>
+
+      <p>I almost called this game "Laser Walls" which tells you how far I was from having a clear vision when I started. The concept was simple — avoid moving laser beams, survive as long as possible. In practice, I spent more time thinking about how lasers should move than anything else. The player controls were an afternoon's work. The lasers were a week.</p>
+
+      <h2>The Movement Models I Tried and Abandoned</h2>
+      <p>My first laser implementation moved walls from left to right at a constant speed and looped back. It looked fine but played terribly — you could just memorize the loop and dodge it mechanically forever. No skill, no tension. I tried randomizing speed, which helped, but random also meant unfair. Sometimes a laser would change direction mid-dodge and hit you through no fault of your own. That feels awful. The breakthrough came when I started thinking about lasers not as obstacles that move but as patterns that transform. A laser wall with a gap that slides horizontally requires you to track the gap, not dodge the wall. That mental shift changed everything. Players aren't running from danger — they're reading the gap and threading through it. I ended up with three movement types: sliding gaps, oscillating walls, and alternating pairs. Each creates a genuinely different dodging challenge.</p>
+
+      <h2>Collision Detection and the "That Was Fair" Rule</h2>
+      <p>Collision detection in a pure-CSS layout game is surprisingly nuanced. I was using pixel bounding boxes at first, which caused constant complaints that felt completely valid — players were clearly in the gap but still dying. The hit boxes were exact, but the visual representation wasn't matching them precisely at all screen sizes. I switched to a 10% inset on the player's collision box — the player appears to take up X pixels but is only "killable" within the inner 80% of that space. This is a common trick in old arcade games that I should have reached for immediately. Once I added it, deaths went from feeling arbitrary to feeling deserved. I never heard the complaint again. The rule I try to follow now: a death should never make the player say "that wasn't fair." Some difficulty is fine; perceived injustice kills a game faster than anything.</p>
+
+      <h2>How Long Is Long Enough to Survive?</h2>
+      <p>Once the mechanics felt right, I faced a meta question: what does the session arc look like? In an infinite survival game, there's no natural end — the session just continues until you fail. I watched people play and most sessions lasted under two minutes. The first 20 seconds felt like warmup, seconds 20–60 felt like the real game, and past 90 seconds things got samey. The laser patterns started repeating and players noticed. I extended the pattern library significantly and added a new laser type every 30 seconds: horizontal walls first, then verticals introduced at 30s, then diagonal sweepers at 60s. Past 90 seconds, speeds increase. Now the session has genuine chapters. Longer survivors see something genuinely different than short-run players, which gives the best players something to discover and talk about.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu">
+        <a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a>
+      </nav>
+    </footer>
+    <style>
+      #cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}
+      #cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}
+    </style>
+    <script>
+      if (!localStorage.getItem("cookie_ok")) {
+        const b = document.createElement("div"); b.id = "cookie-banner";
+        b.innerHTML = '<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';
+        document.body.appendChild(b);
+        document.getElementById("cookie-accept").onclick = () => { localStorage.setItem("cookie_ok","1"); b.remove(); };
+      }
+    </script>
+  </body>
+</html>

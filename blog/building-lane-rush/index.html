@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lane Rush: Why Three Lanes Is the Magic Number — Webgame Arcades Blog</title>
+    <meta name="description" content="How I built Lane Rush, a three-lane endless runner, and discovered why the number of lanes is the single most important design decision in the whole game." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-lane-rush/" />
+    <meta property="og:title" content="Lane Rush: Why Three Lanes Is the Magic Number" />
+    <meta property="og:description" content="How I built Lane Rush, a three-lane endless runner, and discovered why the number of lanes is the single most important design decision in the whole game." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-lane-rush/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    { "@context": "https://schema.org", "@type": "BlogPosting", "headline": "Lane Rush: Why Three Lanes Is the Magic Number", "datePublished": "2026-06-01", "url": "https://webgamearcades.com/blog/building-lane-rush/", "publisher": { "@type": "Organization", "name": "Webgame Arcades" } }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      .topbar { position: sticky; top: 0; z-index: 10; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 18px; min-height: 68px; padding: 12px clamp(16px, 4vw, 44px); border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(16,17,20,0.84); backdrop-filter: blur(18px); }
+      .brand { display: flex; align-items: center; gap: 10px; min-width: 0; color: #f4f2ea; text-decoration: none; font-weight: 800; }
+      .brand-mark { display: grid; width: 34px; height: 34px; flex-shrink: 0; place-items: center; border-radius: 8px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; box-shadow: 0 8px 20px rgba(247,184,75,0.22); }
+      .nav { display: flex; gap: 4px; }
+      .nav a { padding: 9px 12px; border-radius: 8px; color: #b8bec9; text-decoration: none; font-size: 0.92rem; transition: transform 160ms ease, color 150ms ease; }
+      .nav a:hover { color: #f4f2ea; transform: translateY(-1px); }
+      .nav a.active { color: #f7b84b; }
+      @media (max-width: 900px) { .nav { display: none; } }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+      .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; max-width: 1440px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 44px) 36px; border-top: 1px solid rgba(255,255,255,0.12); color: #b8bec9; font-size: 0.88rem; }
+      .site-footer-brand { display: flex; flex-direction: column; gap: 4px; }
+      .site-footer-brand span { color: #f4f2ea; font-weight: 800; font-size: 0.95rem; }
+      .site-footer-brand p { margin: 0; }
+      .site-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+      .site-footer nav a { color: #b8bec9; text-decoration: none; padding: 4px 14px; transition: color 150ms ease; }
+      .site-footer nav a:hover { color: #f4f2ea; }
+      .site-footer nav a + a { border-left: 1px solid rgba(255,255,255,0.12); }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">G</span><span>Webgame Arcades</span></a>
+      <nav class="nav">
+        <a href="/">Games</a><a class="active" href="/blog.html">Blog</a><a href="/community.html">Community</a><a href="/about.html">About</a>
+      </nav>
+    </header>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 1, 2026</p>
+      <h1>Lane Rush: Why Three Lanes Is the Magic Number</h1>
+
+      <svg viewBox="0 0 720 200" style="width:100%;border-radius:12px;margin:0 0 32px;display:block" xmlns="http://www.w3.org/2000/svg">
+        <rect width="720" height="200" fill="#0a0f18"/>
+        <!-- Road surface -->
+        <rect x="150" y="0" width="420" height="200" fill="#161b26"/>
+        <!-- Lane dividers -->
+        <rect x="289" y="0" width="3" height="200" fill="rgba(255,255,255,0.12)"/>
+        <rect x="428" y="0" width="3" height="200" fill="rgba(255,255,255,0.12)"/>
+        <!-- Dashes on dividers -->
+        <rect x="290" y="30" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <rect x="290" y="90" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <rect x="290" y="150" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <rect x="429" y="30" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <rect x="429" y="90" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <rect x="429" y="150" width="2" height="30" fill="rgba(255,255,255,0.35)"/>
+        <!-- Player (center lane, bottom) -->
+        <rect x="335" y="130" width="50" height="60" rx="8" fill="#2bd1c4" opacity="0.95"/>
+        <rect x="342" y="136" width="36" height="24" rx="4" fill="rgba(0,0,0,0.35)"/>
+        <!-- Obstacles -->
+        <rect x="170" y="30" width="50" height="60" rx="8" fill="#f05d5e" opacity="0.85"/>
+        <rect x="176" y="36" width="36" height="24" rx="4" fill="rgba(0,0,0,0.3)"/>
+        <rect x="474" y="60" width="50" height="60" rx="8" fill="#f05d5e" opacity="0.8"/>
+        <rect x="480" y="66" width="36" height="24" rx="4" fill="rgba(0,0,0,0.3)"/>
+        <rect x="335" y="10" width="50" height="60" rx="8" fill="#f05d5e" opacity="0.75"/>
+        <rect x="341" y="16" width="36" height="24" rx="4" fill="rgba(0,0,0,0.3)"/>
+      </svg>
+
+      <p>Lane Rush went through four different lane counts before I landed on three. That might sound like an obvious choice — three lanes is a lane-based runner cliche — but I learned the hard way that what looks obvious in a design document has specific mechanical reasons behind it. Two lanes was too predictable. Four lanes was exhausting. Three lanes has a property the others don't, and understanding why changed how I think about constraint design.</p>
+
+      <h2>What Breaks With Two and Four Lanes</h2>
+      <p>The two-lane version of Lane Rush felt like a coin flip. Left or right. Every obstacle forced a binary decision, and there was no room for anything more nuanced. Obstacle patterns became trivial to read because there were only two states — blocked or clear — so the challenge reduced to reaction speed alone. The four-lane version had the opposite problem. With four lanes, it's possible to be in a lane where both neighbors are blocked simultaneously, forcing a two-lane jump that feels unfair at high speed. Four lanes also meant the player spent most of their time in the middle two lanes — the outer lanes were statistically safer because they could only be attacked from one side. That created a boring default strategy of hugging the center. Three lanes avoids both failure modes. The center is genuinely different from the edges — it's reachable from both sides, which means it's also escapable from both sides. That unique quality of the middle position makes every lane strategically meaningful.</p>
+
+      <h2>Building an Obstacle Generator That Feels Fair</h2>
+      <p>Random obstacle placement in endless runners always risks generating unjust situations — three simultaneous full-lane blocks that are physically impossible to survive. I implemented a constraint that at most two of the three lanes could be blocked at the same time, guaranteeing there was always an escape route. But I also needed to prevent patterns that were trivially easy — long stretches with only the far lane blocked, for example, which any player in the center would never notice. The solution was weighting the random selection toward middle-lane blocks and then constructing the surrounding pattern around them. If the middle lane is blocked, one side lane also gets blocked about 60% of the time. This creates the most demanding patterns — the player is forced out of the center and can't simply return — while always leaving exactly one valid lane. Players feel challenged but never cheated, which is the right emotional balance for a score-chasing endless runner.</p>
+
+      <h2>Speed Scaling Without Feeling Impossible</h2>
+      <p>Endless runners live or die by their speed curve. Too flat and the game never escalates into the satisfying blur that makes high scores feel earned. Too steep and players hit a wall they can't push through, which kills replayability. I landed on a logarithmic speed curve — fast initial acceleration that slows as time goes on, asymptotically approaching a ceiling speed. This means the first 30 seconds feel like genuine escalation, then the game settles into a demanding-but-readable pace that rewards sustained attention rather than pure reflex. I also added a brief visual cue — the screen edges pulse slightly — when the speed jumps a tier, so players have a half-second warning to tighten their focus. Without that cue, speed increases felt like betrayals. With it, they feel like the game rewarding your survival with a new challenge. That framing made a real difference in how long players stayed in a session.</p>
+
+      <a href="/" class="cta">Browse All Games</a>
+    </main>
+    <footer class="site-footer">
+      <div class="site-footer-brand"><span>Webgame Arcades</span><p>A collection of web games that run directly in your browser</p></div>
+      <nav aria-label="Footer menu"><a href="/about.html">About</a><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></nav>
+    </footer>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>
