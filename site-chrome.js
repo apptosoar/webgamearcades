@@ -1,5 +1,6 @@
 /* site-chrome.js — shared header + footer for all non-SPA pages */
 (function () {
+  function init() {
   if (document.getElementById("sc-header")) return;
 
   /* ── CSS ──────────────────────────────────────────────────────────────── */
@@ -81,5 +82,12 @@
   /* ── Game play page: fix .wrap height for 68px topbar ────────────────── */
   if (/^\/games\/[^/]+\/$/.test(p) || /^\/games\/[^/]+\/index\.html$/.test(p)) {
     document.body.classList.add("game-wrap-adjust");
+  }
+  } // end init
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
