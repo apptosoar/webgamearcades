@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -46,51 +49,7 @@
       window.ACTION_GAME_CONFIG = { title: "Ninja Dash", type: "runner", health: 3, playerShape: "ninja", playerColor: "#20242b", enemyShape: "arrow", hazardColor: "#f05d5e", spawnRate: 42, passiveScore: 2, bgA: "#141414", bgB: "#262b30" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Ninja Dash</h1>
-      <p>Sprint across rooftops as a ninja and dodge a relentless barrage of incoming arrows. The arrows fly faster and faster — one wrong move costs a life. See how far you can run before your 3 HP runs out.</p>
-      <p>Timing your jumps is everything. React too early or too late and you'll take a hit — find the rhythm and keep pushing forward.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Jump:</strong> Tap, Click, or press Spacebar</li>
-        <li>Dodge all arrows to survive</li>
-        <li>Score increases with distance</li>
-        <li>Mobile: single tap to jump</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Ninja Dash is an endless runner built around a single, satisfying mechanic: jumping over obstacles at exactly the right moment. The ninja sprints automatically while you focus entirely on timing. It's a game you can pick up in ten seconds and spend twenty minutes trying to master.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Endless runners are one of the most naturally mobile-friendly formats — one input, instant feedback, replayable by nature. We chose arrows as the hazard because they give a clear visual cue for timing: you can see them coming from a distance, which makes the "almost made it" moments feel fair rather than cheap. The ninja theme adds personality without complicating the loop.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The runner uses a parallax background to simulate movement while the ninja stays fixed horizontally. Arrow hazards spawn from the right and scroll left at a speed that gradually increases. Each jump follows a parabolic arc calculated in the game loop — pressing jump again in midair has no effect, keeping the mechanic honest. HP deducts on collision, and the score increments passively every frame the ninja survives.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Jump when the arrow is about one body-length away — jumping too early leads to landing right on the next one.</li>
-        <li>Resist the urge to jump preemptively. Let the arrow get close, then commit.</li>
-        <li>After a hit, use the brief invincibility window to reset your breathing and refocus.</li>
-        <li>As speed increases, shorten your mental reaction window — start treating it as a rhythm game rather than a reflex game.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Double jump</strong> — an aerial second jump that lets you recover from misreads.</li>
-        <li><strong>Obstacle variety</strong> — low-crawl gaps, overhead hazards, or moving platforms mixed in with the arrows.</li>
-        <li><strong>Speed milestones</strong> — visible stage breaks every 500 points with a brief flash and a ramp up in difficulty.</li>
-        <li><strong>Skin unlocks</strong> — different ninja or runner characters unlocked by reaching score thresholds.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

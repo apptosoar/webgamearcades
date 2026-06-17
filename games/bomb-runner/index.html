@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -46,51 +49,7 @@
       window.ACTION_GAME_CONFIG = { title: "Bomb Runner", type: "runner", health: 3, playerShape: "ninja", playerColor: "#2bd1c4", enemyShape: "bomb", hazardColor: "#f05d5e", spawnRate: 34, passiveScore: 2, bgA: "#171512", bgB: "#2f2415" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Bomb Runner</h1>
-      <p>A ninja sprints through a minefield of bombs — jump over each one before it explodes. The path gets busier and faster the further you run, so timing is everything.</p>
-      <p>You have 3 HP. Miss a jump and you take a hit. See how far you can run before the bombs catch up with you.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Jump:</strong> Tap, Click, or press Spacebar</li>
-        <li>Clear each bomb with a well-timed jump</li>
-        <li>Distance increases your score</li>
-        <li>Mobile: single tap to jump</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Bomb Runner takes the jump-timing core of an endless runner and replaces abstract obstacles with something tactile: ticking bombs on the ground. Each bomb has visible visual weight, which makes the "clear it by a hair" moments feel dramatic. The further you run, the more bombs appear and the less time you have to read each one.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>We liked how a single obstacle type — the bomb — could communicate danger without needing complex art or animation. The fuse coil and round shape are universally readable, so there's no learning curve on what to avoid. The hazard type also let us vary the challenge by changing spacing and spawn rate rather than inventing new obstacle categories, which keeps the code and design simple.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The ninja character moves at a constant horizontal speed while the world scrolls left. Bombs are placed ahead using a spawn interval that decreases over time. Each bomb occupies a fixed ground position and the player must jump over it. The jump arc is fixed — height and duration are the same every time — so the game is purely about identifying the correct moment to press jump relative to the bomb's current screen position. A miss-timed jump results in a collision and HP deduction.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Watch the bomb's position on the ground rather than the character's feet — the ground contact point is what actually determines a collision.</li>
-        <li>Jump earlier than feels natural in the first few runs. The arc takes time to peak, and landing before the bomb passes is safer than clearing it on the descent.</li>
-        <li>Resist double-tapping — mid-air inputs do nothing and can cause you to misjudge the remaining arc time.</li>
-        <li>After surviving for a while, shift to treating it as a rhythm game: the bombs develop a pattern, and you can anticipate them rather than react.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Dual-lane bombs</strong> — bombs on an elevated platform that require a lower path rather than a jump.</li>
-        <li><strong>Countdown fuses</strong> — bombs that detonate at a fixed time after spawning, requiring you to clear them quickly regardless of position.</li>
-        <li><strong>Speed burst collectible</strong> — a pickup that temporarily accelerates the runner for a score multiplier.</li>
-        <li><strong>Distance milestones</strong> — a visible marker every 500 meters that shows your personal best for comparison.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

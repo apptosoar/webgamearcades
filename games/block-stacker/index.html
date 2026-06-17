@@ -38,86 +38,30 @@
     .blk-ctrl { display: flex }
     .wrap { grid-template-rows: auto 1fr auto auto }
   }
-  .game-info {
-    width: min(780px, 100%);
-    margin: 0 auto;
-    padding: 36px 18px 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 28px;
-    color: #b8bec9;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .game-info .back-link:hover { color: #f4f2ea; }
-  .game-info h1 {
-    margin: 0 0 14px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: #f4f2ea;
-  }
-  .game-info p {
-    margin: 0 0 12px;
-    color: #b8bec9;
-    line-height: 1.75;
-    max-width: 64ch;
-  }
-  .game-info h2 {
-    margin: 28px 0 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f7b84b;
-  }
-  .game-info ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #b8bec9;
-    line-height: 2;
-  }
-  .game-info hr {
-    margin: 28px 0 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .more-games-link {
-    display: inline-block;
-    margin-top: 36px;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #f4f2ea;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
 </style>
 
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
 <body class="game-block-stacker">
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
 <div class="wrap">
@@ -239,47 +183,7 @@
   addEventListener("resize", () => { clearTimeout(layoutTimer); layoutTimer = setTimeout(layout, 120); });
   spawn(); layout(); resetTimer();
 </script>
-<section class="game-info" id="game-info">
-  <a href="../../" class="back-link">← Webgame Arcades</a>
-  <h1>Block Stacker</h1>
-  <p>Blocks fall one at a time into a 10-wide well. Move and rotate each piece to fill complete rows, clear them for points, and keep stacking before the well fills to the top.</p>
-  <p>Alongside the seven classic tetromino shapes, two bonus pieces — a plus-shaped block and an S-curve block — show up in the mix, keeping even experienced players reading each piece carefully.</p>
-  <hr class="section-divider">
-  <h2>How to Play</h2>
-  <ul>
-    <li><strong>Move:</strong> Left / Right Arrow keys</li>
-    <li><strong>Soft drop:</strong> Down Arrow</li>
-    <li><strong>Rotate:</strong> Up Arrow, or click/tap the board</li>
-    <li><strong>Hard drop:</strong> Spacebar</li>
-    <li>Mobile: on-screen rotate / move / drop pad</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>About This Game</h2>
-  <p>Block Stacker is a classic line-clearing stacking puzzle. Pieces fall from the top of a 10-wide, 24-tall well, and your job is to slot each one in so it completes a horizontal line. Complete lines clear and award points; the well empties from the bottom up. Let the stack reach the top and the run is over.</p>
-  <hr class="section-divider">
-  <h2>Why We Built It</h2>
-  <p>Stacking puzzles are a genre most players already know by feel, so we wanted to keep the core controls completely familiar while adding a small twist. The seven standard tetromino shapes are joined by two extra pieces — a plus-shaped block and an S-curve block — that don't behave like anything in the standard set. Veteran players who can place I- and T-pieces on autopilot have to slow down and actually look at the next drop again.</p>
-  <hr class="section-divider">
-  <h2>How It Works</h2>
-  <p>The well is 10 columns wide and 24 rows tall. A new piece spawns at the top roughly every 650 milliseconds at first, automatically dropping one row per tick. You can shift it left or right, rotate it (with wall-kick adjustment so rotations near the edges still work), or hold down to soft-drop, or hit space to hard-drop it straight to the floor. Once a piece lands, it locks in place after a brief 110-millisecond pause — long enough to see a quick white flash confirming the cells are set. Any completed row clears immediately for 100 points, and the drop speed increases every two lines cleared, down to a floor of 180 milliseconds per row.</p>
-  <hr class="section-divider">
-  <h2>Tips &amp; Strategy</h2>
-  <ul>
-    <li>Keep the surface of your stack as flat as possible — uneven stacks make it much harder to slot in later pieces without leaving gaps.</li>
-    <li>Save hard drops for placements you're already sure about; once you hit space, the piece locks immediately with no chance to adjust.</li>
-    <li>The two bonus shapes rotate differently than any tetromino, so rotate them once in an open area before you commit to a placement.</li>
-    <li>Clearing lines near the edges of the well is usually safer than the center, since it leaves more open space to recover from a mistake.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>Ideas for Improvement</h2>
-  <ul>
-    <li><strong>Next-piece preview</strong> — show the upcoming piece so you can plan a placement in advance.</li>
-    <li><strong>Hold slot</strong> — let players store one piece aside for later instead of always taking the next drop.</li>
-    <li><strong>Combo scoring</strong> — bonus points for clearing lines on back-to-back drops.</li>
-    <li><strong>Marathon vs. sprint modes</strong> — an endless mode alongside a race to clear a fixed number of lines.</li>
-  </ul>
-  <a href="../../" class="more-games-link">Browse All Games</a>
-</section>
+
 
 </body>
 </html>

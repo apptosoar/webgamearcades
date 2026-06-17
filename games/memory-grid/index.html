@@ -15,87 +15,29 @@
 <link rel="stylesheet" href="../game-shell.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
-<style>
-  .game-info {
-    width: min(780px, 100%);
-    margin: 0 auto;
-    padding: 36px 18px 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 28px;
-    color: #b8bec9;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .game-info .back-link:hover { color: #f4f2ea; }
-  .game-info h1 {
-    margin: 0 0 14px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: #f4f2ea;
-  }
-  .game-info p {
-    margin: 0 0 12px;
-    color: #b8bec9;
-    line-height: 1.75;
-    max-width: 64ch;
-  }
-  .game-info h2 {
-    margin: 28px 0 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f7b84b;
-  }
-  .game-info ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #b8bec9;
-    line-height: 2;
-  }
-  .game-info hr {
-    margin: 28px 0 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .more-games-link {
-    display: inline-block;
-    margin-top: 36px;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #f4f2ea;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
-</style>
 
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
 <body class="game-memory-grid">
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
 <div class="wrap">
@@ -151,46 +93,7 @@
     }
   }
 </script>
-<section class="game-info" id="game-info">
-  <a href="../../" class="back-link">← Webgame Arcades</a>
-  <h1>Memory Grid</h1>
-  <p>Nine tiles, one growing sequence. Watch the order they flash, then click them back in exactly the same order. Every round you clear adds one more step to remember.</p>
-  <p>There's no clock and no penalty for taking your time — the only thing standing between you and a higher round is how much of the sequence you can hold in your head.</p>
-  <hr class="section-divider">
-  <h2>How to Play</h2>
-  <ul>
-    <li>Press <strong>Start</strong> to begin the first round</li>
-    <li>Watch the tiles flash in sequence</li>
-    <li>Click or tap the tiles back in the same order</li>
-    <li>Each successful round adds one more step</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>About This Game</h2>
-  <p>Memory Grid is a classic "Simon says" style memory game played on a 3x3 grid of numbered tiles. Round one shows you a single flash; every round after that appends one more tile to the sequence before replaying the whole thing from the start. Get the full sequence right and you move on. Click the wrong tile anywhere along the way and you're back to round one.</p>
-  <hr class="section-divider">
-  <h2>Why We Built It</h2>
-  <p>We wanted a game that tests memory on its own, without mixing in a reaction-time or speed element. Most "fast-paced" games reward quick hands; this one rewards a quiet mind. There's no timer pushing you to rush your input, so the only variable that matters is how many steps you can actually hold onto — which makes it a surprisingly good measure of how distracted (or focused) you are in the moment.</p>
-  <hr class="section-divider">
-  <h2>How It Works</h2>
-  <p>Each round, a new tile index from 0–8 is appended to an internal sequence array. The full sequence is replayed by flashing each tile teal for about 360 milliseconds, with roughly 520 milliseconds between flashes. As you click tiles, your input is checked one step at a time against the recorded sequence — a mismatch at any position ends the run immediately and resets the sequence to empty. Complete the whole sequence correctly and the round counter increases, then the next (longer) sequence plays after a short pause.</p>
-  <hr class="section-divider">
-  <h2>Tips &amp; Strategy</h2>
-  <ul>
-    <li>Group the grid mentally into rows or corners instead of tracking nine separate, unrelated positions.</li>
-    <li>Say the position out loud (or silently in your head) as each tile flashes — verbal coding helps most people retain longer sequences.</li>
-    <li>There's no time limit on your input, so pause and think before each click rather than clicking on instinct.</li>
-    <li>If you keep failing around the same round number, try replaying the sequence in your head once more before you start clicking.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>Ideas for Improvement</h2>
-  <ul>
-    <li><strong>Audio tones</strong> — a distinct musical note per tile, since sound is often easier to recall than position alone.</li>
-    <li><strong>Difficulty modes</strong> — faster flashes or a larger grid for players who outgrow the default pace.</li>
-    <li><strong>Best round tracking</strong> — saving your personal best round across sessions.</li>
-    <li><strong>Partial retry</strong> — an easier mode that only resets a few steps instead of all the way back to round one.</li>
-  </ul>
-  <a href="../../" class="more-games-link">Browse All Games</a>
-</section>
+
 
 </body>
 </html>

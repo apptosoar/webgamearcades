@@ -108,24 +108,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -579,51 +582,7 @@
         loadLevel(0);
       })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Crate Shift</h1>
-      <p>Push crates onto the target markers to solve each puzzle in this classic Sokoban-style game. You can only push — never pull — so plan each move before you act or you'll push a crate into a corner with no escape.</p>
-      <p>Each puzzle has a limited number of moves. Think ahead and find the efficient solution before you run out.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Walk into a crate to push it one square</li>
-        <li>Place every crate on a target marker to solve the puzzle</li>
-        <li>Mobile: on-screen D-pad controls</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Crate Shift is a Sokoban-style puzzle game with a move limit. Push crates onto their target markers to solve each puzzle — but you can only push, never pull, and every move counts. Getting a crate stuck in a corner means starting over. The move limit adds a second layer of constraint: even if you find a solution, it has to be an efficient one.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Sokoban puzzles are mathematically elegant — they require genuinely planning several moves ahead, and a single mistake can make a puzzle unsolvable even though the board still looks like progress was made. We added the move counter to discourage brute-force exploration: knowing you have a budget forces you to think before acting. Each level was designed so the optimal solution uses noticeably fewer moves than a careless approach.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The game state is a 2D grid of cells, each of which can hold a wall, floor, crate, target, player, or crate-on-target. When the player moves into a crate cell, the crate is pushed one step in the same direction if the destination cell is empty floor. If the destination is a wall or another crate, the move is blocked. The move counter decrements on every successful player step, and the puzzle is failed when it reaches zero without all targets covered.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Identify which target each crate needs to reach before making any moves. Pre-planning the route prevents mid-puzzle dead ends.</li>
-        <li>Never push a crate into a corner unless that corner is its target — a cornered crate with no target is permanently stuck.</li>
-        <li>Push crates along walls when possible. Wall-hugging paths leave you more options for the player character's position.</li>
-        <li>Work backwards from the target: ask "where does the crate need to be one step before the target?" and solve for that position first.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Undo button</strong> — step back one move at a time without restarting the entire puzzle.</li>
-        <li><strong>Level editor</strong> — a simple grid editor that lets players design and share their own puzzles.</li>
-        <li><strong>Move efficiency rating</strong> — a star rating based on how close to the optimal move count you solved the puzzle in.</li>
-        <li><strong>Crate types</strong> — heavy crates that require two pushes to move, or fragile crates that break if pushed into a wall.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

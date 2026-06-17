@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -397,51 +400,7 @@
       loop();
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Pop Blitz</h1>
-      <p>Click or tap bubbles to pop them as fast as you can before they slip past the edge. Each pop scores points — let too many escape and you lose HP.</p>
-      <p>Bubbles appear in different sizes and speeds. Survive as long as possible and chase the highest score. You start with 5 HP.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Pop:</strong> Click or tap each bubble to destroy it</li>
-        <li>Don't let bubbles escape — each miss costs 1 HP</li>
-        <li>You have 5 HP to start</li>
-        <li>Mobile: touch controls fully supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Pop Blitz is a speed-clicking arcade game where bubbles of different sizes float across the screen and it's your job to pop every single one. The game rewards fast, accurate clicking over sustained pressure — a good run feels like a sharp, efficient burst of focus rather than an endurance test.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Click-target games are a natural fit for both mouse and touch because the input model is identical: find target, press it. Pop Blitz pushed this to its limit by varying bubble size (affecting the precision required) and bubble speed (affecting the reaction window). The result is a game that gets harder not just because more things appear, but because the things that appear demand more of you individually.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Bubbles are spawned with randomized size, speed, and trajectory. Each bubble moves linearly until it exits the canvas boundary. A click/tap is registered as a hit if it falls within the bubble's circular radius. Bubbles that exit without being popped reduce the HP counter. Smaller bubbles have tighter hit radii and faster speeds, creating a natural prioritization challenge: do you chase the small fast one, or guarantee the large slow ones?</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Prioritize bubbles heading toward the exit edge, not the ones nearest to you. A bubble about to leave is more dangerous than one that just appeared.</li>
-        <li>Small, fast bubbles are score traps — chasing one often means missing two large slow ones. Unless it's about to escape, let it go.</li>
-        <li>Scan the whole screen before committing to a sequence. A planned click order beats reactive popping.</li>
-        <li>On mobile, use a light press rather than a firm tap — you'll click faster and reduce accidental misses from dragging.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Special bubbles</strong> — golden bubbles worth triple points, bomb bubbles that destroy nearby ones if popped, and shield bubbles that block other pops.</li>
-        <li><strong>Combo chain</strong> — a multiplier that grows with consecutive pops and resets when a bubble escapes.</li>
-        <li><strong>Time-limited rounds</strong> — 30-second sprint mode where score rather than HP is the focus.</li>
-        <li><strong>Difficulty selector</strong> — preset starting conditions for casual (larger bubbles, slower speed) and expert (tiny fast bubbles from the start).</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

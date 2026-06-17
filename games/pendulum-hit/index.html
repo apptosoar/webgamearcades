@@ -20,24 +20,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -525,52 +528,7 @@
       loop();
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Pendulum Hit</h1>
-      <p>Watch the pendulum swing back and forth and tap at the exact moment the bob passes through the target zone. The gold inner zone scores a PERFECT — the green outer zone scores GOOD. Miss the zone and it counts as a miss.</p>
-      <p>Clear 10 stages by landing enough hits per stage. The pendulum speeds up and the target zone shrinks with each stage, demanding sharper timing to advance.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Hit:</strong> Tap, click, or press Space / Enter when the bob is inside the target zone</li>
-        <li>Gold center zone = PERFECT (+100), green outer zone = GOOD (+50)</li>
-        <li>Consecutive hits give a streak bonus</li>
-        <li>Each stage has 8 swings — hit the required number to advance</li>
-        <li>Mobile: tap anywhere on screen or use the HIT! button</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Pendulum Hit is a timing game built around one of physics' most elegant motions: simple harmonic oscillation. The pendulum swings at a mathematically precise speed and you have to press at the exact moment the bob passes through the target zone. PERFECT hits land in the narrow gold center; GOOD hits land anywhere in the wider green arc. Miss the zone entirely and it counts against you.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Rhythm games typically give players auditory cues to help with timing. We wanted to build a timing game that was purely visual — your internal sense of the pendulum's rhythm is the only guide. The physics-accurate swing arc (using cosine motion) means the pendulum slows near the endpoints and accelerates through the center, which is the opposite of what players initially expect. That counterintuitive speed profile is what makes it interesting.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The pendulum angle is computed each frame as <code>angle = −MAX_ANGLE × cos(t × speed)</code>, where speed increases with each stage. The target zone is defined as a fraction of MAX_ANGLE — when the absolute angle is less than this fraction, the bob is "in zone". A hit is registered only once per swing window; pressing again during the same swing has no effect. A streak bonus rewards consecutive successful hits, making perfect runs significantly more valuable than average ones.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Don't watch the bob itself — watch the zone. Train yourself to react to when the zone lights up, not to where the bob is.</li>
-        <li>The pendulum slows near the center during its arc, giving you more time than it appears. What feels like a narrow window is actually longer than the edges suggest.</li>
-        <li>On later stages, commit to pressing slightly early rather than on-time. Your brain's processing delay means "feels right" is actually a fraction late.</li>
-        <li>Build a streak early when the window is wide. Later stages have smaller zones, so your streak bonus carried from early stages helps significantly.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Double pendulums</strong> — two pendulums with offset phases that must both be in zone simultaneously for a bonus hit.</li>
-        <li><strong>Rhythm mode</strong> — a variant with an audio beat that syncs to the pendulum, testing whether audio or visual timing is more accurate for each player.</li>
-        <li><strong>Accuracy graph</strong> — a post-game chart showing each hit's distance from perfect center over the session.</li>
-        <li><strong>Calibration stage</strong> — a 0th stage that measures the player's personal reaction time and adjusts the PERFECT threshold accordingly.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

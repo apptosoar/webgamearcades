@@ -15,87 +15,29 @@
 <link rel="stylesheet" href="../game-shell.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
-<style>
-  .game-info {
-    width: min(780px, 100%);
-    margin: 0 auto;
-    padding: 36px 18px 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 28px;
-    color: #b8bec9;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .game-info .back-link:hover { color: #f4f2ea; }
-  .game-info h1 {
-    margin: 0 0 14px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: #f4f2ea;
-  }
-  .game-info p {
-    margin: 0 0 12px;
-    color: #b8bec9;
-    line-height: 1.75;
-    max-width: 64ch;
-  }
-  .game-info h2 {
-    margin: 28px 0 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f7b84b;
-  }
-  .game-info ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #b8bec9;
-    line-height: 2;
-  }
-  .game-info hr {
-    margin: 28px 0 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .more-games-link {
-    display: inline-block;
-    margin-top: 36px;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #f4f2ea;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
-</style>
 
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
 <body class="game-neon-dodge">
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
 <div class="wrap">
@@ -162,46 +104,7 @@
   }
   loop();
 </script>
-<section class="game-info" id="game-info">
-  <a href="../../" class="back-link">← Webgame Arcades</a>
-  <h1>Neon Dodge</h1>
-  <p>Red neon blocks rain down from every part of the screen, and unlike most dodge games, you're not locked to a lane or a grid — you can move to any point on the field. Stay alive as long as you can; your score climbs the whole time.</p>
-  <p>On a keyboard, nudge your way around with the arrow keys. On a touchscreen, just tap or drag to wherever you want your square to be.</p>
-  <hr class="section-divider">
-  <h2>How to Play</h2>
-  <ul>
-    <li><strong>Move:</strong> Arrow keys (all four directions)</li>
-    <li>Mobile: tap or drag anywhere on the stage to move there directly</li>
-    <li>Avoid every falling red block</li>
-    <li>Survive longer to score higher</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>About This Game</h2>
-  <p>Neon Dodge is a free-roaming dodge game. Instead of switching between fixed lanes, your square can sit anywhere on the play field, and red blocks fall continuously from random positions above. The longer you avoid every block, the higher your score climbs — there's no separate objective beyond staying alive.</p>
-  <hr class="section-divider">
-  <h2>Why We Built It</h2>
-  <p>Most dodge games restrict you to a handful of lanes, which turns the challenge into picking the right lane at the right time. We wanted something closer to a bullet-hell feel, where your exact position on the screen matters and every inch of open space is a real option. That also meant touch controls needed to work differently — instead of tapping a direction, you can drag your square straight to where it needs to be, which feels more direct on a phone or tablet than arrow-key style movement.</p>
-  <hr class="section-divider">
-  <h2>How It Works</h2>
-  <p>A new block spawns roughly every 650 milliseconds at a random horizontal position along the top of the screen, falling at a randomized speed each time (faster blocks keep you from settling into a single safe rhythm). Collision is checked every frame using a simple bounding-box overlap between your square and each block. Keyboard input nudges your position by a fixed step in any direction; touch and mouse input instead map your pointer's exact screen position directly to your square's coordinates, which is why dragging tends to feel more precise than tapping a direction repeatedly.</p>
-  <hr class="section-divider">
-  <h2>Tips &amp; Strategy</h2>
-  <ul>
-    <li>On keyboard, make small constant adjustments rather than holding a direction into a corner — corners limit how many ways you can escape the next block.</li>
-    <li>On touch, take advantage of direct positioning — drag instead of tapping repeatedly, since dragging keeps your square moving smoothly with your finger.</li>
-    <li>Watch the top edge of the screen for new spawns instead of fixating on your own square; you'll see incoming blocks earlier.</li>
-    <li>Staying near the center of the field generally gives you more directions to dodge toward than hugging an edge.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>Ideas for Improvement</h2>
-  <ul>
-    <li><strong>Brief shield power-up</strong> — an occasional pickup that absorbs one hit.</li>
-    <li><strong>Spawn telegraphing</strong> — a short warning flash at the top edge before a block actually appears.</li>
-    <li><strong>Density waves</strong> — alternating calm and intense stretches instead of constant random spawning.</li>
-    <li><strong>Difficulty selection</strong> — adjustable starting spawn rate for newer or more experienced players.</li>
-  </ul>
-  <a href="../../" class="more-games-link">Browse All Games</a>
-</section>
+
 
 </body>
 </html>

@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -45,51 +48,7 @@
       window.ACTION_GAME_CONFIG = { title: "Laser Escape", type: "dodge", pattern: "laser", health: 3, playerColor: "#73d676", speed: 6.2, spawnRate: 32, passiveScore: 2, bgA: "#081316", bgB: "#162e34" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Laser Escape</h1>
-      <p>A grid of deadly laser beams sweeps and shifts unpredictably — one touch means a hit. Navigate the field precisely, using every gap you can find to stay alive.</p>
-      <p>With only 3 HP, there's little room for error. Lasers grow more complex and faster as your score increases.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Avoid all laser beams</li>
-        <li>Use gaps in the laser patterns to survive</li>
-        <li>Mobile: touch controls supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Laser Escape is a spatial puzzle disguised as an action game. The lasers don't shoot — they sweep, shift, and close in. Surviving means reading the pattern in advance and positioning yourself in the gap before it closes. One wrong move and a beam finds you.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>We wanted a dodge game with a different feel from simple projectile avoidance. Laser walls force you to think about area rather than point-based collision — you can't thread a needle through a wall, you have to find and reach the right gap ahead of time. The sci-fi laser aesthetic fits naturally and makes the danger feel visually clear even at high speeds.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Laser walls are generated as horizontal or vertical line segments that sweep across the canvas at a fixed velocity. Each wall has a single gap — a break in the line — positioned at a random location. The gap width shrinks slightly as score increases. The player character uses standard WASD/arrow movement clamped to the canvas bounds. Collision is detected when the player's hitbox overlaps any filled portion of an active laser segment.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Identify the gap in an incoming wall before it reaches you — then move to that row or column rather than waiting until the last moment.</li>
-        <li>Stay near the center of the screen when possible; it maximizes your range of motion in any direction.</li>
-        <li>Never move parallel to an incoming wall — you'll end up racing it instead of crossing through the gap.</li>
-        <li>In late game, treat two incoming walls as a unit and find the position that satisfies both gaps simultaneously.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Diagonal lasers</strong> — beams at 45° angles that require movement along both axes to avoid.</li>
-        <li><strong>Rotating laser arms</strong> — beams that pivot from a fixed point, requiring circular movement to stay clear.</li>
-        <li><strong>Pulse lasers</strong> — beams that flash on and off in a rhythm, rewarding timing rather than just positioning.</li>
-        <li><strong>Color-coded danger</strong> — visual cues that show which walls are about to accelerate.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

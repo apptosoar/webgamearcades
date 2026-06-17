@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -45,51 +48,7 @@
       window.ACTION_GAME_CONFIG = { title: "Robot Arena", type: "arena", health: 5, enemyShape: "robot", enemyColor: "#f7b84b", playerColor: "#a98bff", enemySpeed: 1.9, spawnRate: 40, hitScore: 7, bgA: "#12151b", bgB: "#2b2530" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Robot Arena</h1>
-      <p>Enter the arena and face down a horde of enemy robots. Move constantly to avoid getting cornered — your character auto-attacks nearby bots while you focus on staying alive.</p>
-      <p>Robot waves hit harder and faster with every passing second. You have 5 HP, so dodge smartly and pick off enemies before they surround you.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Your character auto-attacks nearby robots</li>
-        <li>Avoid getting surrounded</li>
-        <li>Mobile: touch controls supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Robot Arena drops you into a confined space with an ever-growing horde of mechanical enemies. Your character attacks automatically — survival depends entirely on movement. It's a pure spatial puzzle: where do you go when every direction is closing in?</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>We wanted to explore the "auto-attack survival" genre in its simplest form. Removing the attack input lets players think entirely in terms of space and positioning. The robot theme gives the enemies a mechanical, predictable feel that rewards learning their movement patterns. Every death feels like a mistake you understand, which keeps the run-again pull strong.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Enemies use simple homing logic — each frame they calculate the direction toward the player and move along it. The arena has no walls the player can pass through, so positioning choices have real consequences. Spawn rate increases over time using a frame counter, and enemy speed scales with elapsed time. Auto-attack fires at the nearest enemy within a fixed radius every few frames.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Never stop moving. Standing still for even a second allows enemies to completely surround you.</li>
-        <li>Use corners sparingly — they can funnel enemies in front of you for efficient auto-attack, but they cut off your escape routes.</li>
-        <li>Move toward thin clusters, not through dense ones. Punching through a crowd costs more HP than circling around the edge.</li>
-        <li>Early in the round, orbit the outer edge. As enemy count grows, start using diagonal cuts across the arena to shake pursuers.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Arena hazards</strong> — static obstacles or moving walls that block both enemies and the player.</li>
-        <li><strong>Enemy types</strong> — fast scouts, slow tanks, and explosive bots that behave differently from the standard homing robots.</li>
-        <li><strong>Ability pickups</strong> — temporary speed bursts or area-clear attacks that drop randomly in the arena.</li>
-        <li><strong>Endless wave counter</strong> — showing which wave you're on so players have a concrete milestone to chase.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

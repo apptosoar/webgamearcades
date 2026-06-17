@@ -15,87 +15,29 @@
 <link rel="stylesheet" href="../game-shell.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
-<style>
-  .game-info {
-    width: min(780px, 100%);
-    margin: 0 auto;
-    padding: 36px 18px 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 28px;
-    color: #b8bec9;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .game-info .back-link:hover { color: #f4f2ea; }
-  .game-info h1 {
-    margin: 0 0 14px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: #f4f2ea;
-  }
-  .game-info p {
-    margin: 0 0 12px;
-    color: #b8bec9;
-    line-height: 1.75;
-    max-width: 64ch;
-  }
-  .game-info h2 {
-    margin: 28px 0 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f7b84b;
-  }
-  .game-info ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #b8bec9;
-    line-height: 2;
-  }
-  .game-info hr {
-    margin: 28px 0 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .more-games-link {
-    display: inline-block;
-    margin-top: 36px;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #f4f2ea;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
-</style>
 
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
 <body class="game-sudoku">
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
 <div class="wrap">
@@ -192,46 +134,7 @@
   start(4);
   window.addEventListener("resize", () => { if (cells.length) drawBoard(); });
 </script>
-<section class="game-info" id="game-info">
-  <a href="../../" class="back-link">← Webgame Arcades</a>
-  <h1>Sudoku</h1>
-  <p>Pick a grid size, then fill in the blanks so every row and every column contains each number exactly once. Pre-filled clues are locked; clicking an open cell cycles it through the possible numbers.</p>
-  <p>It plays like classic Sudoku, but without the 3x3 box rule — which means it works cleanly at sizes that don't divide neatly into sub-boxes, from a quick 4x4 warm-up up to a full 10x10 challenge.</p>
-  <hr class="section-divider">
-  <h2>How to Play</h2>
-  <ul>
-    <li>Choose a grid size: 4x4, 5x5, 6x6, 8x8, or 10x10</li>
-    <li>Click any open cell to cycle through numbers 1 through the grid size</li>
-    <li>Fill every row and column with each number exactly once</li>
-    <li>Cells turn red if they conflict with another cell in the same row or column</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>About This Game</h2>
-  <p>This is a Latin-square number puzzle rather than a traditional 9x9 Sudoku. There are no 3x3 boxes to satisfy — just the rule that every row and every column must contain each number from 1 to the grid size exactly once. Some cells start filled in as fixed clues; the rest are yours to complete. Get every row and column right with no conflicts, and the puzzle is solved.</p>
-  <hr class="section-divider">
-  <h2>Why We Built It</h2>
-  <p>Classic Sudoku's 3x3 box rule only works cleanly on a 9x9 grid, since 9 is a perfect square. We wanted players to be able to choose their own grid size — including ones like 5x5, 8x8, or 10x10 that don't split evenly into sub-boxes — so we kept the row-and-column rule and dropped the box constraint entirely. The result is a puzzle that scales smoothly from a two-minute warm-up to a genuinely demanding 10x10 grid, without ever feeling like a different game.</p>
-  <hr class="section-divider">
-  <h2>How It Works</h2>
-  <p>Each puzzle is generated from two independently shuffled orderings of rows and columns, combined with modular arithmetic to produce a guaranteed-valid Latin square — every row and column is mathematically guaranteed to contain each number exactly once before any cells are even hidden. About 48% of cells are then kept visible as fixed clues, and the rest start blank. Clicking an open cell increments its value by one (wrapping back to blank after the grid size), and any cell that currently shares its value with another cell in the same row or column is highlighted in red so you can spot conflicts immediately.</p>
-  <hr class="section-divider">
-  <h2>Tips &amp; Strategy</h2>
-  <ul>
-    <li>Start with 4x4 or 5x5 to get a feel for the click-to-cycle input before attempting larger grids.</li>
-    <li>Work one row or column at a time, figuring out which numbers are still missing rather than guessing randomly across the whole board.</li>
-    <li>A red conflict isn't a dead end — keep clicking through that cell's values until the conflict clears, then move on.</li>
-    <li>On larger grids, scan for rows or columns that are already mostly filled in — they usually have the fewest valid options left.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>Ideas for Improvement</h2>
-  <ul>
-    <li><strong>Pencil marks</strong> — a way to jot down candidate numbers in a cell instead of committing right away.</li>
-    <li><strong>Undo button</strong> — step back from a click instead of cycling all the way around.</li>
-    <li><strong>Timer and best times</strong> — per grid size, so you can track improvement.</li>
-    <li><strong>Single-cell hint</strong> — reveal one correct number when you're stuck.</li>
-  </ul>
-  <a href="../../" class="more-games-link">Browse All Games</a>
-</section>
+
 
 </body>
 </html>

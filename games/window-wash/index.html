@@ -34,24 +34,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -1279,51 +1282,7 @@
       requestAnimationFrame(loop);
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Window Wash</h1>
-      <p>Dirty windows need scrubbing — drag the mop across each pane to clean it. Hit the cleanliness target before time runs out to pass the level. 10 windows to wash in total.</p>
-      <p>Each window is bigger and dirtier than the last, and the timer gets tighter. Cover every inch of grime before the clock runs out.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Scrub:</strong> Click and drag (or touch drag) to wash the window</li>
-        <li>Hit the cleanliness target to pass each level</li>
-        <li>10 levels total</li>
-        <li>Mobile: touch-controlled</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Window Wash is a drag-to-clean game that turns a mundane chore into a satisfying puzzle. Each window has a different pattern of grime, and you need to scrub enough of it away before the timer runs out. The tension isn't combat or reaction — it's coverage efficiency. Can you find the fastest path across the window?</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Cleaning games have a distinct psychological appeal: visible, immediate progress. Every stroke of the squeegee reveals a clean surface beneath the grime, and that reveal feels rewarding in a way that abstract score increases don't. We wanted a game that felt relaxing in early stages and pressured in later ones — the timer creates urgency without changing the core mechanic at all.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The window surface is represented as a pixel grid initialized with a grime texture. As the player drags, pixels within the squeegee's radius are marked as clean. A running percentage counts cleaned pixels against total dirty pixels. When the cleanliness threshold is reached before the timer expires, the level is complete. Later levels have larger windows, denser grime patterns, and shorter time limits. Bird droppings and rain streaks are additional grime types with harder-to-clean edges.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Sweep in horizontal rows from top to bottom — this systematic path covers the most area per second and avoids re-cleaning already-clean spots.</li>
-        <li>Don't start in a corner. Begin near the center and work outward so you end near the edges where the final cleaning percentage is easiest to top off.</li>
-        <li>Bird droppings require multiple passes. Identify them early and give them extra attention rather than leaving them for the last second.</li>
-        <li>Move the squeegee at a moderate speed — moving too fast leaves gaps between strokes while too slow wastes time on already-clean surface.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>New stain types</strong> — sticky mud that requires a hold rather than a drag, or paint that can only be cleaned with a specific tool.</li>
-        <li><strong>Bonus time collectibles</strong> — hidden stars under the grime that add seconds to the clock when revealed.</li>
-        <li><strong>Window themes</strong> — skyscraper, submarine porthole, spacecraft windshield — each with a unique background and grime pattern.</li>
-        <li><strong>Efficiency rating</strong> — a post-level grade based on how many redundant strokes you made, encouraging optimal coverage paths.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

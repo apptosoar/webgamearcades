@@ -23,24 +23,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -529,51 +532,7 @@
       loop(0);
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Water Balloon Blitz</h1>
-      <p>Balloons drift across the screen — click or tap each one to pop it before it flies away. Reach the goal count within the time limit to advance to the next stage. Watch out for bomb balloons that cost HP if popped.</p>
-      <p>10 stages, each with more balloons, less time, and more bombs. Use the Splash ability to burst multiple nearby balloons at once.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Pop:</strong> Click or tap a balloon to burst it</li>
-        <li>Avoid clicking bomb balloons — they cost 1 HP</li>
-        <li><strong>Splash:</strong> tap the Splash button to pop all nearby balloons</li>
-        <li>Reach the goal count before time runs out to advance</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Water Balloon Blitz is a rapid-fire tap game about instant decisions: pop the water balloon or leave it. The catch is the bomb balloons mixed in — tap one by mistake and you lose HP. As stages progress, balloons appear faster and the ratio of bombs increases, forcing you to read each target in a fraction of a second.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>We wanted a game that felt festive and light while still demanding sharp attention. Water balloons have a universally cheerful connotation, which makes the risk-reward tension feel playful rather than stressful. The Splash ability was added after playtesting showed that players needed a way to recover from tight situations — it converts a moment of panic into a tactical decision.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Balloons are spawned with a random trajectory and a type flag — either water or bomb, weighted by the current stage configuration. Each balloon moves along its trajectory and disappears when it exits the canvas. A click/tap hit check fires against each balloon's circular radius on input. Water balloons increment the hit counter toward the stage goal; bomb balloons deduct HP on contact. The Splash ability triggers an area-of-effect pop around the cursor's current position.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Look at the color and shape before tapping — bomb balloons have a distinct appearance. Tapping fast without checking is the main cause of HP loss.</li>
-        <li>Use Splash when three or more water balloons are clustered together. Single-balloon situations aren't worth the cooldown.</li>
-        <li>Allow some water balloons to escape rather than risking a bomb hit when they're tightly grouped.</li>
-        <li>In later stages, focus on the center of the screen where density is highest and let balloons near the edges drift past.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Special balloons</strong> — golden balloons worth three hits, chain balloons that pop adjacent water balloons when hit.</li>
-        <li><strong>Wind mechanics</strong> — balloons pushed by a directional wind that changes each stage, requiring path prediction.</li>
-        <li><strong>Lives display</strong> — animated heart icons that break visually when HP is lost, making damage more emotionally impactful.</li>
-        <li><strong>Stage themes</strong> — different visual backdrops and balloon color palettes per stage to maintain visual freshness.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

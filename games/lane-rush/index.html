@@ -15,87 +15,29 @@
 <link rel="stylesheet" href="../game-shell.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
 <script src="../game-shell.js"></script>
-<style>
-  .game-info {
-    width: min(780px, 100%);
-    margin: 0 auto;
-    padding: 36px 18px 64px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 28px;
-    color: #b8bec9;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.15s;
-  }
-  .game-info .back-link:hover { color: #f4f2ea; }
-  .game-info h1 {
-    margin: 0 0 14px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: #f4f2ea;
-  }
-  .game-info p {
-    margin: 0 0 12px;
-    color: #b8bec9;
-    line-height: 1.75;
-    max-width: 64ch;
-  }
-  .game-info h2 {
-    margin: 28px 0 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f7b84b;
-  }
-  .game-info ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #b8bec9;
-    line-height: 2;
-  }
-  .game-info hr {
-    margin: 28px 0 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .game-info .more-games-link {
-    display: inline-block;
-    margin-top: 36px;
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.07);
-    color: #f4f2ea;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.15s;
-  }
-  .game-info .more-games-link:hover { background: rgba(255, 255, 255, 0.13); }
-</style>
 
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
 <body class="game-lane-rush">
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
 <div class="wrap">
@@ -151,46 +93,7 @@
   }
   loop();
 </script>
-<section class="game-info" id="game-info">
-  <a href="../../" class="back-link">← Webgame Arcades</a>
-  <h1>Lane Rush</h1>
-  <p>Three lanes, one car, and a constant stream of obstacles falling toward you. Switch lanes at the right moment to stay alive — every second you survive adds to your score.</p>
-  <p>There's no acceleration, no power-ups, and no extra mechanics to learn. It's a pure test of reading the lane ahead and committing to a move before it's too late.</p>
-  <hr class="section-divider">
-  <h2>How to Play</h2>
-  <ul>
-    <li><strong>Switch lanes:</strong> Left / Right Arrow keys</li>
-    <li>Mobile: tap the left or right half of the screen</li>
-    <li>Avoid every obstacle in your lane</li>
-    <li>Survive longer to score higher</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>About This Game</h2>
-  <p>Lane Rush is a minimal 3-lane dodging game. Obstacles fall continuously from the top of the screen in one of three lanes, and your only job is to be in a different lane when they reach you. Your score climbs automatically for every moment you stay alive, so there's no separate scoring system to think about — just survive.</p>
-  <hr class="section-divider">
-  <h2>Why We Built It</h2>
-  <p>We wanted to strip a lane-switching reflex game down to its simplest possible form — no speed-up curve, no items, no second mechanic competing for your attention. Just three lanes and a decision to make every time something approaches. It turns out that simplicity makes the timing of each lane switch matter a lot more, since there's nothing else to distract you from it.</p>
-  <hr class="section-divider">
-  <h2>How It Works</h2>
-  <p>A new obstacle spawns in a randomly chosen lane roughly every 0.78 seconds and falls down the screen at a constant speed. Your car sits near the bottom of the play field, and a collision is checked whenever an obstacle in your current lane passes through a fixed vertical zone close to your car. Your score increases by one for every animation frame you're still alive, so longer survival directly becomes a higher number — there's no separate point system layered on top.</p>
-  <hr class="section-divider">
-  <h2>Tips &amp; Strategy</h2>
-  <ul>
-    <li>Pick a lane and commit — switching back and forth without a clear reason is the most common way to accidentally drive into something.</li>
-    <li>Watch the obstacles as they spawn at the top of the screen rather than waiting until they're right in front of your car.</li>
-    <li>The middle lane gives you an escape route in both directions, which makes it a safer default position than either edge.</li>
-    <li>On mobile, keep a finger ready over each half of the screen so you're not reaching across to switch lanes at the last second.</li>
-  </ul>
-  <hr class="section-divider">
-  <h2>Ideas for Improvement</h2>
-  <ul>
-    <li><strong>Speed ramp</strong> — gradually increasing obstacle speed the longer a run goes, for an extra layer of difficulty.</li>
-    <li><strong>Near-miss bonus</strong> — extra points for switching lanes at the last possible moment.</li>
-    <li><strong>Lane-specific hazards</strong> — obstacles that behave differently depending on which lane they spawn in.</li>
-    <li><strong>Visual car and obstacle variety</strong> — different sprites instead of flat colored blocks.</li>
-  </ul>
-  <a href="../../" class="more-games-link">Browse All Games</a>
-</section>
+
 
 </body>
 </html>

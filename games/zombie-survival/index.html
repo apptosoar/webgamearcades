@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -45,51 +48,7 @@
       window.ACTION_GAME_CONFIG = { title: "Zombie Survival", type: "arena", health: 5, enemyShape: "zombie", enemyColor: "#73d676", playerColor: "#2bd1c4", enemySpeed: 1.55, spawnRate: 48, hitScore: 6, bgA: "#101814", bgB: "#20242b" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Zombie Survival</h1>
-      <p>Survive endless waves of zombies in this top-down arena shooter. Enemies swarm in from all sides, and your character auto-attacks anything within range — your job is to keep moving and avoid getting surrounded.</p>
-      <p>Each zombie that reaches you costs one HP. Lose all 5 and it's game over. Waves grow larger and faster as your score climbs, so stay alert.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Your character auto-attacks nearby zombies</li>
-        <li>Survive as long as possible to beat your high score</li>
-        <li>Mobile: touch controls supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Zombie Survival is a top-down arena survivor where the enemy never stops coming. Your character fights on their own — your job is to stay alive by moving intelligently through the horde. The longer you last, the denser the crowd, until survival becomes a moment-to-moment spatial calculation.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>The "auto-battler survivor" format exploded in popularity because it removes the ceiling on what a player can handle — skilled movement alone can take you further than mechanical button accuracy. We built a browser version that captures that escalating pressure in a few minutes of play. Zombies fit the format perfectly: slow individually, terrifying in numbers, and universally understood as a threat.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Zombies use simple steering behavior — each enemy calculates the direction toward the player and advances at a fixed speed. The auto-attack checks for the nearest enemy within a radius every few frames and fires a hit if one is found. Spawn intervals shrink progressively, so the total number of zombies on screen never stops growing. There's no cap — given enough time, the arena fills completely, making survival genuinely impossible past a certain point.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Move in wide arcs around the outer edge of the arena. The center becomes a kill zone as zombie density grows.</li>
-        <li>Thin out clusters by pulling zombies into a trail behind you, then circling back so they bunch into a column your auto-attack can process.</li>
-        <li>Don't stop to fight — the auto-attack handles offense. Your only responsibility is positioning.</li>
-        <li>Watch your flanks, not the horde in front of you. The zombies you can see aren't the problem; the ones wrapping around your sides are.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Weapon variety</strong> — different attack patterns like shotgun spread, chain lightning, or area-of-effect strikes unlocked over time.</li>
-        <li><strong>Safe zones</strong> — brief spotlight areas that stun zombies within them, giving the player a 5-second breather.</li>
-        <li><strong>Mutation system</strong> — every 30 seconds, choose between two passive upgrades like faster movement or wider attack radius.</li>
-        <li><strong>Survival leaderboard</strong> — a localStorage-stored timer that shows how long you've personally lasted in your best run.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

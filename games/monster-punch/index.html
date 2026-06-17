@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -46,51 +49,7 @@
       window.ACTION_GAME_CONFIG = { title: "Monster Punch", type: "click", health: 4, enemyShape: "zombie", enemyColor: "#f05d5e", playerColor: "#f7b84b", spawnRate: 34, hitScore: 9, bgA: "#171016", bgB: "#30202d" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Monster Punch</h1>
-      <p>Monsters are charging at you from all directions — click or tap each one to punch it before it reaches the edge. Miss too many and you lose HP. Stay sharp as the monsters multiply.</p>
-      <p>Speed and accuracy are key. Each monster punched adds to your score, and the waves get faster with every round.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Attack:</strong> Click or Tap each monster</li>
-        <li>Don't let monsters reach the edge</li>
-        <li>You have 4 HP — survive as long as possible</li>
-        <li>Fully touch-friendly on mobile</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Monster Punch is a fast click-to-attack game with a whack-a-mole soul. Monsters charge in from all sides and your job is simple: tap each one before it reaches the edge. The deeper mechanic is prioritization — when multiple monsters appear at once, which one do you hit first?</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Tap-to-destroy games have an inherently satisfying feedback loop on touchscreens. We leaned into that with exaggerated monster designs and a hit response that feels immediate. The 4-HP limit was tuned so that players can make a few mistakes in the early waves while still feeling pressure not to slip. The difficulty ramp in later waves forces players to develop efficient scanning habits rather than just clicking frantically.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Monsters are assigned a random spawn position along the canvas edge and then move linearly toward the center. Each monster has a fixed speed that increases with the spawn rate over time. A hit detection check fires on every click/tap event against each active monster's bounding circle. When a monster is clicked, it disappears with a brief flash effect and the score updates. Letting a monster reach its destination deducts HP and removes it from play.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Target the fastest-moving or closest-to-center monsters first — those are the ones most likely to cause HP loss in the next second.</li>
-        <li>Don't chase monsters that just spawned; let them travel toward you so your tap area covers multiple threats at once.</li>
-        <li>Use wide, sweeping taps on mobile rather than precise pokes — the hitboxes are generous enough to reward coverage over pinpoint accuracy.</li>
-        <li>In later waves, stop trying to get everything. Accept one miss to stay calm and avoid panic-clicking that wastes time on already-handled threats.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Monster types</strong> — armored monsters that need two hits, fast scouts that require precise timing, and splitting monsters that break into smaller ones.</li>
-        <li><strong>Combo multiplier</strong> — chaining consecutive hits within a short window to multiply points.</li>
-        <li><strong>Bomb monsters</strong> — monsters that explode and damage nearby ones if clicked at the right moment.</li>
-        <li><strong>Boss waves</strong> — every 30 seconds, a large monster with a progress bar that requires many hits to defeat.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

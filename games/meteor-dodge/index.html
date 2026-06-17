@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -45,51 +48,7 @@
       window.ACTION_GAME_CONFIG = { title: "Meteor Dodge", type: "dodge", pattern: "meteors", health: 4, enemyShape: "meteor", hazardColor: "#f7b84b", playerShape: "ship", playerColor: "#2bd1c4", speed: 6, spawnRate: 24, passiveScore: 2, bgA: "#0b0d18", bgB: "#261f35" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Meteor Dodge</h1>
-      <p>Pilot a spaceship through a shower of falling meteors. Dodge left and right as rocks rain down faster and faster — one hit costs you HP. Survive the barrage and keep your score climbing.</p>
-      <p>You have 4 HP. Meteors increase in frequency over time, so the game rewards quick reflexes and smart positioning.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Avoid all falling meteors</li>
-        <li>Survive longer for a higher score</li>
-        <li>Mobile: touch controls supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Meteor Dodge puts you in the cockpit of a lone spaceship under a relentless meteor shower. The sky fills with falling rocks and your only option is to move. It's a survival game about reading the incoming patterns and finding the calm spaces between the chaos.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Falling-object dodge games work naturally in a vertical screen orientation, which is how most people hold their phones. The spaceship theme makes horizontal movement feel physically motivated — you're steering, not just sliding. Meteors of varying sizes give the eye something to track with different urgency: large meteors demand immediate attention while small ones can be weaved through.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Meteors spawn at random X positions along the top of the canvas and fall at a consistent downward velocity. Spawn rate and fall speed increase on a timer. The player ship moves horizontally using WASD, arrow keys, or touch drag. Collision detection checks for overlap between the ship's bounding circle and each meteor's circular hitbox. A near-miss intentionally leaves a small gap between visuals and the hitbox, so play that feels close still feels survivable.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Keep your eyes at the top of the screen, not on your ship. Responding to a meteor when it's already near you gives you half the reaction time.</li>
-        <li>Move to areas of low meteor density rather than dodging individual rocks — treat the screen as zones, not individual threats.</li>
-        <li>Stay near the horizontal center when meteor density is low; it keeps both sides of the screen equally reachable.</li>
-        <li>When a wave looks truly unavoidable, pick the side with the fewest meteors and commit with a full-speed dash rather than a hesitant drift.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Meteor types</strong> — explosive meteors that detonate in an area, spinning irregularly shaped rocks with different hitboxes, and slow giant ones that demand early decisions.</li>
-        <li><strong>Shield charge</strong> — a briefly invincible dash that recharges on a timer, adding a resource management layer.</li>
-        <li><strong>Star map background</strong> — parallax star layers that give a sense of speed and travel distance.</li>
-        <li><strong>Proximity scoring</strong> — bonus points for surviving near-misses, rewarding precision movement over pure avoidance.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

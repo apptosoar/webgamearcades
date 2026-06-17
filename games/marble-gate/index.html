@@ -100,24 +100,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -514,51 +517,7 @@
         loadLevel(0);
       })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Marble Gate</h1>
-      <p>Slide blocks out of the way to clear a path for the marble to reach the exit gate. Blocks can only slide along their own axis — figure out the right sequence of moves to free the marble.</p>
-      <p>Puzzles grow more crowded and complex as you progress. Each level has a move limit, so efficiency is key.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Slide a block:</strong> Click and drag it along its axis</li>
-        <li>Horizontal blocks slide left and right; vertical blocks slide up and down</li>
-        <li>Clear the path so the marble can exit through the gate</li>
-        <li>Mobile: touch drag to move blocks</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Marble Gate is a sliding-block puzzle where a marble is trapped behind a grid of interlocking blocks. Slide the blocks out of the way to open a clear path to the exit gate at the bottom. The challenge is that blocks can only move along their own axis — horizontal blocks slide left and right, vertical ones move up and down — which creates surprising constraints even in small grids.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Sliding-block puzzles (like Rush Hour) are satisfying because every move has consequences that propagate through the entire grid. Moving one block to open a path often closes another. We added the marble as the escape object because it makes the goal visually clear — you can always see what you're trying to free and where it needs to go. The move limit discourages random shuffling and rewards spatial reasoning.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The grid contains blocks of varying lengths placed either horizontally or vertically. Each block's movement is constrained to a single axis. A click-and-drag on a block calculates how far it can move in the dragged direction before hitting another block or the grid boundary. The marble occupies a fixed vertical column and will fall through it once the path is clear. A win is triggered when the marble exits through the bottom gate.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Identify the marble's column first, then trace every block that crosses it. Those are the only blocks that matter for opening the direct path.</li>
-        <li>Work from the marble downward. The block immediately below the marble needs to move first; solving that tells you what else needs to shift.</li>
-        <li>Blocks that block other blocks are secondary obstacles — clear the primary path first, then deal with the secondary constraints.</li>
-        <li>Count your moves before committing to a sequence. If you've already used most of your budget and the path isn't clear, restart and try a different approach.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Multiple marbles</strong> — two or three marbles that must all reach separate exit gates simultaneously.</li>
-        <li><strong>Diagonal blocks</strong> — blocks that can slide diagonally, dramatically increasing the solution space.</li>
-        <li><strong>Color-coded locks</strong> — blocks that can only be moved after a specific other block is placed correctly.</li>
-        <li><strong>Move replay</strong> — an animation of the optimal solution after completion so players can compare their approach.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

@@ -16,24 +16,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -46,51 +49,7 @@
       window.ACTION_GAME_CONFIG = { title: "Space Shooter", type: "shooter", health: 4, playerShape: "ship", playerColor: "#2bd1c4", enemyShape: "robot", enemyColor: "#a98bff", fireRate: 10, spawnRate: 36, hitScore: 8, bgA: "#090b18", bgB: "#1e2340" };
     </script>
     <script src="../action-pack.js"></script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Space Shooter</h1>
-      <p>Pilot your ship through waves of enemy robots in this retro-style space shooter. Your ship fires automatically — focus on dodging enemy fire and staying alive as the waves intensify.</p>
-      <p>Each hit costs one HP. You have 4 lives, so keep weaving through the chaos and rack up your score before they bring you down.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Move:</strong> WASD or Arrow Keys</li>
-        <li>Your ship auto-fires forward at enemies</li>
-        <li>Avoid enemy shots and collisions</li>
-        <li>Mobile: touch controls supported</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Space Shooter is a classic shoot-em-up (shmup) that captures the feel of 1980s arcade cabinets — waves of enemies, a lone hero ship, and a score that keeps climbing. The auto-fire mechanic strips away button mashing so you can focus entirely on movement and positioning.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>We wanted a one-handed game that felt immediately satisfying on a phone screen. Auto-fire was the key design decision: instead of tapping to shoot and dodge at the same time, all your attention goes into weaving through enemy patterns. It makes the game accessible to newcomers while still rewarding skilled movement.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>The game runs on an HTML5 Canvas loop at 60 frames per second. Enemy robots spawn from the right edge at a fixed interval and fly toward the player. Your ship fires a projectile upward automatically every 10 frames. Collision detection uses bounding-box checks between the bullet rectangles and enemy hitboxes. Each wave that passes increases the spawn rate slightly, creating a natural difficulty ramp without any explicit level system.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Stay near the vertical center of the screen — it gives you room to dodge both up and down.</li>
-        <li>Move in small adjustments rather than large sweeps. Overcorrecting leads to collisions.</li>
-        <li>Enemies approach in a loose spread — threading through gaps is faster than running from them.</li>
-        <li>Watch the right edge, not the enemies directly in front of you. Anticipating spawns is more valuable than reacting to them.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Powerups</strong> — dropping speed boosts or spread-fire pickups from destroyed enemies.</li>
-        <li><strong>Enemy variety</strong> — enemies that dive toward the player, fire back, or move in formation patterns.</li>
-        <li><strong>Boss encounters</strong> — a large enemy with distinct attack phases every 50 kills.</li>
-        <li><strong>Local high score</strong> — storing the best score in localStorage so each session has a personal target to beat.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

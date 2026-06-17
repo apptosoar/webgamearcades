@@ -20,24 +20,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -534,52 +537,7 @@
       loop();
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Otter Pop</h1>
-      <p>Otters are popping up from their riverside burrows — tap each one before it dives back in! Miss too many and you'll lose HP. Get through all 10 stages as otters appear faster and stay up for shorter and shorter windows.</p>
-      <p>Start slow in Stage 1 with one otter at a time, and work your way up to juggling five lightning-fast otters by Stage 10.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Tap / Click</strong> an otter while it's above its burrow</li>
-        <li>Each otter hit scores points and counts toward the stage goal</li>
-        <li>Letting an otter escape costs 1 HP — you have 5</li>
-        <li>Reach the hit goal before the timer runs out to clear the stage</li>
-        <li>10 stages total — good luck on the final stretch!</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Otter Pop is a whack-a-mole style reflex game set along a riverside. Otters pop up from their burrows for a brief window and then disappear back in — your job is to tap each one while it's above the surface. As stages advance, otters appear more frequently, stay up for shorter periods, and multiple can be up at once, demanding split attention across the whole burrow grid.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Whack-a-mole mechanics are timeless because they test two things simultaneously: reaction speed and attention distribution. We chose otters as the character because their pop-up-and-hide behavior is a natural fit for the mechanic without needing explanation. The 10-stage arc was designed so that Stage 1 feels approachable to anyone and Stage 10 genuinely challenges experienced players.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</html>
-      <p>Each otter occupies one of several fixed burrow positions. A spawn timer determines when the next otter appears, and an "up duration" determines how long it stays visible before automatically retreating. Both values decrease with each stage. When multiple otters are active simultaneously (from Stage 3 onward), the game relies on the player scanning all burrows rather than focusing on one. Missing an otter after it has fully appeared deducts one HP.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Keep your eye on the full grid rather than tracking individual otters. Peripheral vision picks up movement better than direct focus in this kind of game.</li>
-        <li>Tap early in an otter's up window. Waiting until it's fully raised gives you less time before it dives back down.</li>
-        <li>In later stages with multiple active otters, prioritize the ones that appeared first — they have less time remaining above the surface.</li>
-        <li>On mobile, position your thumb near the center of the grid and use your palm's reach for corner burrows rather than repositioning for each one.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Fake-out otters</strong> — otters that begin to rise but retreat immediately without triggering a miss, testing whether players commit too early.</li>
-        <li><strong>Combo multiplier</strong> — consecutive hit chains that multiply the point value of each otter until a miss resets it.</li>
-        <li><strong>River current effects</strong> — otters that drift slightly from their burrow position when up, requiring a slight adjustment in tap position.</li>
-        <li><strong>Golden otter</strong> — a rare otter variant worth 5× points that appears briefly and disappears faster than normal.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>

@@ -20,24 +20,27 @@
     </style>
   
 <style>
-.site-topbar { width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; min-height: 54px; padding: 0 clamp(14px, 4vw, 36px); border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(14,15,18,0.95); box-sizing: border-box; flex-shrink: 0; position: sticky; top: 0; z-index: 10; }
-.site-brand { display: flex; align-items: center; gap: 9px; color: #f4f2ea; text-decoration: none; font-weight: 800; font-size: 0.95rem; }
-.site-brand-mark { display: grid; width: 30px; height: 30px; flex-shrink: 0; place-items: center; border-radius: 7px; background: linear-gradient(135deg, #f7b84b, #f05d5e); color: #15110a; font-weight: 900; font-size: 0.82rem; }
-.game-actions { display: flex; align-items: center; gap: 6px; }
-.game-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.13); background: rgba(255,255,255,0.06); color: #b8bec9; text-decoration: none; font-size: 0.82rem; font-weight: 600; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.game-actions a:hover { background: rgba(255,255,255,0.12); color: #f4f2ea; }
-.wrap { height: min(calc(100svh - 54px), 720px) !important; }
+.site-topbar{width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;min-height:52px;padding:0 clamp(12px,3vw,32px);border-bottom:1px solid rgba(255,255,255,0.1);background:rgba(14,15,18,0.97);box-sizing:border-box;flex-shrink:0;position:sticky;top:0;z-index:10}
+.site-brand{display:flex;align-items:center;gap:8px;color:#f4f2ea;text-decoration:none;font-weight:800;font-size:.9rem;min-width:0}
+.site-brand-mark{display:grid;width:28px;height:28px;flex-shrink:0;place-items:center;border-radius:6px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;font-size:.78rem}
+.site-brand-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:380px){.site-brand-name{display:none}}
+.game-actions{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.game-actions a{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.06);color:#b8bec9;text-decoration:none;font-size:.8rem;font-weight:600;transition:background .15s,color .15s;white-space:nowrap}
+.game-actions a:hover{background:rgba(255,255,255,0.12);color:#f4f2ea}
+.wrap{height:min(calc(100svh - 52px),720px)!important;flex-shrink:0}
+@media(max-width:520px){.game-actions .about-label{display:none}}
 </style>
 </head>
   <body>
 <header class="site-topbar">
-  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span>Webgame Arcades</span></a>
+  <a class="site-brand" href="/"><span class="site-brand-mark">G</span><span class="site-brand-name">Webgame Arcades</span></a>
   <div class="game-actions">
-    <a href="#game-info">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      About
+    <a href="./about.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span class="about-label">About</span>
     </a>
-    <a href="/">← All Games</a>
+    <a href="/">← Games</a>
   </div>
 </header>
     <main class="game">
@@ -543,51 +546,7 @@
       loop();
     })();
     </script>
-    <section class="game-info" id="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Tap Sprint</h1>
-      <p>Race against opponents in a pure tap-speed challenge. The faster you tap, the faster your runner moves — but speed fades between taps, so keep the rhythm going to stay ahead.</p>
-      <p>Start with 1 opponent and work up to 10 across 10 stages. Each stage brings faster rivals. Finish 1st to advance.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Speed up:</strong> Tap, click, or press Space / Enter as fast as you can</li>
-        <li>Your speed decays between taps — keep tapping to maintain pace</li>
-        <li>Finish 1st to clear the stage and face more opponents next round</li>
-        <li>Mobile: tap anywhere on the screen or use the TAP! button</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Tap Sprint is a racing game with one input: tap as fast as you can. Your runner accelerates with each tap and decelerates when you stop — the challenge is maintaining a rhythm that keeps your speed near the maximum without burning out your tapping hand. Ten stages, each adding one more opponent to the race.</p>
 
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>Physical input speed is one of the most honest competitive metrics in a browser game — there's no strategy to learn, no pattern to memorize, just the raw speed of your fingers versus the clock. We added the speed-decay mechanic (your runner slows down between taps) because it makes rhythm matter. A steady 8-tap-per-second rhythm beats a burst of 15 followed by a pause. The opponent count scaling across stages means even experienced players face a real challenge at Stage 10.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Each tap adds a fixed velocity boost to the player's runner, capped at a maximum speed. Every game frame, the runner's speed decreases by a decay constant. AI runners maintain a pseudo-random speed within a stage-defined range, with a small sinusoidal variation to avoid perfectly constant movement. The race distance is fixed — the first runner to cover it is ranked first. Finishing first advances the stage; any other rank restarts the current stage.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Alternate two fingers in rapid succession rather than using one finger repeatedly. Two-finger alternation is significantly faster and more sustainable.</li>
-        <li>Don't tap at your maximum speed from the start. Find a pace just below your ceiling so you can maintain it for the full race length.</li>
-        <li>Watch the progress bar at the top rather than the runners. Knowing your relative position at the midpoint tells you whether to push harder or conserve pace.</li>
-        <li>On mobile, keep the phone still and move only your fingers — device movement reduces input precision and wastes energy.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Tap-per-second display</strong> — a live readout of your current tapping rate so players can track their personal performance.</li>
-        <li><strong>Handicap system</strong> — an option to give the player a head start against later-stage AI for practice runs.</li>
-        <li><strong>Track hazards</strong> — occasional obstacles that require a jump input (a second key or tap zone) without breaking the core rhythm.</li>
-        <li><strong>Personal records</strong> — localStorage tracking of the fastest completion time for each stage.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
     
   </body>
 </html>
