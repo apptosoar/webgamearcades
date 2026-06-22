@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building Sudoku in the Browser: Generation, Validation, and Constraints — Webgame Arcades Blog</title>
+    <meta name="description" content="Sudoku generation requires working backwards from a valid solution. Getting the puzzle to feel solvable — not just technically valid — was the real engineering challenge." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-sudoku-in-browser/" />
+    <meta property="og:title" content="Building Sudoku in the Browser: Generation, Validation, and Constraints" />
+    <meta property="og:description" content="Sudoku generation requires working backwards from a valid solution. Getting the puzzle to feel solvable — not just technically valid — was the real engineering challenge." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-sudoku-in-browser/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/thumbs/sudoku.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Building Sudoku in the Browser: Generation, Validation, and Constraints",
+      "datePublished": "2026-05-22",
+      "url": "https://webgamearcades.com/blog/building-sudoku-in-browser/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>* { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }</style>
+  <script src="/site-chrome.js"></script>
+</head>
+  <body>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · May 22, 2026</p>
+      <h1>Building Sudoku in the Browser: Generation, Validation, and Constraints</h1>
+
+      <img src="/assets/thumbs/sudoku.png" alt="Sudoku" style="width:100%;border-radius:12px;margin:0 0 32px;display:block;object-fit:cover;height:200px;">
+
+      <p>Sudoku is one of those games that looks simple to implement until you start implementing it. The rules are compact — fill a 9x9 grid so that every row, column, and 3x3 box contains the numbers 1 through 9 exactly once. But implementing a generator that produces valid, playable puzzles from scratch, in the browser, without any external library, is a different challenge entirely.</p>
+
+      <h2>Why you generate backwards</h2>
+      <p>The naive approach to Sudoku generation is to start with an empty grid and try to fill it in by placing valid numbers one cell at a time. This works but it is slow — backtracking algorithms can explore thousands of dead ends before finding a valid complete grid. The more efficient approach is to start with a completed, valid solution and then remove numbers strategically to create the puzzle.</p>
+      <p>This means the generation process has two distinct phases: first, produce a valid completed grid; second, remove enough cells to create a challenge while ensuring the puzzle still has exactly one solution. Both phases require a solver, because you need to verify after each removal that the remaining puzzle is still uniquely solvable.</p>
+
+      <h2>Generating the completed grid</h2>
+      <p>A valid Sudoku solution is a Latin square with the additional constraint that each 3x3 box is also complete. The fastest way to generate one is to start with a known valid arrangement — a diagonal pattern of 1-9 that satisfies the box constraint by construction — and then use a shuffle and backtrack pass to fill the remaining rows. Because the diagonal boxes are already filled correctly, the constraint search space for each row is significantly smaller than a blank-start approach. The resulting grid is generated in under one millisecond in practice.</p>
+
+      <h2>Removing cells: the difficulty question</h2>
+      <p>The harder problem is cell removal. Removing cells randomly does not produce a good puzzle — it produces puzzles that range from trivially solvable to requiring advanced techniques like X-wings or forcing chains that casual players cannot apply. The goal is to remove cells in a way that keeps the puzzle solvable using only basic row-column-box elimination and naked singles.</p>
+      <p>The approach used in this implementation is symmetric removal with a difficulty ceiling. Cells are removed in symmetric pairs (mirrored across the center), which produces visually balanced puzzles and also constrains the search space. After each removal, a constraint-propagation solver checks whether the remaining puzzle is uniquely solvable using only the techniques appropriate to the target difficulty. If it is not, the removal is undone and a different pair is attempted. This produces puzzles that feel consistent in difficulty without requiring a human expert to verify each one.</p>
+
+      <h2>The 200-line constraint</h2>
+      <p>The original build post mentioned a self-imposed 200-line limit. The constraint forced specific choices: no pencil marks, no undo history, no timer, no difficulty selection. These are all features a more complete Sudoku implementation would have. But stripping them out produced a version where the only feedback is the grid itself and whether you have placed a valid number. That minimal feedback loop turned out to suit the browser format well — the game loads instantly and is immediately understandable, with no menu or setup required before the first number can be placed.</p>
+
+      <a href="/games/sudoku/" class="cta">Play Sudoku</a>
+    </main>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>
