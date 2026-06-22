@@ -19,6 +19,8 @@
   .wrap { height: 100dvh; gap: 8px }
   .stage { overflow: hidden; padding: 6px !important }
           .touch-controls { display: none !important }
+  .game-block-stacker .stage.center { display: flex; flex-direction: column; align-items: stretch }
+  .game-block-stacker .stage.center > div { flex: 1; display: flex; flex-direction: column; align-items: center; min-height: 0 }
   #board { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(24, 1fr); gap: 2px; aspect-ratio: 10/24; align-self: center; justify-self: center }
 
   .blk-ctrl { display: none; align-items: center; justify-content: space-between; gap: 10px; padding: 0 4px }
@@ -136,8 +138,19 @@
 
   let layoutTimer = null;
   function fitBoard() {
-    const box = board.parentElement.getBoundingClientRect(), gap = 2, pad = 14;
-    const tile = Math.max(10, Math.floor(Math.min((box.width - pad - gap * (w - 1)) / w, (box.height - pad - gap * (h - 1)) / h)));
+    const parent = board.parentElement;
+    const box = parent.getBoundingClientRect(), gap = 2;
+    let usedH = 0;
+    for (const el of parent.children) {
+      if (el !== board) {
+        const r = el.getBoundingClientRect();
+        usedH += r.height + parseInt(getComputedStyle(el).marginTop || 0) + parseInt(getComputedStyle(el).marginBottom || 0);
+      }
+    }
+    const tile = Math.max(10, Math.floor(Math.min(
+      (box.width - gap * (w - 1)) / w,
+      (box.height - usedH - gap * (h - 1)) / h
+    )));
     board.style.width = (tile * w + gap * (w - 1)) + "px";
     board.style.height = (tile * h + gap * (h - 1)) + "px";
   }
