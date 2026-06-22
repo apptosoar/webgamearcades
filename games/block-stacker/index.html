@@ -21,7 +21,7 @@
           .touch-controls { display: none !important }
   .game-block-stacker.game-wrap-adjust .wrap { height: calc(100dvh - 68px - var(--sc-footer-h,108px)) !important }
   .game-block-stacker .stage.center { display: flex; flex-direction: column; align-items: stretch }
-  .game-block-stacker .stage.center > div { flex: 1; display: flex; flex-direction: column; align-items: center; min-height: 0 }
+  .game-block-stacker .stage.center > div { flex: 1; display: flex; flex-direction: column; align-items: center; min-height: 0; overflow: hidden }
   #board { display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(24, 1fr); gap: 2px; aspect-ratio: 10/24; align-self: center; justify-self: center }
 
   .blk-ctrl { display: none; align-items: center; justify-content: space-between; gap: 10px; padding: 0 4px }
@@ -151,12 +151,12 @@
     const box = parent.getBoundingClientRect(), gap = 2;
     let usedH = 0;
     for (const el of parent.children) {
-      if (el !== board) {
+      if (el !== board && getComputedStyle(el).position !== 'absolute') {
         const r = el.getBoundingClientRect();
         usedH += r.height + parseInt(getComputedStyle(el).marginTop || 0) + parseInt(getComputedStyle(el).marginBottom || 0);
       }
     }
-    const tile = Math.max(10, Math.floor(Math.min(
+    const tile = Math.max(6, Math.floor(Math.min(
       (box.width - gap * (w - 1)) / w,
       (box.height - usedH - gap * (h - 1)) / h
     )));
@@ -205,6 +205,10 @@
   }
   function layout() { fitBoard(); draw(); layoutReady = true; drawPreview(); }
   addEventListener("resize", () => { clearTimeout(layoutTimer); layoutTimer = setTimeout(layout, 120); });
+  if (window.ResizeObserver) {
+    new ResizeObserver(() => { clearTimeout(layoutTimer); layoutTimer = setTimeout(layout, 60); })
+      .observe(document.querySelector('.wrap'));
+  }
   queue.push(randomType(), randomType(), randomType()); spawn(); layout(); resetTimer();
 </script>
 
