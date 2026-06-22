@@ -24,6 +24,7 @@
     ".sc-footer-nav a+a{border-left:1px solid rgba(255,255,255,0.12)}",
     /* game pages: account for 68px topbar instead of previous compact sizes */
     ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
+    ".game-wrap-adjust .game{height:min(calc(100dvh - 68px),720px)!important}",
   ].join("");
   document.head.appendChild(style);
 
