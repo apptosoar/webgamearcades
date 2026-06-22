@@ -22,9 +22,11 @@
     ".sc-footer-nav a{color:#b8bec9;text-decoration:none;padding:4px 14px;transition:color .15s}",
     ".sc-footer-nav a:hover{color:#f4f2ea}",
     ".sc-footer-nav a+a{border-left:1px solid rgba(255,255,255,0.12)}",
+    /* sticky footer for non-game pages */
+    "body:not(.game-wrap-adjust){display:flex;flex-direction:column;min-height:100dvh}",
+    "body:not(.game-wrap-adjust) #sc-footer{margin-top:auto}",
     /* game pages: account for 68px topbar instead of previous compact sizes */
     ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
-    ".game-wrap-adjust .game{height:min(calc(100dvh - 68px),720px)!important}",
   ].join("");
   document.head.appendChild(style);
 
