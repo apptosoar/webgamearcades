@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sample Clicker — How to Play | Webgame Arcades</title>
+<meta name="description" content="A satisfying one-button clicker with particle bursts and multilingual support. Free browser game — no download needed." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://webgamearcades.com/games/sample-clicker/about.html" />
+<meta property="og:title" content="Sample Clicker — How to Play | Webgame Arcades" />
+<meta property="og:description" content="A satisfying one-button clicker with particle bursts and multilingual support. Free browser game — no download needed." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://webgamearcades.com/games/sample-clicker/about.html" />
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+<style>*{box-sizing:border-box}
+body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+main{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+.back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;color:#b8bec9;text-decoration:none;font-size:.875rem}
+.back-link:hover{color:#f4f2ea}
+.play-btn{display:inline-flex;align-items:center;gap:8px;margin-bottom:40px;padding:12px 24px;border-radius:8px;background:#f7b84b;color:#1b1205;text-decoration:none;font-weight:800;font-size:.95rem;transition:opacity .15s}
+.play-btn:hover{opacity:.85}
+.play-btn svg{flex-shrink:0}
+h1{margin:0 0 16px;font-size:clamp(1.6rem,5vw,2.2rem);color:#f4f2ea}
+h2{margin:32px 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}
+p{margin:0 0 14px;color:#b8bec9;max-width:66ch}
+ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}
+li{margin-bottom:6px}
+hr{margin:28px 0;border:none;border-top:1px solid rgba(255,255,255,0.08)}
+.play-btn-bottom{display:inline-flex;align-items:center;gap:8px;margin-top:40px;padding:12px 24px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:#f4f2ea;text-decoration:none;font-weight:700;font-size:.95rem;transition:background .15s}
+.play-btn-bottom:hover{background:rgba(255,255,255,0.13)}
+code{background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-size:.9em}</style>
+<script src="/site-chrome.js"></script>
+</head>
+<body>
+<main>
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <a href="index.html" class="play-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Sample Clicker
+  </a>
+
+  <h1>Sample Clicker</h1>
+  <p>A simple, satisfying clicker. Hit the button to increase your score — every 10 clicks triggers a Bonus burst with a shower of colourful particles. There's no end goal, just pure clicking flow.</p>
+
+  <hr>
+  <h2>How to Play</h2>
+  <ul>
+    <li><strong>Click / Tap</strong> the button to score a point</li>
+    <li>Every 10 clicks triggers a colourful particle burst</li>
+    <li>Press Restart to reset the score and start over</li>
+    <li>Fully touch-friendly on mobile</li>
+  </ul>
+
+  <hr>
+  <h2>About This Game</h2>
+  <p>Sample Clicker is the purest form of a clicker game: one button, one score, infinite clicks. Every tenth click triggers a Bonus burst — a shower of colourful particles that explodes from your tap point. There's no end state, no goal to reach, just the satisfying loop of click, score, repeat.</p>
+  <p>A great way to take a quick mental break. Click as fast as you can and watch the score climb.</p>
+
+  <hr>
+  <h2>Why We Built It</h2>
+  <p>This game started as a template demonstrating how to load an external HTML game file into the Webgame Arcades framework. It evolved into a proper standalone clicker because the particle burst effect was too satisfying to leave as a placeholder. The multilingual support (15 languages auto-detected from browser settings) was added to show how locale-aware browser games can work without a backend.</p>
+
+  <hr>
+  <h2>How It Works</h2>
+  <p>Each click increments a counter and checks whether it's a multiple of 10 to trigger the Bonus label. The particle burst creates 18 individual DOM elements per click, each assigned a random angle, distance, color, shape, and spin via CSS custom properties. They animate outward using a CSS keyframe and remove themselves from the DOM when the animation ends. Locale detection reads <code>navigator.languages</code> and maps the first matching prefix to one of 15 supported language codes.</p>
+
+  <hr>
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li>Click in a steady rhythm rather than bursting — you'll hit higher counts with less fatigue.</li>
+    <li>Try landing clicks at different positions on the button to see the particle burst origin shift.</li>
+    <li>Use Restart to reset and challenge your previous session's score.</li>
+    <li>On mobile, a light single-finger tap works best — speed is the only variable.</li>
+  </ul>
+
+  <hr>
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Click-per-second display</strong> — a live readout showing your current tapping rate over the last second.</li>
+    <li><strong>Milestone rewards</strong> — visual changes to the button or background at 100, 500, and 1000 clicks.</li>
+    <li><strong>Auto-clicker upgrade</strong> — spend accumulated score to unlock an idle click rate that ticks even when you're not pressing.</li>
+    <li><strong>High score storage</strong> — localStorage persistence that shows your all-time best score across sessions.</li>
+  </ul>
+
+  <a href="index.html" class="play-btn-bottom">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Now
+  </a>
+</main>
+<style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+<script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,35 +15,11 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../action-style.css" />
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        background: #0b0c0f;
-        color: #f4f2ea;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
-
       .game {
-        width: min(720px, calc(100% - 28px));
-        min-height: 460px;
-        display: grid;
+        height: min(calc(100dvh - 68px), 720px);
+        width: min(720px, 100%);
+        grid-template-columns: 1fr;
         grid-template-rows: auto 1fr auto;
-        gap: 14px;
-        padding: 18px;
-      }
-
-      .hud {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        color: #b8bec9;
       }
 
       .stage {
@@ -51,6 +27,8 @@
         overflow: hidden;
         display: grid;
         place-items: center;
+        height: 100%;
+        min-height: 0;
         border: 1px solid rgba(255, 255, 255, 0.13);
         border-radius: 8px;
         background:
@@ -86,8 +64,12 @@
         box-shadow: 0 18px 40px rgba(240, 93, 94, 0.3);
       }
 
-      .target:active {
-        transform: scale(0.96);
+      .target:active { transform: scale(0.96); }
+
+      .stage .target {
+        grid-row: auto;
+        justify-self: center;
+        align-self: center;
       }
 
       .particle {
@@ -127,39 +109,25 @@
       }
 
       @keyframes burst {
-        0% {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
-        }
-
-        100% {
-          opacity: 0;
-          transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25) rotate(var(--spin));
-        }
-      }
-
-      .reset {
-        justify-self: start;
-        min-height: 40px;
-        padding: 9px 13px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.08);
-        color: #f4f2ea;
-        cursor: pointer;
+        0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.6) rotate(0deg); }
+        100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.25) rotate(var(--spin)); }
       }
     </style>
+    <script src="/site-chrome.js"></script>
   </head>
   <body>
     <main class="game">
       <div class="hud">
-        <strong>Sample Clicker</strong>
-        <span><span id="scoreLabel">점수</span> <b id="score">0</b></span>
+        <strong id="gameTitle">Sample Clicker</strong>
+        <span><span id="scoreLabel">Score</span> <b id="score">0</b></span>
       </div>
       <section class="stage">
-        <button class="target" id="target" type="button">클릭</button>
+        <button class="target" id="target" type="button">Click</button>
       </section>
-      <button class="reset" id="reset" type="button">다시 시작</button>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="reset" id="reset" type="button">Restart</button>
+        <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+      </div>
     </main>
 
     <script>
@@ -183,30 +151,30 @@
 
       function detectLocale() {
         const languages = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
-        for (const language of languages) {
-          const code = language.toLowerCase();
-          if (code.startsWith("ko")) return "ko";
-          if (code.startsWith("es")) return "es";
-          if (code.startsWith("zh")) return "zh";
-          if (code.startsWith("ja")) return "ja";
-          if (code.startsWith("de")) return "de";
-          if (code.startsWith("fr")) return "fr";
-          if (code.startsWith("hi")) return "hi";
-          if (code.startsWith("cs")) return "cs";
-          if (code.startsWith("nl")) return "nl";
-          if (code.startsWith("fi")) return "fi";
-          if (code.startsWith("he") || code.startsWith("iw")) return "he";
-          if (code.startsWith("ro")) return "ro";
-          if (code.startsWith("uk")) return "uk";
-          if (code.startsWith("mk")) return "mk";
-          if (code.startsWith("en")) return "en";
+        for (const lang of languages) {
+          const c = lang.toLowerCase();
+          if (c.startsWith("ko")) return "ko";
+          if (c.startsWith("es")) return "es";
+          if (c.startsWith("zh")) return "zh";
+          if (c.startsWith("ja")) return "ja";
+          if (c.startsWith("de")) return "de";
+          if (c.startsWith("fr")) return "fr";
+          if (c.startsWith("hi")) return "hi";
+          if (c.startsWith("cs")) return "cs";
+          if (c.startsWith("nl")) return "nl";
+          if (c.startsWith("fi")) return "fi";
+          if (c.startsWith("he") || c.startsWith("iw")) return "he";
+          if (c.startsWith("ro")) return "ro";
+          if (c.startsWith("uk")) return "uk";
+          if (c.startsWith("mk")) return "mk";
+          if (c.startsWith("en")) return "en";
         }
         return "en";
       }
 
       const currentLocale = detectLocale();
-      const copy = translations[currentLocale];
-      const score = document.querySelector("#score");
+      const copy = translations[currentLocale] || translations.en;
+      const scoreEl = document.querySelector("#score");
       const scoreLabel = document.querySelector("#scoreLabel");
       const target = document.querySelector("#target");
       const stage = document.querySelector(".stage");
@@ -219,16 +187,16 @@
       target.textContent = copy.click;
       reset.textContent = copy.restart;
 
-      target.addEventListener("click", (event) => {
+      target.addEventListener("click", (e) => {
         count += 1;
-        score.textContent = count;
+        scoreEl.textContent = count;
         target.textContent = count % 10 === 0 ? copy.bonus : copy.click;
-        burst(event);
+        burst(e);
       });
 
       reset.addEventListener("click", () => {
         count = 0;
-        score.textContent = count;
+        scoreEl.textContent = count;
         target.textContent = copy.click;
       });
 
@@ -236,114 +204,29 @@
         const stageBox = stage.getBoundingClientRect();
         const targetBox = target.getBoundingClientRect();
         const originX = event.clientX ? event.clientX - stageBox.left : targetBox.left + targetBox.width / 2 - stageBox.left;
-        const originY = event.clientY ? event.clientY - stageBox.top : targetBox.top + targetBox.height / 2 - stageBox.top;
-        const colors = ["#00f5e0", "#ffb000", "#ff334d", "#8f5cff", "#38e05f", "#ffffff"];
-        const shapes = ["square", "triangle", "star", "diamond", "circle"];
-
-        for (let i = 0; i < 18; i += 1) {
+        const originY = event.clientY ? event.clientY - stageBox.top  : targetBox.top  + targetBox.height / 2 - stageBox.top;
+        const colors = ["#00f5e0","#ffb000","#ff334d","#8f5cff","#38e05f","#ffffff"];
+        const shapes = ["square","triangle","star","diamond","circle"];
+        for (let i = 0; i < 18; i++) {
           const angle = (Math.PI * 2 * i) / 18 + Math.random() * 0.45;
-          const distance = 54 + Math.random() * 92;
-          const particle = document.createElement("span");
+          const dist  = 54 + Math.random() * 92;
+          const p = document.createElement("span");
           const shape = shapes[Math.floor(Math.random() * shapes.length)];
-          particle.className = `particle ${shape}`;
-          particle.textContent = shape === "star" ? "★" : shape === "diamond" ? "◆" : shape === "circle" ? "●" : "";
-          particle.style.left = `${originX}px`;
-          particle.style.top = `${originY}px`;
-          particle.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
-          particle.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
-          particle.style.setProperty("--spin", `${Math.random() * 360 - 180}deg`);
+          p.className = `particle ${shape}`;
+          p.textContent = shape === "star" ? "★" : shape === "diamond" ? "◆" : shape === "circle" ? "●" : "";
+          p.style.left = `${originX}px`;
+          p.style.top  = `${originY}px`;
+          p.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+          p.style.setProperty("--dy", `${Math.sin(angle) * dist}px`);
+          p.style.setProperty("--spin", `${Math.random() * 360 - 180}deg`);
           const color = colors[Math.floor(Math.random() * colors.length)];
-          particle.style.setProperty("--particle-color", color);
-          particle.style.setProperty("--particle-glow", color);
-          particle.style.setProperty("--particle-size", `${14 + Math.random() * 12}px`);
-          stage.appendChild(particle);
-          particle.addEventListener("animationend", () => particle.remove(), { once: true });
+          p.style.setProperty("--particle-color", color);
+          p.style.setProperty("--particle-glow", color);
+          p.style.setProperty("--particle-size", `${14 + Math.random() * 12}px`);
+          stage.appendChild(p);
+          p.addEventListener("animationend", () => p.remove(), { once: true });
         }
       }
     </script>
-    <section class="game-info">
-      <a href="../../" class="back-link">← Webgame Arcades</a>
-      <h1>Sample Clicker</h1>
-      <p>A simple, satisfying clicker. Hit the button to increase your score — every 10 clicks triggers a Bonus round with a burst of colour particles. There's no end goal, just pure clicking flow.</p>
-      <p>A great way to take a quick break. Click as fast as you can and watch the score climb.</p>
-      <hr class="section-divider">
-      <h2>How to Play</h2>
-      <ul>
-        <li><strong>Click / Tap</strong> the button to score a point</li>
-        <li>Every 10 clicks triggers a colourful Bonus burst</li>
-        <li>Press Restart to reset the score</li>
-        <li>Fully touch-friendly on mobile</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>About This Game</h2>
-      <p>Sample Clicker is the purest form of a clicker game: one button, one score, infinite clicks. Every tenth click triggers a Bonus burst — a shower of colourful particles that explodes from your tap point. There's no end state, no goal to reach, just the satisfying loop of click, score, repeat.</p>
-
-      <hr class="section-divider">
-      <h2>Why We Built It</h2>
-      <p>This game started as a template demonstrating how to load an external HTML game file into the Webgame Arcades framework. It evolved into a proper standalone clicker because the particle burst effect was too satisfying to leave as a placeholder. The multilingual support (15 languages auto-detected from browser settings) was added to show how locale-aware browser games can work without a backend.</p>
-
-      <hr class="section-divider">
-      <h2>How It Works</h2>
-      <p>Each click increments a counter and checks whether it's a multiple of 10 to trigger the Bonus label. The particle burst creates 18 individual DOM elements per click, each assigned a random angle, distance, color, shape, and spin via CSS custom properties. They animate outward using a CSS keyframe and remove themselves from the DOM when the animation ends. The locale detection reads <code>navigator.languages</code> and maps the first matching prefix to one of 15 supported language codes.</p>
-
-      <hr class="section-divider">
-      <h2>Tips &amp; Strategy</h2>
-      <ul>
-        <li>Click in a steady rhythm rather than bursting — you'll hit higher counts with less fatigue.</li>
-        <li>Try to land clicks exactly on the button edge to trigger particles from different origins and see the full burst pattern.</li>
-        <li>Use the Restart button to reset and try to beat your previous session's score.</li>
-        <li>On mobile, use a light single-finger tap — the button is large enough that precision isn't needed, so speed is the only variable.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>Ideas for Improvement</h2>
-      <ul>
-        <li><strong>Click-per-second display</strong> — a live readout showing your current tapping rate over the last second.</li>
-        <li><strong>Milestone rewards</strong> — visual changes to the button or background at 100, 500, and 1000 clicks.</li>
-        <li><strong>Auto-clicker upgrade</strong> — spend accumulated score to unlock an idle click rate that ticks even when you're not pressing.</li>
-        <li><strong>High score storage</strong> — localStorage persistence that shows your all-time best score across sessions.</li>
-      </ul>
-
-      <a href="../../" class="more-games-link">Browse All Games</a>
-    </section>
-    <section class="game-info" lang="ko">
-      <hr class="section-divider">
-      <h2>조작 방법</h2>
-      <ul>
-        <li><strong>클릭 / 탭</strong> 버튼을 눌러 점수를 획득하세요</li>
-        <li>10번 클릭마다 화려한 보너스 폭발이 터집니다</li>
-        <li>다시 시작을 눌러 점수를 초기화하세요</li>
-        <li>모바일에서도 완전 터치 지원</li>
-      </ul>
-      <hr class="section-divider">
-      <h2>게임 소개</h2>
-      <p>샘플 클리커는 클리커 게임의 가장 순수한 형태입니다. 버튼 하나, 점수 하나, 무한한 클릭. 10번 클릭마다 보너스 폭발이 터집니다. 탭 지점에서 알록달록한 파티클이 폭발합니다. 끝 상태도, 달성해야 할 목표도 없습니다. 그냥 클릭, 점수, 반복의 만족스러운 루프입니다.</p>
-
-      <hr class="section-divider">
-      <h2>제작 배경</h2>
-      <p>이 게임은 외부 HTML 게임 파일을 Webgame Arcades 프레임워크에 로드하는 방법을 보여주는 템플릿으로 시작했습니다. 파티클 폭발 효과가 너무 만족스러워 자리 표시자로 두기 아까워 제대로 된 독립형 클리커로 발전했습니다. 다국어 지원(브라우저 설정에서 자동 감지되는 15개 언어)은 백엔드 없이 로케일 인식 브라우저 게임이 어떻게 작동할 수 있는지 보여주기 위해 추가되었습니다.</p>
-
-      <hr class="section-divider">
-      <h2>작동 원리</h2>
-      <p>각 클릭은 카운터를 증가시키고 10의 배수인지 확인하여 보너스 레이블을 트리거합니다. 파티클 폭발은 클릭당 18개의 개별 DOM 요소를 생성하며, 각각 CSS 커스텀 프로퍼티를 통해 무작위 각도, 거리, 색상, 모양, 회전을 할당받습니다. CSS 키프레임을 사용해 밖으로 애니메이션되고 애니메이션이 끝나면 DOM에서 자신을 제거합니다. 로케일 감지는 `navigator.languages`를 읽고 첫 번째 일치하는 접두사를 15개의 지원 언어 코드 중 하나에 매핑합니다.</p>
-
-      <hr class="section-divider">
-      <h2>팁 &amp; 전략</h2>
-      <ul>
-        <li>폭발적으로 클릭하기보다 꾸준한 리듬으로 클릭하세요. 덜 피로한 상태로 더 높은 카운트를 달성할 수 있습니다.</li>
-        <li>버튼 가장자리 정확히에 클릭을 시도하여 다른 원점에서 파티클을 발생시키고 전체 폭발 패턴을 확인해보세요.</li>
-        <li>다시 시작 버튼을 사용해 초기화하고 이전 세션 점수를 넘어보세요.</li>
-        <li>모바일에서는 가볍게 한 손가락으로 탭하세요. 버튼이 충분히 커서 정확도가 필요 없으므로 속도가 유일한 변수입니다.</li>
-      </ul>
-
-      <hr class="section-divider">
-      <h2>개선 아이디어</h2>
-      <ul>
-        <li><strong>초당 클릭 수 표시</strong> — 지난 1초 동안의 현재 탭 속도를 실시간으로 보여주는 라이브 수치.</li>
-        <li><strong>마일스톤 보상</strong> — 100, 500, 1000번 클릭에서 버튼이나 배경의 시각적 변화.</li>
-        <li><strong>자동 클리커 업그레이드</strong> — 쌓인 점수를 소비해 누르지 않아도 클릭하는 유휴 클릭 속도를 해금.</li>
-        <li><strong>하이스코어 저장</strong> — 세션 간에 개인 최고 점수를 보여주는 localStorage 지속성.</li>
-      </ul>
-    </section>
   </body>
 </html>
