@@ -2347,6 +2347,7 @@ function applyStaticText() {
   document.querySelector("#brandLink span:last-child").textContent = brandName;
   document.querySelector("#mainNav").setAttribute("aria-label", copy.mainMenu);
   document.querySelector("#navGames").textContent = copy.navGames;
+  document.querySelector("#navGames").classList.add("active");
   document.querySelector("#navBlog").textContent = copy.navBlog;
   document.querySelector("#navCommunity").textContent = copy.navCommunity;
   buildLangSelector();

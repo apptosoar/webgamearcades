@@ -12,7 +12,7 @@
     ".sc-nav{display:flex;gap:4px}",
     ".sc-nav a{padding:9px 12px;border-radius:8px;color:#b8bec9;text-decoration:none;font-size:.92rem;font-weight:500;transition:transform 160ms ease,color 150ms ease}",
     ".sc-nav a:hover{color:#f4f2ea;transform:translateY(-1px)}",
-    ".sc-nav a.sc-active{color:#f7b84b}",
+    ".sc-nav a.sc-active{color:#f7b84b;font-weight:600}",
     "@media(max-width:900px){.sc-nav{display:none}}",
     "#sc-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;width:min(1440px,calc(100% - 32px));margin:0 auto;padding:24px 0 36px;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:.88rem}",
     ".sc-footer-brand{display:flex;flex-direction:column;gap:4px}",
@@ -23,8 +23,8 @@
     ".sc-footer-nav a:hover{color:#f4f2ea}",
     ".sc-footer-nav a+a{border-left:1px solid rgba(255,255,255,0.12)}",
     /* game pages: account for 68px topbar instead of previous compact sizes */
-    ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
-    ".game-wrap-adjust .game{height:min(calc(100dvh - 68px),720px)!important}",
+    ".game-wrap-adjust .wrap{height:calc(100svh - 68px)!important}",
+    ".game-wrap-adjust .game{height:calc(100dvh - 68px)!important}",
   ].join("");
   document.head.appendChild(style);
 
