@@ -82,21 +82,24 @@
     return false;
   }
   function drawBoard() {
-    const gap = 4, maxTile = size >= 10 ? 32 : size >= 8 ? 36 : size >= 6 ? 44 : 58;
-    const avail = Math.min(window.innerWidth - 64, 400);
-    const tile = Math.min(maxTile, Math.floor((avail - (size - 1) * gap) / size));
+    const gap = 4;
+    const boardSize = Math.min(400, window.innerWidth - 48);
+    const tileApprox = (boardSize - (size - 1) * gap) / size;
+    const fs = tileApprox < 35 ? ".65rem" : tileApprox < 50 ? ".78rem" : ".95rem";
     const review = cells.every(Boolean);
-    board.style.gridTemplateColumns = "repeat(" + size + "," + tile + "px)";
+    board.style.width = boardSize + "px";
+    board.style.height = boardSize + "px";
+    board.style.gridTemplateColumns = "repeat(" + size + ",1fr)";
+    board.style.gap = gap + "px";
     board.innerHTML = "";
     cells.forEach((v, i) => {
       const bad = review && hasConflict(i), locked = fixed[i] || complete;
       const bg = complete ? "#73d676" : bad ? "#f05d5e" : fixed[i] ? "#2bd1c4" : "rgba(255,255,255,.08)";
       const fg = complete || fixed[i] ? "#0b0c0f" : "#f4f2ea";
-      const fs = tile < 30 ? ".65rem" : tile < 42 ? ".78rem" : ".95rem";
       const cell = document.createElement("button");
       cell.type = "button";
       cell.textContent = v || "";
-      cell.style.cssText = "width:" + tile + "px;height:" + tile + "px;padding:0;border-radius:8px;font-weight:800;font-size:" + fs + ";background:" + bg + ";color:" + fg + ";opacity:1;cursor:" + (locked ? "default" : "pointer");
+      cell.style.cssText = "width:100%;height:100%;padding:0;border-radius:8px;font-weight:800;font-size:" + fs + ";background:" + bg + ";color:" + fg + ";opacity:1;cursor:" + (locked ? "default" : "pointer");
       if (!locked) cell.onclick = () => inputCell(i, cell);
       board.appendChild(cell);
     });
