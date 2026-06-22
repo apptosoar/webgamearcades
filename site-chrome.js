@@ -26,6 +26,7 @@
     "body:not(.game-wrap-adjust){display:flex;flex-direction:column;min-height:100dvh}",
     "body:not(.game-wrap-adjust) #sc-footer{margin-top:auto}",
     /* game pages: account for 68px topbar instead of previous compact sizes */
+    ".game-wrap-adjust #sc-footer{display:none}",
     ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
   ].join("");
   document.head.appendChild(style);
