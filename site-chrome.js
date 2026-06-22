@@ -25,9 +25,9 @@
     /* sticky footer for non-game pages */
     "body:not(.game-wrap-adjust){display:flex;flex-direction:column;min-height:100dvh}",
     "body:not(.game-wrap-adjust) #sc-footer{margin-top:auto}",
-    /* game pages: account for 68px topbar instead of previous compact sizes */
-    ".game-wrap-adjust #sc-footer{display:none}",
-    ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
+    /* game pages: fit within viewport accounting for header + footer */
+    ".game-wrap-adjust .wrap{height:min(calc(100dvh - 68px - var(--sc-footer-h,108px)),720px)!important}",
+    ".game-wrap-adjust .game{height:calc(100dvh - 68px - var(--sc-footer-h,108px))!important}",
   ].join("");
   document.head.appendChild(style);
 
@@ -82,6 +82,13 @@
   /* Remove any old footer, then append ours */
   document.querySelectorAll("footer").forEach(f => f.remove());
   document.body.appendChild(footer);
+
+  /* ── Sync footer height as CSS variable so game areas can subtract it ── */
+  function syncFooterH() {
+    document.documentElement.style.setProperty('--sc-footer-h', footer.offsetHeight + 'px');
+  }
+  requestAnimationFrame(syncFooterH);
+  window.addEventListener('resize', syncFooterH);
 
   /* ── Game play page: fix .wrap height for 68px topbar ────────────────── */
   if (/^\/games\/[^/]+\/$/.test(p) || /^\/games\/[^/]+\/index\.html$/.test(p)) {
