@@ -6,7 +6,7 @@
   /* ── CSS ──────────────────────────────────────────────────────────────── */
   const style = document.createElement("style");
   style.textContent = [
-    "#sc-header{position:sticky;top:0;z-index:100;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px);box-sizing:border-box}",
+    "#sc-header{position:sticky;top:0;z-index:100;align-self:stretch;display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;min-height:68px;padding:12px clamp(16px,4vw,44px);border-bottom:1px solid rgba(255,255,255,0.12);background:rgba(16,17,20,0.84);backdrop-filter:blur(18px);box-sizing:border-box}",
     ".sc-brand{display:flex;align-items:center;gap:10px;min-width:0;color:#f4f2ea;text-decoration:none;font-weight:800}",
     ".sc-brand-mark{display:grid;width:34px;height:34px;flex-shrink:0;place-items:center;border-radius:8px;background:linear-gradient(135deg,#f7b84b,#f05d5e);color:#15110a;font-weight:900;box-shadow:0 8px 20px rgba(247,184,75,0.22)}",
     ".sc-nav{display:flex;gap:4px}",
@@ -23,8 +23,8 @@
     ".sc-footer-nav a:hover{color:#f4f2ea}",
     ".sc-footer-nav a+a{border-left:1px solid rgba(255,255,255,0.12)}",
     /* game pages: account for 68px topbar instead of previous compact sizes */
-    ".game-wrap-adjust .wrap{height:calc(100svh - 68px)!important}",
-    ".game-wrap-adjust .game{height:calc(100dvh - 68px)!important}",
+    ".game-wrap-adjust .wrap{height:min(calc(100svh - 68px),720px)!important}",
+    ".game-wrap-adjust .game{height:min(calc(100dvh - 68px),720px)!important}",
   ].join("");
   document.head.appendChild(style);
 
