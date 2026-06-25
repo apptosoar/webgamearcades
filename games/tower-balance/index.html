@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tower Balance — Webgame Arcades</title>
+  <meta name="description" content="Place weighted blocks on a seesaw scale. Keep both sides balanced or it tips over. Free browser puzzle game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/tower-balance/" />
+  <meta property="og:title" content="Tower Balance — Webgame Arcades" />
+  <meta property="og:description" content="Place weighted blocks on a seesaw. Keep both sides balanced — tip too far and the game ends." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/tower-balance/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    canvas { grid-column: 1/-1; width: 100%; height: 100%; min-height: 0; border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; background: #151820; touch-action: none; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Tower Balance</strong>
+    <span>Blocks <b id="score">0</b></span>
+  </div>
+  <canvas id="c"></canvas>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+    <button id="bL" type="button" style="min-height:40px;padding:9px 16px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#f4f2ea;font-size:inherit;cursor:pointer;">◀ Left</button>
+    <button id="bR" type="button" style="min-height:40px;padding:9px 16px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#f4f2ea;font-size:inherit;cursor:pointer;">Right ▶</button>
+  </div>
+</main>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+
+const COLORS = ["#f05d5e","#2bd1c4","#f7b84b","#a98bff","#73d676","#ff8c42","#4dd8f0","#ff6fa3"];
+const MAX_ANGLE = Math.PI / 3;  // 60 degrees = game over
+const BLOCK_TIME = 5000;        // ms per block before auto-place
+
+let W, H;
+let leftBlocks, rightBlocks, leftW, rightW;
+let cur, countdownStart;
+let score, running, started;
+let rafId;
+
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  canvas.width  = r.width  * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  W = canvas.width; H = canvas.height;
+}
+new ResizeObserver(() => { resize(); if (!running) drawTitle(); }).observe(canvas);
+resize();
+
+function getAngle() {
+  const diff = rightW - leftW;
+  // Scale so a difference of 14 weight units = full 60 degree tilt
+  return Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, diff * (MAX_ANGLE / 14)));
+}
+
+function newBlock(ts) {
+  cur = {
+    weight: 1 + Math.floor(Math.random() * 3),
+    color:  COLORS[Math.floor(Math.random() * COLORS.length)]
+  };
+  countdownStart = ts;
+}
+
+function place(side, ts) {
+  if (!cur || !running) return;
+  if (side === "left")  { leftW  += cur.weight; leftBlocks.push({ ...cur }); }
+  else                  { rightW += cur.weight; rightBlocks.push({ ...cur }); }
+  score++;
+  scoreEl.textContent = score;
+  if (Math.abs(getAngle()) >= MAX_ANGLE) { endGame(); return; }
+  newBlock(ts);
+}
+
+function init() {
+  leftBlocks = []; rightBlocks = [];
+  leftW = 0; rightW = 0;
+  score = 0; scoreEl.textContent = 0;
+  cur = null; running = true; started = true;
+  cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(ts => { newBlock(ts); loop(ts); });
+}
+
+function loop(ts) {
+  if (!running) return;
+  rafId = requestAnimationFrame(loop);
+  if (cur && ts - countdownStart >= BLOCK_TIME) {
+    // Auto-place on lighter side (mercy rule)
+    place(leftW <= rightW ? "left" : "right", ts);
+    return;
+  }
+  draw(ts);
+}
+
+function draw(ts) {
+  ctx.clearRect(0, 0, W, H);
+
+  const angle = getAngle();
+  const arm   = W * 0.33;
+  const px    = W / 2;
+  const py    = H * 0.60;
+
+  // Beam endpoints
+  const lx = px - arm, ly = py - arm * Math.sin(angle);
+  const rx = px + arm, ry = py + arm * Math.sin(angle);
+  const pw = W * 0.18, ph = H * 0.012;
+  const bw = W * 0.09, bh = H * 0.042;
+  const gap = 2;
+
+  // Pivot post and base
+  ctx.fillStyle = "#b8bec9";
+  ctx.beginPath();
+  ctx.moveTo(px, py + 2);
+  ctx.lineTo(px - W * 0.045, py + H * 0.11);
+  ctx.lineTo(px + W * 0.045, py + H * 0.11);
+  ctx.closePath(); ctx.fill();
+  ctx.fillRect(px - W * 0.11, py + H * 0.11, W * 0.22, H * 0.015);
+
+  // Beam
+  ctx.strokeStyle = Math.abs(angle) > MAX_ANGLE * 0.75
+    ? "rgba(240,93,94,0.9)" : "rgba(255,255,255,0.75)";
+  ctx.lineWidth = Math.max(3, W * 0.011);
+  ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(rx, ry); ctx.stroke();
+
+  // Pivot circle
+  ctx.fillStyle = "#f4f2ea";
+  ctx.beginPath(); ctx.arc(px, py, W * 0.018, 0, Math.PI * 2); ctx.fill();
+
+  // Plates
+  ctx.fillStyle = "#b8bec9";
+  ctx.fillRect(lx - pw / 2, ly, pw, ph);
+  ctx.fillRect(rx - pw / 2, ry, pw, ph);
+
+  // Blocks stacked on left plate (upward from plate)
+  leftBlocks.forEach((blk, i) => {
+    const by = ly - (i + 1) * (bh + gap);
+    ctx.save(); ctx.shadowColor = blk.color; ctx.shadowBlur = 8 * devicePixelRatio;
+    ctx.fillStyle = blk.color;
+    ctx.beginPath(); ctx.roundRect(lx - bw / 2, by, bw, bh, [3]); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = "#0b0c0f";
+    ctx.font = `bold ${bh * 0.6}px system-ui`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(blk.weight, lx, by + bh / 2);
+  });
+
+  // Blocks stacked on right plate
+  rightBlocks.forEach((blk, i) => {
+    const by = ry - (i + 1) * (bh + gap);
+    ctx.save(); ctx.shadowColor = blk.color; ctx.shadowBlur = 8 * devicePixelRatio;
+    ctx.fillStyle = blk.color;
+    ctx.beginPath(); ctx.roundRect(rx - bw / 2, by, bw, bh, [3]); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = "#0b0c0f";
+    ctx.font = `bold ${bh * 0.6}px system-ui`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(blk.weight, rx, by + bh / 2);
+  });
+
+  // Current block floating at top center
+  if (cur) {
+    const cbx = W / 2 - bw / 2, cby = H * 0.1;
+    ctx.save(); ctx.shadowColor = cur.color; ctx.shadowBlur = 20 * devicePixelRatio;
+    ctx.fillStyle = cur.color;
+    ctx.beginPath(); ctx.roundRect(cbx, cby, bw, bh * 1.2, [4]); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = "#0b0c0f";
+    ctx.font = `bold ${bh * 0.85}px system-ui`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(cur.weight, W / 2, cby + bh * 0.6);
+
+    // Countdown bar
+    const pct = Math.max(0, 1 - (ts - countdownStart) / BLOCK_TIME);
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    ctx.fillRect(W * 0.1, cby + bh * 1.35, W * 0.8, 6);
+    ctx.fillStyle = pct > 0.35 ? "#2bd1c4" : "#f05d5e";
+    ctx.fillRect(W * 0.1, cby + bh * 1.35, W * 0.8 * pct, 6);
+
+    // Arrow hints (faint)
+    ctx.fillStyle = "rgba(255,255,255,0.18)";
+    ctx.font = `${W * 0.04}px system-ui`;
+    ctx.textAlign = "left";  ctx.fillText("◀ Left",  W * 0.04, H * 0.28);
+    ctx.textAlign = "right"; ctx.fillText("Right ▶", W * 0.96, H * 0.28);
+  }
+
+  // Weight totals
+  ctx.font = `${W * 0.028}px system-ui`;
+  ctx.fillStyle = "rgba(255,255,255,0.4)";
+  ctx.textAlign = "center";
+  ctx.fillText(`${leftW}`, lx, py + H * 0.16);
+  ctx.fillText(`${rightW}`, rx, py + H * 0.16);
+
+  // Tilt warning
+  if (Math.abs(angle) > MAX_ANGLE * 0.72) {
+    ctx.fillStyle = "rgba(240,93,94,0.85)";
+    ctx.font = `bold ${W * 0.038}px system-ui`;
+    ctx.textAlign = "center";
+    ctx.fillText("⚠ About to tip!", W / 2, H * 0.9);
+  }
+}
+
+function endGame() {
+  running = false; cancelAnimationFrame(rafId);
+  draw(performance.now());
+  ctx.fillStyle = "rgba(11,12,15,0.82)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${W * 0.07}px system-ui`;
+  ctx.fillText("Tipped Over!", W / 2, H * 0.42);
+  ctx.font = `${W * 0.04}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText(`Blocks placed: ${score}`, W / 2, H * 0.54);
+  ctx.font = `${W * 0.03}px system-ui`;
+  ctx.fillText("Press ◀ ▶ or tap buttons to restart", W / 2, H * 0.64);
+}
+
+function drawTitle() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "rgba(11,12,15,0.78)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${(W || 400) * 0.07}px system-ui`;
+  ctx.fillText("Tower Balance", W / 2, H * 0.38);
+  ctx.font = `${(W || 400) * 0.034}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText("Place weighted blocks on LEFT or RIGHT", W / 2, H * 0.5);
+  ctx.fillText("Keep the seesaw from tipping over", W / 2, H * 0.58);
+  ctx.fillText("Press ◀ or ▶ to begin", W / 2, H * 0.68);
+}
+
+// Keyboard
+document.addEventListener("keydown", e => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  e.preventDefault();
+  if (!running) { init(); return; }
+  place(e.key === "ArrowLeft" ? "left" : "right", performance.now());
+});
+
+// Touch: tap left half = left, right half = right
+canvas.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  if (!running) { if (!started) init(); return; }
+  const rect = canvas.getBoundingClientRect();
+  const relX = (e.clientX - rect.left) / rect.width;
+  place(relX < 0.5 ? "left" : "right", performance.now());
+});
+
+document.getElementById("bL").addEventListener("pointerdown", e => { e.preventDefault(); if (!running) init(); else place("left",  performance.now()); });
+document.getElementById("bR").addEventListener("pointerdown", e => { e.preventDefault(); if (!running) init(); else place("right", performance.now()); });
+document.getElementById("reset").addEventListener("click", init);
+
+drawTitle();
+</script>
+</body>
+</html>

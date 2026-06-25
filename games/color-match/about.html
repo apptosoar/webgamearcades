@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Color Match — How to Play | Webgame Arcades</title>
+<meta name="description" content="Move your paddle to catch balls matching the target color. Avoid wrong colors and don't let matching ones fall. Free browser game." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://webgamearcades.com/games/color-match/about.html" />
+<meta property="og:title" content="Color Match — How to Play | Webgame Arcades" />
+<meta property="og:description" content="Move your paddle to catch balls matching the target color. Avoid wrong colors and don't let matching ones fall." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://webgamearcades.com/games/color-match/about.html" />
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+<style>*{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}main{max-width:760px;margin:0 auto;padding:48px 24px 80px}.back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}.play-btn{display:inline-flex;align-items:center;gap:8px;margin-bottom:40px;padding:12px 24px;border-radius:8px;background:#f7b84b;color:#1b1205;text-decoration:none;font-weight:800;font-size:.95rem;transition:opacity .15s}.play-btn:hover{opacity:.85}.play-btn svg{flex-shrink:0}h1{margin:0 0 16px;font-size:clamp(1.6rem,5vw,2.2rem);color:#f4f2ea}h2{margin:32px 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}p{margin:0 0 14px;color:#b8bec9;max-width:66ch}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}hr{margin:28px 0;border:none;border-top:1px solid rgba(255,255,255,0.08)}.play-btn-bottom{display:inline-flex;align-items:center;gap:8px;margin-top:40px;padding:12px 24px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:#f4f2ea;text-decoration:none;font-weight:700;font-size:.95rem;transition:background .15s}.play-btn-bottom:hover{background:rgba(255,255,255,0.13)}code{background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-size:.9em}</style>
+<script src="/site-chrome.js"></script>
+</head>
+<body>
+<main>
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <a href="index.html" class="play-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Color Match
+  </a>
+
+  <h1>Color Match</h1>
+  <p>A color-recognition reflex game where a target color glows at the top of the screen and a stream of colored balls drops from above. Your job: position the paddle under every ball that matches the current target, and dodge everything else. Every five correct catches, the target switches — forcing you to instantly recalibrate.</p>
+
+  <hr>
+  <h2>How to Play</h2>
+  <ul>
+    <li>The large glowing circle at the top shows the <strong>target color</strong></li>
+    <li>Move the paddle with your mouse, touch drag, or arrow keys</li>
+    <li>Catch a ball matching the target color to score a point</li>
+    <li>Catching the wrong color or missing a matching ball costs a life</li>
+    <li>Every 5 correct catches, the target color changes</li>
+    <li>Ball speed and spawn rate increase with your score</li>
+    <li>Lose all three lives and the game ends</li>
+  </ul>
+
+  <hr>
+  <h2>About This Game</h2>
+  <p>Color Match layers two skills on top of each other: spatial positioning (get the paddle under the ball) and color discrimination (confirm the ball color before committing). At low scores these two tasks happen sequentially — you can think, then move. At high scores, multiple balls fall simultaneously and you must make split-second go/no-go decisions while the paddle is still in motion.</p>
+  <p>The six available colors — red, cyan, gold, purple, green, and orange — are chosen to be visually distinct even under fast motion. The target indicator uses a glow effect rather than a flat swatch so the color is readable at a peripheral glance without looking away from the falling balls.</p>
+  <p>The scoring design rewards attention over luck. You do not lose a life simply for missing a non-target ball — only for missing a target ball or catching a wrong one. This means cautious players who let non-target balls pass through are penalized less than players who try to block everything.</p>
+
+  <hr>
+  <h2>Why We Built It</h2>
+  <p>Color Match was designed as a pure perceptual training game. Color discrimination under time pressure is a skill used in everything from reading maps to interpreting data visualizations. Building it as a casual game made it approachable without requiring any prior skill. The mechanics are simple enough to explain in one sentence, yet the difficulty scales naturally through spawn density and speed, so both beginners and experienced players find a challenge at the right level.</p>
+  <p>The canvas-based renderer means the game runs at 60 fps on any modern device, giving the physics a smooth, satisfying feel even as the action accelerates.</p>
+
+  <hr>
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li><strong>Watch the target first</strong> — commit the current color to memory before the first ball appears.</li>
+    <li><strong>Center your paddle</strong> — start from the middle so you have equal reach left and right.</li>
+    <li><strong>Let non-target balls pass</strong> — there is no penalty for ignoring balls that don't match.</li>
+    <li><strong>Anticipate the color swap</strong> — every 5th catch triggers a new target; be ready to re-evaluate the next ball immediately.</li>
+    <li><strong>Blink deliberately</strong> — prolonged staring at the falling balls causes color fatigue. Brief blinks keep your perception sharp.</li>
+  </ul>
+
+  <hr>
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Power-ups</strong> — a temporary wide-paddle upgrade for clearing dense waves of matching balls.</li>
+    <li><strong>Color-blind modes</strong> — shape icons on each ball as an alternative cue for players with color vision deficiencies.</li>
+    <li><strong>Combo multiplier</strong> — consecutive catches without a miss that multiply score to reward streaks.</li>
+    <li><strong>Time attack mode</strong> — a fixed 60-second window to score as many matches as possible before time expires.</li>
+  </ul>
+
+  <a href="index.html" class="play-btn-bottom">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Now
+  </a>
+</main>
+<style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+<script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+</body>
+</html>

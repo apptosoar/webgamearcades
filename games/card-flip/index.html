@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Flip — Webgame Arcades</title>
+  <meta name="description" content="Flip pairs of cards to find all matching pairs. Beat the clock and finish with the fewest flips. Free browser memory game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/card-flip/" />
+  <meta property="og:title" content="Card Flip — Webgame Arcades" />
+  <meta property="og:description" content="Flip pairs of cards to find all matching pairs. Beat the clock and finish with the fewest flips." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/card-flip/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    .stage {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      height: 100%; min-height: 0;
+      border: 1px solid rgba(255,255,255,0.13); border-radius: 8px;
+      background: radial-gradient(circle at 30% 40%, rgba(43,209,196,0.1), transparent 50%), #151820;
+    }
+    #board { display: grid; gap: 8px; padding: 12px; }
+    .card {
+      width: 100%; aspect-ratio: 3/4;
+      perspective: 600px; cursor: pointer;
+    }
+    .card-inner {
+      width: 100%; height: 100%; position: relative;
+      transform-style: preserve-3d; transition: transform 0.35s ease;
+      border-radius: 10px;
+    }
+    .card.flipped .card-inner, .card.matched .card-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute; inset: 0; border-radius: 10px;
+      backface-visibility: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .card-back {
+      background: linear-gradient(135deg, #1e2430, #2a3040);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      font-size: 1.4rem; color: rgba(255,255,255,0.15);
+    }
+    .card-front {
+      background: linear-gradient(135deg, #1e2a2a, #1a2230);
+      border: 1.5px solid rgba(43,209,196,0.35);
+      transform: rotateY(180deg);
+      font-size: clamp(1.5rem, 5vw, 2.4rem);
+    }
+    .card.matched .card-front { border-color: rgba(115,214,118,0.7); background: rgba(115,214,118,0.1); }
+    #timer-bar-wrap { position: absolute; top: 8px; left: 12px; right: 12px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+    #timer-bar { height: 100%; background: linear-gradient(90deg,#2bd1c4,#a98bff); border-radius: 3px; transition: width 0.2s linear; }
+    #overlay {
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      background: rgba(11,12,15,0.88); border-radius: 8px; pointer-events: none; opacity: 0; transition: opacity 0.25s;
+    }
+    #overlay.show { opacity: 1; pointer-events: auto; }
+    #overlay h2 { margin: 0; font-size: 1.8rem; color: #f4f2ea; }
+    #overlay p  { margin: 0; color: #b8bec9; }
+    #overlay button { margin-top: 8px; padding: 12px 28px; border-radius: 8px; background: #2bd1c4; color: #0b1a1a; font: 700 1rem/1 inherit; border: 0; cursor: pointer; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Card Flip</strong>
+    <span>Flips <b id="flips">0</b></span>
+    <span>Time <b id="timer">60</b>s</span>
+  </div>
+  <section class="stage">
+    <div id="timer-bar-wrap"><div id="timer-bar" style="width:100%"></div></div>
+    <div id="board"></div>
+    <div id="overlay">
+      <h2 id="o-title">Card Flip</h2>
+      <p id="o-msg">Find all matching pairs before time runs out!</p>
+      <button id="o-btn">Start</button>
+    </div>
+  </section>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const ICONS = ["🐉","🦋","🌸","⭐","🎭","🔮","🌊","🦊","🎸","🍀","🌈","🎯","🦁","🏆","🎪","🚀"];
+const TOTAL_PAIRS = 8;
+const TIME_LIMIT = 60;
+
+const boardEl  = document.getElementById("board");
+const flipsEl  = document.getElementById("flips");
+const timerEl  = document.getElementById("timer");
+const barEl    = document.getElementById("timer-bar");
+const overlay  = document.getElementById("overlay");
+const oTitle   = document.getElementById("o-title");
+const oMsg     = document.getElementById("o-msg");
+const oBtn     = document.getElementById("o-btn");
+
+let cards = [], flipped = [], flips = 0, matched = 0, timeLeft = TIME_LIMIT, intervalId, running = false, locked = false;
+
+function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function buildBoard() {
+  boardEl.innerHTML = "";
+  const icons = shuffle(ICONS.slice(0, TOTAL_PAIRS));
+  const pairs = shuffle([...icons, ...icons]);
+
+  // responsive grid columns
+  const cols = window.innerWidth < 480 ? 4 : 4;
+  boardEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  boardEl.style.width = `min(${cols * 90}px, 96%)`;
+
+  cards = pairs.map((icon, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<div class="card-inner"><div class="card-back">?</div><div class="card-front">${icon}</div></div>`;
+    card.dataset.icon = icon; card.dataset.i = i;
+    card.addEventListener("click", () => flipCard(card));
+    boardEl.appendChild(card);
+    return card;
+  });
+}
+
+function flipCard(card) {
+  if (!running || locked || card.classList.contains("flipped") || card.classList.contains("matched")) return;
+  card.classList.add("flipped");
+  flipped.push(card);
+  flips++; flipsEl.textContent = flips;
+  if (flipped.length === 2) {
+    locked = true;
+    setTimeout(checkMatch, 700);
+  }
+}
+
+function checkMatch() {
+  const [a, b] = flipped;
+  if (a.dataset.icon === b.dataset.icon) {
+    a.classList.add("matched"); b.classList.add("matched");
+    matched++;
+    if (matched === TOTAL_PAIRS) { win(); return; }
+  } else {
+    a.classList.remove("flipped"); b.classList.remove("flipped");
+  }
+  flipped = []; locked = false;
+}
+
+function win() {
+  running = false; clearInterval(intervalId);
+  const score = Math.max(0, timeLeft * 10 - (flips - TOTAL_PAIRS) * 5);
+  oTitle.textContent = "You Win! 🎉";
+  oMsg.textContent = `Flips: ${flips} | Time left: ${timeLeft}s | Score: ${score}`;
+  oBtn.textContent = "Play Again";
+  overlay.classList.add("show");
+}
+
+function startGame() {
+  overlay.classList.remove("show");
+  flips = 0; matched = 0; flipped = []; locked = false;
+  timeLeft = TIME_LIMIT; flipsEl.textContent = 0; timerEl.textContent = timeLeft;
+  barEl.style.width = "100%";
+  buildBoard(); running = true; clearInterval(intervalId);
+  intervalId = setInterval(() => {
+    timeLeft--; timerEl.textContent = timeLeft;
+    barEl.style.width = (timeLeft / TIME_LIMIT * 100) + "%";
+    if (timeLeft <= 0) {
+      running = false; clearInterval(intervalId);
+      oTitle.textContent = "Time's Up!";
+      oMsg.textContent = `Matched: ${matched}/${TOTAL_PAIRS} pairs in ${flips} flips`;
+      oBtn.textContent = "Try Again";
+      overlay.classList.add("show");
+    }
+  }, 1000);
+}
+
+oBtn.addEventListener("click", startGame);
+document.getElementById("reset").addEventListener("click", startGame);
+overlay.classList.add("show");
+</script>
+</body>
+</html>

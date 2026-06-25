@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhythm Tap — Webgame Arcades</title>
+  <meta name="description" content="Tap the falling notes as they hit the target line. Perfect timing earns more points. Free browser rhythm game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/rhythm-tap/" />
+  <meta property="og:title" content="Rhythm Tap — Webgame Arcades" />
+  <meta property="og:description" content="Tap the falling notes as they hit the target line. Perfect timing earns more points." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/rhythm-tap/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    canvas { grid-column: 1/-1; width: 100%; height: 100%; min-height: 0; border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; background: #151820; touch-action: none; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Rhythm Tap</strong>
+    <span>Score <b id="score">0</b></span>
+    <span>Combo <b id="combo">0</b></span>
+  </div>
+  <canvas id="c"></canvas>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+const comboEl = document.getElementById("combo");
+
+const LANES = 4;
+const LANE_KEYS = ["d","f","j","k"];
+const LANE_COLORS = ["#f05d5e","#f7b84b","#2bd1c4","#a98bff"];
+const BPM = 120;
+
+let W, H, notes = [], score = 0, combo = 0, lives = 5, running = false, tick = 0, rafId;
+let hitFeedback = [], particles = [];
+let laneFlash = [0,0,0,0];
+
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  W = canvas.width; H = canvas.height;
+}
+new ResizeObserver(() => { resize(); if (!running) draw(); }).observe(canvas); resize();
+
+function laneX(l) { return W / LANES * l + W / LANES / 2; }
+function targetY() { return H * 0.82; }
+function noteW() { return W / LANES * 0.6; }
+function noteH() { return H * 0.065; }
+
+function spawnNote(lane) {
+  notes.push({ lane, y: -noteH(), speed: H * 0.006 + score * 0.00005, hit: false, miss: false });
+}
+
+function beatPattern(t) {
+  const beat = Math.floor(t / (60 / BPM * 60));
+  const patterns = [
+    [0,2],[1,3],[0,1,2,3],[0,3],[1,2],[0,2,3],[1],[0,1,3]
+  ];
+  const p = patterns[beat % patterns.length];
+  return p.includes(t % 4 === 0 ? 0 : t % 4 === 1 ? 1 : t % 4 === 2 ? 2 : 3) ? [t % LANES] : [];
+}
+
+let spawnAccum = 0;
+const SPAWN_INTERVAL = 28;
+
+function init() {
+  notes = []; score = 0; combo = 0; lives = 5; tick = 0; hitFeedback = []; particles = []; spawnAccum = 0;
+  laneFlash = [0,0,0,0];
+  scoreEl.textContent = 0; comboEl.textContent = 0;
+  running = true; cancelAnimationFrame(rafId); loop();
+}
+
+function tryHit(lane) {
+  if (!running) { init(); return; }
+  laneFlash[lane] = 10;
+  const ty = targetY();
+  let best = null, bestDist = Infinity;
+  for (const n of notes) {
+    if (n.lane !== lane || n.hit || n.miss) continue;
+    const dist = Math.abs(n.y + noteH() / 2 - ty);
+    if (dist < bestDist) { bestDist = dist; best = n; }
+  }
+  const window = noteH() * 1.8;
+  if (best && bestDist < window) {
+    best.hit = true;
+    const perfect = bestDist < noteH() * 0.6;
+    const pts = perfect ? 15 : 10;
+    combo++; score += pts * Math.ceil(combo / 5);
+    scoreEl.textContent = score; comboEl.textContent = combo;
+    hitFeedback.push({ x: laneX(lane), y: ty, text: perfect ? "PERFECT!" : "GOOD", col: perfect ? "#f7b84b" : "#2bd1c4", life: 1 });
+    for (let i = 0; i < 8; i++) {
+      const a = Math.random() * Math.PI * 2;
+      particles.push({ x: laneX(lane), y: ty, vx: Math.cos(a) * 3, vy: Math.sin(a) * 3, r: noteW() * 0.1, life: 1, col: LANE_COLORS[lane] });
+    }
+  }
+}
+
+document.addEventListener("keydown", e => {
+  const i = LANE_KEYS.indexOf(e.key);
+  if (i >= 0) { e.preventDefault(); tryHit(i); }
+  if (!running && e.code === "Space") init();
+});
+
+canvas.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const scale = canvas.width / rect.width;
+  const x = (e.clientX - rect.left) * scale;
+  const lane = Math.floor(x / (W / LANES));
+  if (lane >= 0 && lane < LANES) tryHit(lane);
+});
+
+function loop() {
+  if (!running) return;
+  rafId = requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, W, H);
+  tick++;
+
+  // spawn
+  spawnAccum++;
+  if (spawnAccum >= SPAWN_INTERVAL) {
+    spawnAccum = 0;
+    const count = Math.random() < 0.3 ? 2 : 1;
+    const usedLanes = new Set();
+    for (let i = 0; i < count; i++) {
+      let l;
+      do { l = Math.floor(Math.random() * LANES); } while (usedLanes.has(l));
+      usedLanes.add(l); spawnNote(l);
+    }
+  }
+
+  const ty = targetY();
+  const lw = W / LANES;
+
+  // lane separators
+  ctx.strokeStyle = "rgba(255,255,255,0.06)"; ctx.lineWidth = 1;
+  for (let i = 1; i < LANES; i++) {
+    ctx.beginPath(); ctx.moveTo(i * lw, 0); ctx.lineTo(i * lw, H); ctx.stroke();
+  }
+
+  // target line
+  for (let l = 0; l < LANES; l++) {
+    const x = l * lw, flash = laneFlash[l] > 0;
+    if (flash) laneFlash[l]--;
+    ctx.save();
+    ctx.globalAlpha = flash ? 0.9 : 0.4;
+    ctx.strokeStyle = LANE_COLORS[l]; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x, ty); ctx.lineTo(x + lw, ty); ctx.stroke();
+    ctx.globalAlpha = flash ? 0.5 : 0.15;
+    ctx.fillStyle = LANE_COLORS[l];
+    ctx.fillRect(x, ty - noteH() * 0.9, lw, noteH() * 1.8);
+    ctx.restore();
+    // key hint
+    ctx.fillStyle = "rgba(255,255,255,0.35)";
+    ctx.font = `bold ${lw * 0.28}px system-ui`; ctx.textAlign = "center";
+    ctx.fillText(LANE_KEYS[l].toUpperCase(), x + lw / 2, H * 0.96);
+  }
+
+  // notes
+  for (let i = notes.length - 1; i >= 0; i--) {
+    const n = notes[i];
+    n.y += n.speed;
+    if (n.hit) { notes.splice(i, 1); continue; }
+    if (n.y > H) {
+      if (!n.miss) { combo = 0; comboEl.textContent = 0; lives--; hitFeedback.push({ x: laneX(n.lane), y: ty, text: "MISS", col: "#f05d5e", life: 1 }); }
+      if (lives <= 0) { endGame(); return; }
+      notes.splice(i, 1); continue;
+    }
+    const x = n.lane * lw + lw * 0.1;
+    const nw = lw * 0.8, nh = noteH();
+    ctx.save();
+    ctx.shadowColor = LANE_COLORS[n.lane]; ctx.shadowBlur = 14 * devicePixelRatio;
+    ctx.fillStyle = LANE_COLORS[n.lane];
+    ctx.beginPath(); ctx.roundRect(x, n.y, nw, nh, [6]); ctx.fill();
+    ctx.restore();
+  }
+
+  // hit feedback
+  for (let i = hitFeedback.length - 1; i >= 0; i--) {
+    const f = hitFeedback[i];
+    f.life -= 0.05; f.y -= 1.5;
+    if (f.life <= 0) { hitFeedback.splice(i, 1); continue; }
+    ctx.globalAlpha = f.life; ctx.fillStyle = f.col;
+    ctx.font = `bold ${W * 0.04}px system-ui`; ctx.textAlign = "center";
+    ctx.fillText(f.text, f.x, f.y); ctx.globalAlpha = 1;
+  }
+
+  // particles
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy; p.life -= 0.06;
+    if (p.life <= 0) { particles.splice(i, 1); continue; }
+    ctx.globalAlpha = p.life; ctx.fillStyle = p.col;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
+  // lives
+  ctx.fillStyle = "#b8bec9"; ctx.font = `${W*0.03}px system-ui`; ctx.textAlign = "left";
+  ctx.fillText("❤️".repeat(lives) + "🖤".repeat(5 - lives), W * 0.02, H * 0.06);
+}
+
+function endGame() {
+  running = false; cancelAnimationFrame(rafId);
+  ctx.fillStyle = "rgba(11,12,15,0.85)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${W * 0.07}px system-ui`; ctx.fillText("Game Over", W / 2, H * 0.43);
+  ctx.font = `${W * 0.04}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText(`Score: ${score}`, W / 2, H * 0.55);
+  ctx.font = `${W * 0.03}px system-ui`; ctx.fillText("Tap any lane to restart", W / 2, H * 0.65);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "rgba(11,12,15,0.78)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${(W||400)*0.07}px system-ui`; ctx.fillText("Rhythm Tap", W/2, H*0.40);
+  ctx.font = `${(W||400)*0.035}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText("Tap lanes or press D F J K as notes fall", W/2, H*0.52);
+  ctx.fillText("Tap to start", W/2, H*0.62);
+}
+
+document.getElementById("reset").addEventListener("click", init);
+draw();
+</script>
+</body>
+</html>

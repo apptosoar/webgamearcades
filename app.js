@@ -106,6 +106,16 @@
       "marble-gate": "블록을 좌우로 밀어 빈길을 만들고 구슬을 아래 출구로 굴려 보내세요.",
       "otter-pop": "강가 굴에서 수달이 튀어나옵니다. 타이밍에 맞게 탭해 수달을 잡으세요. 10스테이지에 걸쳐 점점 빠르게 나타나고 올라와 있는 시간도 짧아집니다.",
       "shelf-snap": "책장에서 책이 하나씩 삐져나옵니다. 바닥으로 떨어지기 전에 탭해서 제자리로 밀어 넣으세요. 10스테이지로 갈수록 속도가 빨라지고 동시에 여러 권이 튀어나옵니다.",
+      "typing-rush": "단어가 나타나기 전에 타이핑하세요. 레벨이 올라갈수록 시간이 줄어들고 단어가 길어집니다.",
+      "color-match": "목표 색과 같은 공을 패들로 받으세요. 다른 색을 받거나 목표 색을 놓치면 목숨을 잃습니다.",
+      "snake-maze": "뱀을 조종해 먹이를 먹고 성장하세요. 벽이나 자신의 몸에 부딪히면 게임 오버입니다.",
+      "gravity-flip": "탭 또는 스페이스로 중력을 뒤집어 장애물을 피하세요. 오래 버틸수록 속도가 빨라집니다.",
+      "rhythm-tap": "D F J K 키 또는 레인 탭으로 떨어지는 노트를 타이밍에 맞게 쳐서 점수를 올리세요.",
+      "number-crunch": "제한 시간 안에 수식의 답을 골라보세요. 빠를수록 보너스 점수가 높습니다.",
+      "bubble-pop": "같은 색 버블 2개 이상 그룹을 클릭해 터뜨리세요. 버블이 바닥에 닿으면 게임 오버입니다.",
+      "ice-slide": "펭귄이 벽에 부딪힐 때까지 미끄러집니다. 15개 퍼즐에서 별까지 경로를 찾으세요.",
+      "card-flip": "카드 2장을 뒤집어 짝을 맞추세요. 60초 안에 8쌍을 모두 찾으면 승리합니다.",
+      "tower-balance": "흔들리는 크레인에서 블록을 떨어뜨려 탑을 쌓으세요. 정확하게 겹쳐야 탑이 무너지지 않습니다.",
     },
   },
   en: {
@@ -215,6 +225,16 @@
       "marble-gate": "Slide blocks sideways to open a path and guide the marble down through the exit.",
       "otter-pop": "Tap otters as they pop up from riverside burrows. Hit the stage goal before time runs out. 10 stages — otters get faster and stay up for shorter windows each round.",
       "shelf-snap": "Books keep sliding off the shelf one by one. Tap each protruding book to snap it back before it falls. 10 stages — books slide faster and more pop out at once as you advance.",
+      "typing-rush": "Type each word before the timer bar empties. Words get longer and time shrinks every level.",
+      "color-match": "Move the paddle to catch balls matching the target color. Catching wrong colors or missing target balls costs a life.",
+      "snake-maze": "Guide the snake to eat food and grow. Hitting a wall or your own tail ends the game.",
+      "gravity-flip": "Tap or press Space to flip gravity and dodge purple obstacles. Speed increases the longer you survive.",
+      "rhythm-tap": "Press D F J K or tap lanes to hit notes as they reach the target line. Perfect timing earns more points.",
+      "number-crunch": "Pick the correct answer to each equation before the timer runs out. Faster answers earn higher bonus points.",
+      "bubble-pop": "Click groups of 2 or more same-color bubbles to pop them. Don't let any bubble reach the bottom line.",
+      "ice-slide": "The penguin slides until it hits a wall. Navigate to the star across 15 handcrafted ice puzzles.",
+      "card-flip": "Flip two cards at a time to find matching emoji pairs. Find all 8 pairs within 60 seconds to win.",
+      "tower-balance": "Drop blocks from a swinging crane and stack them precisely. Stack collapses when a block misses the tower.",
     },
   },
 };
@@ -1689,6 +1709,16 @@ const gameMeta = [
   { id: "puzzle-trap-scout", genre: "puzzle", title: "Trap Scout", icon: "TR", accent: "#f05d5e", url: "./games/trap-scout/index.html" },
   { id: "puzzle-sudoku", genre: "puzzle", title: "Sudoku", icon: "9", accent: "#a98bff", url: "./games/sudoku/index.html" },
   { id: "sample-clicker", genre: "puzzle", title: "Sample Clicker", icon: "SC", accent: "#a98bff", url: "./games/sample-clicker/index.html" },
+  { id: "typing-rush", genre: "action", title: "Typing Rush", icon: "TR", accent: "#f7b84b", url: "./games/typing-rush/index.html" },
+  { id: "color-match", genre: "action", title: "Color Match", icon: "CM", accent: "#2bd1c4", url: "./games/color-match/index.html" },
+  { id: "snake-maze", genre: "action", title: "Snake Maze", icon: "SM", accent: "#73d676", url: "./games/snake-maze/index.html" },
+  { id: "gravity-flip", genre: "action", title: "Gravity Flip", icon: "GF", accent: "#a98bff", url: "./games/gravity-flip/index.html" },
+  { id: "rhythm-tap", genre: "action", title: "Rhythm Tap", icon: "RT", accent: "#ff6fa3", url: "./games/rhythm-tap/index.html" },
+  { id: "number-crunch", genre: "puzzle", title: "Number Crunch", icon: "NC", accent: "#a98bff", url: "./games/number-crunch/index.html" },
+  { id: "bubble-pop", genre: "puzzle", title: "Bubble Pop", icon: "BP", accent: "#f05d5e", url: "./games/bubble-pop/index.html" },
+  { id: "ice-slide", genre: "puzzle", title: "Ice Slide", icon: "IS", accent: "#4dd8f0", url: "./games/ice-slide/index.html" },
+  { id: "card-flip", genre: "puzzle", title: "Card Flip", icon: "CF", accent: "#2bd1c4", url: "./games/card-flip/index.html" },
+  { id: "tower-balance", genre: "puzzle", title: "Tower Balance", icon: "TB", accent: "#f7b84b", url: "./games/tower-balance/index.html" },
 ];
 
 const puzzleExamples = [
@@ -3037,6 +3067,185 @@ function drawIconShape(ctx, id, c, S) {
       ctx.beginPath(); ctx.arc(c - S*0.05, c + S*0.04, S*0.32, 0, Math.PI*2); ctx.stroke();
       ctx.globalAlpha = 1;
       break;
+
+    case "typing-rush": {
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = `900 ${S*0.38}px system-ui`;
+      ctx.fillText("A", c - S*0.18, c - S*0.1);
+      ctx.globalAlpha = 0.55;
+      ctx.fillText("Z", c + S*0.18, c - S*0.1);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(255,255,255,0.18)";
+      ctx.fillRect(c - S*0.3, c + S*0.12, S*0.6, S*0.07);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fillRect(c - S*0.3, c + S*0.12, S*0.2, S*0.07);
+      ctx.fillRect(c + S*0.12, c + S*0.28, S*0.04, S*0.14);
+      break;
+    }
+
+    case "color-match": {
+      ctx.fillStyle = "rgba(240,93,94,0.9)";
+      ctx.beginPath(); ctx.arc(c, c - S*0.27, S*0.1, 0, Math.PI*2); ctx.fill();
+      [[c-S*0.2,c,"rgba(43,209,196,0.85)"],[c,c+S*0.1,"rgba(240,93,94,0.88)"],[c+S*0.2,c-S*0.04,"rgba(247,184,75,0.8)"]].forEach(([bx,by,col]) => {
+        ctx.fillStyle = col;
+        ctx.beginPath(); ctx.arc(bx, by, S*0.1, 0, Math.PI*2); ctx.fill();
+      });
+      ctx.fillStyle = "rgba(240,93,94,0.7)";
+      ctx.fillRect(c - S*0.24, c + S*0.26, S*0.48, S*0.07);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
+
+    case "snake-maze": {
+      ctx.strokeStyle = "rgba(255,255,255,0.12)"; ctx.lineWidth = S*0.018;
+      for (let i = 1; i < 5; i++) {
+        const p = c - S*0.3 + i * S*0.15;
+        ctx.beginPath(); ctx.moveTo(p, c-S*0.3); ctx.lineTo(p, c+S*0.3); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(c-S*0.3, p); ctx.lineTo(c+S*0.3, p); ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(255,255,255,0.22)";
+      [[1,0],[3,0],[0,2],[4,2],[1,4],[3,4]].forEach(([col,row]) =>
+        ctx.fillRect(c - S*0.3 + col*S*0.15, c - S*0.3 + row*S*0.15, S*0.15, S*0.15));
+      ctx.strokeStyle = "rgba(115,214,118,0.95)"; ctx.lineWidth = S*0.1; ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(c, c+S*0.3); ctx.lineTo(c, c+S*0.15); ctx.lineTo(c+S*0.15, c+S*0.15);
+      ctx.lineTo(c+S*0.15, c-S*0.15); ctx.lineTo(c-S*0.15, c-S*0.15); ctx.lineTo(c-S*0.15, c-S*0.3);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(115,214,118,0.95)";
+      ctx.beginPath(); ctx.arc(c-S*0.15, c-S*0.3, S*0.07, 0, Math.PI*2); ctx.fill();
+      break;
+    }
+
+    case "gravity-flip": {
+      ctx.beginPath();
+      ctx.moveTo(c-S*0.04,c-S*0.08); ctx.lineTo(c+S*0.18,c-S*0.22); ctx.lineTo(c+S*0.18,c+S*0.06);
+      ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = 0.32;
+      ctx.beginPath();
+      ctx.moveTo(c-S*0.04,c+S*0.28); ctx.lineTo(c+S*0.18,c+S*0.42); ctx.lineTo(c+S*0.18,c+S*0.14);
+      ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(169,139,255,0.82)";
+      ctx.fillRect(c+S*0.28, c-S*0.36, S*0.12, S*0.22);
+      ctx.fillRect(c+S*0.28, c+S*0.04, S*0.12, S*0.26);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
+
+    case "rhythm-tap": {
+      const rC = ["rgba(240,93,94,0.82)","rgba(247,184,75,0.82)","rgba(43,209,196,0.82)","rgba(169,139,255,0.82)"];
+      const rY = [c-S*0.04, c+S*0.12, c-S*0.2, c+S*0.0];
+      rC.forEach((col, i) => {
+        const lx = c - S*0.32 + i * S*0.21;
+        ctx.fillStyle = "rgba(255,255,255,0.04)";
+        ctx.fillRect(lx, c-S*0.38, S*0.16, S*0.76);
+        ctx.fillStyle = col;
+        ctx.beginPath(); ctx.roundRect(lx, rY[i], S*0.16, S*0.12, [3]); ctx.fill();
+      });
+      ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.lineWidth = S*0.04;
+      ctx.beginPath(); ctx.moveTo(c-S*0.36, c+S*0.28); ctx.lineTo(c+S*0.36, c+S*0.28); ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
+
+    case "number-crunch": {
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = `900 ${S*0.3}px system-ui`;
+      ctx.fillText("7×8", c, c - S*0.1);
+      ctx.font = `900 ${S*0.2}px system-ui`;
+      ctx.fillStyle = "rgba(255,255,255,0.6)";
+      ctx.fillText("= ?", c, c + S*0.16);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.globalAlpha = 0.22;
+      ctx.fillRect(c - S*0.22, c + S*0.06, S*0.44, S*0.2);
+      ctx.globalAlpha = 1;
+      break;
+    }
+
+    case "bubble-pop": {
+      [[c-S*0.2,c-S*0.07,S*0.13,"rgba(240,93,94,0.85)"],[c+S*0.1,c-S*0.18,S*0.11,"rgba(43,209,196,0.85)"],
+       [c+S*0.24,c+S*0.04,S*0.12,"rgba(247,184,75,0.8)"],[c-S*0.05,c+S*0.16,S*0.13,"rgba(169,139,255,0.85)"],
+       [c+S*0.1,c+S*0.18,S*0.09,"rgba(115,214,118,0.8)"]].forEach(([bx,by,r,col]) => {
+        ctx.fillStyle = col;
+        ctx.beginPath(); ctx.arc(bx, by, r, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = "rgba(255,255,255,0.28)";
+        ctx.beginPath(); ctx.arc(bx-r*0.3, by-r*0.28, r*0.32, 0, Math.PI*2); ctx.fill();
+      });
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.strokeStyle = "rgba(255,255,255,0.65)"; ctx.lineWidth = S*0.04;
+      [0,60,120,180,240,300].forEach(deg => {
+        const a = deg * Math.PI / 180;
+        ctx.beginPath();
+        ctx.moveTo(c-S*0.2+Math.cos(a)*S*0.13, c-S*0.07+Math.sin(a)*S*0.13);
+        ctx.lineTo(c-S*0.2+Math.cos(a)*S*0.2, c-S*0.07+Math.sin(a)*S*0.2);
+        ctx.stroke();
+      });
+      break;
+    }
+
+    case "ice-slide": {
+      ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = S*0.018;
+      for (let i = 0; i < 5; i++) {
+        const p = c - S*0.36 + i*S*0.18;
+        ctx.beginPath(); ctx.moveTo(p, c-S*0.3); ctx.lineTo(p, c+S*0.3); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(c-S*0.36, p); ctx.lineTo(c+S*0.36, p); ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.beginPath(); ctx.arc(c-S*0.16, c-S*0.1, S*0.1, 0, Math.PI*2); ctx.fill();
+      ctx.fillRect(c-S*0.2, c-S*0.01, S*0.12, S*0.2);
+      ctx.fillStyle = "rgba(0,0,0,0.25)";
+      ctx.beginPath(); ctx.arc(c-S*0.2, c-S*0.13, S*0.035, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c-S*0.1, c-S*0.13, S*0.035, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = "rgba(77,216,240,0.9)";
+      ctx.strokeStyle = "rgba(77,216,240,0.9)"; ctx.lineWidth = S*0.05;
+      ctx.beginPath(); ctx.moveTo(c+S*0.06, c+S*0.06); ctx.lineTo(c+S*0.34, c+S*0.06); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c+S*0.26,c-S*0.02); ctx.lineTo(c+S*0.36,c+S*0.06); ctx.lineTo(c+S*0.26,c+S*0.14);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.strokeStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
+
+    case "card-flip": {
+      ctx.fillStyle = "rgba(255,255,255,0.14)";
+      ctx.beginPath(); ctx.roundRect(c-S*0.34, c-S*0.28, S*0.24, S*0.36, [S*0.03]); ctx.fill();
+      ctx.strokeStyle = "rgba(255,255,255,0.3)"; ctx.lineWidth = S*0.03;
+      ctx.beginPath(); ctx.roundRect(c-S*0.34, c-S*0.28, S*0.24, S*0.36, [S*0.03]); ctx.stroke();
+      ctx.strokeStyle = "rgba(255,255,255,0.1)"; ctx.lineWidth = S*0.025;
+      ctx.beginPath();
+      ctx.moveTo(c-S*0.34,c-S*0.28); ctx.lineTo(c-S*0.1,c+S*0.08);
+      ctx.moveTo(c-S*0.1,c-S*0.28); ctx.lineTo(c-S*0.34,c+S*0.08);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(20,32,42,0.95)";
+      ctx.beginPath(); ctx.roundRect(c+S*0.1, c-S*0.28, S*0.24, S*0.36, [S*0.03]); ctx.fill();
+      ctx.strokeStyle = "rgba(43,209,196,0.72)"; ctx.lineWidth = S*0.03;
+      ctx.beginPath(); ctx.roundRect(c+S*0.1, c-S*0.28, S*0.24, S*0.36, [S*0.03]); ctx.stroke();
+      ctx.font = `${S*0.2}px system-ui`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fillText("⭐", c+S*0.22, c-S*0.1);
+      break;
+    }
+
+    case "tower-balance": {
+      const bA = 0.24, aL = S*0.32;
+      ctx.strokeStyle = "rgba(255,255,255,0.82)"; ctx.lineWidth = S*0.065;
+      ctx.beginPath();
+      ctx.moveTo(c-aL, c - aL*Math.sin(bA));
+      ctx.lineTo(c+aL, c + aL*Math.sin(bA));
+      ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.beginPath();
+      ctx.moveTo(c, c+aL*Math.sin(bA)*0.4);
+      ctx.lineTo(c-S*0.07, c+S*0.24); ctx.lineTo(c+S*0.07, c+S*0.24);
+      ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "rgba(240,93,94,0.85)";
+      ctx.fillRect(c-aL-S*0.08, c-aL*Math.sin(bA)-S*0.12, S*0.16, S*0.1);
+      ctx.fillRect(c-aL-S*0.06, c-aL*Math.sin(bA)-S*0.24, S*0.12, S*0.1);
+      ctx.fillStyle = "rgba(43,209,196,0.85)";
+      ctx.fillRect(c+aL-S*0.08, c+aL*Math.sin(bA)-S*0.12, S*0.16, S*0.1);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      break;
+    }
 
     default: {
       const pts = 5, outerR = S*0.28, innerR = S*0.12;

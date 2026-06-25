@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Snake Maze — How to Play | Webgame Arcades</title>
+<meta name="description" content="Navigate a snake through a real maze with inner wall barriers. Eat food to grow, avoid walls and your own tail on a 20×20 maze grid. Free browser game." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://webgamearcades.com/games/snake-maze/about.html" />
+<meta property="og:title" content="Snake Maze — How to Play | Webgame Arcades" />
+<meta property="og:description" content="Navigate a snake through a real maze. Eat food to grow, avoid inner walls and your own tail." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://webgamearcades.com/games/snake-maze/about.html" />
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+<style>*{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}main{max-width:760px;margin:0 auto;padding:48px 24px 80px}.back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}.play-btn{display:inline-flex;align-items:center;gap:8px;margin-bottom:40px;padding:12px 24px;border-radius:8px;background:#f7b84b;color:#1b1205;text-decoration:none;font-weight:800;font-size:.95rem;transition:opacity .15s}.play-btn:hover{opacity:.85}.play-btn svg{flex-shrink:0}h1{margin:0 0 16px;font-size:clamp(1.6rem,5vw,2.2rem);color:#f4f2ea}h2{margin:32px 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}p{margin:0 0 14px;color:#b8bec9;max-width:66ch}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}hr{margin:28px 0;border:none;border-top:1px solid rgba(255,255,255,0.08)}.play-btn-bottom{display:inline-flex;align-items:center;gap:8px;margin-top:40px;padding:12px 24px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:#f4f2ea;text-decoration:none;font-weight:700;font-size:.95rem;transition:background .15s}.play-btn-bottom:hover{background:rgba(255,255,255,0.13)}</style>
+<script src="/site-chrome.js"></script>
+</head>
+<body>
+<main>
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <a href="index.html" class="play-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Snake Maze
+  </a>
+
+  <h1>Snake Maze</h1>
+  <p>Snake Maze combines the classic growing-snake mechanic with a real internal maze. The 20×20 grid features two full-width horizontal barriers and two vertical barriers that divide the board into five distinct zones: a central cross corridor and four enclosed corner quadrants. Navigate between zones through narrow single-cell gaps, eat red food to grow, and avoid crashing into the maze walls or your own tail.</p>
+
+  <hr>
+  <h2>How to Play</h2>
+  <ul>
+    <li>Use <strong>Arrow Keys</strong> on desktop to steer the snake</li>
+    <li>On mobile, <strong>swipe</strong> on the canvas or tap the on-screen directional buttons</li>
+    <li>The snake moves continuously — you only change direction</li>
+    <li>Eat the glowing <strong>red dot</strong> to grow one segment and earn 10 points</li>
+    <li>Crashing into a <strong>maze wall</strong> or your own tail ends the game immediately</li>
+    <li>The snake still <strong>wraps around outer edges</strong> — exiting the left returns from the right</li>
+    <li>Each zone gap is exactly one cell wide — plan your entries and exits carefully</li>
+    <li>Speed increases with each food eaten, capped at twice the starting speed</li>
+  </ul>
+
+  <hr>
+  <h2>About This Game</h2>
+  <p>The maze structure in Snake Maze is built from two crossing sets of barriers. Horizontal walls at rows 5 and 14 span the full grid width, leaving a single-cell gap at column 10. Vertical walls at columns 5 and 14 span rows 6 through 13, leaving a single-cell gap at row 10. Together these create a large central cross corridor — always accessible — and four enclosed corner quadrants that can only be entered or exited by passing through the corresponding gap on the corridor.</p>
+  <p>This layout produces a fundamentally different challenge than open-grid snake. On an open grid, any path is equally valid as long as you avoid self-collision. On the maze grid, a snake heading into a corner quadrant must have a plan to get back out before the body fills the available cells. A long snake that enters a small quadrant without a clear exit route will trap itself — the path that allowed entry becomes blocked by the body growing behind the head.</p>
+  <p>The wrap-around outer edges remain active and interact with the maze in interesting ways. A snake entering the top-left corner quadrant at column 0 can wrap around the left edge to appear at column 19, entirely bypassing the left vertical wall. This gives experienced players additional routing options that are invisible to casual players, adding a skill layer on top of the basic maze navigation.</p>
+
+  <hr>
+  <h2>Why We Built It</h2>
+  <p>The core snake mechanic has been a staple of browser gaming since the Nokia era, but open-grid snake has a well-known flaw: once a player learns to coil the snake efficiently, the game becomes a patience exercise rather than a skill challenge. Adding actual maze walls transforms the puzzle from "don't run into yourself" to "plan a route that navigates corridors while keeping an escape path." The five-zone maze structure is tight enough to create meaningful route decisions at any snake length without being so complex that a new player feels lost. Food can appear anywhere in any zone, so every run demands a different navigation sequence.</p>
+
+  <hr>
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li><strong>Cross the gaps carefully</strong> — the single-cell openings at row 10 and column 10 are the only routes between zones; passing through them with a long tail is risky.</li>
+    <li><strong>Don't fill corner quadrants</strong> — each corner zone has limited cell count; a long snake that coils inside has no room to exit.</li>
+    <li><strong>Use the outer wrap as an alternate route</strong> — wrapping through the top, bottom, or sides bypasses vertical and horizontal walls entirely.</li>
+    <li><strong>Plan two moves ahead at gaps</strong> — approach a gap aligned so your next move keeps you parallel to the wall, not perpendicular to it.</li>
+    <li><strong>Chase food in the center corridor first</strong> — the cross-shaped center is the safest zone; prioritize food there over corner quadrant food when the snake is long.</li>
+  </ul>
+
+  <hr>
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Multiple maze layouts</strong> — unlock different barrier patterns as the score climbs, keeping veteran players challenged.</li>
+    <li><strong>Moving walls</strong> — barriers that shift position every N food eaten, forcing continuous route re-planning.</li>
+    <li><strong>Two-player mode</strong> — two snakes competing for food on the same maze grid using different key sets.</li>
+    <li><strong>LocalStorage leaderboard</strong> — a persistent top-10 list stored in the browser across sessions.</li>
+  </ul>
+
+  <a href="index.html" class="play-btn-bottom">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Now
+  </a>
+</main>
+<style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+<script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Match — Webgame Arcades</title>
+  <meta name="description" content="Catch falling balls that match the target color. Miss a match or catch the wrong one and lose a life. Free browser game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/color-match/" />
+  <meta property="og:title" content="Color Match — Webgame Arcades" />
+  <meta property="og:description" content="Catch falling balls that match the target color. Miss a match or catch the wrong one and lose a life." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/color-match/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    canvas { grid-column: 1/-1; width: 100%; height: 100%; min-height: 0; border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; background: #151820; touch-action: none; cursor: none; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Color Match</strong>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <canvas id="c"></canvas>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+
+const COLORS = ["#f05d5e","#2bd1c4","#f7b84b","#a98bff","#73d676","#ff8c42"];
+const CNAMES = ["RED","CYAN","GOLD","PURPLE","GREEN","ORANGE"];
+
+let W, H, balls = [], paddle = {}, target = 0, score = 0, lives = 3, speed = 1, frameId = 0, running = false, spawnTimer = 0, spawnInterval = 90;
+
+function resize() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * devicePixelRatio;
+  canvas.height = rect.height * devicePixelRatio;
+  W = canvas.width; H = canvas.height;
+  paddle.w = W * 0.18; paddle.h = H * 0.035;
+  paddle.x = W / 2 - paddle.w / 2; paddle.y = H * 0.88;
+  paddle.r = 12;
+}
+new ResizeObserver(resize).observe(canvas); resize();
+
+function pickNewTarget() { target = Math.floor(Math.random() * COLORS.length); }
+
+function spawnBall() {
+  const col = Math.floor(Math.random() * COLORS.length);
+  const r = W * 0.04;
+  balls.push({ x: r + Math.random() * (W - r * 2), y: -r, r, col, vy: (2 + Math.random() * 2) * speed * devicePixelRatio });
+}
+
+function init() {
+  balls = []; score = 0; lives = 3; speed = 1; spawnTimer = 0;
+  pickNewTarget(); resize();
+  scoreEl.textContent = 0; running = true;
+  cancelAnimationFrame(frameId); loop();
+}
+
+canvas.addEventListener("pointermove", e => {
+  const rect = canvas.getBoundingClientRect();
+  const scale = canvas.width / rect.width;
+  paddle.x = e.clientX * scale - paddle.w / 2;
+  paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+});
+canvas.addEventListener("pointerdown", e => {
+  const rect = canvas.getBoundingClientRect();
+  const scale = canvas.width / rect.width;
+  paddle.x = e.clientX * scale - paddle.w / 2;
+  paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft")  paddle.x = Math.max(0, paddle.x - W * 0.06);
+  if (e.key === "ArrowRight") paddle.x = Math.min(W - paddle.w, paddle.x + W * 0.06);
+});
+
+function loop() {
+  if (!running) return;
+  frameId = requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, W, H);
+
+  spawnTimer++;
+  if (spawnTimer >= spawnInterval) { spawnTimer = 0; spawnBall(); }
+  speed = 1 + score * 0.008;
+  spawnInterval = Math.max(30, 90 - score * 0.8);
+
+  // draw target indicator
+  const tR = W * 0.07;
+  ctx.save();
+  ctx.shadowColor = COLORS[target]; ctx.shadowBlur = 20 * devicePixelRatio;
+  ctx.fillStyle = COLORS[target];
+  ctx.beginPath(); ctx.arc(W / 2, H * 0.07, tR, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = "#f4f2ea";
+  ctx.font = `bold ${W * 0.025}px system-ui`;
+  ctx.textAlign = "center";
+  ctx.fillText("CATCH →", W / 2, H * 0.15);
+
+  // lives
+  ctx.font = `${W * 0.03}px system-ui`;
+  ctx.textAlign = "left";
+  ctx.fillText("❤️".repeat(lives) + "🖤".repeat(3 - lives), W * 0.03, H * 0.05);
+
+  // balls
+  for (let i = balls.length - 1; i >= 0; i--) {
+    const b = balls[i];
+    b.y += b.vy;
+
+    // paddle collision
+    if (b.y + b.r >= paddle.y && b.y - b.r <= paddle.y + paddle.h &&
+        b.x >= paddle.x - b.r && b.x <= paddle.x + paddle.w + b.r && b.vy > 0) {
+      if (b.col === target) {
+        score++; scoreEl.textContent = score;
+        if (score % 5 === 0) pickNewTarget();
+      } else {
+        lives--; if (lives <= 0) { endGame(); return; }
+      }
+      balls.splice(i, 1); continue;
+    }
+    if (b.y - b.r > H) {
+      if (b.col === target) { lives--; if (lives <= 0) { endGame(); return; } }
+      balls.splice(i, 1); continue;
+    }
+
+    ctx.save();
+    ctx.shadowColor = COLORS[b.col]; ctx.shadowBlur = 14 * devicePixelRatio;
+    ctx.fillStyle = COLORS[b.col];
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  // paddle
+  ctx.save();
+  ctx.shadowColor = COLORS[target]; ctx.shadowBlur = 16 * devicePixelRatio;
+  ctx.fillStyle = COLORS[target];
+  ctx.beginPath();
+  ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, [paddle.r]);
+  ctx.fill();
+  ctx.restore();
+}
+
+function endGame() {
+  running = false; cancelAnimationFrame(frameId);
+  ctx.fillStyle = "rgba(11,12,15,0.82)";
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea";
+  ctx.font = `bold ${W * 0.06}px system-ui`;
+  ctx.textAlign = "center";
+  ctx.fillText("Game Over", W / 2, H * 0.45);
+  ctx.font = `${W * 0.04}px system-ui`;
+  ctx.fillStyle = "#b8bec9";
+  ctx.fillText(`Score: ${score}`, W / 2, H * 0.55);
+}
+
+document.getElementById("reset").addEventListener("click", init);
+// start screen
+ctx.clearRect(0, 0, W, H);
+(function drawStart() {
+  if (W === 0) { requestAnimationFrame(drawStart); return; }
+  ctx.fillStyle = "rgba(11,12,15,0.82)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.font = `bold ${(W || 400) * 0.07}px system-ui`; ctx.textAlign = "center";
+  ctx.fillText("Color Match", W / 2, H * 0.42);
+  ctx.font = `${(W || 400) * 0.035}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText("Catch balls matching the target color", W / 2, H * 0.54);
+})();
+</script>
+</body>
+</html>

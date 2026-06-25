@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Crunch — Webgame Arcades</title>
+  <meta name="description" content="Solve math equations fast. Pick the correct answer before time runs out. 10 questions per round, speed increases each level." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/number-crunch/" />
+  <meta property="og:title" content="Number Crunch — Webgame Arcades" />
+  <meta property="og:description" content="Solve math equations fast. Pick the correct answer before time runs out." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/number-crunch/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    .stage {
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+      height: 100%; min-height: 0;
+      border: 1px solid rgba(255,255,255,0.13); border-radius: 8px;
+      background: radial-gradient(circle at 50% 40%, rgba(169,139,255,0.15), transparent 55%), #151820;
+      padding: 24px;
+    }
+    #equation {
+      font-size: clamp(2.2rem, 9vw, 4.5rem); font-weight: 900; color: #f4f2ea;
+      letter-spacing: 0.05em; text-align: center; min-height: 1.2em;
+    }
+    #timer-bar-wrap { width: min(380px, 80%); height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+    #timer-bar { height: 100%; background: linear-gradient(90deg, #a98bff, #f05d5e); border-radius: 4px; transition: width 0.1s linear; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: min(360px, 90%); }
+    .choice-btn {
+      padding: 18px 12px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07); color: #f4f2ea; font: 700 1.4rem/1 inherit;
+      cursor: pointer; transition: background 0.1s, border-color 0.1s;
+    }
+    .choice-btn:hover { background: rgba(255,255,255,0.14); }
+    .choice-btn.correct { background: rgba(115,214,118,0.2); border-color: #73d676; }
+    .choice-btn.wrong   { background: rgba(240,93,94,0.2);  border-color: #f05d5e; }
+    .choice-btn:disabled { cursor: default; }
+    #status-row { font-size: 0.85rem; color: #b8bec9; display: flex; gap: 16px; }
+    #overlay {
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      background: rgba(11,12,15,0.88); border-radius: 8px; pointer-events: none; opacity: 0; transition: opacity 0.25s;
+    }
+    #overlay.show { opacity: 1; pointer-events: auto; }
+    #overlay h2 { margin: 0; font-size: 1.8rem; color: #f4f2ea; }
+    #overlay p  { margin: 0; color: #b8bec9; }
+    #overlay button { margin-top: 8px; padding: 12px 28px; border-radius: 8px; background: #a98bff; color: #fff; font: 700 1rem/1 inherit; border: 0; cursor: pointer; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Number Crunch</strong>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <section class="stage">
+    <div id="status-row"><span>Level <b id="lvl">1</b></span><span>Q <b id="qnum">1</b>/10</span></div>
+    <div id="equation">?</div>
+    <div id="timer-bar-wrap"><div id="timer-bar" style="width:100%"></div></div>
+    <div class="choices" id="choices">
+      <button class="choice-btn" id="c0"></button>
+      <button class="choice-btn" id="c1"></button>
+      <button class="choice-btn" id="c2"></button>
+      <button class="choice-btn" id="c3"></button>
+    </div>
+    <div id="overlay">
+      <h2 id="o-title">Number Crunch</h2>
+      <p id="o-msg">Solve 10 equations per round as fast as you can!</p>
+      <button id="o-btn">Start</button>
+    </div>
+  </section>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const scoreEl = document.getElementById("score");
+const eqEl    = document.getElementById("equation");
+const barEl   = document.getElementById("timer-bar");
+const lvlEl   = document.getElementById("lvl");
+const qnumEl  = document.getElementById("qnum");
+const overlay = document.getElementById("overlay");
+const oTitle  = document.getElementById("o-title");
+const oMsg    = document.getElementById("o-msg");
+const oBtn    = document.getElementById("o-btn");
+const btns    = [0,1,2,3].map(i => document.getElementById(`c${i}`));
+
+const TIME_BASE = 5000;
+let score = 0, level = 1, qNum = 0, correct = 0, answer = 0, rafId = 0, timerStart = 0, running = false, answered = false;
+
+function gen() {
+  const ops = level <= 2 ? ["+","-"] : level <= 4 ? ["+","-","×"] : ["+","-","×","÷"];
+  const op = ops[Math.floor(Math.random() * ops.length)];
+  let a, b, ans;
+  if (op === "+") { a = 1 + Math.floor(Math.random() * (10 * level)); b = 1 + Math.floor(Math.random() * (10 * level)); ans = a + b; }
+  else if (op === "-") { a = 10 + Math.floor(Math.random() * (10 * level)); b = 1 + Math.floor(Math.random() * a); ans = a - b; }
+  else if (op === "×") { a = 2 + Math.floor(Math.random() * (3 * level)); b = 2 + Math.floor(Math.random() * 10); ans = a * b; }
+  else { b = 2 + Math.floor(Math.random() * 9); a = b * (1 + Math.floor(Math.random() * 10)); ans = a / b; }
+  return { eq: `${a} ${op} ${b} = ?`, ans };
+}
+
+function shuffle(arr) { const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function nextQ() {
+  cancelAnimationFrame(rafId); answered = false;
+  qNum++; if (qNum > 10) { endRound(); return; }
+  qnumEl.textContent = qNum;
+  const { eq, ans } = gen();
+  answer = ans; eqEl.textContent = eq; eqEl.style.color = "#f4f2ea";
+  btns.forEach(b => { b.disabled = false; b.className = "choice-btn"; });
+  const wrongs = new Set();
+  while (wrongs.size < 3) {
+    const w = ans + (Math.ceil(Math.random() * 12) * (Math.random() < 0.5 ? 1 : -1));
+    if (w !== ans) wrongs.add(w);
+  }
+  const choices = shuffle([ans, ...wrongs]);
+  btns.forEach((b, i) => { b.textContent = choices[i]; b.dataset.val = choices[i]; });
+  timerStart = performance.now();
+  tick();
+}
+
+function tick() {
+  const elapsed = performance.now() - timerStart;
+  const allowed = Math.max(2000, TIME_BASE - (level - 1) * 700);
+  const pct = Math.max(0, 1 - elapsed / allowed);
+  barEl.style.width = (pct * 100) + "%";
+  if (pct <= 0 && !answered) { timeOut(); return; }
+  if (!answered) rafId = requestAnimationFrame(tick);
+}
+
+function timeOut() {
+  answered = true; btns.forEach(b => { b.disabled = true; if (+b.dataset.val === answer) b.classList.add("correct"); });
+  eqEl.style.color = "#f05d5e";
+  setTimeout(() => { if (running) nextQ(); }, 900);
+}
+
+btns.forEach(b => b.addEventListener("click", () => {
+  if (answered || !running) return;
+  answered = true; cancelAnimationFrame(rafId);
+  const chosen = +b.dataset.val;
+  if (chosen === answer) {
+    b.classList.add("correct");
+    const elapsed = performance.now() - timerStart;
+    const allowed = Math.max(2000, TIME_BASE - (level - 1) * 700);
+    const bonus = Math.max(1, Math.ceil((1 - elapsed / allowed) * 15));
+    score += bonus; scoreEl.textContent = score; correct++;
+  } else {
+    b.classList.add("wrong");
+    btns.forEach(ob => { if (+ob.dataset.val === answer) ob.classList.add("correct"); });
+  }
+  btns.forEach(ob => ob.disabled = true);
+  setTimeout(() => { if (running) nextQ(); }, 700);
+}));
+
+function endRound() {
+  running = false;
+  oTitle.textContent = `Round ${level} Complete!`;
+  oMsg.textContent = `Correct: ${correct}/10 — Score: ${score}`;
+  oBtn.textContent = "Next Level"; level++;
+  overlay.classList.add("show");
+}
+
+function startRound() {
+  overlay.classList.remove("show");
+  qNum = 0; correct = 0; running = true; lvlEl.textContent = level;
+  setTimeout(nextQ, 300);
+}
+
+oBtn.addEventListener("click", startRound);
+document.getElementById("reset").addEventListener("click", () => {
+  score = 0; level = 1; scoreEl.textContent = 0;
+  oTitle.textContent = "Number Crunch"; oMsg.textContent = "Solve 10 equations per round as fast as you can!";
+  oBtn.textContent = "Start"; overlay.classList.add("show"); running = false;
+});
+
+overlay.classList.add("show");
+</script>
+</body>
+</html>

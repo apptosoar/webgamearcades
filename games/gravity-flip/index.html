@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gravity Flip — Webgame Arcades</title>
+  <meta name="description" content="Flip gravity to dodge obstacles and survive as long as possible. Tap or press Space to flip. Free browser game." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/gravity-flip/" />
+  <meta property="og:title" content="Gravity Flip — Webgame Arcades" />
+  <meta property="og:description" content="Flip gravity to dodge obstacles and survive as long as possible. Tap or press Space to flip." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/gravity-flip/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    canvas { grid-column: 1/-1; width: 100%; height: 100%; min-height: 0; border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; background: #151820; touch-action: none; cursor: pointer; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Gravity Flip</strong>
+    <span>Score <b id="score">0</b></span>
+    <span>Best <b id="best">0</b></span>
+  </div>
+  <canvas id="c"></canvas>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+const bestEl  = document.getElementById("best");
+
+let W, H, player, obstacles, score, best = 0, speed, frameId, running = false, started = false, tick = 0;
+
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  W = canvas.width; H = canvas.height;
+}
+new ResizeObserver(() => { resize(); if (!running) draw(); }).observe(canvas); resize();
+
+function init() {
+  player = { x: W * 0.2, y: H / 2, w: W * 0.045, h: W * 0.045, vy: 0, gravity: 1, flipped: false };
+  obstacles = []; speed = 4 * devicePixelRatio; score = 0; tick = 0;
+  scoreEl.textContent = 0; running = true; started = true;
+  cancelAnimationFrame(frameId); loop();
+}
+
+function flip() {
+  if (!running) { init(); return; }
+  player.flipped = !player.flipped;
+  player.gravity = player.flipped ? -1 : 1;
+  player.vy = 0;
+}
+
+canvas.addEventListener("pointerdown", e => { e.preventDefault(); flip(); });
+document.addEventListener("keydown", e => { if (e.code === "Space") { e.preventDefault(); flip(); } });
+
+function spawnObstacle() {
+  const gap = H * (0.32 - Math.min(0.14, score * 0.0005));
+  const minTop = H * 0.08, maxTop = H - gap - H * 0.08;
+  const topH = minTop + Math.random() * (maxTop - minTop);
+  const w = W * 0.055;
+  obstacles.push(
+    { x: W + w, y: 0,           w, h: topH,      col: "#a98bff" },
+    { x: W + w, y: topH + gap,  w, h: H - topH - gap, col: "#a98bff" }
+  );
+}
+
+function loop() {
+  if (!running) return;
+  frameId = requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, W, H);
+  tick++;
+
+  speed = (4 + score * 0.04) * devicePixelRatio;
+  const gapInterval = Math.max(55, 90 - score * 0.2);
+  if (tick % Math.floor(gapInterval) === 0) spawnObstacle();
+
+  // floor / ceiling lines
+  ctx.strokeStyle = "rgba(255,255,255,0.12)"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(0, H * 0.02); ctx.lineTo(W, H * 0.02); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, H * 0.98); ctx.lineTo(W, H * 0.98); ctx.stroke();
+
+  // player physics
+  player.vy += player.gravity * 0.55 * devicePixelRatio;
+  player.y += player.vy;
+
+  // wall collision
+  if (player.y < H * 0.02 || player.y + player.h > H * 0.98) { endGame(); return; }
+
+  // obstacles
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    const o = obstacles[i];
+    o.x -= speed;
+    ctx.save();
+    ctx.shadowColor = o.col; ctx.shadowBlur = 10 * devicePixelRatio;
+    ctx.fillStyle = o.col;
+    ctx.fillRect(o.x, o.y, o.w, o.h);
+    ctx.restore();
+    if (o.x + o.w < 0) { obstacles.splice(i, 1); continue; }
+    if (player.x + player.w * 0.8 > o.x + 2 && player.x < o.x + o.w - 2 &&
+        player.y + player.h * 0.8 > o.y + 2 && player.y < o.y + o.h - 2) { endGame(); return; }
+  }
+
+  // score
+  score++; scoreEl.textContent = Math.floor(score / 6);
+  if (score > best) { best = Math.floor(score / 6); bestEl.textContent = best; }
+
+  // player
+  ctx.save();
+  ctx.shadowColor = "#2bd1c4"; ctx.shadowBlur = 18 * devicePixelRatio;
+  ctx.fillStyle = "#2bd1c4";
+  ctx.beginPath();
+  if (player.flipped) {
+    ctx.moveTo(player.x + player.w / 2, player.y);
+    ctx.lineTo(player.x + player.w, player.y + player.h);
+    ctx.lineTo(player.x, player.y + player.h);
+  } else {
+    ctx.moveTo(player.x, player.y);
+    ctx.lineTo(player.x + player.w, player.y);
+    ctx.lineTo(player.x + player.w / 2, player.y + player.h);
+  }
+  ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+
+function endGame() {
+  running = false; cancelAnimationFrame(frameId);
+  const s = Math.floor(score / 6);
+  ctx.fillStyle = "rgba(11,12,15,0.82)"; ctx.fillRect(0, 0, W, H);
+  ctx.textAlign = "center"; ctx.fillStyle = "#f4f2ea";
+  ctx.font = `bold ${W * 0.07}px system-ui`; ctx.fillText("Game Over", W / 2, H * 0.43);
+  ctx.font = `${W * 0.04}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText(`Score: ${s}  Best: ${best}`, W / 2, H * 0.55);
+  ctx.font = `${W * 0.03}px system-ui`; ctx.fillText("Tap or press Space to restart", W / 2, H * 0.65);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "rgba(11,12,15,0.78)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${(W||400)*0.07}px system-ui`; ctx.fillText("Gravity Flip", W/2, H*0.42);
+  ctx.font = `${(W||400)*0.035}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText("Tap or press Space to flip gravity", W/2, H*0.54);
+}
+
+document.getElementById("reset").addEventListener("click", init);
+draw();
+</script>
+</body>
+</html>

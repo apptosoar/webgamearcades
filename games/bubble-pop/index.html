@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bubble Pop — Webgame Arcades</title>
+  <meta name="description" content="Click groups of 2 or more matching bubbles to pop them. New rows drop from the top — clear them before they reach the bottom." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/bubble-pop/" />
+  <meta property="og:title" content="Bubble Pop — Webgame Arcades" />
+  <meta property="og:description" content="Click groups of 2 or more matching bubbles to pop them before they reach the bottom." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/bubble-pop/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game { height: 100dvh; width: min(720px, 100%); grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    canvas { grid-column: 1/-1; width: 100%; height: 100%; min-height: 0; border: 1px solid rgba(255,255,255,0.13); border-radius: 8px; background: #151820; touch-action: none; cursor: pointer; }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Bubble Pop</strong>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <canvas id="c"></canvas>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+
+const COLS = 8, COLORS = ["#f05d5e","#2bd1c4","#f7b84b","#a98bff","#73d676","#ff8c42"];
+let W, H, CS, grid = [], score = 0, running = false, addTimer = 0, ADD_INTERVAL = 600, particles = [];
+
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  W = canvas.width; H = canvas.height;
+  CS = Math.floor(W / COLS);
+}
+new ResizeObserver(() => { resize(); draw(); }).observe(canvas); resize();
+
+function maxRows() { return Math.floor(H / CS) - 1; }
+
+function newRow() {
+  return Array.from({ length: COLS }, () => COLORS[Math.floor(Math.random() * COLORS.length)]);
+}
+
+function init() {
+  grid = []; score = 0; addTimer = 0; particles = [];
+  for (let i = 0; i < 5; i++) grid.push(newRow());
+  scoreEl.textContent = 0; running = true;
+  cancelAnimationFrame(window._rafId);
+  loop();
+}
+
+function flood(r, c, col, visited) {
+  const key = `${r},${c}`;
+  if (r < 0 || r >= grid.length || c < 0 || c >= COLS) return [];
+  if (visited.has(key)) return [];
+  if (!grid[r] || grid[r][c] !== col) return [];
+  visited.add(key);
+  return [[r, c], ...flood(r-1,c,col,visited), ...flood(r+1,c,col,visited), ...flood(r,c-1,col,visited), ...flood(r,c+1,col,visited)];
+}
+
+function handleClick(px, py) {
+  if (!running) { init(); return; }
+  const c = Math.floor(px / CS);
+  const r = Math.floor(py / CS);
+  if (r < 0 || r >= grid.length || c < 0 || c >= COLS) return;
+  const col = grid[r][c];
+  if (!col) return;
+  const group = flood(r, c, col, new Set());
+  if (group.length < 2) return;
+  group.forEach(([gr, gc]) => {
+    const cx = gc * CS + CS / 2, cy = gr * CS + CS / 2;
+    for (let i = 0; i < 6; i++) {
+      const a = Math.random() * Math.PI * 2;
+      particles.push({ x: cx, y: cy, vx: Math.cos(a) * (2 + Math.random() * 3), vy: Math.sin(a) * (2 + Math.random() * 3), r: CS * 0.15, life: 1, col });
+    }
+    grid[gr][gc] = null;
+  });
+  // compact: remove fully-null rows from top (they'd be at the end since index 0 = top)
+  while (grid.length && grid[0].every(c => !c)) grid.shift();
+  score += group.length * group.length;
+  scoreEl.textContent = score;
+}
+
+canvas.addEventListener("pointerdown", e => {
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const scale = canvas.width / rect.width;
+  handleClick((e.clientX - rect.left) * scale, (e.clientY - rect.top) * scale);
+});
+
+let lastAdd = 0;
+function loop(ts = 0) {
+  window._rafId = requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, W, H);
+
+  if (running) {
+    addTimer++;
+    const interval = Math.max(200, ADD_INTERVAL - score * 0.8);
+    if (addTimer >= interval) { addTimer = 0; grid.push(newRow()); }
+    if (grid.length > maxRows()) { endGame(); return; }
+  }
+
+  // draw grid
+  grid.forEach((row, r) => {
+    row.forEach((col, c) => {
+      if (!col) return;
+      const cx = c * CS + CS / 2, cy = r * CS + CS / 2, rad = CS * 0.42;
+      ctx.save();
+      ctx.shadowColor = col; ctx.shadowBlur = 8 * devicePixelRatio;
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.25)";
+      ctx.beginPath(); ctx.arc(cx - rad * 0.28, cy - rad * 0.28, rad * 0.35, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    });
+  });
+
+  // particles
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life -= 0.04;
+    if (p.life <= 0) { particles.splice(i, 1); continue; }
+    ctx.globalAlpha = p.life;
+    ctx.fillStyle = p.col;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
+  // danger line
+  const dangerY = maxRows() * CS;
+  ctx.strokeStyle = "rgba(240,93,94,0.3)"; ctx.lineWidth = 2;
+  ctx.setLineDash([8, 8]);
+  ctx.beginPath(); ctx.moveTo(0, dangerY); ctx.lineTo(W, dangerY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (!running) {
+    ctx.fillStyle = "rgba(11,12,15,0.82)"; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+    ctx.font = `bold ${W * 0.07}px system-ui`; ctx.fillText("Game Over", W / 2, H * 0.43);
+    ctx.font = `${W * 0.04}px system-ui`; ctx.fillStyle = "#b8bec9";
+    ctx.fillText(`Score: ${score}`, W / 2, H * 0.55);
+    ctx.font = `${W * 0.03}px system-ui`; ctx.fillText("Tap to play again", W / 2, H * 0.65);
+  }
+}
+
+function endGame() { running = false; }
+document.getElementById("reset").addEventListener("click", init);
+
+// start screen
+(function drawStart() {
+  if (W === 0) { requestAnimationFrame(drawStart); return; }
+  ctx.fillStyle = "rgba(11,12,15,0.82)"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#f4f2ea"; ctx.textAlign = "center";
+  ctx.font = `bold ${(W||400)*0.07}px system-ui`; ctx.fillText("Bubble Pop", W/2, H*0.42);
+  ctx.font = `${(W||400)*0.035}px system-ui`; ctx.fillStyle = "#b8bec9";
+  ctx.fillText("Click groups of 2+ same-color bubbles", W/2, H*0.54);
+  ctx.fillText("Tap to start", W/2, H*0.63);
+})();
+loop();
+</script>
+</body>
+</html>

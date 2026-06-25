@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Rush — Webgame Arcades</title>
+  <meta name="description" content="Type words before the timer runs out. Speed increases every level. Free browser typing game — no download needed." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webgamearcades.com/games/typing-rush/" />
+  <meta property="og:title" content="Typing Rush — Webgame Arcades" />
+  <meta property="og:description" content="Type words before the timer runs out. Speed increases every level. Free browser typing game — no download needed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://webgamearcades.com/games/typing-rush/" />
+  <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../action-style.css" />
+  <style>
+    .game {
+      height: 100dvh;
+      width: min(720px, 100%);
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+    }
+    .stage {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      height: 100%;
+      min-height: 0;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 8px;
+      background: radial-gradient(circle at 50% 30%, rgba(247,184,75,0.18), transparent 55%),
+        linear-gradient(160deg, rgba(247,184,75,0.08), rgba(240,93,94,0.08)), #151820;
+      text-align: center;
+      padding: 24px;
+    }
+    #word-display {
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: #f4f2ea;
+      min-height: 1.2em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    #word-display.correct { color: #73d676; }
+    #word-display.wrong { color: #f05d5e; }
+    #timer-bar-wrap {
+      width: min(400px, 80%);
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #timer-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #f7b84b, #f05d5e);
+      border-radius: 4px;
+      transition: width 0.1s linear;
+    }
+    #type-input {
+      width: min(360px, 80%);
+      padding: 14px 18px;
+      border: 2px solid rgba(255,255,255,0.18);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.07);
+      color: #f4f2ea;
+      font: inherit;
+      font-size: 1.25rem;
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color 0.15s;
+      letter-spacing: 0.1em;
+    }
+    #type-input:focus { border-color: rgba(247,184,75,0.6); }
+    #type-input:disabled { opacity: 0.4; }
+    .lives-row { display: flex; gap: 8px; font-size: 1.3rem; }
+    #level-badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #f7b84b;
+      font-weight: 700;
+    }
+    #overlay {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      background: rgba(11,12,15,0.88); border-radius: 8px;
+      pointer-events: none; opacity: 0; transition: opacity 0.25s;
+    }
+    #overlay.show { opacity: 1; pointer-events: auto; }
+    #overlay h2 { margin: 0; font-size: 1.8rem; color: #f4f2ea; }
+    #overlay p { margin: 0; color: #b8bec9; }
+    #overlay button {
+      margin-top: 8px; padding: 12px 28px; border-radius: 8px;
+      background: #f7b84b; color: #1b1205; font: 700 1rem/1 inherit;
+      border: 0; cursor: pointer;
+    }
+  </style>
+  <script src="/site-chrome.js"></script>
+</head>
+<body>
+<main class="game">
+  <div class="hud">
+    <strong>Typing Rush</strong>
+    <span>Score <b id="score">0</b></span>
+  </div>
+  <section class="stage">
+    <div id="level-badge">Level 1</div>
+    <div id="word-display">—</div>
+    <div id="timer-bar-wrap"><div id="timer-bar" style="width:100%"></div></div>
+    <input id="type-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="type here" disabled />
+    <div class="lives-row" id="lives-row">❤️❤️❤️</div>
+    <div id="overlay">
+      <h2 id="overlay-title">Typing Rush</h2>
+      <p id="overlay-msg">Type each word before time runs out!</p>
+      <button id="overlay-btn">Start</button>
+    </div>
+  </section>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="reset" id="reset" type="button">Restart</button>
+    <a href="about.html" style="display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;border:1px solid rgba(255,255,255,0.14);border-radius:8px;background:rgba(255,255,255,0.08);color:#b8bec9;text-decoration:none;font-size:inherit;">Info</a>
+  </div>
+</main>
+<script>
+const WORDS = [
+  ["cat","dog","run","fly","hot","sun","box","mix","sky","cup","red","bag"],
+  ["jump","fast","blue","fire","game","door","ship","cold","star","moon","rain","wave"],
+  ["tiger","plant","flame","black","queen","river","night","magic","stone","cloud","dance","fresh"],
+  ["battle","castle","frozen","jungle","master","silver","window","bridge","forest","island","rocket","wizard"],
+  ["captain","fantasy","morning","perfect","program","stadium","warrior","kitchen","balance","thunder","crystal","diamond"],
+];
+const TIME = [5000, 4000, 3000, 2500, 2000];
+
+let score = 0, lives = 3, level = 0, wordIdx = 0, wordList = [], timerStart = 0, rafId = 0, running = false;
+
+const scoreEl = document.getElementById("score");
+const wordEl  = document.getElementById("word-display");
+const barEl   = document.getElementById("timer-bar");
+const inputEl = document.getElementById("type-input");
+const livesEl = document.getElementById("lives-row");
+const badgeEl = document.getElementById("level-badge");
+const overlay = document.getElementById("overlay");
+const oTitle  = document.getElementById("overlay-title");
+const oMsg    = document.getElementById("overlay-msg");
+const oBtn    = document.getElementById("overlay-btn");
+
+function shuffle(arr) {
+  const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a;
+}
+
+function showOverlay(title, msg, btn) {
+  oTitle.textContent = title; oMsg.textContent = msg; oBtn.textContent = btn;
+  overlay.classList.add("show");
+}
+
+function hideOverlay() { overlay.classList.remove("show"); }
+
+function updateLives() {
+  livesEl.textContent = "❤️".repeat(lives) + "🖤".repeat(3 - lives);
+}
+
+function nextWord() {
+  cancelAnimationFrame(rafId);
+  if (wordIdx >= wordList.length) {
+    if (level < WORDS.length - 1) { level++; wordList = shuffle(WORDS[level]); wordIdx = 0; }
+    else { wordList = shuffle(WORDS[level]); wordIdx = 0; }
+  }
+  const word = wordList[wordIdx++];
+  wordEl.textContent = word;
+  wordEl.className = "";
+  inputEl.value = "";
+  inputEl.disabled = false;
+  inputEl.focus();
+  badgeEl.textContent = `Level ${level + 1}`;
+  timerStart = performance.now();
+  tick();
+}
+
+function tick() {
+  const elapsed = performance.now() - timerStart;
+  const allowed = TIME[level];
+  const pct = Math.max(0, 1 - elapsed / allowed);
+  barEl.style.width = (pct * 100) + "%";
+  if (pct <= 0) { miss(); return; }
+  rafId = requestAnimationFrame(tick);
+}
+
+function miss() {
+  lives--;
+  updateLives();
+  wordEl.classList.add("wrong");
+  inputEl.disabled = true;
+  if (lives <= 0) { gameOver(); return; }
+  setTimeout(() => { if (running) nextWord(); }, 600);
+}
+
+function gameOver() {
+  running = false; inputEl.disabled = true;
+  showOverlay("Game Over", `Score: ${score}`, "Play Again");
+}
+
+function startGame() {
+  score = 0; lives = 3; level = 0;
+  wordList = shuffle(WORDS[0]); wordIdx = 0;
+  scoreEl.textContent = 0; updateLives();
+  running = true; hideOverlay(); nextWord();
+}
+
+inputEl.addEventListener("input", () => {
+  if (!running) return;
+  const typed = inputEl.value.trim().toUpperCase();
+  const target = wordEl.textContent.toUpperCase();
+  if (typed === target) {
+    cancelAnimationFrame(rafId);
+    const elapsed = performance.now() - timerStart;
+    const bonus = Math.max(1, Math.ceil((1 - elapsed / TIME[level]) * 10));
+    score += bonus;
+    scoreEl.textContent = score;
+    wordEl.classList.add("correct");
+    inputEl.disabled = true;
+    setTimeout(() => { if (running) nextWord(); }, 300);
+  }
+});
+
+oBtn.addEventListener("click", startGame);
+document.getElementById("reset").addEventListener("click", startGame);
+showOverlay("Typing Rush", "Type each word before time runs out!", "Start");
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Card Flip — How to Play | Webgame Arcades</title>
+<meta name="description" content="Flip pairs of emoji cards to find all 8 matching pairs before the 60-second timer runs out. Free browser memory game." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://webgamearcades.com/games/card-flip/about.html" />
+<meta property="og:title" content="Card Flip — How to Play | Webgame Arcades" />
+<meta property="og:description" content="Flip pairs of emoji cards to find all 8 matching pairs before the 60-second timer runs out." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://webgamearcades.com/games/card-flip/about.html" />
+<meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+<style>*{box-sizing:border-box}body{margin:0;background:#0b0c0f;color:#f4f2ea;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}main{max-width:760px;margin:0 auto;padding:48px 24px 80px}.back-link{display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;color:#b8bec9;text-decoration:none;font-size:.875rem}.back-link:hover{color:#f4f2ea}.play-btn{display:inline-flex;align-items:center;gap:8px;margin-bottom:40px;padding:12px 24px;border-radius:8px;background:#f7b84b;color:#1b1205;text-decoration:none;font-weight:800;font-size:.95rem;transition:opacity .15s}.play-btn:hover{opacity:.85}.play-btn svg{flex-shrink:0}h1{margin:0 0 16px;font-size:clamp(1.6rem,5vw,2.2rem);color:#f4f2ea}h2{margin:32px 0 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#f7b84b}p{margin:0 0 14px;color:#b8bec9;max-width:66ch}ul{margin:0 0 16px;padding-left:20px;color:#b8bec9}li{margin-bottom:6px}hr{margin:28px 0;border:none;border-top:1px solid rgba(255,255,255,0.08)}.play-btn-bottom{display:inline-flex;align-items:center;gap:8px;margin-top:40px;padding:12px 24px;border-radius:8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);color:#f4f2ea;text-decoration:none;font-weight:700;font-size:.95rem;transition:background .15s}.play-btn-bottom:hover{background:rgba(255,255,255,0.13)}</style>
+<script src="/site-chrome.js"></script>
+</head>
+<body>
+<main>
+  <a href="../../" class="back-link">← Webgame Arcades</a>
+  <a href="index.html" class="play-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Card Flip
+  </a>
+
+  <h1>Card Flip</h1>
+  <p>A classic memory card game with 16 face-down emoji cards hiding 8 matching pairs. Flip two cards at a time — if they match, they stay face up; if not, they flip back down. Find all eight pairs before the 60-second timer runs out. Your score is based on how much time you have left and how few flips you used.</p>
+
+  <hr>
+  <h2>How to Play</h2>
+  <ul>
+    <li>Click or tap any face-down card to flip it face up</li>
+    <li>Click a second card to try to match it with the first</li>
+    <li>A <strong>matching pair</strong> stays face up with a green glow</li>
+    <li>A <strong>non-matching pair</strong> flips back face down after a short pause</li>
+    <li>Find all 8 pairs before the 60-second timer runs out to win</li>
+    <li>Score = time remaining × 10, minus a penalty for extra flips beyond the minimum 8</li>
+    <li>Try to minimize your flip count for a higher final score</li>
+  </ul>
+
+  <hr>
+  <h2>About This Game</h2>
+  <p>Card Flip is a faithful implementation of the concentration card game, one of the oldest memory challenges in existence. The 4×4 grid of 16 cards (8 pairs) is the sweet spot for single-session play: small enough to complete in under a minute with good memory, large enough to tax short-term recall on a first run. The emoji icons are used as card faces because they are visually distinctive, universally recognizable, and require no specialized knowledge — any player anywhere can identify a dragon or a star without ambiguity.</p>
+  <p>The 60-second time limit creates pressure without being punishing for casual players. A methodical player who has seen every card once can typically complete the grid in 30–45 seconds; competitive players aiming for maximum score try to compress that to 20–25 seconds by maintaining a reliable mental map rather than relying on lucky guesses.</p>
+  <p>The scoring formula rewards both speed and efficiency. Time remaining contributes the bulk of the score, while excess flips apply a small penalty. This means the optimal play is not just remembering pairs but doing so in the minimum number of exposures — never flipping a card you already know the identity of, and always making your second flip count as a match when possible.</p>
+
+  <hr>
+  <h2>Why We Built It</h2>
+  <p>Memory training games have measurable cognitive benefits, particularly for short-term spatial memory and pattern retention. Card Flip packages these benefits inside a universally familiar format that needs zero explanation. The card-flip animation uses CSS 3D transforms for a smooth flip effect without any JavaScript animation library, and the layout adapts from narrow phone screens to wide desktop displays using responsive CSS grid. Because all game state lives in JavaScript variables — no server, no database — it works offline and loads instantly.</p>
+
+  <hr>
+  <h2>Tips &amp; Strategy</h2>
+  <ul>
+    <li><strong>Scan systematically</strong> — flip cards in a row-by-row order at the start to build a complete mental map before matching.</li>
+    <li><strong>Hold positions in working memory</strong> — when you reveal a card, immediately encode its position relative to the grid (top-left, middle row, etc.) rather than just its identity.</li>
+    <li><strong>Match when you can, explore when you can't</strong> — don't flip a known card for exploration; only flip unknowns when no known match is available.</li>
+    <li><strong>Use landmarks</strong> — the corners and center cards are easier to remember positionally; start with them to anchor your mental map.</li>
+    <li><strong>Don't rush the second flip</strong> — take the fraction of a second to confirm your memory before clicking; a wrong guess wastes time and a flip.</li>
+  </ul>
+
+  <hr>
+  <h2>Ideas for Improvement</h2>
+  <ul>
+    <li><strong>Difficulty levels</strong> — 3×4 (easy), 4×4 (medium), 4×5 or 5×6 (hard) grid sizes for scalable challenge.</li>
+    <li><strong>Themed card sets</strong> — swappable icon themes (animals, space, food) to keep the game fresh across sessions.</li>
+    <li><strong>Two-player pass-and-play</strong> — alternate turns where a match earns an extra turn, scoring pairs to determine the winner.</li>
+    <li><strong>Personal best tracking</strong> — localStorage high scores per grid size, showing best time and minimum flips.</li>
+  </ul>
+
+  <a href="index.html" class="play-btn-bottom">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2l10 6-10 6V2z"/></svg>
+    Play Now
+  </a>
+</main>
+<style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+<script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+</body>
+</html>

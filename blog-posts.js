@@ -3,6 +3,36 @@
 // and automatically paginates it 6 posts per page.
 const BLOG_POSTS = [
   {
+    slug: "10-new-games-added-to-the-arcade",
+    title: "10 New Games Added to the Arcade",
+    category: "Release",
+    date: "2026-06-25",
+    dateLabel: "Jun 25, 2026",
+    summary: "We just shipped ten new browser games across action and puzzle genres — typing, rhythm, color matching, snake maze, gravity flip, and five more. All free, no install.",
+    thumbLabel: "NEW",
+    thumbGradient: "linear-gradient(135deg, #2bd1c4, #a98bff)",
+  },
+  {
+    slug: "building-snake-maze",
+    title: "Snake Maze: Adding Real Walls Changed Everything",
+    category: "Dev Blog",
+    date: "2026-06-24",
+    dateLabel: "Jun 24, 2026",
+    summary: "Open-grid snake stops being challenging once you learn to coil efficiently. Adding internal maze walls with single-cell gaps brought back real routing decisions at every snake length.",
+    thumbLabel: "DEV",
+    thumbGradient: "linear-gradient(135deg, #73d676, #1e3a20)",
+  },
+  {
+    slug: "building-tower-balance",
+    title: "Tower Balance: Designing a Seesaw Decision Game",
+    category: "Dev Blog",
+    date: "2026-06-23",
+    dateLabel: "Jun 23, 2026",
+    summary: "Placing weighted blocks on a seesaw without tipping it sounds trivial. Getting the decision loop right — weights, visible totals, countdown timer, auto-place rule — took three full iterations.",
+    thumbLabel: "DEV",
+    thumbGradient: "linear-gradient(135deg, #f7b84b, #f05d5e)",
+  },
+  {
     slug: "5-games-for-your-lunch-break",
     title: "5 Games to Play on Your Lunch Break",
     category: "Guide",

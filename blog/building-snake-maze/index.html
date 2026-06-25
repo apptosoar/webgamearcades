@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Maze: Adding Real Walls Changed Everything — Webgame Arcades Blog</title>
+    <meta name="description" content="Adding internal maze barriers to snake navigation completely changes how players route, plan, and ultimately fail. Here's why open-grid snake needed walls." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://webgamearcades.com/blog/building-snake-maze/" />
+    <meta property="og:title" content="Snake Maze: Adding Real Walls Changed Everything" />
+    <meta property="og:description" content="Adding internal maze barriers to snake navigation completely changes how players route, plan, and ultimately fail." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://webgamearcades.com/blog/building-snake-maze/" />
+    <meta property="og:image" content="https://webgamearcades.com/assets/hero-game-portal.png" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Snake Maze: Adding Real Walls Changed Everything",
+      "datePublished": "2026-06-24",
+      "url": "https://webgamearcades.com/blog/building-snake-maze/",
+      "publisher": { "@type": "Organization", "name": "Webgame Arcades" }
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237395397379866" crossorigin="anonymous"></script>
+    <style>* { box-sizing: border-box; }
+      body { margin: 0; background: #0b0c0f; color: #f4f2ea; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.75; }
+      main { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+      .back-link { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; color: #b8bec9; text-decoration: none; font-size: 0.875rem; }
+      .back-link:hover { color: #f4f2ea; }
+      .post-meta { margin: 0 0 12px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      h1 { margin: 0 0 24px; font-size: clamp(1.8rem, 5vw, 2.4rem); color: #f4f2ea; }
+      h2 { margin: 40px 0 12px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #f7b84b; }
+      p { margin: 0 0 16px; color: #b8bec9; }
+      ul { margin: 0 0 16px; padding-left: 20px; color: #b8bec9; }
+      li { margin-bottom: 6px; }
+      a.cta { display: inline-block; margin-top: 36px; padding: 12px 24px; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: rgba(255,255,255,0.07); color: #f4f2ea; text-decoration: none; font-size: 0.95rem; transition: background 0.15s; }
+      a.cta:hover { background: rgba(255,255,255,0.13); }
+    </style>
+  <script src="/site-chrome.js"></script>
+</head>
+  <body>
+    <main>
+      <a href="/blog.html" class="back-link">← Back to Blog</a>
+      <p class="post-meta">Dev Blog · June 24, 2026</p>
+      <h1>Snake Maze: Adding Real Walls Changed Everything</h1>
+
+      <p>Open-grid snake has a well-known ceiling problem. Once a player learns to coil efficiently — spiraling inward from the outer edge — the game stops being about decisions and becomes a patience exercise. The snake can grow to fill almost the entire grid without any real danger as long as the player stays methodical. I knew this going in and decided to add internal maze walls to make the routing genuinely hard again. It worked better than I expected, mostly because of an effect I hadn't anticipated.</p>
+
+      <h2>The Wall Structure</h2>
+      <p>The maze uses a cross-shaped barrier layout on the 20×20 grid. Two horizontal walls span the full width at rows 5 and 14, each with a single-cell gap at column 10. Two vertical walls run between those horizontal walls at columns 5 and 14, each with a gap at row 10. The result is five distinct zones: a central cross corridor that is always open, and four enclosed corner sections accessible only through the corresponding single-cell gap.</p>
+      <p>The snake still wraps around the outer edges, which turned out to be an important decision. The wrap-around creates unofficial routes between zones: a snake in the top-left corner can exit through the top edge and reappear in the bottom-left — effectively bypassing the horizontal wall. This means experienced players have routing options that aren't obvious to beginners, which creates a skill gap without adding arbitrary complexity.</p>
+
+      <h2>The Effect I Did Not Expect</h2>
+      <p>The single-cell gaps are the interesting part. In open-grid snake, every cell is equally accessible, so you never have to think about corridors or bottlenecks. With the maze, every gap is a one-cell chokepoint: the snake can only pass through them single-file. A snake that is 12 cells long entering a corner quadrant through the column-5 gap at row 10 will have 12 cells of body trailing through that gap. To exit the same way it came in, the head must navigate around the quadrant and return to the gap opening — but the tail is still occupying several cells of the corridor.</p>
+      <p>This is the trap players walk into: they follow food into a corner quadrant, the body blocks the exit gap, and there is no alternative route out. On an open grid this never happens because exits exist in every direction. The maze makes it happen repeatedly until players learn to count body length before entering a tight space.</p>
+
+      <h2>Food Placement and Zone Balance</h2>
+      <p>Food can spawn in any open cell — which means it can appear inside any of the five zones, including corner quadrants. Initially I considered restricting food to the central corridor to keep the game accessible, but playtesting made it clear that corner food is more interesting, not less. When food appears in a corner quadrant, the player has to decide whether the snake's current length makes it safe to enter and exit. At short lengths the answer is almost always yes. At long lengths, entering a corner for food can be a gamble with no good exit.</p>
+      <p>This creates a natural risk-reward calibration that scales with the snake's length rather than with an explicit difficulty setting. The game gets harder as you get better at it, which is the right relationship between player progress and challenge.</p>
+
+      <h2>Speed and the Maze</h2>
+      <p>The snake speeds up as the score increases, which was already true of the open-grid version. What changed is how speed interacts with the maze. At low speed, players have time to plan a route through the gaps. At high speed, they react to immediate threats — and reacting to immediate threats in a maze environment means sometimes turning directly into a wall before realizing the planned route was a dead end. High-speed failure in the maze feels fair in a way that high-speed failure in open-grid snake doesn't: there was a decision that led to it, even if the decision had to be made a fraction of a second earlier than the player would have preferred.</p>
+
+      <a href="/games/snake-maze/" class="cta">Play Snake Maze</a>
+    </main>
+    <style>#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 24px;background:#20242b;border-top:1px solid rgba(255,255,255,0.12);color:#b8bec9;font-size:13px}#cookie-banner a{color:#2bd1c4;text-decoration:none}#cookie-accept{padding:6px 16px;border:none;border-radius:6px;background:#f7b84b;color:#1b0c05;font:600 13px/1 inherit;cursor:pointer}</style>
+    <script>if(!localStorage.getItem("cookie_ok")){const b=document.createElement("div");b.id="cookie-banner";b.innerHTML='<span>This site uses cookies for operation and ad delivery.</span><div style="display:flex;align-items:center;gap:10px;flex-shrink:0"><a href="/privacy.html">Learn more</a><button id="cookie-accept">Accept</button></div>';document.body.appendChild(b);document.getElementById("cookie-accept").onclick=()=>{localStorage.setItem("cookie_ok","1");b.remove();}}</script>
+  </body>
+</html>
