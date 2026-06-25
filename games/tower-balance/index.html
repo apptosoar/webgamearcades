@@ -97,6 +97,7 @@ function loop(ts) {
   if (cur && ts - countdownStart >= BLOCK_TIME) {
     // Auto-place on lighter side (mercy rule)
     place(leftW <= rightW ? "left" : "right", ts);
+    if (running) draw(ts);
     return;
   }
   draw(ts);
@@ -246,7 +247,7 @@ document.addEventListener("keydown", e => {
 // Touch: tap left half = left, right half = right
 canvas.addEventListener("pointerdown", e => {
   e.preventDefault();
-  if (!running) { if (!started) init(); return; }
+  if (!running) { init(); return; }
   const rect = canvas.getBoundingClientRect();
   const relX = (e.clientX - rect.left) / rect.width;
   place(relX < 0.5 ? "left" : "right", performance.now());

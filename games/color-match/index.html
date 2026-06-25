@@ -75,12 +75,14 @@ canvas.addEventListener("pointermove", e => {
   paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
 });
 canvas.addEventListener("pointerdown", e => {
+  if (!running) { init(); return; }
   const rect = canvas.getBoundingClientRect();
   const scale = canvas.width / rect.width;
   paddle.x = e.clientX * scale - paddle.w / 2;
   paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
 });
 document.addEventListener("keydown", e => {
+  if (!running) { init(); return; }
   if (e.key === "ArrowLeft")  paddle.x = Math.max(0, paddle.x - W * 0.06);
   if (e.key === "ArrowRight") paddle.x = Math.min(W - paddle.w, paddle.x + W * 0.06);
 });
