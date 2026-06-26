@@ -5,6 +5,7 @@
     navGames: "게임",
     navBlog: "블로그",
     navCommunity: "커뮤니티",
+    navAbout: "소개",
     navPrivacy: "개인정보처리방침",
     navContact: "문의",
     brandHome: "Webgame Arcades 홈",
@@ -124,6 +125,7 @@
     navGames: "Games",
     navBlog: "Blog",
     navCommunity: "Community",
+    navAbout: "About",
     navPrivacy: "Privacy",
     navContact: "Contact",
     brandHome: "Webgame Arcades home",
@@ -2380,6 +2382,8 @@ function applyStaticText() {
   document.querySelector("#navGames").classList.add("active");
   document.querySelector("#navBlog").textContent = copy.navBlog;
   document.querySelector("#navCommunity").textContent = copy.navCommunity;
+  const navAboutEl = document.querySelector("#navAbout");
+  if (navAboutEl) navAboutEl.textContent = copy.navAbout || "About";
   buildLangSelector();
 }
 
