@@ -47,6 +47,7 @@
     spawn: 0,
     second: 0,
     hitFlash: 0,
+    spriteScale: 1,
     touch: { active: false, x: 0, y: 0 },
   };
 
@@ -123,6 +124,7 @@
     canvas.width = Math.floor(state.w * ratio);
     canvas.height = Math.floor(state.h * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    state.spriteScale = clamp(state.w / 780, 0.45, 1);
     if (!state.t) resetPlayer();
   }
 
@@ -183,7 +185,7 @@
 
   function movePlayer() {
     const p = state.player;
-    const speed = config.speed || 5;
+    const speed = (config.speed || 5) * state.spriteScale;
     if (config.type === "runner") {
       p.vy += 0.8;
       p.y += p.vy;
@@ -238,7 +240,7 @@
   function autoAttack() {
     state.autoAttack = Math.max(0, state.autoAttack - 1);
     if (state.autoAttack > 0) return;
-    const radius = config.attackRadius || 68;
+    const radius = (config.attackRadius || 68) * state.spriteScale;
     const nearest = state.items
       .filter((item) => item.kind === "enemy" && !item.dead && distance(item, state.player) <= radius)
       .sort((a, b) => distance(a, state.player) - distance(b, state.player))[0];
@@ -331,12 +333,12 @@
   }
 
   function updateItems() {
-    const playerCollisionR = spriteCollisionRadius(playerSprite, config.playerSpriteHeight, state.player.r);
+    const playerCollisionR = spriteCollisionRadius(playerSprite, config.playerSpriteHeight && config.playerSpriteHeight * state.spriteScale, state.player.r);
     state.items.forEach((item) => {
       if (config.type === "arena" && item.kind === "enemy") {
         const angle = Math.atan2(state.player.y - item.y, state.player.x - item.x);
-        item.vx = Math.cos(angle) * (config.enemySpeed || 1.7);
-        item.vy = Math.sin(angle) * (config.enemySpeed || 1.7);
+        item.vx = Math.cos(angle) * (config.enemySpeed || 1.7) * state.spriteScale;
+        item.vy = Math.sin(angle) * (config.enemySpeed || 1.7) * state.spriteScale;
         if (Math.abs(item.vx) > 0.15) item.facing = item.vx < 0 ? -1 : 1;
       }
       item.x += item.vx;
@@ -350,7 +352,7 @@
         if (hit) hurt(item);
       } else {
         const itemCollisionR = item.kind === "enemy" && enemySprites.length
-          ? spriteCollisionRadius(enemySprites[item.spriteIndex || 0], config.enemySpriteHeight, item.r)
+          ? spriteCollisionRadius(enemySprites[item.spriteIndex || 0], config.enemySpriteHeight && config.enemySpriteHeight * state.spriteScale, item.r)
           : item.r;
         if (distance(item, state.player) < itemCollisionR + playerCollisionR) hurt(item);
       }
@@ -636,7 +638,7 @@
     ctx.save();
     ctx.translate(p.x, p.y);
     if (playerSprite && playerSprite.naturalWidth) {
-      const drawH = config.playerSpriteHeight || p.r * 3.6;
+      const drawH = (config.playerSpriteHeight || p.r * 3.6) * state.spriteScale;
       const drawW = drawH * (playerSprite.naturalWidth / playerSprite.naturalHeight);
       ctx.scale(p.facing === 1 ? -1 : 1, 1);
       ctx.drawImage(playerSprite, -drawW / 2, -drawH * 0.62, drawW, drawH);
@@ -671,7 +673,7 @@
     if (item.kind === "enemy" && enemySprites.length) {
       const sprite = enemySprites[item.spriteIndex || 0];
       if (sprite.naturalWidth) {
-        const drawH = config.enemySpriteHeight || item.r * 3.4;
+        const drawH = (config.enemySpriteHeight || item.r * 3.4) * state.spriteScale;
         const drawW = drawH * (sprite.naturalWidth / sprite.naturalHeight);
         ctx.scale(item.facing === 1 ? -1 : 1, 1);
         ctx.drawImage(sprite, -drawW / 2, -drawH * 0.62, drawW, drawH);
