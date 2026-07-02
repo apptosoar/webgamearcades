@@ -25,6 +25,7 @@
   const ctx = canvas.getContext("2d");
   const scoreEl = document.querySelector("#score");
   const healthEl = document.querySelector("#health");
+  const healthBarEl = document.querySelector("#healthBar");
   const restart = document.querySelector("#restart");
   const titleEl = document.querySelector("#title");
   const action = document.querySelector("#action");
@@ -37,13 +38,15 @@
     health: config.health || 3,
     over: false,
     keys: new Set(),
-    player: { x: 0, y: 0, r: 16, vx: 0, vy: 0, lane: 1 },
+    player: { x: 0, y: 0, r: 16, vx: 0, vy: 0, lane: 1, facing: 1 },
     items: [],
     shots: [],
     effects: [],
     cooldown: 0,
+    autoAttack: 0,
     spawn: 0,
     second: 0,
+    hitFlash: 0,
     touch: { active: false, x: 0, y: 0 },
   };
 
@@ -58,6 +61,16 @@
     violet: "#a98bff",
     green: "#73d676",
   };
+
+  const playerSprite = config.playerSprite ? new Image() : null;
+  if (playerSprite) playerSprite.src = config.playerSprite;
+  const enemySprites = (config.enemySprites || []).map((src) => {
+    const img = new Image();
+    img.src = src;
+    return img;
+  });
+  const bgImage = config.bgImage ? new Image() : null;
+  if (bgImage) bgImage.src = config.bgImage;
 
   document.documentElement.lang = currentLocale;
   document.documentElement.dir = ["he", "ur"].includes(currentLocale) ? "rtl" : "ltr";
@@ -137,13 +150,35 @@
       state.score += config.passiveScore || 1;
     }
 
+    const healthBefore = state.health;
     movePlayer();
     if (state.spawn <= 0) spawnItem();
+    if (config.type === "arena") autoAttack();
     updateShots();
     updateItems();
     updateEffects();
+    state.hitFlash = Math.max(0, state.hitFlash - 1);
+    if (state.health < healthBefore) state.hitFlash = 18;
     scoreEl.textContent = state.score;
     healthEl.textContent = state.health;
+    if (healthBarEl) {
+      const maxHealth = config.health || 3;
+      if (healthBarEl.children.length !== maxHealth) {
+        healthBarEl.innerHTML = "";
+        for (let i = 0; i < maxHealth; i += 1) {
+          const seg = document.createElement("span");
+          seg.className = "hp-seg";
+          healthBarEl.appendChild(seg);
+        }
+      }
+      const segs = healthBarEl.children;
+      for (let i = 0; i < segs.length; i += 1) {
+        segs[i].classList.toggle("filled", i < state.health);
+        segs[i].classList.toggle("just-lost", state.hitFlash > 0 && i === state.health);
+      }
+      const flashAlpha = state.hitFlash / 18;
+      healthBarEl.style.boxShadow = flashAlpha > 0 ? `0 0 ${10 * flashAlpha}px ${2 * flashAlpha}px rgba(240,93,94,${flashAlpha})` : "none";
+    }
   }
 
   function movePlayer() {
@@ -163,13 +198,15 @@
       return;
     }
 
-    if (state.keys.has("ArrowLeft") || state.keys.has("a")) p.x -= speed;
-    if (state.keys.has("ArrowRight") || state.keys.has("d")) p.x += speed;
+    if (state.keys.has("ArrowLeft") || state.keys.has("a")) { p.x -= speed; p.facing = -1; }
+    if (state.keys.has("ArrowRight") || state.keys.has("d")) { p.x += speed; p.facing = 1; }
     if (state.keys.has("ArrowUp") || state.keys.has("w")) p.y -= speed;
     if (state.keys.has("ArrowDown") || state.keys.has("s")) p.y += speed;
     if (state.touch.active && config.type !== "defender" && config.type !== "click") {
-      p.x += clamp(state.touch.x - p.x, -speed * 1.8, speed * 1.8);
+      const dx = clamp(state.touch.x - p.x, -speed * 1.8, speed * 1.8);
+      p.x += dx;
       p.y += clamp(state.touch.y - p.y, -speed * 1.8, speed * 1.8);
+      if (Math.abs(dx) > 0.3) p.facing = dx < 0 ? -1 : 1;
     }
     p.x = clamp(p.x, 24, state.w - 24);
     p.y = clamp(p.y, 42, state.h - 36);
@@ -196,6 +233,20 @@
     const start = { x: 38, y: state.h * 0.5 };
     const angle = Math.atan2(y - start.y, x - start.x);
     state.shots.push({ x: start.x, y: start.y, vx: Math.cos(angle) * 9, vy: Math.sin(angle) * 9, r: 5 });
+  }
+
+  function autoAttack() {
+    state.autoAttack = Math.max(0, state.autoAttack - 1);
+    if (state.autoAttack > 0) return;
+    const radius = config.attackRadius || 68;
+    const nearest = state.items
+      .filter((item) => item.kind === "enemy" && !item.dead && distance(item, state.player) <= radius)
+      .sort((a, b) => distance(a, state.player) - distance(b, state.player))[0];
+    if (!nearest) return;
+    state.autoAttack = config.attackRate || 18;
+    nearest.dead = true;
+    state.score += config.hitScore || 5;
+    pulse(nearest.x, nearest.y, palette.teal);
   }
 
   function punchNearest() {
@@ -238,7 +289,8 @@
         { x: rand(24, state.w - 24), y: -24 },
         { x: rand(24, state.w - 24), y: state.h + 24 },
       ][edge];
-      state.items.push({ kind: "enemy", ...point, vx: 0, vy: 0, r: 18 });
+      const spriteIndex = enemySprites.length ? Math.floor(Math.random() * enemySprites.length) : 0;
+      state.items.push({ kind: "enemy", ...point, vx: 0, vy: 0, r: 18, spriteIndex });
       return;
     }
     if (config.type === "click") {
@@ -270,12 +322,22 @@
     state.shots = state.shots.filter((shot) => !shot.dead && shot.x > -30 && shot.x < state.w + 30 && shot.y > -40 && shot.y < state.h + 40);
   }
 
+  function spriteCollisionRadius(sprite, targetHeight, fallbackR) {
+    if (sprite && sprite.naturalWidth && targetHeight) {
+      const drawW = targetHeight * (sprite.naturalWidth / sprite.naturalHeight);
+      return Math.min(drawW, targetHeight) * 0.5;
+    }
+    return fallbackR;
+  }
+
   function updateItems() {
+    const playerCollisionR = spriteCollisionRadius(playerSprite, config.playerSpriteHeight, state.player.r);
     state.items.forEach((item) => {
       if (config.type === "arena" && item.kind === "enemy") {
         const angle = Math.atan2(state.player.y - item.y, state.player.x - item.x);
         item.vx = Math.cos(angle) * (config.enemySpeed || 1.7);
         item.vy = Math.sin(angle) * (config.enemySpeed || 1.7);
+        if (Math.abs(item.vx) > 0.15) item.facing = item.vx < 0 ? -1 : 1;
       }
       item.x += item.vx;
       item.y += item.vy;
@@ -286,8 +348,11 @@
           ? Math.abs(state.player.x - item.x) < 16 && Math.abs(state.player.y - item.y) < 90
           : Math.abs(state.player.y - item.y) < 16 && Math.abs(state.player.x - item.x) < 90;
         if (hit) hurt(item);
-      } else if (distance(item, state.player) < item.r + state.player.r) {
-        hurt(item);
+      } else {
+        const itemCollisionR = item.kind === "enemy" && enemySprites.length
+          ? spriteCollisionRadius(enemySprites[item.spriteIndex || 0], config.enemySpriteHeight, item.r)
+          : item.r;
+        if (distance(item, state.player) < itemCollisionR + playerCollisionR) hurt(item);
       }
 
       if (config.type === "defender" && item.x < 34) {
@@ -318,24 +383,48 @@
     state.shots.forEach(drawShot);
     drawPlayer();
     state.effects.forEach(drawEffect);
+    if (state.hitFlash > 0) {
+      ctx.fillStyle = `rgba(240,50,50,${(state.hitFlash / 18) * 0.35})`;
+      ctx.fillRect(0, 0, state.w, state.h);
+    }
     if (state.over) drawGameOver();
   }
 
   function drawBackground() {
-    const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
-    grd.addColorStop(0, config.bgA || "#151820");
-    grd.addColorStop(1, config.bgB || "#22262e");
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, state.w, state.h);
-    drawScene(sceneName());
-    drawGridOverlay();
+    if (bgImage && bgImage.naturalWidth) {
+      drawBgImageCover(bgImage);
+      ctx.fillStyle = "rgba(8,9,12,.4)";
+      ctx.fillRect(0, 0, state.w, state.h);
+    } else {
+      const grd = ctx.createLinearGradient(0, 0, state.w, state.h);
+      grd.addColorStop(0, config.bgA || "#151820");
+      grd.addColorStop(1, config.bgB || "#22262e");
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, state.w, state.h);
+      drawScene(sceneName());
+    }
+    if (config.gridOverlay !== false) drawGridOverlay();
+  }
+
+  function drawBgImageCover(img) {
+    const canvasRatio = state.w / state.h;
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    let drawW, drawH;
+    if (imgRatio > canvasRatio) {
+      drawH = state.h;
+      drawW = drawH * imgRatio;
+    } else {
+      drawW = state.w;
+      drawH = drawW / imgRatio;
+    }
+    ctx.drawImage(img, (state.w - drawW) / 2, (state.h - drawH) / 2, drawW, drawH);
   }
 
   function sceneName() {
     const title = (config.title || "").toLowerCase();
     if (title.includes("space")) return "space";
     if (title.includes("meteor")) return "meteor";
-    if (title.includes("zombie")) return "graveyard";
+    if (title.includes("zombie")) return "ruinedCity";
     if (title.includes("ninja")) return "dojo";
     if (title.includes("robot")) return "factory";
     if (title.includes("arrow")) return "range";
@@ -348,7 +437,7 @@
 
   function drawScene(scene) {
     if (scene === "space" || scene === "meteor") drawSpaceScene(scene === "meteor");
-    else if (scene === "graveyard") drawGraveyardScene();
+    else if (scene === "ruinedCity") drawRuinedCityScene();
     else if (scene === "dojo") drawDojoScene();
     else if (scene === "factory") drawFactoryScene();
     else if (scene === "range") drawRangeScene();
@@ -386,15 +475,54 @@
     }
   }
 
-  function drawGraveyardScene() {
-    drawGround("#142016");
-    ctx.fillStyle = "rgba(244,242,234,.12)";
-    for (let x = 36; x < state.w; x += 92) {
-      roundRect(x, state.h - 96 - ((x / 92) % 2) * 12, 26, 48, 10);
-      ctx.fillRect(x - 7, state.h - 58, 40, 10);
+  function drawRuinedCityScene() {
+    drawGround("#17181b");
+
+    ctx.fillStyle = "rgba(20,22,28,.6)";
+    for (let x = -30; x < state.w + 60; x += 78) {
+      const h = 46 + ((x / 78) % 4) * 16;
+      ctx.fillRect(x, 0, 54, h);
     }
-    ctx.fillStyle = "rgba(115,214,118,.16)";
-    circle(state.w * 0.82, state.h * 0.18, 48);
+    ctx.fillStyle = "rgba(247,184,75,.09)";
+    for (let x = -30; x < state.w + 60; x += 78) {
+      const h = 46 + ((x / 78) % 4) * 16;
+      for (let wy = 8; wy < h - 8; wy += 14) {
+        for (let wx = x + 8; wx < x + 46; wx += 12) {
+          if (Math.floor(wx + wy) % 5 !== 0) ctx.fillRect(wx, wy, 6, 8);
+        }
+      }
+    }
+
+    ctx.strokeStyle = "rgba(244,242,234,.14)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, state.h - 30);
+    for (let x = 0; x <= state.w; x += 30) ctx.lineTo(x, state.h - 30 + Math.sin(x * 0.12) * 5);
+    ctx.stroke();
+
+    [0.14, 0.5, 0.84].forEach((frac, i) => {
+      ctx.save();
+      ctx.translate(state.w * frac, state.h - 40);
+      ctx.rotate(i % 2 === 0 ? -0.16 : 0.2);
+      ctx.fillStyle = "rgba(90,44,40,.45)";
+      roundRect(-24, -13, 48, 22, 6);
+      ctx.fillStyle = "rgba(15,15,16,.5)";
+      circle(-14, 9, 6);
+      circle(14, 9, 6);
+      ctx.restore();
+    });
+
+    ctx.fillStyle = "rgba(90,88,82,.3)";
+    for (let i = 0; i < 9; i += 1) {
+      const x = (i * 97 + 30) % state.w;
+      const y = state.h - 18 - (i % 3) * 5;
+      path([x, y - 5, x + 9, y - 2, x + 4, y + 5, x - 7, y + 3]);
+    }
+
+    ctx.fillStyle = "rgba(240,93,94,.14)";
+    circle(state.w * 0.24, state.h * 0.6, 42);
+    ctx.fillStyle = "rgba(247,184,75,.1)";
+    circle(state.w * 0.78, state.h * 0.42, 34);
   }
 
   function drawDojoScene() {
@@ -507,6 +635,14 @@
     const p = state.player;
     ctx.save();
     ctx.translate(p.x, p.y);
+    if (playerSprite && playerSprite.naturalWidth) {
+      const drawH = config.playerSpriteHeight || p.r * 3.6;
+      const drawW = drawH * (playerSprite.naturalWidth / playerSprite.naturalHeight);
+      ctx.scale(p.facing === 1 ? -1 : 1, 1);
+      ctx.drawImage(playerSprite, -drawW / 2, -drawH * 0.62, drawW, drawH);
+      ctx.restore();
+      return;
+    }
     ctx.fillStyle = config.playerColor || palette.teal;
     if (config.playerShape === "ship") {
       path([0, -22, 16, 18, 0, 10, -16, 18]);
@@ -531,6 +667,17 @@
       else roundRect(-88, -8, 176, 16, 8);
       ctx.restore();
       return;
+    }
+    if (item.kind === "enemy" && enemySprites.length) {
+      const sprite = enemySprites[item.spriteIndex || 0];
+      if (sprite.naturalWidth) {
+        const drawH = config.enemySpriteHeight || item.r * 3.4;
+        const drawW = drawH * (sprite.naturalWidth / sprite.naturalHeight);
+        ctx.scale(item.facing === 1 ? -1 : 1, 1);
+        ctx.drawImage(sprite, -drawW / 2, -drawH * 0.62, drawW, drawH);
+        ctx.restore();
+        return;
+      }
     }
     ctx.fillStyle = item.kind === "enemy" ? config.enemyColor || palette.red : config.hazardColor || palette.amber;
     if (config.enemyShape === "zombie") {
